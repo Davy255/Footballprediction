@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from app.core.database import get_db
@@ -10,12 +10,13 @@ from app.core.security import (
 )
 from app.models.user import User
 from app.schemas.schemas import UserCreate, UserOut, Token, ForgotPasswordRequest, ResetPasswordRequest
+from app.services.email_service import send_welcome_email, send_password_reset_email
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 
 @router.post("/register", response_model=Token, dependencies=[Depends(register_rate_limiter)])
-def register(user_in: UserCreate, db: Session = Depends(get_db)):
+def register(user_in: UserCreate, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
     clean_email = user_in.email.strip().lower()
     clean_username = user_in.username.strip()
 
@@ -33,6 +34,9 @@ def register(user_in: UserCreate, db: Session = Depends(get_db)):
     db.add(user)
     db.commit()
     db.refresh(user)
+
+    # Dispatch welcome email asynchronously
+    background_tasks.add_task(send_welcome_email, user.email, user.username)
 
     token = create_access_token({"sub": str(user.id)})
     return {"access_token": token, "token_type": "bearer", "user": user}
@@ -87,20 +91,24 @@ def update_me(
 
 
 @router.post("/forgot-password", dependencies=[Depends(password_reset_rate_limiter)])
-def forgot_password(payload: ForgotPasswordRequest, db: Session = Depends(get_db)):
+def forgot_password(payload: ForgotPasswordRequest, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
     clean_email = payload.email.strip().lower()
     user = db.query(User).filter(User.email == clean_email).first()
 
     # Always return a success response to prevent email enumeration attacks
     if not user:
         return {
-            "detail": "If this email is registered, you will receive password reset instructions.",
+            "detail": "If this email is registered, password reset instructions have been sent to your inbox.",
             "reset_token": None,
         }
 
     reset_token = create_password_reset_token(user.email)
+
+    # Dispatch email asynchronously in background
+    background_tasks.add_task(send_password_reset_email, user.email, reset_token, user.username)
+
     return {
-        "detail": "Password reset token generated successfully. (Valid for 15 minutes)",
+        "detail": "Password reset instructions have been sent to your email. (Valid for 15 minutes)",
         "reset_token": reset_token,
     }
 

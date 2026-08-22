@@ -23,6 +23,15 @@ class Settings(BaseSettings):
     ADMIN_EMAIL: str = "admin@footballpredict.com"
     ADMIN_PASSWORD: str = "admin123"
 
+    # SMTP / Email Service
+    SMTP_HOST: str = ""
+    SMTP_PORT: int = 587
+    SMTP_USER: str = ""
+    SMTP_PASSWORD: str = ""
+    SMTP_FROM_EMAIL: str = "no-reply@footballpredict.com"
+    SMTP_FROM_NAME: str = "FootballPredict ⚽"
+    SMTP_TLS: bool = True
+
     class Config:
         env_file = ".env"
         extra = "allow"

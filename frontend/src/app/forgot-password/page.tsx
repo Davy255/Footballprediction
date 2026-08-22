@@ -1,21 +1,32 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { forgotPassword, resetPassword } from '@/lib/api';
 
-export default function ForgotPasswordPage() {
+function ForgotPasswordContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const tokenFromUrl = searchParams.get('token');
 
-  const [step, setStep] = useState<1 | 2>(1);
+  const [step, setStep] = useState<1 | 2>(tokenFromUrl ? 2 : 1);
   const [email, setEmail] = useState('');
-  const [resetToken, setResetToken] = useState('');
+  const [resetToken, setResetToken] = useState(tokenFromUrl || '');
   const [newPassword, setNewPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const [successMsg, setSuccessMsg] = useState<string | null>(
+    tokenFromUrl ? 'Reset token loaded from your email! Please enter your new password below.' : null
+  );
+
+  useEffect(() => {
+    if (tokenFromUrl) {
+      setResetToken(tokenFromUrl);
+      setStep(2);
+    }
+  }, [tokenFromUrl]);
 
   // Step 1: Request Password Reset Token
   const handleRequestToken = async (e: React.FormEvent) => {
@@ -246,5 +257,17 @@ export default function ForgotPasswordPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ForgotPasswordPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+        <span className="spinner" style={{ borderTopColor: 'var(--accent-blue)', borderColor: 'rgba(59,130,246,0.2)' }} />
+      </div>
+    }>
+      <ForgotPasswordContent />
+    </Suspense>
   );
 }
