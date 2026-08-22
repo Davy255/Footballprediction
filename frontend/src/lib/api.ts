@@ -1,6 +1,7 @@
 import { User, Match, Prediction, League, LeaderboardEntry, AdminStats, ChatMessage, ChatResponse } from './types';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const RAW_API = process.env.NEXT_PUBLIC_API_URL || 'https://football-prediction-api-mmet.onrender.com';
+const API_BASE = RAW_API.replace(/\/+$/, '');
 
 function getHeaders(token?: string | null) {
   const headers: Record<string, string> = {
