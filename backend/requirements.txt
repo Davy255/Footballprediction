@@ -4,8 +4,10 @@ sqlalchemy
 alembic
 pydantic
 pydantic-settings
+email-validator
 python-jose[cryptography]
 passlib[bcrypt]
+bcrypt
 python-multipart
 httpx
 apscheduler
