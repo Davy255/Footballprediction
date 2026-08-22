@@ -23,15 +23,30 @@ function FixturesContent() {
       .catch(() => {});
   }, []);
 
-  const loadMatches = async () => {
-    setLoading(true);
+  const loadMatches = async (useCache = true) => {
+    const cacheKey = `fp_fix_${selectedLeague}_${selectedStatus}`;
+    if (useCache && typeof window !== 'undefined') {
+      try {
+        const cached = sessionStorage.getItem(cacheKey);
+        if (cached) {
+          setMatches(JSON.parse(cached));
+          setLoading(false);
+        }
+      } catch {}
+    }
+
     try {
       const data = await fetchMatches({
         league_code: selectedLeague || undefined,
         status: selectedStatus || undefined,
-        limit: 100,
+        limit: 40,
       });
       setMatches(data);
+      if (typeof window !== 'undefined') {
+        try {
+          sessionStorage.setItem(cacheKey, JSON.stringify(data));
+        } catch {}
+      }
     } catch (err) {
       console.error(err);
     } finally {
@@ -40,7 +55,7 @@ function FixturesContent() {
   };
 
   useEffect(() => {
-    loadMatches();
+    loadMatches(true);
   }, [selectedLeague, selectedStatus]);
 
   const groupMatchesByLeague = (matchesList: Match[]) => {

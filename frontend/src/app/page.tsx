@@ -29,17 +29,41 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [showGuide, setShowGuide] = useState(false);
 
-  const loadData = async () => {
-    setLoading(true);
+  const loadData = async (isInitial = true) => {
+    // Try restoring from instant client cache first
+    if (isInitial && typeof window !== 'undefined') {
+      try {
+        const cachedToday = sessionStorage.getItem('fp_cache_today');
+        const cachedUpcoming = sessionStorage.getItem('fp_cache_upcoming');
+        const cachedLeagues = sessionStorage.getItem('fp_cache_leagues');
+        if (cachedToday && cachedLeagues) {
+          setTodayMatches(JSON.parse(cachedToday));
+          setLeagues(JSON.parse(cachedLeagues));
+          if (cachedUpcoming) setUpcomingMatches(JSON.parse(cachedUpcoming));
+          setLoading(false);
+        }
+      } catch {}
+    }
+
     try {
       const [today, upcoming, lgs] = await Promise.all([
         fetchTodayMatches().catch(() => []),
-        fetchUpcomingMatches(14).catch(() => []),
+        fetchUpcomingMatches(10).catch(() => []),
         fetchLeagues().catch(() => []),
       ]);
-      setTodayMatches(today);
-      setUpcomingMatches(upcoming);
-      setLeagues(lgs);
+
+      if (today.length > 0) setTodayMatches(today);
+      if (upcoming.length > 0) setUpcomingMatches(upcoming);
+      if (lgs.length > 0) setLeagues(lgs);
+
+      // Save to instant client cache
+      if (typeof window !== 'undefined') {
+        try {
+          if (today.length > 0) sessionStorage.setItem('fp_cache_today', JSON.stringify(today));
+          if (upcoming.length > 0) sessionStorage.setItem('fp_cache_upcoming', JSON.stringify(upcoming));
+          if (lgs.length > 0) sessionStorage.setItem('fp_cache_leagues', JSON.stringify(lgs));
+        } catch {}
+      }
     } catch (err) {
       console.error(err);
     } finally {
@@ -48,7 +72,7 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    loadData();
+    loadData(true);
   }, []);
 
   const groupMatchesByLeague = (matchesList: Match[]) => {
