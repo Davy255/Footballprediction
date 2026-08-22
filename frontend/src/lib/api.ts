@@ -51,6 +51,20 @@ export async function registerUser(userData: { username: string; email: string; 
   });
 }
 
+export async function forgotPassword(email: string) {
+  return fetchApi<{ detail: string; reset_token?: string | null }>('/api/auth/forgot-password', {
+    method: 'POST',
+    body: JSON.stringify({ email }),
+  });
+}
+
+export async function resetPassword(payload: { token: string; new_password: string }) {
+  return fetchApi<{ detail: string }>('/api/auth/reset-password', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+}
+
 export async function fetchMe() {
   return fetchApi<User>('/api/auth/me');
 }

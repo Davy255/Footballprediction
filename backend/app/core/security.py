@@ -54,6 +54,7 @@ class RateLimiter:
 login_rate_limiter = RateLimiter(max_requests=5, window_seconds=60, action_name="login")
 register_rate_limiter = RateLimiter(max_requests=4, window_seconds=60, action_name="registration")
 chat_rate_limiter = RateLimiter(max_requests=25, window_seconds=60, action_name="chat")
+password_reset_rate_limiter = RateLimiter(max_requests=3, window_seconds=60, action_name="password reset")
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -78,11 +79,24 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
     return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
 
 
+def create_password_reset_token(email: str) -> str:
+    expire = datetime.now(timezone.utc) + timedelta(minutes=15)
+    to_encode = {"sub": email, "type": "password_reset", "exp": expire}
+    return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
+
+
 def decode_token(token: str) -> Optional[dict]:
     try:
         return jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
     except JWTError:
         return None
+
+
+def verify_password_reset_token(token: str) -> Optional[str]:
+    payload = decode_token(token)
+    if not payload or payload.get("type") != "password_reset":
+        return None
+    return payload.get("sub")
 
 
 async def get_current_user(

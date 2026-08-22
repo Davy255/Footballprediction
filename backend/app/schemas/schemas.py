@@ -27,6 +27,22 @@ class UserLogin(BaseModel):
     password: str
 
 
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    new_password: str = Field(..., min_length=8, max_length=128, description="New password minimum 8 characters")
+
+    @field_validator("new_password")
+    @classmethod
+    def validate_password_strength(cls, v: str) -> str:
+        if not re.search(r"[A-Za-z]", v) or not re.search(r"[0-9]", v):
+            raise ValueError("Password must contain at least one letter and one number")
+        return v
+
+
 class UserOut(BaseModel):
     id: int
     username: str
