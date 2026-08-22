@@ -106,18 +106,18 @@ export default function HomePage() {
             )}
           </div>
 
-          {/* Stats Row */}
+          {/* Stats Row Strip */}
           <div className="stats-row">
             {[
-              { value: '87k+', label: 'Historical Matches' },
-              { value: '12', label: 'Top Leagues' },
-              { value: '+5pts', label: 'Exact Score Bonus' },
-              { value: '+3pts', label: 'Outcome Winner' },
-              { value: '+2pts', label: 'BTTS & O/U 2.5' },
-              { value: '⚡ Live', label: 'Real-time Data' },
+              { value: '87k+', label: 'Historical Matches', color: '#2563eb', bg: 'rgba(37, 99, 235, 0.08)' },
+              { value: '12', label: 'Top Leagues', color: '#7c3aed', bg: 'rgba(124, 58, 237, 0.08)' },
+              { value: '+5pts', label: 'Exact Score Bonus', color: '#16a34a', bg: 'rgba(22, 163, 74, 0.08)' },
+              { value: '+3pts', label: 'Outcome Winner', color: '#0284c7', bg: 'rgba(2, 132, 199, 0.08)' },
+              { value: '+2pts', label: 'BTTS & O/U 2.5', color: '#d97706', bg: 'rgba(217, 119, 6, 0.08)' },
+              { value: '⚡ Live', label: 'Real-time Data', color: '#dc2626', bg: 'rgba(220, 38, 38, 0.08)' },
             ].map((s) => (
-              <div className="stat-item" key={s.label}>
-                <span className="stat-value">{s.value}</span>
+              <div className="stat-item" key={s.label} style={{ background: s.bg, border: `1px solid ${s.color}35` }}>
+                <span className="stat-value" style={{ color: s.color }}>{s.value}</span>
                 <span className="stat-label">{s.label}</span>
               </div>
             ))}

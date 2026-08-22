@@ -187,9 +187,10 @@ interface MatchCardProps {
   defaultOpen?: boolean;
   onPredictionChange?: () => void;
   isLast?: boolean;
+  isEven?: boolean;
 }
 
-export default function MatchCard({ match, defaultOpen = false, onPredictionChange, isLast }: MatchCardProps) {
+export default function MatchCard({ match, defaultOpen = false, onPredictionChange, isLast, isEven }: MatchCardProps) {
   const { user, token } = useAuth();
   const [open, setOpen] = useState(defaultOpen);
   const [activeTab, setActiveTab] = useState<TabKey>('ai');
@@ -376,7 +377,7 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
     <div style={{ marginBottom: 3 }}>
       {/* FootyStats / WhoScored Hybrid Fixture Row */}
       <div
-        className={`ws-fixture-row ${status.isLive ? 'live-row' : ''}`}
+        className={`ws-fixture-row ${isEven ? 'row-even' : 'row-odd'} ${status.isLive ? 'live-row' : status.isFinished ? 'finished-row' : status.isPostponed ? 'postponed-row' : 'sched-row'}`}
         onClick={() => {
           setOpen(o => !o);
           if (!open && activeTab === 'predict') loadPred();
