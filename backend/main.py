@@ -123,7 +123,14 @@ async def add_security_headers(request: Request, call_next):
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.FRONTEND_URL, "http://localhost:3000", "http://localhost:3001"],
+    allow_origins=[
+        settings.FRONTEND_URL,
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "https://footballprediction.vercel.app",
+        "https://footballprediction-vertex-digital3.vercel.app",
+    ],
+    allow_origin_regex=r"^https?:\/\/.*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
