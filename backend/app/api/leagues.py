@@ -1,3 +1,5 @@
+import time
+from typing import Optional, Dict, Any, Tuple
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.core.database import get_db
@@ -8,10 +10,19 @@ import asyncio
 
 router = APIRouter(prefix="/api/leagues", tags=["leagues"])
 
+_leagues_cache: Dict[str, Tuple[float, Any]] = {}
+
 
 @router.get("/", response_model=list[LeagueOut])
 def get_leagues(db: Session = Depends(get_db)):
-    return db.query(League).filter(League.is_active == True).all()
+    if "all_leagues" in _leagues_cache:
+        ts, data = _leagues_cache["all_leagues"]
+        if time.time() - ts < 60.0:  # Cache for 60 seconds
+            return data
+
+    res = db.query(League).filter(League.is_active == True).all()
+    _leagues_cache["all_leagues"] = (time.time(), res)
+    return res
 
 
 @router.get("/{code}", response_model=LeagueOut)
