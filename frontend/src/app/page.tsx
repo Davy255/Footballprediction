@@ -5,6 +5,7 @@ import { Match, League } from '@/lib/types';
 import { fetchTodayMatches, fetchUpcomingMatches, fetchLeagues } from '@/lib/api';
 import LeagueAccordionSection from '@/components/LeagueAccordionSection';
 import HowToPlayModal from '@/components/HowToPlayModal';
+import AdBanner from '@/components/AdBanner';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 
@@ -203,6 +204,9 @@ export default function HomePage() {
               </div>
             )}
           </div>
+
+          {/* Leaderboard Ad Placement Slot */}
+          <AdBanner />
 
           {/* Upcoming Matches Section */}
           <div>

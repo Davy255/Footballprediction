@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
 import { ThemeProvider } from '@/context/ThemeContext';
@@ -20,8 +21,20 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const adClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+
   return (
     <html lang="en" data-theme="dark">
+      <head>
+        {adClient && (
+          <Script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adClient}`}
+            crossOrigin="anonymous"
+            strategy="lazyOnload"
+          />
+        )}
+      </head>
       <body>
         <ThemeProvider>
           <AuthProvider>
@@ -108,23 +121,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     </ul>
                   </div>
 
-                  {/* Account Column */}
+                  {/* Legal Column */}
                   <div className="footer-col">
-                    <h4>Account</h4>
+                    <h4>Legal &amp; Trust</h4>
                     <ul className="footer-links">
-                      <li><Link href="/register">Create Account</Link></li>
-                      <li><Link href="/login">Sign In</Link></li>
-                      <li><Link href="/stats">Match Analytics</Link></li>
-                      <li><Link href="/leagues">League Tables</Link></li>
+                      <li><Link href="/privacy">Privacy Policy</Link></li>
+                      <li><Link href="/terms">Terms of Service</Link></li>
+                      <li><Link href="/disclaimer">Disclaimer &amp; Gaming</Link></li>
+                      <li><Link href="/forgot-password">Account Recovery</Link></li>
                     </ul>
                   </div>
                 </div>
 
                 <div className="footer-bottom">
                   <span>⚽ FootballPredict &copy; {new Date().getFullYear()}. All rights reserved.</span>
-                  <span style={{ textAlign: 'center' }}>
-                    For entertainment & statistical analysis only. Please gamble responsibly.
-                  </span>
+                  <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    <Link href="/privacy" style={{ color: 'var(--text-muted)' }}>Privacy Policy</Link>
+                    <span>•</span>
+                    <Link href="/terms" style={{ color: 'var(--text-muted)' }}>Terms of Service</Link>
+                    <span>•</span>
+                    <Link href="/disclaimer" style={{ color: 'var(--text-muted)' }}>Disclaimer</Link>
+                  </div>
                   <span>Powered by football-data.org &amp; The Odds API</span>
                 </div>
               </div>
