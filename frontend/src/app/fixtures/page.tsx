@@ -127,6 +127,18 @@ function FixturesContent() {
 
       if (!matchFound) return false;
     }
+
+    if (selectedStatus === 'SCHEDULED') {
+      if (!['SCHEDULED', 'TIMED'].includes(m.status)) return false;
+      try {
+        const matchTime = new Date(m.utc_date).getTime();
+        const startOfToday = new Date().setHours(0, 0, 0, 0);
+        return matchTime >= startOfToday;
+      } catch {
+        return true;
+      }
+    }
+
     return true;
   });
 

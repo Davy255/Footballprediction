@@ -93,12 +93,15 @@ def get_unified_matches_feed(response: Response, db: Session = Depends(get_db)):
         .all()
     )
 
-    # 2. Upcoming Scheduled Matches (ordered chronologically from today forward)
+    today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    # 2. Upcoming Scheduled Matches (strictly from today forward, active only)
     upcoming_matches = (
         db.query(Match)
         .options(*opts)
         .filter(
-            Match.status.in_(["SCHEDULED", "TIMED", "POSTPONED"]),
+            Match.status.in_(["SCHEDULED", "TIMED"]),
+            Match.utc_date >= today_start,
         )
         .order_by(Match.utc_date.asc())
         .limit(60)

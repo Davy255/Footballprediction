@@ -188,7 +188,14 @@ export default function HomePage() {
       return ['FINISHED', 'AWARDED'].includes(m.status);
     }
     if (selectedStatus === 'SCHEDULED') {
-      return ['SCHEDULED', 'TIMED', 'POSTPONED'].includes(m.status);
+      if (!['SCHEDULED', 'TIMED'].includes(m.status)) return false;
+      try {
+        const matchTime = new Date(m.utc_date).getTime();
+        const startOfToday = new Date().setHours(0, 0, 0, 0);
+        return matchTime >= startOfToday;
+      } catch {
+        return true;
+      }
     }
     return true;
   });
