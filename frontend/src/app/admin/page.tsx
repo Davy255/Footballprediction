@@ -96,6 +96,7 @@ export default function AdminDashboardPage() {
 
       login(res.access_token, res.user);
       setIdleSecondsLeft(300);
+      fetchAdminStats().then(setStats).catch(console.error);
     } catch (err: any) {
       setLoginError(err.message || 'Invalid admin credentials');
     } finally {
@@ -108,6 +109,9 @@ export default function AdminDashboardPage() {
       setSyncMsg('Triggering full competition season sync in background...');
       const res = await triggerAdminSync();
       setSyncMsg(res.detail);
+      setTimeout(() => {
+        fetchAdminStats().then(setStats).catch(console.error);
+      }, 2500);
     } catch (err: any) {
       setSyncMsg(`Sync error: ${err.message}`);
     }

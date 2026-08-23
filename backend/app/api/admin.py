@@ -2,10 +2,12 @@ import logging
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
+from app.core.config import settings
 from app.core.database import get_db
 from app.core.security import get_current_admin
 from app.models.user import User
 from app.models.match import League, Match, Team
+from app.models.prediction import Prediction
 from app.services.sync_service import sync_all_competitions, score_finished_predictions
 from app.services.ml_predictor import generate_prediction_description, calculate_projected_scoreline
 
@@ -167,17 +169,23 @@ def get_stats(
     db: Session = Depends(get_db),
     _=Depends(get_current_admin),
 ):
-    from app.models.prediction import Prediction
+    scheduled_count = db.query(Match).filter(Match.status.in_(["SCHEDULED", "TIMED", "POSTPONED"])).count()
+    finished_count = db.query(Match).filter(Match.status.in_(["FINISHED", "AWARDED"])).count()
+    live_count = db.query(Match).filter(Match.status.in_(["LIVE", "IN_PLAY", "PAUSED", "HALFTIME"])).count()
+
+    smtp_is_configured = bool(getattr(settings, "SMTP_HOST", "") and getattr(settings, "SMTP_USER", ""))
+    smtp_host_val = getattr(settings, "SMTP_HOST", "") or "Not configured (DEV mock mode)"
+
     return {
         "total_users": db.query(User).count(),
         "total_matches": db.query(Match).count(),
         "total_predictions": db.query(Prediction).count(),
-        "scheduled_matches": db.query(Match).filter(Match.status == "SCHEDULED").count(),
-        "finished_matches": db.query(Match).filter(Match.status == "FINISHED").count(),
-        "live_matches": db.query(Match).filter(Match.status.in_(["LIVE", "IN_PLAY", "PAUSED"])).count(),
+        "scheduled_matches": scheduled_count,
+        "finished_matches": finished_count,
+        "live_matches": live_count,
         "leagues": db.query(League).count(),
-        "smtp_configured": bool(settings.SMTP_HOST and settings.SMTP_USER),
-        "smtp_host": settings.SMTP_HOST or "Not configured (DEV mock mode)",
+        "smtp_configured": smtp_is_configured,
+        "smtp_host": smtp_host_val,
     }
 
 
