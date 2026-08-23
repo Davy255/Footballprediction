@@ -173,8 +173,11 @@ def get_stats(
     finished_count = db.query(Match).filter(Match.status.in_(["FINISHED", "AWARDED"])).count()
     live_count = db.query(Match).filter(Match.status.in_(["LIVE", "IN_PLAY", "PAUSED", "HALFTIME"])).count()
 
-    smtp_is_configured = bool(getattr(settings, "RESEND_API_KEY", "") or getattr(settings, "BREVO_API_KEY", "") or (getattr(settings, "SMTP_HOST", "") and getattr(settings, "SMTP_USER", "")))
-    smtp_host_val = "Resend HTTPS API" if getattr(settings, "RESEND_API_KEY", "") else "Brevo HTTPS API" if getattr(settings, "BREVO_API_KEY", "") else getattr(settings, "SMTP_HOST", "") or "Disabled (Dev Mode)"
+    import os
+    resend_env = os.environ.get("RESEND_API_KEY", "").strip() or getattr(settings, "RESEND_API_KEY", "").strip()
+    brevo_env = os.environ.get("BREVO_API_KEY", "").strip() or getattr(settings, "BREVO_API_KEY", "").strip()
+    smtp_is_configured = bool(resend_env or brevo_env or (getattr(settings, "SMTP_HOST", "") and getattr(settings, "SMTP_USER", "")))
+    smtp_host_val = "Resend HTTPS API" if resend_env else "Brevo HTTPS API" if brevo_env else getattr(settings, "SMTP_HOST", "") or "Disabled (Dev Mode)"
 
     return {
         "total_users": db.query(User).count(),
@@ -222,7 +225,9 @@ def test_send_email(
     else:
         raise HTTPException(status_code=400, detail=f"Unknown email type: '{payload.email_type}'. Use 'welcome', 'reminder', or 'reset'.")
 
-    active_mode = "Resend HTTPS API" if settings.RESEND_API_KEY else "Brevo HTTPS API" if settings.BREVO_API_KEY else f"Live SMTP ({settings.SMTP_HOST})" if settings.SMTP_HOST else "Development Log Mode"
+    resend_env = os.environ.get("RESEND_API_KEY", "").strip() or getattr(settings, "RESEND_API_KEY", "").strip()
+    brevo_env = os.environ.get("BREVO_API_KEY", "").strip() or getattr(settings, "BREVO_API_KEY", "").strip()
+    active_mode = "Resend HTTPS API" if resend_env else "Brevo HTTPS API" if brevo_env else f"Live SMTP ({settings.SMTP_HOST})" if settings.SMTP_HOST else "Development Log Mode"
 
     if not success:
         err_detail = _LAST_EMAIL_ERROR or "Email dispatch failed"

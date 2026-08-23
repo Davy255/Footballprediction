@@ -32,8 +32,9 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
     from_header = f"{settings.SMTP_FROM_NAME} <{from_addr}>"
 
     # 1. Primary Cloud Dispatch: Resend REST HTTPS API (Port 443 - 100% unblocked)
-    resend_key = getattr(settings, "RESEND_API_KEY", "")
-    if resend_key and len(resend_key.strip()) > 5:
+    import os
+    resend_key = os.environ.get("RESEND_API_KEY", "").strip() or getattr(settings, "RESEND_API_KEY", "").strip()
+    if resend_key and len(resend_key) > 5:
         try:
             sender_email = from_addr if "@" in from_addr and not from_addr.endswith("gmail.com") else "FootballPredict <onboarding@resend.dev>"
             resend_payload = {
