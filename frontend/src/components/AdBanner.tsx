@@ -80,7 +80,7 @@ export default function AdBanner({
   style,
   className = '',
 }: AdBannerProps) {
-  const adClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || '';
+  const adClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || 'ca-pub-3089881788835574';
 
   useEffect(() => {
     try {
