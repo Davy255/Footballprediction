@@ -32,19 +32,17 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const adClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+  const adClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || 'ca-pub-3089881788835574';
 
   return (
     <html lang="en" data-theme="dark">
       <head>
-        {adClient && (
-          <Script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adClient}`}
-            crossOrigin="anonymous"
-            strategy="lazyOnload"
-          />
-        )}
+        <meta name="google-adsense-account" content="ca-pub-3089881788835574" />
+        <script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adClient}`}
+          crossOrigin="anonymous"
+        />
       </head>
       <body>
         <ThemeProvider>
