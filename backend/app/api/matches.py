@@ -114,7 +114,7 @@ def get_unified_matches_feed(response: Response, db: Session = Depends(get_db)):
         .options(*opts)
         .filter(Match.status.in_(["FINISHED", "AWARDED"]))
         .order_by(Match.utc_date.desc())
-        .limit(30)
+        .limit(120)
         .all()
     )
 

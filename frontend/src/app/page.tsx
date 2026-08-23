@@ -228,6 +228,9 @@ export default function HomePage() {
       dateMap[dateInfo.key].totalMatches += 1;
     });
 
+    if (selectedStatus === 'FINISHED') {
+      return Object.values(dateMap).sort((a, b) => b.dateKey.localeCompare(a.dateKey));
+    }
     return Object.values(dateMap).sort((a, b) => a.dateKey.localeCompare(b.dateKey));
   };
 
