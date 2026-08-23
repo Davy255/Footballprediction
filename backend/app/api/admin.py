@@ -173,8 +173,8 @@ def get_stats(
     finished_count = db.query(Match).filter(Match.status.in_(["FINISHED", "AWARDED"])).count()
     live_count = db.query(Match).filter(Match.status.in_(["LIVE", "IN_PLAY", "PAUSED", "HALFTIME"])).count()
 
-    smtp_is_configured = bool(getattr(settings, "SMTP_HOST", "") and getattr(settings, "SMTP_USER", ""))
-    smtp_host_val = getattr(settings, "SMTP_HOST", "") or "Not configured (DEV mock mode)"
+    smtp_is_configured = bool(getattr(settings, "RESEND_API_KEY", "") or getattr(settings, "BREVO_API_KEY", "") or (getattr(settings, "SMTP_HOST", "") and getattr(settings, "SMTP_USER", "")))
+    smtp_host_val = "Resend HTTPS API" if getattr(settings, "RESEND_API_KEY", "") else "Brevo HTTPS API" if getattr(settings, "BREVO_API_KEY", "") else getattr(settings, "SMTP_HOST", "") or "Disabled (Dev Mode)"
 
     return {
         "total_users": db.query(User).count(),
@@ -200,12 +200,13 @@ def test_send_email(
     _=Depends(get_current_admin),
 ):
     """
-    Sends a test email to verify SMTP configuration and live delivery.
+    Sends a test email to verify email provider configuration and live delivery.
     """
     from app.services.email_service import (
         send_welcome_email,
         send_password_reset_email,
         send_daily_match_reminder_email,
+        _LAST_EMAIL_ERROR,
     )
     
     target_email = payload.to_email.strip().lower()
@@ -221,33 +222,24 @@ def test_send_email(
     else:
         raise HTTPException(status_code=400, detail=f"Unknown email type: '{payload.email_type}'. Use 'welcome', 'reminder', or 'reset'.")
 
-    from app.services.email_service import _LAST_EMAIL_ERROR
-
-    if not settings.SMTP_HOST:
-        return {
-            "success": True,
-            "recipient": target_email,
-            "email_type": payload.email_type,
-            "mode": "Development Log Mode",
-            "message": "📧 DEV MODE: Email logged on server console. To send real emails, configure SMTP_HOST and SMTP_PASSWORD in Render.",
-        }
+    active_mode = "Resend HTTPS API" if settings.RESEND_API_KEY else "Brevo HTTPS API" if settings.BREVO_API_KEY else f"Live SMTP ({settings.SMTP_HOST})" if settings.SMTP_HOST else "Development Log Mode"
 
     if not success:
-        err_detail = _LAST_EMAIL_ERROR or "SMTP handshake or authentication failed"
+        err_detail = _LAST_EMAIL_ERROR or "Email dispatch failed"
         return {
             "success": False,
             "recipient": target_email,
             "email_type": payload.email_type,
-            "mode": f"Live SMTP ({settings.SMTP_HOST})",
-            "message": f"❌ Email failed to deliver via {settings.SMTP_HOST}: {err_detail}",
+            "mode": active_mode,
+            "message": f"❌ Email delivery failed via {active_mode}: {err_detail}",
         }
 
     return {
         "success": True,
         "recipient": target_email,
         "email_type": payload.email_type,
-        "mode": f"Live SMTP ({settings.SMTP_HOST})",
-        "message": f"✅ Email successfully delivered to {target_email} via {settings.SMTP_HOST}!",
+        "mode": active_mode,
+        "message": f"✅ Email successfully delivered to {target_email} via {active_mode}!",
     }
 
 
