@@ -9,25 +9,43 @@ import ChatbotWidget from '@/components/ChatbotWidget';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'FootballPredict — Expert Match Predictions & Tactical Football Analysis',
+  metadataBase: new URL('https://footballprediction-lovat.vercel.app'),
+  title: 'FootballPredict — Expert Match Analytics & Multi-Market Predictions',
   description:
-    'Comprehensive football match predictions, live bookmaker odds, standings, multi-market analysis (BTTS, O/U 2.5, Double Chance), and community leaderboard rankings.',
+    'Data-driven football match analytics, statistical probabilities (1X2, BTTS, Over/Under 2.5), head-to-head form, and community predictions across all top leagues.',
   keywords: 'football predictions, soccer odds, match analysis, head-to-head, team stats, betting tips, fixture previews',
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
       { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
     ],
     apple: [
       { url: '/apple-icon.svg', type: 'image/svg+xml' },
     ],
-    shortcut: ['/favicon.svg'],
+    shortcut: ['/icon.svg'],
   },
   manifest: '/manifest.json',
   openGraph: {
-    title: 'FootballPredict — Expert Match Predictions',
-    description: 'Comprehensive football match predictions with live odds and multi-market match analysis.',
+    title: 'FootballPredict — Match Analytics & Statistical Predictions',
+    description: 'Data-driven football match analytics, statistical probabilities (1X2, BTTS, Over/Under 2.5), and head-to-head form.',
+    url: 'https://footballprediction-lovat.vercel.app',
+    siteName: 'FootballPredict',
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'FootballPredict Match Intelligence',
+      },
+    ],
+    locale: 'en_US',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'FootballPredict — Match Analytics & Statistical Predictions',
+    description: 'Data-driven football match analytics, statistical probabilities (1X2, BTTS, Over/Under 2.5), and head-to-head form.',
+    images: ['/opengraph-image'],
   },
 };
 
