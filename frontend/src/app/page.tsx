@@ -77,7 +77,6 @@ export default function HomePage() {
   const [showGuide, setShowGuide] = useState(false);
 
   const loadData = async (isInitial = true) => {
-    // Try client cache first for instant display
     if (isInitial && typeof window !== 'undefined') {
       try {
         const cachedMatches = sessionStorage.getItem('fp_cache_all_matches');
@@ -138,7 +137,6 @@ export default function HomePage() {
 
   // Filter matches based on Search Query, selected Status & League
   const filteredMatches = allMatches.filter((m) => {
-    // Search Query filter
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
       const hn = (m.home_team?.name || '').toLowerCase();
@@ -161,12 +159,10 @@ export default function HomePage() {
       if (!matchFound) return false;
     }
 
-    // League filter
     if (selectedLeague && (m.league.code !== selectedLeague && m.league.name !== selectedLeague)) {
       return false;
     }
 
-    // Status filter
     if (selectedStatus === 'LIVE') {
       return ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME'].includes(m.status);
     }
@@ -179,7 +175,6 @@ export default function HomePage() {
     return true;
   });
 
-  // Group filtered matches chronologically by Date, then by League
   const groupMatchesByDateAndLeague = (matchesList: Match[]): DateGroup[] => {
     const dateMap: Record<string, DateGroup> = {};
 
@@ -216,58 +211,59 @@ export default function HomePage() {
   return (
     <div>
       {/* Main Content Container */}
-      <div className="container" style={{ marginTop: '1.25rem', paddingBottom: '2.5rem' }}>
+      <div className="container" style={{ marginTop: '0.85rem', paddingBottom: '3rem' }}>
         <div style={{ maxWidth: '980px', margin: '0 auto' }}>
 
           {/* Hero Header Title */}
-          <div style={{ marginBottom: '1.25rem' }}>
+          <div style={{ marginBottom: '1rem', padding: '0 0.2rem' }}>
             <h1 style={{
-              fontSize: '1.75rem',
+              fontSize: 'clamp(1.35rem, 5.5vw, 1.85rem)',
               fontWeight: 900,
               color: 'var(--text-primary)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
+              letterSpacing: '-0.025em',
+              lineHeight: 1.25,
               marginBottom: '0.35rem',
-              letterSpacing: '-0.02em',
             }}>
-              Match Fixtures &amp; Predictions <span style={{ fontSize: '1.5rem' }}>⚽</span>
+              Match Fixtures &amp; Predictions ⚽
             </h1>
-            <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', margin: 0 }}>
+            <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', lineHeight: 1.45, margin: 0 }}>
               Browse upcoming matches, view comprehensive probability breakdowns, and place your predictions.
             </p>
           </div>
 
-          {/* Status, Search & League Filter Card */}
+          {/* Sleek Mobile & Desktop Filter Card */}
           <div className="glass-panel" style={{
-            padding: '1.1rem 1.25rem',
-            marginBottom: '1.5rem',
+            padding: '1rem',
+            marginBottom: '1.25rem',
             display: 'flex',
             flexDirection: 'column',
-            gap: '0.85rem',
+            gap: '0.75rem',
             background: 'var(--bg-card)',
             border: '1px solid var(--border-color)',
-            borderRadius: '14px',
+            borderRadius: '16px',
             boxShadow: 'var(--shadow-card)',
           }}>
             {/* Universal Search Bar */}
             <div style={{ position: 'relative', width: '100%' }}>
-              <span style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', fontSize: '0.95rem', color: 'var(--text-muted)' }}>
+              <span style={{
+                position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)',
+                fontSize: '0.95rem', color: 'var(--text-muted)', pointerEvents: 'none'
+              }}>
                 🔍
               </span>
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search games, teams, or leagues (e.g. Man City, Arsenal, Real Madrid, Premier League)..."
+                placeholder="Search teams, matches, leagues (e.g. Arsenal, Real Madrid)..."
                 style={{
                   width: '100%',
-                  padding: '0.65rem 2.2rem 0.65rem 2.5rem',
+                  padding: '0.62rem 2.2rem 0.62rem 2.4rem',
                   borderRadius: '10px',
                   border: '1px solid var(--border-color)',
                   background: 'var(--bg-card-hover)',
                   color: 'var(--text-primary)',
-                  fontSize: '0.86rem',
+                  fontSize: '0.84rem',
                   fontWeight: 500,
                   outline: 'none',
                   transition: 'border-color 0.2s ease',
@@ -278,10 +274,10 @@ export default function HomePage() {
                   type="button"
                   onClick={() => setSearchQuery('')}
                   style={{
-                    position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)',
+                    position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)',
                     background: 'rgba(255,255,255,0.12)', border: 'none', borderRadius: '50%',
                     width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    cursor: 'pointer', color: 'var(--text-muted)', fontSize: '0.72rem',
+                    cursor: 'pointer', color: 'var(--text-muted)', fontSize: '0.70rem',
                   }}
                   title="Clear search"
                 >
@@ -290,70 +286,102 @@ export default function HomePage() {
               )}
             </div>
 
-            {/* Filter Controls Row */}
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '1rem',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-              {/* Status Filter Buttons */}
-              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
-                <span style={{ fontWeight: 700, fontSize: '0.86rem', color: 'var(--text-primary)' }}>Status:</span>
+            {/* Segmented Status Tab Control (3 Equal Width Buttons) */}
+            <div>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                gap: '0.35rem',
+                background: 'var(--bg-card-hover)',
+                padding: '0.25rem',
+                borderRadius: '10px',
+                border: '1px solid var(--border-color)',
+              }}>
                 <button
                   type="button"
                   onClick={() => setSelectedStatus('SCHEDULED')}
-                  className={`btn ${selectedStatus === 'SCHEDULED' ? 'btn-primary' : 'btn-secondary'}`}
-                  style={{ fontSize: '0.80rem', padding: '0.35rem 0.9rem', borderRadius: '8px', fontWeight: 700 }}
+                  style={{
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '0.45rem 0.2rem',
+                    fontSize: '0.80rem',
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    textAlign: 'center',
+                    background: selectedStatus === 'SCHEDULED' ? 'linear-gradient(135deg, #2563eb 0%, #3b82f6 100%)' : 'transparent',
+                    color: selectedStatus === 'SCHEDULED' ? '#ffffff' : 'var(--text-secondary)',
+                    boxShadow: selectedStatus === 'SCHEDULED' ? '0 2px 8px rgba(37, 99, 235, 0.4)' : 'none',
+                  }}
                 >
                   Upcoming
                 </button>
                 <button
                   type="button"
                   onClick={() => setSelectedStatus('LIVE')}
-                  className={`btn ${selectedStatus === 'LIVE' ? 'btn-primary' : 'btn-secondary'}`}
-                  style={{ fontSize: '0.80rem', padding: '0.35rem 0.9rem', borderRadius: '8px', fontWeight: 700 }}
+                  style={{
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '0.45rem 0.2rem',
+                    fontSize: '0.80rem',
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    textAlign: 'center',
+                    background: selectedStatus === 'LIVE' ? 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)' : 'transparent',
+                    color: selectedStatus === 'LIVE' ? '#ffffff' : 'var(--text-secondary)',
+                    boxShadow: selectedStatus === 'LIVE' ? '0 2px 8px rgba(220, 38, 38, 0.4)' : 'none',
+                  }}
                 >
                   🔴 Live
                 </button>
                 <button
                   type="button"
                   onClick={() => setSelectedStatus('FINISHED')}
-                  className={`btn ${selectedStatus === 'FINISHED' ? 'btn-primary' : 'btn-secondary'}`}
-                  style={{ fontSize: '0.80rem', padding: '0.35rem 0.9rem', borderRadius: '8px', fontWeight: 700 }}
+                  style={{
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '0.45rem 0.2rem',
+                    fontSize: '0.80rem',
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    textAlign: 'center',
+                    background: selectedStatus === 'FINISHED' ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'transparent',
+                    color: selectedStatus === 'FINISHED' ? '#ffffff' : 'var(--text-secondary)',
+                    boxShadow: selectedStatus === 'FINISHED' ? '0 2px 8px rgba(16, 185, 129, 0.4)' : 'none',
+                  }}
                 >
                   Completed
                 </button>
               </div>
+            </div>
 
-              {/* League Dropdown Selector */}
-              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', minWidth: '220px', flex: '1 1 200px', maxWidth: '300px' }}>
-                <span style={{ fontWeight: 700, fontSize: '0.86rem', color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>League:</span>
-                <select
-                  value={selectedLeague}
-                  onChange={(e) => setSelectedLeague(e.target.value)}
-                  style={{
-                    flex: 1,
-                    padding: '0.42rem 0.8rem',
-                    borderRadius: '8px',
-                    border: '1px solid var(--border-color)',
-                    background: 'var(--bg-card-hover)',
-                    color: 'var(--text-primary)',
-                    fontWeight: 600,
-                    fontSize: '0.84rem',
-                    outline: 'none',
-                    cursor: 'pointer',
-                  }}
-                >
-                  <option value="">🚩 All Leagues</option>
-                  {leagues.map((lg) => (
-                    <option key={lg.code} value={lg.code}>
-                      {lg.flag} {lg.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            {/* League Dropdown Filter */}
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', width: '100%' }}>
+              <select
+                value={selectedLeague}
+                onChange={(e) => setSelectedLeague(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '0.55rem 0.85rem',
+                  borderRadius: '10px',
+                  border: '1px solid var(--border-color)',
+                  background: 'var(--bg-card-hover)',
+                  color: 'var(--text-primary)',
+                  fontWeight: 700,
+                  fontSize: '0.84rem',
+                  outline: 'none',
+                  cursor: 'pointer',
+                }}
+              >
+                <option value="">🚩 All Leagues &amp; Competitions</option>
+                {leagues.map((lg) => (
+                  <option key={lg.code} value={lg.code}>
+                    {lg.flag} {lg.name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
@@ -368,7 +396,7 @@ export default function HomePage() {
             ) : dateGroups.length > 0 ? (
               <div>
                 {dateGroups.map((group) => (
-                  <div key={group.dateKey} style={{ marginBottom: '2rem' }}>
+                  <div key={group.dateKey} style={{ marginBottom: '1.75rem' }}>
                     {/* Clean Date Header Ribbon */}
                     <div style={{
                       display: 'flex',
@@ -378,16 +406,15 @@ export default function HomePage() {
                         ? 'linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%)'
                         : 'var(--bg-card-hover)',
                       border: group.isToday ? '1px solid rgba(59, 130, 246, 0.35)' : '1px solid var(--border-color)',
-                      borderRadius: '10px',
-                      padding: '0.65rem 1rem',
-                      marginBottom: '0.85rem',
-                      boxShadow: group.isToday ? '0 0 15px rgba(59, 130, 246, 0.1)' : 'none',
+                      borderRadius: '12px',
+                      padding: '0.55rem 0.9rem',
+                      marginBottom: '0.75rem',
                     }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <span style={{ fontSize: '1.1rem' }}>📅</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                        <span style={{ fontSize: '1rem' }}>📅</span>
                         <span style={{
                           fontWeight: 800,
-                          fontSize: '0.94rem',
+                          fontSize: '0.88rem',
                           color: group.isToday ? 'var(--accent-blue)' : 'var(--text-primary)',
                           letterSpacing: '-0.01em',
                         }}>
@@ -395,10 +422,10 @@ export default function HomePage() {
                         </span>
                         {group.isToday && (
                           <span style={{
-                            fontSize: '0.68rem',
-                            padding: '0.15rem 0.5rem',
+                            fontSize: '0.66rem',
+                            padding: '0.12rem 0.45rem',
                             borderRadius: '12px',
-                            background: 'rgba(37, 99, 235, 0.2)',
+                            background: 'rgba(37, 99, 235, 0.25)',
                             color: '#60a5fa',
                             fontWeight: 800,
                           }}>
@@ -407,7 +434,7 @@ export default function HomePage() {
                         )}
                       </div>
 
-                      <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                      <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 600 }}>
                         {group.totalMatches} {group.totalMatches === 1 ? 'game' : 'games'}
                       </span>
                     </div>
@@ -427,7 +454,7 @@ export default function HomePage() {
             ) : (
               <div className="glass-panel" style={{ padding: '2.5rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
                 <div style={{ fontSize: '2.2rem', marginBottom: '0.5rem' }}>⚽</div>
-                <p style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--text-primary)' }}>
+                <p style={{ fontWeight: 700, fontSize: '0.96rem', color: 'var(--text-primary)' }}>
                   No matches found {searchQuery ? `matching "${searchQuery}"` : `for ${selectedStatus.toLowerCase()} status`}
                 </p>
                 <p style={{ fontSize: '0.82rem', marginTop: '0.3rem' }}>
@@ -454,32 +481,32 @@ export default function HomePage() {
             background: 'var(--bg-card)',
             border: '1px solid var(--border-color)',
             borderRadius: '16px',
-            padding: '1.5rem',
-            marginTop: '2rem',
+            padding: '1.25rem',
+            marginTop: '1.75rem',
             boxShadow: 'var(--shadow-card)',
           }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.65rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               <span>🏆</span> Football Intelligence &amp; Multi-Market Predictions
             </h3>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1rem' }}>
+            <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '0.85rem' }}>
               Explore tactical form ratings, H2H statistics, Over/Under 2.5 projections, and Both Teams to Score (BTTS) probabilities powered by deep match analytics.
             </p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.85rem' }}>
-              <div style={{ background: 'var(--bg-card-hover)', padding: '0.85rem', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
-                <div style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>🤖</div>
-                <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Coach AI Assistant</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Real-time match forecasts &amp; supporter</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem' }}>
+              <div style={{ background: 'var(--bg-card-hover)', padding: '0.75rem', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
+                <div style={{ fontSize: '1.2rem', marginBottom: '0.2rem' }}>🤖</div>
+                <div style={{ fontWeight: 700, fontSize: '0.82rem', color: 'var(--text-primary)' }}>Coach AI Assistant</div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Real-time match forecasts &amp; supporter</div>
               </div>
-              <div style={{ background: 'var(--bg-card-hover)', padding: '0.85rem', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
-                <div style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>📊</div>
-                <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>WhoScored Tactical Hub</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Formations, referee stats &amp; style</div>
+              <div style={{ background: 'var(--bg-card-hover)', padding: '0.75rem', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
+                <div style={{ fontSize: '1.2rem', marginBottom: '0.2rem' }}>📊</div>
+                <div style={{ fontWeight: 700, fontSize: '0.82rem', color: 'var(--text-primary)' }}>WhoScored Tactical Hub</div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Formations, referee stats &amp; style</div>
               </div>
-              <div style={{ background: 'var(--bg-card-hover)', padding: '0.85rem', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
-                <div style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>👑</div>
-                <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Global Leaderboard</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Compete with fans &amp; earn points</div>
+              <div style={{ background: 'var(--bg-card-hover)', padding: '0.75rem', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
+                <div style={{ fontSize: '1.2rem', marginBottom: '0.2rem' }}>👑</div>
+                <div style={{ fontWeight: 700, fontSize: '0.82rem', color: 'var(--text-primary)' }}>Global Leaderboard</div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Compete with fans &amp; earn points</div>
               </div>
             </div>
           </section>

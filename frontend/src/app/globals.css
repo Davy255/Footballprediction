@@ -1761,7 +1761,35 @@ img {
   color: #dc2626;
 }
 
-/* Mobile Optimizations for FootyStats Layout */
+/* Mobile Optimizations for Responsive Layout */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none !important;
+  }
+  .hamburger {
+    display: flex !important;
+  }
+  .nav-desktop-guide {
+    display: none !important;
+  }
+  .nav-desktop-register {
+    display: none !important;
+  }
+  .logo {
+    font-size: 1.18rem !important;
+  }
+  .logo-icon {
+    font-size: 1.3rem !important;
+  }
+  .nav-container {
+    padding: 0 0.85rem !important;
+    gap: 0.5rem !important;
+  }
+  .container {
+    padding: 0 0.85rem !important;
+  }
+}
+
 @media (max-width: 640px) {
   .footystats-league-header {
     padding: 8px 10px;
@@ -1800,17 +1828,6 @@ img {
   }
   .fs-center-sub {
     font-size: 0.62rem;
-  }
-  .guide-btn-desktop { 
-    display: inline-flex !important; 
-    padding: 0.3rem 0.6rem !important;
-    font-size: 0.78rem !important;
-  }
-  .guide-text-desktop { 
-    display: inline !important; 
-  }
-  .user-info-desktop { 
-    display: flex !important; 
   }
   .hero-tag { font-size: 0.70rem !important; padding: 3px 8px !important; }
   .stats-row { gap: 0.4rem !important; }
