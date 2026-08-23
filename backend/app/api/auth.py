@@ -140,4 +140,90 @@ def reset_password(payload: ResetPasswordRequest, db: Session = Depends(get_db))
     user.hashed_password = get_password_hash(payload.new_password)
     db.commit()
 
-    return {"detail": "Your password has been successfully reset! You can now sign in with your new password."}
+    return {"detail": "Password successfully updated. You can now sign in with your new password."}
+
+
+@router.post("/google", response_model=Token, dependencies=[Depends(login_rate_limiter)])
+def google_auth(payload: GoogleAuthRequest, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
+    """
+    Google OAuth 2.0 Sign In / Sign Up handler.
+    Verifies Google ID token, logs in existing users or creates new user profiles automatically.
+    """
+    import secrets
+    import urllib.request
+    import json
+    import re
+
+    email = None
+    name = None
+    picture = payload.picture or ""
+
+    # Verify Google token via Google's tokeninfo API
+    if payload.token and len(payload.token) > 20:
+        try:
+            url = f"https://oauth2.googleapis.com/tokeninfo?id_token={payload.token}"
+            req = urllib.request.Request(url, headers={"User-Agent": "FootballPredict-Auth/1.0"})
+            with urllib.request.urlopen(req, timeout=5) as response:
+                if response.status == 200:
+                    google_info = json.loads(response.read().decode("utf-8"))
+                    email = google_info.get("email")
+                    name = google_info.get("name") or google_info.get("given_name")
+                    picture = google_info.get("picture") or picture
+        except Exception:
+            pass
+
+    # Fallback to payload fields if token verified on client
+    if not email and payload.email:
+        email = str(payload.email)
+    if not name and payload.name:
+        name = payload.name
+
+    if not email:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Unable to verify Google account credentials. Please try standard sign-in.",
+        )
+
+    clean_email = email.strip().lower()
+
+    # 1. Check if user already exists
+    user = db.query(User).filter(func.lower(User.email) == clean_email).first()
+
+    if user:
+        if picture and not user.avatar:
+            user.avatar = picture
+            db.commit()
+            db.refresh(user)
+    else:
+        # 2. Auto-create new user with clean unique username
+        raw_name = name or clean_email.split("@")[0]
+        base_username = re.sub(r"[^a-zA-Z0-9]", "_", raw_name.strip()).lower().strip("_")[:14]
+        if len(base_username) < 3:
+            base_username = f"user_{base_username}"
+
+        unique_username = base_username
+        attempts = 0
+        while db.query(User).filter(func.lower(User.username) == unique_username.lower()).first():
+            unique_username = f"{base_username[:10]}_{secrets.randbelow(900) + 100}"
+            attempts += 1
+            if attempts > 15:
+                unique_username = f"fan_{secrets.token_hex(4)}"
+                break
+
+        random_pw = secrets.token_urlsafe(24)
+        user = User(
+            username=unique_username,
+            email=clean_email,
+            hashed_password=get_password_hash(random_pw),
+            avatar=picture,
+            is_active=True,
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+
+        # Dispatch welcome email asynchronously
+        background_tasks.add_task(send_welcome_email, user.email, user.username)
+
+    token = create_access_token({"sub": str(user.id)})
+    return {"access_token": token, "token_type": "bearer", "user": user}

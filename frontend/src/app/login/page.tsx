@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { loginUser } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
+import GoogleAuthButton from '@/components/GoogleAuthButton';
 
 function LoginForm() {
   const router = useRouter();
@@ -41,7 +42,7 @@ function LoginForm() {
       <h1 style={{ fontSize: '2rem', fontWeight: 900, marginBottom: '0.4rem' }}>
         Welcome Back 👋
       </h1>
-      <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '2rem' }}>
+      <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
         Don&apos;t have an account?{' '}
         <Link href="/register" style={{ color: 'var(--accent-blue)', fontWeight: 700 }}>
           Sign up free →
@@ -49,11 +50,34 @@ function LoginForm() {
       </p>
 
       {error && (
-        <div className="alert alert-error">
+        <div className="alert alert-error" style={{ marginBottom: '1.25rem' }}>
           <span>⚠️</span>
           <span>{error}</span>
         </div>
       )}
+
+      {/* 1-Tap Google Sign In */}
+      <GoogleAuthButton
+        mode="signin"
+        onSuccess={() => router.push(redirect)}
+        onError={(err) => setError(err)}
+      />
+
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.75rem',
+        margin: '1.25rem 0',
+        color: 'var(--text-muted)',
+        fontSize: '0.82rem',
+        fontWeight: 600,
+        textTransform: 'uppercase',
+        letterSpacing: '0.05em'
+      }}>
+        <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
+        <span>Or with username</span>
+        <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
+      </div>
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">

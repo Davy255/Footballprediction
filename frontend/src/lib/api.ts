@@ -51,6 +51,13 @@ export async function registerUser(userData: { username: string; email: string; 
   });
 }
 
+export async function loginWithGoogle(payload: { token: string; email?: string; name?: string; picture?: string }) {
+  return fetchApi<{ access_token: string; token_type: string; user: User }>('/api/auth/google', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+}
+
 export async function forgotPassword(email: string) {
   return fetchApi<{ detail: string; reset_token?: string | null }>('/api/auth/forgot-password', {
     method: 'POST',

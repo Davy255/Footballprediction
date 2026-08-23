@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { registerUser } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
+import GoogleAuthButton from '@/components/GoogleAuthButton';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -89,7 +90,7 @@ export default function RegisterPage() {
           <h1 style={{ fontSize: '2rem', fontWeight: 900, marginBottom: '0.4rem' }}>
             Create Account 🚀
           </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '2rem' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
             Already registered?{' '}
             <Link href="/login" style={{ color: 'var(--accent-blue)', fontWeight: 700 }}>
               Sign in →
@@ -97,11 +98,34 @@ export default function RegisterPage() {
           </p>
 
           {error && (
-            <div className="alert alert-error">
+            <div className="alert alert-error" style={{ marginBottom: '1.25rem' }}>
               <span>⚠️</span>
               <span>{error}</span>
             </div>
           )}
+
+          {/* 1-Tap Google Sign Up */}
+          <GoogleAuthButton
+            mode="signup"
+            onSuccess={() => router.push('/')}
+            onError={(err) => setError(err)}
+          />
+
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            margin: '1.25rem 0',
+            color: 'var(--text-muted)',
+            fontSize: '0.82rem',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em'
+          }}>
+            <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
+            <span>Or register with email</span>
+            <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
+          </div>
 
           <form onSubmit={handleSubmit}>
             <div className="form-group">

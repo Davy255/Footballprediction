@@ -43,6 +43,13 @@ class ResetPasswordRequest(BaseModel):
         return v
 
 
+class GoogleAuthRequest(BaseModel):
+    token: str
+    email: Optional[EmailStr] = None
+    name: Optional[str] = None
+    picture: Optional[str] = None
+
+
 class UserOut(BaseModel):
     id: int
     username: str
