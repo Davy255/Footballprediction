@@ -149,21 +149,35 @@ def google_auth(payload: GoogleAuthRequest, background_tasks: BackgroundTasks, d
     Google OAuth 2.0 Sign In / Sign Up handler.
     Verifies Google ID token, logs in existing users or creates new user profiles automatically.
     """
-    import secrets
-    import urllib.request
+    import base64
     import json
     import re
+    import secrets
 
     email = None
     name = None
     picture = payload.picture or ""
 
-    # Verify Google token via Google's tokeninfo API
-    if payload.token and len(payload.token) > 20:
+    # 1. Parse JWT payload directly (instant, zero-network overhead)
+    if payload.token and "." in payload.token:
+        try:
+            parts = payload.token.split(".")
+            if len(parts) >= 2:
+                padded = parts[1] + "=" * (-len(parts[1]) % 4)
+                decoded_bytes = base64.urlsafe_b64decode(padded)
+                jwt_data = json.loads(decoded_bytes.decode("utf-8"))
+                email = jwt_data.get("email")
+                name = jwt_data.get("name") or jwt_data.get("given_name")
+                picture = jwt_data.get("picture") or picture
+        except Exception:
+            pass
+
+    # 2. Fallback to Google TokenInfo API if needed
+    if not email and payload.token and len(payload.token) > 20:
         try:
             url = f"https://oauth2.googleapis.com/tokeninfo?id_token={payload.token}"
             req = urllib.request.Request(url, headers={"User-Agent": "FootballPredict-Auth/1.0"})
-            with urllib.request.urlopen(req, timeout=5) as response:
+            with urllib.request.urlopen(req, timeout=4) as response:
                 if response.status == 200:
                     google_info = json.loads(response.read().decode("utf-8"))
                     email = google_info.get("email")
@@ -172,7 +186,7 @@ def google_auth(payload: GoogleAuthRequest, background_tasks: BackgroundTasks, d
         except Exception:
             pass
 
-    # Fallback to payload fields if token verified on client
+    # 3. Fallback to client-provided fields
     if not email and payload.email:
         email = str(payload.email)
     if not name and payload.name:

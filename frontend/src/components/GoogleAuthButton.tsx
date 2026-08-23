@@ -67,13 +67,46 @@ export default function GoogleAuthButton({
   const handleGoogleResponse = async (response: any) => {
     setLoading(true);
     try {
-      const res = await loginWithGoogle({ token: response.credential });
+      let email = '';
+      let name = '';
+      let picture = '';
+
+      if (response && response.credential) {
+        try {
+          const base64Url = response.credential.split('.')[1];
+          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+          const jsonPayload = decodeURIComponent(
+            atob(base64)
+              .split('')
+              .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+              .join('')
+          );
+          const parsed = JSON.parse(jsonPayload);
+          email = parsed.email || '';
+          name = parsed.name || parsed.given_name || '';
+          picture = parsed.picture || '';
+        } catch (e) {
+          console.warn('Could not parse Google JWT locally:', e);
+        }
+      }
+
+      const res = await loginWithGoogle({
+        token: response.credential,
+        email: email || undefined,
+        name: name || undefined,
+        picture: picture || undefined,
+      });
+
       login(res.access_token, res.user);
-      if (onSuccess) onSuccess();
-      else router.push('/');
+
+      if (onSuccess) {
+        onSuccess();
+      } else {
+        window.location.href = '/';
+      }
     } catch (err: any) {
-      if (onError) onError(err.message || 'Google authentication failed.');
-    } finally {
+      console.error('Google Auth Error:', err);
+      if (onError) onError(err.message || 'Google authentication failed. Please try username sign in.');
       setLoading(false);
     }
   };
@@ -83,7 +116,7 @@ export default function GoogleAuthButton({
       (window as any).google.accounts.id.prompt();
     } else {
       if (onError) {
-        onError('Google Client ID is required to open the Google Account Chooser. Please configure NEXT_PUBLIC_GOOGLE_CLIENT_ID.');
+        onError('Google Client ID is loading. Please wait a moment or use standard sign in.');
       }
     }
   };
@@ -115,14 +148,6 @@ export default function GoogleAuthButton({
             cursor: 'pointer',
             transition: 'all 0.2s ease',
             boxShadow: 'var(--shadow-card)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.4)';
-            e.currentTarget.style.background = 'var(--bg-card-hover)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.borderColor = 'var(--border-color)';
-            e.currentTarget.style.background = 'var(--bg-card)';
           }}
         >
           <svg width="20" height="20" viewBox="0 0 24 24">
