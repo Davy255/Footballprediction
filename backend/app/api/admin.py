@@ -221,13 +221,33 @@ def test_send_email(
     else:
         raise HTTPException(status_code=400, detail=f"Unknown email type: '{payload.email_type}'. Use 'welcome', 'reminder', or 'reset'.")
 
-    smtp_status = "live SMTP server" if settings.SMTP_HOST else "development log mode (no SMTP credentials configured)"
+    from app.services.email_service import _LAST_EMAIL_ERROR
+
+    if not settings.SMTP_HOST:
+        return {
+            "success": True,
+            "recipient": target_email,
+            "email_type": payload.email_type,
+            "mode": "Development Log Mode",
+            "message": "📧 DEV MODE: Email logged on server console. To send real emails, configure SMTP_HOST and SMTP_PASSWORD in Render.",
+        }
+
+    if not success:
+        err_detail = _LAST_EMAIL_ERROR or "SMTP handshake or authentication failed"
+        return {
+            "success": False,
+            "recipient": target_email,
+            "email_type": payload.email_type,
+            "mode": f"Live SMTP ({settings.SMTP_HOST})",
+            "message": f"❌ Email failed to deliver via {settings.SMTP_HOST}: {err_detail}",
+        }
+
     return {
-        "success": success,
+        "success": True,
         "recipient": target_email,
         "email_type": payload.email_type,
-        "mode": smtp_status,
-        "message": f"Test {payload.email_type} email processed via {smtp_status}.",
+        "mode": f"Live SMTP ({settings.SMTP_HOST})",
+        "message": f"✅ Email successfully delivered to {target_email} via {settings.SMTP_HOST}!",
     }
 
 

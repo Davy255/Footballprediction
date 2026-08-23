@@ -13,11 +13,16 @@ from app.core.config import settings
 logger = logging.getLogger("email.service")
 
 
+_LAST_EMAIL_ERROR: str = ""
+
+
 def send_raw_email(to_email: str, subject: str, html_content: str, text_content: str = "") -> bool:
     """
     Sends an HTML email using configured SMTP settings.
     If SMTP_HOST is not configured, logs the message (development mode) and returns True.
     """
+    global _LAST_EMAIL_ERROR
+    _LAST_EMAIL_ERROR = ""
     import ssl
 
     if not settings.SMTP_HOST or not settings.SMTP_USER:
@@ -63,6 +68,7 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
         logger.info(f"✅ Email successfully delivered to {to_email} with subject: '{subject}'")
         return True
     except Exception as e:
+        _LAST_EMAIL_ERROR = str(e)
         logger.error(f"❌ Failed to deliver email to {to_email} via {clean_host}:{clean_port}: {e}")
         return False
 
