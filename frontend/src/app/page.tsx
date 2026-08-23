@@ -92,71 +92,53 @@ export default function HomePage() {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="hero-banner">
-        <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
-          <div className="hero-tag">
-            🏆 Expert Football Intelligence &amp; Match Prediction Hub
+      {/* Compact, Clean Top Header Bar */}
+      <section style={{
+        background: 'var(--bg-card)',
+        borderBottom: '1px solid var(--border-color)',
+        padding: '0.85rem 0',
+      }}>
+        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ fontSize: '1.25rem' }}>⚽</span>
+            <div>
+              <h1 style={{ fontSize: '1.05rem', fontWeight: 900, color: 'var(--text-primary)', margin: 0, lineHeight: 1.2 }}>
+                Football Intelligence &amp; Match Predictions
+              </h1>
+              <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', margin: 0 }}>
+                AI Projections • WhoScored Analytics • Live Odds &amp; Leaderboards
+              </p>
+            </div>
           </div>
-          <h1 className="hero-title">
-            Expert Match Predictions<br />
-            <span style={{ background: 'var(--gradient-badge)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              Backed by 87,000+ Match History
-            </span>
-          </h1>
-          <p className="hero-subtitle">
-            Statistical outcome breakdowns, live bookmaker odds, historical Head-to-Head records, 
-            multi-market analysis (BTTS, O/U 2.5, Double Chance), and competitive points settlement.
-          </p>
 
-          <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/fixtures" className="btn btn-primary" style={{ padding: '0.55rem 1.4rem', fontSize: '0.9rem' }}>
-              Explore Fixtures 🎯
-            </Link>
+          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
             <button
               type="button"
               onClick={() => setShowGuide(true)}
               className="btn btn-secondary"
-              style={{ padding: '0.55rem 1.2rem', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+              style={{ padding: '0.35rem 0.8rem', fontSize: '0.80rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}
             >
-              📖 How to Play &amp; Rules
+              📖 Rules
             </button>
-            <Link href="/leaderboard" className="btn btn-secondary" style={{ padding: '0.55rem 1.4rem', fontSize: '0.9rem' }}>
+            <Link href="/leaderboard" className="btn btn-secondary" style={{ padding: '0.35rem 0.8rem', fontSize: '0.80rem' }}>
               👑 Leaderboard
             </Link>
             {!user && (
-              <Link href="/register" className="btn btn-secondary" style={{ padding: '0.55rem 1.4rem', fontSize: '0.9rem' }}>
-                Sign Up Free 🚀
+              <Link href="/register" className="btn btn-primary" style={{ padding: '0.35rem 0.9rem', fontSize: '0.80rem' }}>
+                Sign Up 🚀
               </Link>
             )}
-          </div>
-
-          {/* Stats Row Strip */}
-          <div className="stats-row">
-            {[
-              { value: '87k+', label: 'Historical Matches', color: '#2563eb', bg: 'rgba(37, 99, 235, 0.08)' },
-              { value: '12', label: 'Top Leagues', color: '#7c3aed', bg: 'rgba(124, 58, 237, 0.08)' },
-              { value: '+5pts', label: 'Exact Score Bonus', color: '#16a34a', bg: 'rgba(22, 163, 74, 0.08)' },
-              { value: '+3pts', label: 'Outcome Winner', color: '#0284c7', bg: 'rgba(2, 132, 199, 0.08)' },
-              { value: '+2pts', label: 'BTTS & O/U 2.5', color: '#d97706', bg: 'rgba(217, 119, 6, 0.08)' },
-              { value: '⚡ Live', label: 'Real-time Data', color: '#dc2626', bg: 'rgba(220, 38, 38, 0.08)' },
-            ].map((s) => (
-              <div className="stat-item" key={s.label} style={{ background: s.bg, border: `1px solid ${s.color}35` }}>
-                <span className="stat-value" style={{ color: s.color }}>{s.value}</span>
-                <span className="stat-label">{s.label}</span>
-              </div>
-            ))}
           </div>
         </div>
       </section>
 
-      {/* Main Content - Centered Fixtures Column */}
-      <div className="container" style={{ marginTop: '1.5rem', paddingBottom: '3rem' }}>
+      {/* Main Content - Fixtures Column */}
+      <div className="container" style={{ marginTop: '1rem', paddingBottom: '2rem' }}>
         <div style={{ maxWidth: '980px', margin: '0 auto' }}>
 
           {/* League Pills Bar */}
           {leagues.length > 0 && (
-            <div className="league-pills" style={{ marginBottom: '1.5rem', justifyContent: 'center' }}>
+            <div className="league-pills" style={{ marginBottom: '1.25rem' }}>
               <Link href="/fixtures" className="league-pill">
                 🌍 All Leagues
               </Link>
@@ -174,7 +156,7 @@ export default function HomePage() {
           )}
 
           {/* Today's Matches Section */}
-          <div style={{ marginBottom: '2.5rem' }}>
+          <div style={{ marginBottom: '2rem' }}>
             <div className="section-header">
               <h2 className="section-title">🔥 Matches Today &amp; Imminent</h2>
               <Link href="/fixtures" className="section-link">View All →</Link>
@@ -182,6 +164,7 @@ export default function HomePage() {
 
             {loading ? (
               <div>
+                <SkeletonCard />
                 <SkeletonCard />
                 <SkeletonCard />
               </div>
@@ -197,10 +180,10 @@ export default function HomePage() {
                 ))}
               </div>
             ) : (
-              <div className="glass-panel" style={{ padding: '2.5rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
-                <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>📅</div>
-                <p style={{ fontWeight: 600, fontSize: '1rem', color: 'var(--text-primary)' }}>No matches scheduled for today</p>
-                <p style={{ fontSize: '0.88rem', marginTop: '0.3rem' }}>Check the upcoming fixtures below!</p>
+              <div className="glass-panel" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📅</div>
+                <p style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-primary)' }}>No matches scheduled for today</p>
+                <p style={{ fontSize: '0.82rem', marginTop: '0.2rem' }}>Check the upcoming fixtures below!</p>
               </div>
             )}
           </div>
@@ -209,7 +192,7 @@ export default function HomePage() {
           <AdBanner />
 
           {/* Upcoming Matches Section */}
-          <div>
+          <div style={{ marginBottom: '3rem' }}>
             <div className="section-header">
               <h2 className="section-title">📅 Upcoming Featured Fixtures</h2>
               <Link href="/fixtures?status=SCHEDULED" className="section-link">View All Fixtures →</Link>
@@ -232,11 +215,63 @@ export default function HomePage() {
                 ))}
               </div>
             ) : (
-              <div className="glass-panel" style={{ padding: '2.5rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+              <div className="glass-panel" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
                 <p>No upcoming matches found</p>
               </div>
             )}
           </div>
+
+          {/* Bottom Platform Feature & Historical Stats Banner */}
+          <section style={{
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border-color)',
+            borderRadius: '16px',
+            padding: '2rem 1.5rem',
+            textAlign: 'center',
+            boxShadow: 'var(--shadow-card)',
+          }}>
+            <div className="hero-tag" style={{ display: 'inline-block', marginBottom: '0.5rem' }}>
+              🏆 Expert Football Intelligence Hub
+            </div>
+            <h3 style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+              Backed by 87,000+ Match History
+            </h3>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', maxWidth: '650px', margin: '0 auto 1.25rem', lineHeight: 1.5 }}>
+              Statistical outcome breakdowns, live bookmaker odds, historical Head-to-Head records, 
+              multi-market analysis (BTTS, O/U 2.5, Double Chance), and competitive community points settlement.
+            </p>
+
+            <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
+              <Link href="/fixtures" className="btn btn-primary" style={{ padding: '0.45rem 1.2rem', fontSize: '0.85rem' }}>
+                Explore All Fixtures 🎯
+              </Link>
+              <button
+                type="button"
+                onClick={() => setShowGuide(true)}
+                className="btn btn-secondary"
+                style={{ padding: '0.45rem 1.1rem', fontSize: '0.85rem' }}
+              >
+                📖 How Scoring Works
+              </button>
+            </div>
+
+            {/* Stats Row Strip */}
+            <div className="stats-row">
+              {[
+                { value: '87k+', label: 'Historical Matches', color: '#2563eb', bg: 'rgba(37, 99, 235, 0.08)' },
+                { value: '12', label: 'Top Leagues', color: '#7c3aed', bg: 'rgba(124, 58, 237, 0.08)' },
+                { value: '+5pts', label: 'Exact Score Bonus', color: '#16a34a', bg: 'rgba(22, 163, 74, 0.08)' },
+                { value: '+3pts', label: 'Outcome Winner', color: '#0284c7', bg: 'rgba(2, 132, 199, 0.08)' },
+                { value: '+2pts', label: 'BTTS & O/U 2.5', color: '#d97706', bg: 'rgba(217, 119, 6, 0.08)' },
+                { value: '⚡ Live', label: 'Real-time Data', color: '#dc2626', bg: 'rgba(220, 38, 38, 0.08)' },
+              ].map((s) => (
+                <div className="stat-item" key={s.label} style={{ background: s.bg, border: `1px solid ${s.color}35` }}>
+                  <span className="stat-value" style={{ color: s.color }}>{s.value}</span>
+                  <span className="stat-label">{s.label}</span>
+                </div>
+              ))}
+            </div>
+          </section>
 
         </div>
       </div>

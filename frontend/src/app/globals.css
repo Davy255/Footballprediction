@@ -1575,10 +1575,126 @@ img {
 .ws-league-name { flex: 1; color: var(--text-primary); }
 .ws-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #dc2626; animation: pulseBadge 1.5s infinite; display: inline-block; }
 
-/* Responsive tweaks for match rows */
+/* Responsive tweaks for match rows & mobile layout */
 @media (max-width: 640px) {
-  .ws-fixture-row { grid-template-columns: 65px 1fr 75px; padding: 8px 10px; gap: 8px; }
-  .fs-time-main { font-size: 0.84rem; }
-  .fs-team-name { font-size: 0.80rem; }
-  .fs-mid-divider { width: 20px; height: 20px; font-size: 0.65rem; }
+  .ws-fixture-row {
+    grid-template-columns: 58px 1fr 68px !important;
+    padding: 9px 10px !important;
+    gap: 8px !important;
+  }
+  
+  .fs-col-time {
+    min-width: 52px !important;
+  }
+  .fs-time-main {
+    font-size: 0.78rem !important;
+    font-weight: 800 !important;
+  }
+  .fs-time-rel, .fs-time-date {
+    font-size: 0.62rem !important;
+  }
+
+  /* Stack teams vertically so team names are 100% visible */
+  .fs-col-teams {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    align-items: flex-start !important;
+  }
+
+  .fs-team-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+
+  .fs-team-item.home-team {
+    justify-content: flex-start !important;
+    text-align: left !important;
+    flex-direction: row !important;
+  }
+
+  .fs-team-item.away-team {
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+
+  .fs-team-name {
+    font-size: 0.86rem !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: inline-block !important;
+    flex: 1 !important;
+    max-width: 180px !important;
+  }
+
+  .fs-team-item.is-winner .fs-team-name {
+    color: var(--accent-green) !important;
+    font-weight: 800 !important;
+  }
+
+  .fs-crest-box {
+    width: 18px !important;
+    height: 18px !important;
+    flex-shrink: 0 !important;
+  }
+  .fs-crest-img {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .fs-form-pill {
+    font-size: 0.62rem !important;
+    padding: 1px 4px !important;
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+  }
+
+  .fs-mid-divider {
+    display: none !important;
+  }
+
+  .fs-col-result {
+    min-width: 60px !important;
+  }
+  .fs-live-scorebox, .fs-score-box {
+    font-size: 0.96rem !important;
+    padding: 2px 6px !important;
+  }
+  .fs-badge-ft {
+    font-size: 0.60rem !important;
+    padding: 1px 4px !important;
+  }
+  .fs-btn-view-stats {
+    padding: 2px 6px !important;
+    font-size: 0.68rem !important;
+  }
+
+  /* Header adjustments for mobile */
+  .hero-tag {
+    font-size: 0.70rem !important;
+    padding: 3px 8px !important;
+  }
+  .stats-row {
+    gap: 0.4rem !important;
+  }
+  .stat-item {
+    min-width: 90px !important;
+    padding: 0.4rem 0.6rem !important;
+  }
+  .stat-value {
+    font-size: 1rem !important;
+  }
+  .stat-label {
+    font-size: 0.62rem !important;
+  }
 }

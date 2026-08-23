@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { submitPrediction } from '@/lib/api';
 import { Match } from '@/lib/types';
@@ -194,6 +195,7 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
   const { user, token } = useAuth();
   const [open, setOpen] = useState(defaultOpen);
   const [activeTab, setActiveTab] = useState<TabKey>('ai');
+  const [showAuthModal, setShowAuthModal] = useState(false);
   
   // Prediction form state
   const [predHome, setPredHome] = useState('');
@@ -379,6 +381,10 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
       <div
         className={`ws-fixture-row ${isEven ? 'row-even' : 'row-odd'} ${status.isLive ? 'live-row' : status.isFinished ? 'finished-row' : status.isPostponed ? 'postponed-row' : 'sched-row'}`}
         onClick={() => {
+          if (!user) {
+            setShowAuthModal(true);
+            return;
+          }
           setOpen(o => !o);
           if (!open && activeTab === 'predict') loadPred();
         }}
@@ -1036,6 +1042,68 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
               </div>
             )}
 
+          </div>
+        </div>
+      )}
+
+      {/* Auth Gate Modal for Previews and Predictions */}
+      {showAuthModal && (
+        <div
+          className="modal-overlay"
+          onClick={() => setShowAuthModal(false)}
+          style={{ zIndex: 9999 }}
+        >
+          <div
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: '420px',
+              textAlign: 'center',
+              padding: '2rem 1.5rem',
+              borderRadius: '20px',
+              border: '1px solid var(--border-color)',
+              background: 'var(--bg-card)',
+              boxShadow: 'var(--shadow-card)',
+            }}
+          >
+            <div style={{ fontSize: '2.5rem', marginBottom: '0.6rem' }}>🔒</div>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
+              Sign In to Unlock Match Analytics
+            </h3>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '1.4rem' }}>
+              Create a free account or sign in to explore full AI match forecasts, WhoScored tactical metrics, Head-to-Head histories, and place your score predictions!
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+              <Link
+                href="/register"
+                className="btn btn-primary"
+                style={{ justifyContent: 'center', padding: '0.65rem', fontSize: '0.9rem' }}
+              >
+                Create Free Account 🎯
+              </Link>
+              <Link
+                href="/login"
+                className="btn btn-secondary"
+                style={{ justifyContent: 'center', padding: '0.65rem', fontSize: '0.9rem' }}
+              >
+                Sign In 🚀
+              </Link>
+              <button
+                type="button"
+                onClick={() => setShowAuthModal(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--text-muted)',
+                  fontSize: '0.82rem',
+                  cursor: 'pointer',
+                  marginTop: '0.4rem',
+                  padding: '4px',
+                }}
+              >
+                Continue Browsing
+              </button>
+            </div>
           </div>
         </div>
       )}

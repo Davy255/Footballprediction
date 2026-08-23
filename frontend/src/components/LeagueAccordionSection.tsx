@@ -53,8 +53,8 @@ export default function LeagueAccordionSection({
 
   return (
     <div style={{
-      marginBottom: '1.5rem',
-      borderRadius: '16px',
+      marginBottom: '1.25rem',
+      borderRadius: '14px',
       overflow: 'hidden',
       border: '1px solid var(--border-color)',
       background: 'var(--bg-card)',
@@ -65,17 +65,17 @@ export default function LeagueAccordionSection({
         onClick={() => setIsExpanded(!isExpanded)}
         style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '0.85rem 1.25rem',
+          padding: '0.75rem 1rem',
           background: theme.bg,
-          borderLeft: `6px solid ${theme.border}`,
+          borderLeft: `5px solid ${theme.border}`,
           borderBottom: isExpanded ? '1px solid rgba(255,255,255,0.08)' : 'none',
           cursor: 'pointer',
           userSelect: 'none',
           transition: 'all 0.2s ease',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0, flex: 1, marginRight: '0.5rem' }}>
           {/* Favorite star */}
           <button
             type="button"
@@ -85,8 +85,8 @@ export default function LeagueAccordionSection({
             }}
             style={{
               background: 'none', border: 'none', cursor: 'pointer',
-              fontSize: '1.1rem', color: isFavorite ? '#fbbf24' : 'rgba(255,255,255,0.4)',
-              padding: 0, lineHeight: 1, transition: 'color 0.2s ease',
+              fontSize: '1rem', color: isFavorite ? '#fbbf24' : 'rgba(255,255,255,0.4)',
+              padding: 0, lineHeight: 1, transition: 'color 0.2s ease', flexShrink: 0,
             }}
             title={isFavorite ? 'Remove favorite' : 'Add to favorite leagues'}
           >
@@ -94,50 +94,53 @@ export default function LeagueAccordionSection({
           </button>
 
           {/* League Flag & Title */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            <span style={{
-              fontSize: '1.2rem',
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-              width: '28px', height: '28px', borderRadius: '6px',
-              background: 'rgba(255,255,255,0.12)',
-            }}>
-              {league.flag || '⚽'}
-            </span>
-            <span style={{ fontWeight: 800, fontSize: '0.98rem', color: '#ffffff', letterSpacing: '-0.01em', textShadow: '0 1px 2px rgba(0,0,0,0.4)' }}>
-              {league.country ? `${league.country} - ` : ''}{league.name}
-            </span>
-          </div>
+          <span style={{
+            fontSize: '1.1rem',
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+            width: '24px', height: '24px', borderRadius: '5px',
+            background: 'rgba(255,255,255,0.12)', flexShrink: 0,
+          }}>
+            {league.flag || '⚽'}
+          </span>
+          
+          <span style={{
+            fontWeight: 800, fontSize: '0.90rem', color: '#ffffff',
+            letterSpacing: '-0.01em', textShadow: '0 1px 2px rgba(0,0,0,0.4)',
+            overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+          }}>
+            {league.country ? `${league.country} - ` : ''}{league.name}
+          </span>
 
           {/* Mini analytics badge */}
-          <span style={{
-            fontSize: '0.75rem', fontWeight: 700, color: theme.accent,
-            background: 'rgba(255,255,255,0.12)', padding: '2px 8px', borderRadius: '12px',
-            border: `1px solid ${theme.border}`, display: 'inline-flex', alignItems: 'center', gap: '3px',
+          <span className="league-analytics-badge" style={{
+            fontSize: '0.70rem', fontWeight: 700, color: theme.accent,
+            background: 'rgba(255,255,255,0.12)', padding: '1px 6px', borderRadius: '10px',
+            border: `1px solid ${theme.border}`, display: 'inline-flex', alignItems: 'center', gap: '2px', flexShrink: 0,
           }}>
-            <span>📊</span> Analytics
+            <span>📊</span>
           </span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
           {/* Live indicator badge */}
           {liveCount > 0 && (
-            <span className="status-badge status-live" style={{ fontSize: '0.72rem', padding: '0.2rem 0.65rem' }}>
+            <span className="status-badge status-live" style={{ fontSize: '0.68rem', padding: '0.15rem 0.5rem' }}>
               ● {liveCount} LIVE
             </span>
           )}
 
           {/* Match count */}
           <span style={{
-            fontSize: '0.78rem', fontWeight: 800, color: '#ffffff',
-            background: 'rgba(255, 255, 255, 0.15)', padding: '0.25rem 0.7rem', borderRadius: '8px',
-            border: '1px solid rgba(255,255,255,0.2)',
+            fontSize: '0.74rem', fontWeight: 800, color: '#ffffff',
+            background: 'rgba(255, 255, 255, 0.15)', padding: '0.2rem 0.55rem', borderRadius: '6px',
+            border: '1px solid rgba(255,255,255,0.2)', whiteSpace: 'nowrap',
           }}>
-            {matches.length} {matches.length === 1 ? 'match' : 'matches'}
+            {matches.length}
           </span>
 
           {/* Chevron */}
           <span style={{
-            fontSize: '0.85rem', color: '#ffffff',
+            fontSize: '0.75rem', color: '#ffffff',
             transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
             transition: 'transform 0.2s ease', opacity: 0.85,
           }}>

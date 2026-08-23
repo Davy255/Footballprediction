@@ -38,7 +38,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ThemeProvider>
           <AuthProvider>
-            <LiveScoreTicker />
             <Navbar />
             <main style={{ flex: 1, paddingBottom: '1rem' }}>
               {children}
