@@ -6,6 +6,48 @@ import { fetchMatches, fetchLeagues } from '@/lib/api';
 import LeagueAccordionSection from '@/components/LeagueAccordionSection';
 import { useSearchParams } from 'next/navigation';
 
+function getMatchDateKey(utc_date: string): { key: string; label: string; isToday: boolean; isTomorrow: boolean } {
+  if (!utc_date) return { key: '9999-99-99', label: 'Other Fixtures', isToday: false, isTomorrow: false };
+  try {
+    let s = String(utc_date).trim();
+    if (!s.endsWith('Z') && !s.includes('+') && !s.match(/-\d{2}:\d{2}$/)) s = s.replace(' ', 'T') + 'Z';
+    else s = s.replace(' ', 'T');
+    const d = new Date(s);
+    const now = new Date();
+    const isToday = d.toDateString() === now.toDateString();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(now.getDate() + 1);
+    const isTomorrow = d.toDateString() === tomorrow.toDateString();
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+    const isYesterday = d.toDateString() === yesterday.toDateString();
+
+    const dateKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    
+    const weekday = d.toLocaleDateString([], { weekday: 'long' });
+    const dayMonth = d.toLocaleDateString([], { day: 'numeric', month: 'short' });
+
+    let label = `${weekday}, ${dayMonth}`;
+    if (isToday) label = `Today — ${weekday}, ${dayMonth}`;
+    else if (isTomorrow) label = `Tomorrow — ${weekday}, ${dayMonth}`;
+    else if (isYesterday) label = `Yesterday — ${weekday}, ${dayMonth}`;
+    else label = `${weekday}, ${d.toLocaleDateString([], { day: 'numeric', month: 'short', year: 'numeric' })}`;
+
+    return { key: dateKey, label, isToday, isTomorrow };
+  } catch {
+    return { key: '9999-99-99', label: 'Upcoming Matches', isToday: false, isTomorrow: false };
+  }
+}
+
+interface DateGroup {
+  dateKey: string;
+  dateLabel: string;
+  isToday: boolean;
+  isTomorrow: boolean;
+  leagueGroups: Record<string, { league: League; matches: Match[] }>;
+  totalMatches: number;
+}
+
 function FixturesContent() {
   const searchParams = useSearchParams();
   const initialLeague = searchParams.get('league') || '';
@@ -15,6 +57,7 @@ function FixturesContent() {
   const [selectedLeague, setSelectedLeague] = useState<string>(initialLeague);
   const initialStatus = searchParams.get('status') || 'SCHEDULED';
   const [selectedStatus, setSelectedStatus] = useState<string>(initialStatus);
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,7 +82,7 @@ function FixturesContent() {
       const data = await fetchMatches({
         league_code: selectedLeague || undefined,
         status: selectedStatus || undefined,
-        limit: 40,
+        limit: 80,
       });
       setMatches(data);
       if (typeof window !== 'undefined') {
@@ -58,77 +101,235 @@ function FixturesContent() {
     loadMatches(true);
   }, [selectedLeague, selectedStatus]);
 
-  const groupMatchesByLeague = (matchesList: Match[]) => {
-    return matchesList.reduce<Record<string, { league: League; matches: Match[] }>>((acc, m) => {
-      const code = m.league.code || m.league.name;
-      if (!acc[code]) {
-        acc[code] = { league: m.league, matches: [] };
+  // Filter matches based on search query
+  const filteredMatches = matches.filter((m) => {
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      const hn = (m.home_team?.name || '').toLowerCase();
+      const hsn = (m.home_team?.short_name || '').toLowerCase();
+      const an = (m.away_team?.name || '').toLowerCase();
+      const asn = (m.away_team?.short_name || '').toLowerCase();
+      const ln = (m.league?.name || '').toLowerCase();
+      const lc = (m.league?.country || '').toLowerCase();
+      const lcode = (m.league?.code || '').toLowerCase();
+
+      const matchFound =
+        hn.includes(q) ||
+        hsn.includes(q) ||
+        an.includes(q) ||
+        asn.includes(q) ||
+        ln.includes(q) ||
+        lc.includes(q) ||
+        lcode.includes(q);
+
+      if (!matchFound) return false;
+    }
+    return true;
+  });
+
+  // Group filtered matches chronologically by Date, then by League
+  const groupMatchesByDateAndLeague = (matchesList: Match[]): DateGroup[] => {
+    const dateMap: Record<string, DateGroup> = {};
+
+    matchesList.forEach((m) => {
+      const dateInfo = getMatchDateKey(m.utc_date);
+      if (!dateMap[dateInfo.key]) {
+        dateMap[dateInfo.key] = {
+          dateKey: dateInfo.key,
+          dateLabel: dateInfo.label,
+          isToday: dateInfo.isToday,
+          isTomorrow: dateInfo.isTomorrow,
+          leagueGroups: {},
+          totalMatches: 0,
+        };
       }
-      acc[code].matches.push(m);
-      return acc;
-    }, {});
+
+      const leagueCode = m.league.code || m.league.name;
+      if (!dateMap[dateInfo.key].leagueGroups[leagueCode]) {
+        dateMap[dateInfo.key].leagueGroups[leagueCode] = {
+          league: m.league,
+          matches: [],
+        };
+      }
+
+      dateMap[dateInfo.key].leagueGroups[leagueCode].matches.push(m);
+      dateMap[dateInfo.key].totalMatches += 1;
+    });
+
+    return Object.values(dateMap).sort((a, b) => a.dateKey.localeCompare(b.dateKey));
   };
 
-  const grouped = groupMatchesByLeague(matches);
+  const dateGroups = groupMatchesByDateAndLeague(filteredMatches);
 
   return (
     <div>
-      {/* Filter Bar */}
-      <div className="glass-panel" style={{ padding: '1.2rem', marginBottom: '2rem', display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center' }}>
-          <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>Status:</span>
-          {['SCHEDULED', 'LIVE', 'FINISHED'].map((st) => (
-            <button
-              key={st}
-              onClick={() => setSelectedStatus(st)}
-              className={`btn ${selectedStatus === st ? 'btn-primary' : 'btn-secondary'}`}
-              style={{ fontSize: '0.85rem', padding: '0.4rem 1rem' }}
-            >
-              {st === 'SCHEDULED' ? 'Upcoming' : st === 'LIVE' ? '🔴 Live' : 'Completed'}
-            </button>
-          ))}
-        </div>
-
-        <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center' }}>
-          <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>League:</span>
-          <select
-            value={selectedLeague}
-            onChange={(e) => setSelectedLeague(e.target.value)}
+      {/* Search & Filter Bar */}
+      <div className="glass-panel" style={{
+        padding: '1.1rem 1.25rem',
+        marginBottom: '2rem',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.85rem',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
+        borderRadius: '14px',
+      }}>
+        {/* Universal Search Bar */}
+        <div style={{ position: 'relative', width: '100%' }}>
+          <span style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', fontSize: '0.95rem', color: 'var(--text-muted)' }}>
+            🔍
+          </span>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search games, teams, or leagues (e.g. Man City, Arsenal, Real Madrid, Premier League)..."
             style={{
-              padding: '0.5rem 1rem',
+              width: '100%',
+              padding: '0.65rem 2.2rem 0.65rem 2.5rem',
               borderRadius: '10px',
               border: '1px solid var(--border-color)',
               background: 'var(--bg-card-hover)',
               color: 'var(--text-primary)',
-              fontWeight: 600,
-              fontSize: '0.9rem',
+              fontSize: '0.86rem',
+              fontWeight: 500,
               outline: 'none',
+              transition: 'border-color 0.2s ease',
             }}
-          >
-            <option value="">All Leagues</option>
-            {leagues.map((lg) => (
-              <option key={lg.code} value={lg.code}>
-                {lg.flag} {lg.name}
-              </option>
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery('')}
+              style={{
+                position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)',
+                background: 'rgba(255,255,255,0.12)', border: 'none', borderRadius: '50%',
+                width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer', color: 'var(--text-muted)', fontSize: '0.72rem',
+              }}
+              title="Clear search"
+            >
+              ✕
+            </button>
+          )}
+        </div>
+
+        {/* Filter Controls Row */}
+        <div style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '1rem',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+          {/* Status buttons */}
+          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+            <span style={{ fontWeight: 700, fontSize: '0.86rem', color: 'var(--text-primary)' }}>Status:</span>
+            {['SCHEDULED', 'LIVE', 'FINISHED'].map((st) => (
+              <button
+                key={st}
+                type="button"
+                onClick={() => setSelectedStatus(st)}
+                className={`btn ${selectedStatus === st ? 'btn-primary' : 'btn-secondary'}`}
+                style={{ fontSize: '0.80rem', padding: '0.35rem 0.9rem', borderRadius: '8px', fontWeight: 700 }}
+              >
+                {st === 'SCHEDULED' ? 'Upcoming' : st === 'LIVE' ? '🔴 Live' : 'Completed'}
+              </button>
             ))}
-          </select>
+          </div>
+
+          {/* League dropdown */}
+          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', minWidth: '220px', flex: '1 1 200px', maxWidth: '300px' }}>
+            <span style={{ fontWeight: 700, fontSize: '0.86rem', color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>League:</span>
+            <select
+              value={selectedLeague}
+              onChange={(e) => setSelectedLeague(e.target.value)}
+              style={{
+                flex: 1,
+                padding: '0.42rem 0.8rem',
+                borderRadius: '8px',
+                border: '1px solid var(--border-color)',
+                background: 'var(--bg-card-hover)',
+                color: 'var(--text-primary)',
+                fontWeight: 600,
+                fontSize: '0.84rem',
+                outline: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              <option value="">🚩 All Leagues</option>
+              {leagues.map((lg) => (
+                <option key={lg.code} value={lg.code}>
+                  {lg.flag} {lg.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
-      {/* Matches Accordion List */}
+      {/* Matches Categorized by Date & Day */}
       {loading ? (
         <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center' }}>
           Loading fixtures...
         </div>
-      ) : Object.keys(grouped).length > 0 ? (
+      ) : dateGroups.length > 0 ? (
         <div>
-          {Object.values(grouped).map(({ league, matches: leagueMatches }) => (
-            <LeagueAccordionSection
-              key={league.id || league.code}
-              league={league}
-              matches={leagueMatches}
-              onPredictionChange={loadMatches}
-            />
+          {dateGroups.map((group) => (
+            <div key={group.dateKey} style={{ marginBottom: '2rem' }}>
+              {/* Date Header Ribbon */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                background: group.isToday
+                  ? 'linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%)'
+                  : 'var(--bg-card-hover)',
+                border: group.isToday ? '1px solid rgba(59, 130, 246, 0.35)' : '1px solid var(--border-color)',
+                borderRadius: '10px',
+                padding: '0.65rem 1rem',
+                marginBottom: '0.85rem',
+                boxShadow: group.isToday ? '0 0 15px rgba(59, 130, 246, 0.1)' : 'none',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span style={{ fontSize: '1.1rem' }}>📅</span>
+                  <span style={{
+                    fontWeight: 800,
+                    fontSize: '0.94rem',
+                    color: group.isToday ? 'var(--accent-blue)' : 'var(--text-primary)',
+                    letterSpacing: '-0.01em',
+                  }}>
+                    {group.dateLabel}
+                  </span>
+                  {group.isToday && (
+                    <span style={{
+                      fontSize: '0.68rem',
+                      padding: '0.15rem 0.5rem',
+                      borderRadius: '12px',
+                      background: 'rgba(37, 99, 235, 0.2)',
+                      color: '#60a5fa',
+                      fontWeight: 800,
+                    }}>
+                      Today
+                    </span>
+                  )}
+                </div>
+
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                  {group.totalMatches} {group.totalMatches === 1 ? 'game' : 'games'}
+                </span>
+              </div>
+
+              {/* Leagues for this Date */}
+              {Object.values(group.leagueGroups).map(({ league, matches: leagueMatches }) => (
+                <LeagueAccordionSection
+                  key={`${group.dateKey}-${league.id || league.code}`}
+                  league={league}
+                  matches={leagueMatches}
+                  onPredictionChange={loadMatches}
+                />
+              ))}
+            </div>
           ))}
         </div>
       ) : (
@@ -142,17 +343,30 @@ function FixturesContent() {
 
 export default function FixturesPage() {
   return (
-    <div className="container" style={{ marginTop: '2rem' }}>
-      <div style={{ marginBottom: '2rem' }}>
-        <h1 style={{ fontSize: '2.2rem', marginBottom: '0.5rem' }}>Match Fixtures & Predictions ⚽</h1>
-        <p style={{ color: 'var(--text-secondary)' }}>
-          Browse upcoming matches, view comprehensive probability breakdowns, and place your predictions.
-        </p>
-      </div>
+    <div className="container" style={{ marginTop: '1.25rem', paddingBottom: '2.5rem' }}>
+      <div style={{ maxWidth: '980px', margin: '0 auto' }}>
+        <div style={{ marginBottom: '1.25rem' }}>
+          <h1 style={{
+            fontSize: '1.75rem',
+            fontWeight: 900,
+            color: 'var(--text-primary)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            marginBottom: '0.35rem',
+            letterSpacing: '-0.02em',
+          }}>
+            Match Fixtures &amp; Predictions <span style={{ fontSize: '1.5rem' }}>⚽</span>
+          </h1>
+          <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', margin: 0 }}>
+            Browse upcoming matches, view comprehensive probability breakdowns, and place your predictions.
+          </p>
+        </div>
 
-      <Suspense fallback={<div className="glass-panel" style={{ padding: '3rem', textAlign: 'center' }}>Loading page...</div>}>
-        <FixturesContent />
-      </Suspense>
+        <Suspense fallback={<div className="glass-panel" style={{ padding: '3rem', textAlign: 'center' }}>Loading page...</div>}>
+          <FixturesContent />
+        </Suspense>
+      </div>
     </div>
   );
 }
