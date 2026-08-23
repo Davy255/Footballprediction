@@ -11,29 +11,6 @@ interface Props {
   defaultExpanded?: boolean;
 }
 
-// Sofascore & FootyStats inspired league accent palettes
-const LEAGUE_THEMES: Record<string, { bg: string; border: string; accent: string; flagBg: string }> = {
-  PL:  { bg: 'linear-gradient(135deg, #38003c 0%, #200024 100%)', border: '#00ff85', accent: '#00ff85', flagBg: 'rgba(0,255,133,0.15)' },
-  PD:  { bg: 'linear-gradient(135deg, #991b1b 0%, #5b0d0d 100%)', border: '#fbbf24', accent: '#fbbf24', flagBg: 'rgba(251,191,36,0.15)' },
-  SA:  { bg: 'linear-gradient(135deg, #0369a1 0%, #0c4a6e 100%)', border: '#38bdf8', accent: '#38bdf8', flagBg: 'rgba(56,189,248,0.15)' },
-  BL1: { bg: 'linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%)', border: '#fbbf24', accent: '#fbbf24', flagBg: 'rgba(251,191,36,0.15)' },
-  FL1: { bg: 'linear-gradient(135deg, #0f766e 0%, #115e59 100%)', border: '#a3e635', accent: '#a3e635', flagBg: 'rgba(163,230,53,0.15)' },
-  DED: { bg: 'linear-gradient(135deg, #c2410c 0%, #7c2d12 100%)', border: '#fb923c', accent: '#fb923c', flagBg: 'rgba(251,146,60,0.15)' },
-  PPL: { bg: 'linear-gradient(135deg, #047857 0%, #064e3b 100%)', border: '#facc15', accent: '#facc15', flagBg: 'rgba(250,204,21,0.15)' },
-  BSA: { bg: 'linear-gradient(135deg, #15803d 0%, #14532d 100%)', border: '#eab308', accent: '#eab308', flagBg: 'rgba(234,179,8,0.15)' },
-  CL:  { bg: 'linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%)', border: '#67e8f9', accent: '#67e8f9', flagBg: 'rgba(103,232,249,0.15)' },
-  ELC: { bg: 'linear-gradient(135deg, #3730a3 0%, #1e1b4b 100%)', border: '#f43f5e', accent: '#f43f5e', flagBg: 'rgba(244,63,94,0.15)' },
-  WC:  { bg: 'linear-gradient(135deg, #065f46 0%, #064e3b 100%)', border: '#fbbf24', accent: '#fbbf24', flagBg: 'rgba(251,191,36,0.15)' },
-  EC:  { bg: 'linear-gradient(135deg, #0369a1 0%, #075985 100%)', border: '#38bdf8', accent: '#38bdf8', flagBg: 'rgba(56,189,248,0.15)' },
-};
-
-const DEFAULT_THEME = {
-  bg: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
-  border: '#3b82f6',
-  accent: '#60a5fa',
-  flagBg: 'rgba(59,130,246,0.15)',
-};
-
 export default function LeagueAccordionSection({
   league,
   matches,
@@ -49,33 +26,24 @@ export default function LeagueAccordionSection({
     ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME'].includes(m.status)
   ).length;
 
-  const theme = LEAGUE_THEMES[league.code] || DEFAULT_THEME;
-
   return (
-    <div style={{
-      marginBottom: '1.25rem',
-      borderRadius: '14px',
-      overflow: 'hidden',
-      border: '1px solid var(--border-color)',
-      background: 'var(--bg-card)',
-      boxShadow: 'var(--shadow-card)',
-    }}>
-      {/* Competition Colored Header Strip */}
+    <div className="footystats-league-card">
+      {/* FootyStats Style League Header */}
       <div
         onClick={() => setIsExpanded(!isExpanded)}
-        style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '0.75rem 1rem',
-          background: theme.bg,
-          borderLeft: `5px solid ${theme.border}`,
-          borderBottom: isExpanded ? '1px solid rgba(255,255,255,0.08)' : 'none',
-          cursor: 'pointer',
-          userSelect: 'none',
-          transition: 'all 0.2s ease',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
-        }}
+        className="footystats-league-header"
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0, flex: 1, marginRight: '0.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0, flex: 1 }}>
+          {/* League Flag */}
+          <span style={{ fontSize: '1.15rem', display: 'inline-flex', alignItems: 'center' }}>
+            {league.flag || '⚽'}
+          </span>
+
+          {/* League Title */}
+          <span className="footystats-league-title">
+            {league.country ? `${league.country} - ` : ''}{league.name}
+          </span>
+
           {/* Favorite star */}
           <button
             type="button"
@@ -85,69 +53,42 @@ export default function LeagueAccordionSection({
             }}
             style={{
               background: 'none', border: 'none', cursor: 'pointer',
-              fontSize: '1rem', color: isFavorite ? '#fbbf24' : 'rgba(255,255,255,0.4)',
-              padding: 0, lineHeight: 1, transition: 'color 0.2s ease', flexShrink: 0,
+              fontSize: '1rem', color: isFavorite ? '#fbbf24' : 'var(--text-muted)',
+              padding: 0, lineHeight: 1, transition: 'color 0.2s ease', marginLeft: '0.25rem',
             }}
             title={isFavorite ? 'Remove favorite' : 'Add to favorite leagues'}
           >
             {isFavorite ? '★' : '☆'}
           </button>
-
-          {/* League Flag & Title */}
-          <span style={{
-            fontSize: '1.1rem',
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            width: '24px', height: '24px', borderRadius: '5px',
-            background: 'rgba(255,255,255,0.12)', flexShrink: 0,
-          }}>
-            {league.flag || '⚽'}
-          </span>
-          
-          <span style={{
-            fontWeight: 800, fontSize: '0.90rem', color: '#ffffff',
-            letterSpacing: '-0.01em', textShadow: '0 1px 2px rgba(0,0,0,0.4)',
-            overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-          }}>
-            {league.country ? `${league.country} - ` : ''}{league.name}
-          </span>
-
-          {/* Mini analytics badge */}
-          <span className="league-analytics-badge" style={{
-            fontSize: '0.70rem', fontWeight: 700, color: theme.accent,
-            background: 'rgba(255,255,255,0.12)', padding: '1px 6px', borderRadius: '10px',
-            border: `1px solid ${theme.border}`, display: 'inline-flex', alignItems: 'center', gap: '2px', flexShrink: 0,
-          }}>
-            <span>📊</span>
-          </span>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
-          {/* Live indicator badge */}
           {liveCount > 0 && (
             <span className="status-badge status-live" style={{ fontSize: '0.68rem', padding: '0.15rem 0.5rem' }}>
               ● {liveCount} LIVE
             </span>
           )}
 
-          {/* Match count */}
-          <span style={{
-            fontSize: '0.74rem', fontWeight: 800, color: '#ffffff',
-            background: 'rgba(255, 255, 255, 0.15)', padding: '0.2rem 0.55rem', borderRadius: '6px',
-            border: '1px solid rgba(255,255,255,0.2)', whiteSpace: 'nowrap',
-          }}>
-            {matches.length}
-          </span>
-
-          {/* Chevron */}
-          <span style={{
-            fontSize: '0.75rem', color: '#ffffff',
-            transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-            transition: 'transform 0.2s ease', opacity: 0.85,
-          }}>
-            ▼
+          <span className="footystats-hide-btn">
+            {isExpanded ? '▲ Hide' : '▼ Show'} ({matches.length})
           </span>
         </div>
       </div>
+
+      {/* Column Sub-Header Bar (FootyStats layout) */}
+      {isExpanded && (
+        <div className="footystats-sub-header">
+          <div className="fs-sub-home">
+            <span>Home</span>
+            <span>Form</span>
+          </div>
+          <div className="fs-sub-center"></div>
+          <div className="fs-sub-away">
+            <span>Form</span>
+            <span>Away</span>
+          </div>
+        </div>
+      )}
 
       {/* Matches List with Zebra Striping */}
       {isExpanded && (

@@ -8,6 +8,32 @@ import { Match } from '@/lib/types';
 
 type TabKey = 'ai' | 'analytics' | 'sw' | 'predict' | 'stats' | 'h2h';
 
+function getTeamFormPpg(stats: any, fallback: number = 1.60): string {
+  if (stats?.ppg != null) return Number(stats.ppg).toFixed(2);
+  if (stats?.pts5 != null) return Number(stats.pts5).toFixed(2);
+  if (stats?.last5_matches && stats.last5_matches.length > 0) {
+    let pts = 0;
+    stats.last5_matches.forEach((m: any) => {
+      const res = (m.result || '').toUpperCase();
+      if (res === 'W') pts += 3;
+      else if (res === 'D') pts += 1;
+    });
+    return (pts / stats.last5_matches.length).toFixed(2);
+  }
+  if (stats?.ws_rating) {
+    const ppg = ((stats.ws_rating - 5.2) * 1.2).toFixed(2);
+    return Math.max(0.4, Math.min(2.8, Number(ppg))).toFixed(2);
+  }
+  return fallback.toFixed(2);
+}
+
+function getFormBadgeColor(ppgStr: string): string {
+  const ppg = parseFloat(ppgStr) || 1.5;
+  if (ppg >= 1.70) return 'fs-ppg-green';
+  if (ppg >= 1.10) return 'fs-ppg-amber';
+  return 'fs-ppg-red';
+}
+
 function getRatingClass(r: number) {
   if (r >= 7.5) return 'ws-rating-high';
   if (r >= 6.0) return 'ws-rating-medium';
@@ -375,11 +401,14 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
     { key: 'h2h', label: '🔄 H2H & Form' },
   ];
 
+  const homePpg = getTeamFormPpg(homeStats, 1.70);
+  const awayPpg = getTeamFormPpg(awayStats, 1.50);
+
   return (
-    <div style={{ marginBottom: 3 }}>
-      {/* FootyStats / WhoScored Hybrid Fixture Row */}
+    <div style={{ marginBottom: 0 }}>
+      {/* FootyStats Authentic Match Row */}
       <div
-        className={`ws-fixture-row ${isEven ? 'row-even' : 'row-odd'} ${status.isLive ? 'live-row' : status.isFinished ? 'finished-row' : status.isPostponed ? 'postponed-row' : 'sched-row'}`}
+        className={`footystats-match-row ${isEven ? 'row-even' : 'row-odd'} ${status.isLive ? 'live-row' : ''}`}
         onClick={() => {
           if (!user) {
             setShowAuthModal(true);
@@ -389,92 +418,54 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
           if (!open && activeTab === 'predict') loadPred();
         }}
       >
-        {/* Left: Kickoff Time & Date */}
-        <div className="fs-col-time">
-          <div className="fs-time-main">{dateTime.time}</div>
-          {dateTime.relative ? (
-            <div className="fs-time-rel">{dateTime.relative}</div>
-          ) : (
-            <div className="fs-time-date">{dateTime.date}</div>
-          )}
+        {/* Home Side: Team Name (right) + Form Badge */}
+        <div className="fs-home-side">
+          <span className={`fs-team-name-home ${homeWin ? 'is-winner' : ''}`} title={HN}>
+            {HN}
+          </span>
+          <span className={`fs-ppg-badge ${getFormBadgeColor(homePpg)}`}>
+            {homePpg}
+          </span>
         </div>
 
-        {/* Center: Parallel Team Rows with Crests, Names, and Scores */}
-        <div className="fs-col-teams">
-          {/* Home Team Row */}
-          <div className={`fs-team-row ${homeWin ? 'is-winner' : ''}`}>
-            <div className="fs-crest-box">
-              {match.home_team?.crest ? (
-                <img src={match.home_team.crest} alt={HN} width={18} height={18} className="fs-crest-img" />
-              ) : (
-                <span className="fs-crest-fallback">⚽</span>
-              )}
-            </div>
-            <span className="fs-team-name">{HN}</span>
-            {homeStats?.ws_rating && (
-              <span className={`fs-form-pill ${getRatingClass(homeStats.ws_rating)}`} title={`Rating: ${homeStats.ws_rating.toFixed(1)}`}>
-                {homeStats.ws_rating.toFixed(1)}
-              </span>
-            )}
-            {(status.isLive || status.isFinished) && (
-              <span className={`fs-row-score ${homeWin ? 'winner' : ''}`}>
-                {hs ?? 0}
-              </span>
-            )}
-          </div>
-
-          {/* Away Team Row */}
-          <div className={`fs-team-row ${awayWin ? 'is-winner' : ''}`}>
-            <div className="fs-crest-box">
-              {match.away_team?.crest ? (
-                <img src={match.away_team.crest} alt={AN} width={18} height={18} className="fs-crest-img" />
-              ) : (
-                <span className="fs-crest-fallback">⚽</span>
-              )}
-            </div>
-            <span className="fs-team-name">{AN}</span>
-            {awayStats?.ws_rating && (
-              <span className={`fs-form-pill ${getRatingClass(awayStats.ws_rating)}`} title={`Rating: ${awayStats.ws_rating.toFixed(1)}`}>
-                {awayStats.ws_rating.toFixed(1)}
-              </span>
-            )}
-            {(status.isLive || status.isFinished) && (
-              <span className={`fs-row-score ${awayWin ? 'winner' : ''}`}>
-                {as_ ?? 0}
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Right: Action Pill & Status Badge */}
-        <div className="fs-col-result">
+        {/* Center Column: Kickoff Time / Score + "Stats" link */}
+        <div className="fs-center-side">
           {status.isLive ? (
-            <div className="fs-result-live">
-              <span className="fs-live-badge">
-                <span className="fs-live-pulse-dot" />
-                <span>{status.minuteText}</span>
-              </span>
-            </div>
+            <>
+              <span className="fs-center-score live">{hs ?? 0} - {as_ ?? 0}</span>
+              <span className="fs-center-sub live">● {status.minuteText}</span>
+            </>
           ) : status.isFinished ? (
-            <div className="fs-result-finished">
-              <span className="fs-badge-ft">FT</span>
-            </div>
+            <>
+              <span className="fs-center-score">{hs ?? 0} - {as_ ?? 0}</span>
+              <span className="fs-center-sub">FT</span>
+            </>
           ) : status.isPostponed ? (
-            <div className="fs-result-pst">
-              <span className="fs-badge-pst">PST</span>
-            </div>
+            <>
+              <span className="fs-center-time pst">PST</span>
+              <span className="fs-center-sub">Stats</span>
+            </>
           ) : status.isCancelled ? (
-            <div className="fs-result-canc">
-              <span className="fs-badge-canc">CANC</span>
-            </div>
+            <>
+              <span className="fs-center-time canc">CANC</span>
+              <span className="fs-center-sub">Stats</span>
+            </>
           ) : (
-            <div className="fs-result-sched">
-              <span className="fs-btn-view-stats">
-                <span>Predict</span>
-                <span className="fs-view-arrow">▸</span>
-              </span>
-            </div>
+            <>
+              <span className="fs-center-time">{dateTime.time}</span>
+              <span className="fs-center-sub">Stats</span>
+            </>
           )}
+        </div>
+
+        {/* Away Side: Form Badge + Team Name (left) */}
+        <div className="fs-away-side">
+          <span className={`fs-ppg-badge ${getFormBadgeColor(awayPpg)}`}>
+            {awayPpg}
+          </span>
+          <span className={`fs-team-name-away ${awayWin ? 'is-winner' : ''}`} title={AN}>
+            {AN}
+          </span>
         </div>
       </div>
 
