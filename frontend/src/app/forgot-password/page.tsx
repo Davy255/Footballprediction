@@ -82,179 +82,178 @@ function ForgotPasswordContent() {
 
   const strength = newPassword.length === 0 ? 0 : newPassword.length < 8 ? 1 : (/[A-Za-z]/.test(newPassword) && /[0-9]/.test(newPassword)) ? 3 : 2;
   const strengthColors = ['', '#ef4444', '#f59e0b', '#10b981'];
-  const strengthLabels = ['', 'Too short', 'Fair', 'Strong'];
+  const strengthLabels = ['', 'Too short (min 8 chars)', 'Fair', 'Strong'];
 
   return (
-    <div className="auth-page">
-      {/* Left Branding Panel */}
-      <div className="auth-panel-left">
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: '420px' }}>
-          <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '2rem' }}>
-            <span style={{ fontSize: '2rem' }}>⚽</span>
-            <span style={{
-              fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: '1.5rem',
+    <div className="auth-card">
+      {/* Header */}
+      <div className="auth-header">
+        <Link href="/" className="auth-logo">
+          <span style={{ fontSize: '2rem' }}>⚽</span>
+          <span
+            style={{
+              fontFamily: 'Outfit, sans-serif',
+              fontWeight: 900,
+              fontSize: '1.45rem',
               background: 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-            }}>
-              FootballPredict
-            </span>
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
+            FootballPredict
+          </span>
+        </Link>
+        <h1 className="auth-title">
+          {step === 1 ? 'Forgot Password? 🔑' : 'Reset Password 🔒'}
+        </h1>
+        <p className="auth-subtitle">
+          Remembered your password?{' '}
+          <Link href="/login" style={{ color: 'var(--accent-blue)', fontWeight: 700 }}>
+            Back to Sign In →
           </Link>
-
-          <h2 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.4rem)', fontWeight: 900, marginBottom: '1rem', lineHeight: 1.2 }}>
-            Account Security &<br />
-            <span style={{ color: 'var(--accent-blue)' }}>Password Recovery</span>
-          </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '2rem', lineHeight: 1.7 }}>
-            Quickly recover access to your account to continue predicting matches, earning points, and tracking your global leaderboard ranking.
-          </p>
-
-          <ul className="auth-feature-list">
-            {[
-              { icon: '🔒', text: 'Secure, time-limited token authentication' },
-              { icon: '🛡️', text: 'Strict password complexity protection' },
-              { icon: '⚡', text: 'Instant password reset and account unlock' },
-            ].map((f) => (
-              <li key={f.text}>
-                <span>{f.icon}</span>
-                <span>{f.text}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        </p>
       </div>
 
-      {/* Right Form Panel */}
-      <div className="auth-panel-right">
-        <div style={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}>
-          <h1 style={{ fontSize: '2rem', fontWeight: 900, marginBottom: '0.4rem' }}>
-            {step === 1 ? 'Forgot Password? 🔑' : 'Reset Password 🔒'}
-          </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '2rem' }}>
-            Remembered your password?{' '}
-            <Link href="/login" style={{ color: 'var(--accent-blue)', fontWeight: 700 }}>
-              Back to Sign In →
-            </Link>
-          </p>
+      {error && (
+        <div className="alert alert-error" style={{ marginBottom: '1.25rem' }}>
+          <span>⚠️</span>
+          <span>{error}</span>
+        </div>
+      )}
 
-          {error && (
-            <div className="alert alert-error" style={{ marginBottom: '1.5rem' }}>
-              <span>⚠️</span>
-              <span>{error}</span>
-            </div>
-          )}
+      {successMsg && (
+        <div className="alert alert-success" style={{ marginBottom: '1.25rem' }}>
+          <span>✅</span>
+          <span>{successMsg}</span>
+        </div>
+      )}
 
-          {successMsg && (
-            <div className="alert alert-success" style={{ marginBottom: '1.5rem' }}>
-              <span>✅</span>
-              <span>{successMsg}</span>
-            </div>
-          )}
+      {step === 1 ? (
+        <form onSubmit={handleRequestToken}>
+          <div className="form-group" style={{ marginBottom: '1.25rem' }}>
+            <label className="form-label" htmlFor="reset-email">Registered Email Address</label>
+            <input
+              id="reset-email"
+              type="email"
+              className="form-input"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your registered email"
+              autoComplete="email"
+            />
+          </div>
 
-          {step === 1 ? (
-            <form onSubmit={handleRequestToken}>
-              <div className="form-group">
-                <label className="form-label" htmlFor="reset-email">Your Registered Email</label>
-                <input
-                  id="reset-email"
-                  type="email"
-                  className="form-input"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your registered email address"
-                  autoComplete="email"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn btn-primary"
-                style={{ width: '100%', padding: '0.9rem', fontSize: '1rem', marginTop: '0.5rem' }}
-              >
-                {loading ? (
-                  <><span className="spinner" /> Generating Reset Token...</>
-                ) : (
-                  'Continue to Reset Password →'
-                )}
-              </button>
-            </form>
-          ) : (
-            <form onSubmit={handleResetPassword}>
-              <div className="form-group">
-                <label className="form-label" htmlFor="new-password">New Password</label>
-                <div style={{ position: 'relative' }}>
-                  <input
-                    id="new-password"
-                    type={showPassword ? 'text' : 'password'}
-                    className="form-input"
-                    required
-                    minLength={8}
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="Min 8 characters (letters & numbers)"
-                    autoComplete="new-password"
-                    style={{ paddingRight: '3rem' }}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    style={{
-                      position: 'absolute', right: '0.75rem', top: '50%',
-                      transform: 'translateY(-50%)', background: 'none',
-                      border: 'none', cursor: 'pointer', fontSize: '1rem',
-                      color: 'var(--text-muted)', padding: '0.25rem',
-                    }}
-                  >
-                    {showPassword ? '🙈' : '👁️'}
-                  </button>
-                </div>
-
-                {/* Password Strength Indicator */}
-                {newPassword.length > 0 && (
-                  <div style={{ marginTop: '0.5rem' }}>
-                    <div style={{ display: 'flex', gap: '4px', marginBottom: '0.25rem' }}>
-                      {[1, 2, 3].map((level) => (
-                        <div key={level} style={{
-                          flex: 1, height: '3px', borderRadius: '3px',
-                          background: strength >= level ? strengthColors[strength] : 'var(--border-color)',
-                          transition: 'background 0.3s ease',
-                        }} />
-                      ))}
-                    </div>
-                    <div style={{ fontSize: '0.72rem', color: strengthColors[strength], fontWeight: 600 }}>
-                      {strengthLabels[strength]}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn btn-accent"
-                style={{ width: '100%', padding: '0.9rem', fontSize: '1rem', marginTop: '0.5rem' }}
-              >
-                {loading ? (
-                  <><span className="spinner" /> Updating Password...</>
-                ) : (
-                  'Update Password & Sign In 🚀'
-                )}
-              </button>
-
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn btn-primary"
+            style={{ width: '100%', padding: '0.9rem', fontSize: '1rem', marginTop: '0.25rem' }}
+          >
+            {loading ? (
+              <><span className="spinner" /> Generating Token...</>
+            ) : (
+              'Send Reset Token →'
+            )}
+          </button>
+        </form>
+      ) : (
+        <form onSubmit={handleResetPassword}>
+          <div className="form-group" style={{ marginBottom: '1.25rem' }}>
+            <label className="form-label" htmlFor="new-password">New Password</label>
+            <div style={{ position: 'relative' }}>
+              <input
+                id="new-password"
+                type={showPassword ? 'text' : 'password'}
+                className="form-input"
+                required
+                minLength={8}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Min 8 chars (letters & numbers)"
+                autoComplete="new-password"
+                style={{ paddingRight: '3rem' }}
+              />
               <button
                 type="button"
-                onClick={() => setStep(1)}
+                onClick={() => setShowPassword(!showPassword)}
                 style={{
-                  width: '100%', marginTop: '0.75rem', background: 'none',
-                  border: 'none', color: 'var(--text-muted)', fontSize: '0.85rem', cursor: 'pointer'
+                  position: 'absolute',
+                  right: '0.75rem',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '1rem',
+                  color: 'var(--text-muted)',
+                  padding: '0.25rem',
                 }}
               >
-                ← Back to enter email
+                {showPassword ? '🙈' : '👁️'}
               </button>
-            </form>
-          )}
-        </div>
+            </div>
+
+            {/* Password Strength Indicator */}
+            {newPassword.length > 0 && (
+              <div style={{ marginTop: '0.45rem' }}>
+                <div style={{ display: 'flex', gap: '4px', marginBottom: '0.25rem' }}>
+                  {[1, 2, 3].map((level) => (
+                    <div
+                      key={level}
+                      style={{
+                        flex: 1,
+                        height: '3px',
+                        borderRadius: '3px',
+                        background: strength >= level ? strengthColors[strength] : 'var(--border-color)',
+                        transition: 'background 0.3s ease',
+                      }}
+                    />
+                  ))}
+                </div>
+                <div style={{ fontSize: '0.72rem', color: strengthColors[strength], fontWeight: 600 }}>
+                  {strengthLabels[strength]}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn btn-accent"
+            style={{ width: '100%', padding: '0.9rem', fontSize: '1rem', marginTop: '0.25rem' }}
+          >
+            {loading ? (
+              <><span className="spinner" /> Updating Password...</>
+            ) : (
+              'Update Password & Sign In 🚀'
+            )}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setStep(1)}
+            style={{
+              width: '100%',
+              marginTop: '0.75rem',
+              background: 'none',
+              border: 'none',
+              color: 'var(--text-muted)',
+              fontSize: '0.85rem',
+              cursor: 'pointer',
+            }}
+          >
+            ← Back to enter email
+          </button>
+        </form>
+      )}
+
+      {/* Security Pills */}
+      <div className="auth-feature-pills">
+        <span className="auth-pill">🔒 Secure Encryption</span>
+        <span className="auth-pill">⏱️ 15-Min Expiry</span>
+        <span className="auth-pill">🛡️ Strict Protection</span>
       </div>
     </div>
   );
@@ -262,12 +261,16 @@ function ForgotPasswordContent() {
 
 export default function ForgotPasswordPage() {
   return (
-    <Suspense fallback={
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-        <span className="spinner" style={{ borderTopColor: 'var(--accent-blue)', borderColor: 'rgba(59,130,246,0.2)' }} />
-      </div>
-    }>
-      <ForgotPasswordContent />
-    </Suspense>
+    <div className="auth-page">
+      <Suspense
+        fallback={
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <span className="spinner" style={{ borderTopColor: 'var(--accent-blue)', borderColor: 'rgba(59,130,246,0.2)' }} />
+          </div>
+        }
+      >
+        <ForgotPasswordContent />
+      </Suspense>
+    </div>
   );
 }

@@ -941,73 +941,93 @@ img {
 }
 
 /* =============================================
-   AUTH PAGES
+   AUTH PAGES — MODERN CENTERED CARD
    ============================================= */
 .auth-page {
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - 72px);
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+  background: radial-gradient(circle at 50% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 60%),
+              radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 60%),
+              var(--bg-primary);
+  position: relative;
 }
 
-.auth-panel-left {
-  flex: 1;
-  background: var(--gradient-hero);
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glow);
+  border-radius: 24px;
+  padding: 2.5rem 2.25rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  backdrop-filter: blur(16px);
   position: relative;
   overflow: hidden;
-  border-right: 1px solid var(--border-color);
+  animation: scaleIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.auth-panel-left::after {
-  content: '⚽';
+.auth-card::before {
+  content: '';
   position: absolute;
-  font-size: 15rem;
-  opacity: 0.05;
-  right: -50px;
-  bottom: -50px;
-  line-height: 1;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #3b82f6, #10b981, transparent);
+  border-radius: 2px;
 }
 
-.auth-panel-right {
-  flex: 1;
-  max-width: 520px;
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: var(--bg-secondary);
+.auth-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
-.auth-feature-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  margin-top: 1.5rem;
-}
-
-.auth-feature-list li {
-  display: flex;
+.auth-logo {
+  display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  font-size: 0.95rem;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  text-decoration: none;
+}
+
+.auth-title {
+  font-size: 1.85rem;
+  font-weight: 900;
+  margin-bottom: 0.35rem;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.auth-subtitle {
   color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.5;
 }
 
-.auth-feature-list li span:first-child {
-  width: 28px;
-  height: 28px;
-  background: rgba(59, 130, 246, 0.15);
-  border-radius: 8px;
+.auth-feature-pills {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.auth-pill {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 0.85rem;
-  flex-shrink: 0;
+  gap: 0.3rem;
 }
 
 /* =============================================

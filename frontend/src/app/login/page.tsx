@@ -38,16 +38,32 @@ function LoginForm() {
   };
 
   return (
-    <div style={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}>
-      <h1 style={{ fontSize: '2rem', fontWeight: 900, marginBottom: '0.4rem' }}>
-        Welcome Back 👋
-      </h1>
-      <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
-        Don&apos;t have an account?{' '}
-        <Link href="/register" style={{ color: 'var(--accent-blue)', fontWeight: 700 }}>
-          Sign up free →
+    <div className="auth-card">
+      {/* Header */}
+      <div className="auth-header">
+        <Link href="/" className="auth-logo">
+          <span style={{ fontSize: '2rem' }}>⚽</span>
+          <span
+            style={{
+              fontFamily: 'Outfit, sans-serif',
+              fontWeight: 900,
+              fontSize: '1.45rem',
+              background: 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
+            FootballPredict
+          </span>
         </Link>
-      </p>
+        <h1 className="auth-title">Welcome Back 👋</h1>
+        <p className="auth-subtitle">
+          Don&apos;t have an account?{' '}
+          <Link href="/register" style={{ color: 'var(--accent-blue)', fontWeight: 700 }}>
+            Sign up free →
+          </Link>
+        </p>
+      </div>
 
       {error && (
         <div className="alert alert-error" style={{ marginBottom: '1.25rem' }}>
@@ -63,24 +79,28 @@ function LoginForm() {
         onError={(err) => setError(err)}
       />
 
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.75rem',
-        margin: '1.25rem 0',
-        color: 'var(--text-muted)',
-        fontSize: '0.82rem',
-        fontWeight: 600,
-        textTransform: 'uppercase',
-        letterSpacing: '0.05em'
-      }}>
+      {/* Divider */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.75rem',
+          margin: '1.25rem 0',
+          color: 'var(--text-muted)',
+          fontSize: '0.78rem',
+          fontWeight: 700,
+          textTransform: 'uppercase',
+          letterSpacing: '0.06em',
+        }}
+      >
         <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
-        <span>Or with username</span>
+        <span>Or continue with username</span>
         <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
       </div>
 
+      {/* Form */}
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className="form-group" style={{ marginBottom: '1rem' }}>
           <label className="form-label" htmlFor="login-username">Username or Email</label>
           <input
             id="login-username"
@@ -94,7 +114,7 @@ function LoginForm() {
           />
         </div>
 
-        <div className="form-group">
+        <div className="form-group" style={{ marginBottom: '1.25rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
             <label className="form-label" htmlFor="login-password" style={{ marginBottom: 0 }}>Password</label>
             <Link href="/forgot-password" style={{ fontSize: '0.8rem', color: 'var(--accent-blue)', fontWeight: 600 }}>
@@ -117,10 +137,16 @@ function LoginForm() {
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               style={{
-                position: 'absolute', right: '0.75rem', top: '50%',
-                transform: 'translateY(-50%)', background: 'none',
-                border: 'none', cursor: 'pointer', fontSize: '1rem',
-                color: 'var(--text-muted)', padding: '0.25rem',
+                position: 'absolute',
+                right: '0.75rem',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '1rem',
+                color: 'var(--text-muted)',
+                padding: '0.25rem',
               }}
             >
               {showPassword ? '🙈' : '👁️'}
@@ -132,7 +158,7 @@ function LoginForm() {
           type="submit"
           disabled={loading}
           className="btn btn-primary"
-          style={{ width: '100%', padding: '0.9rem', fontSize: '1rem', marginTop: '0.5rem' }}
+          style={{ width: '100%', padding: '0.9rem', fontSize: '1rem', marginTop: '0.25rem' }}
         >
           {loading ? (
             <><span className="spinner" /> Signing in...</>
@@ -141,6 +167,13 @@ function LoginForm() {
           )}
         </button>
       </form>
+
+      {/* Feature Badges */}
+      <div className="auth-feature-pills">
+        <span className="auth-pill">📈 Match Analytics</span>
+        <span className="auth-pill">🎯 Over/Under 2.5</span>
+        <span className="auth-pill">👑 Global Leaderboard</span>
+      </div>
     </div>
   );
 }
@@ -148,54 +181,15 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <div className="auth-page">
-      {/* Left Branding Panel */}
-      <div className="auth-panel-left">
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: '420px' }}>
-          <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '2rem' }}>
-            <span style={{ fontSize: '2rem' }}>⚽</span>
-            <span style={{
-              fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: '1.5rem',
-              background: 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-            }}>
-              FootballPredict
-            </span>
-          </Link>
-
-          <h2 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.4rem)', fontWeight: 900, marginBottom: '1rem', lineHeight: 1.2 }}>
-            Your Edge in<br />
-            <span style={{ color: 'var(--accent-blue)' }}>Match Predictions</span>
-          </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '2rem', lineHeight: 1.7 }}>
-            Log in to submit predictions, track your accuracy, and compete on the global leaderboard.
-          </p>
-
-          <ul className="auth-feature-list">
-            {[
-              { icon: '📈', text: 'Statistical match projections backed by 87k+ matches' },
-              { icon: '📊', text: 'Live odds from Bet365, Pinnacle & more' },
-              { icon: '🎯', text: 'Earn up to 8 points per correct prediction' },
-              { icon: '👑', text: 'Compete globally on the leaderboard' },
-            ].map((f) => (
-              <li key={f.text}>
-                <span>{f.icon}</span>
-                <span>{f.text}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      {/* Right Form Panel — Suspense required for useSearchParams */}
-      <div className="auth-panel-right">
-        <Suspense fallback={
+      <Suspense
+        fallback={
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
             <span className="spinner" style={{ borderTopColor: 'var(--accent-blue)', borderColor: 'rgba(59,130,246,0.2)' }} />
           </div>
-        }>
-          <LoginForm />
-        </Suspense>
-      </div>
+        }
+      >
+        <LoginForm />
+      </Suspense>
     </div>
   );
 }
