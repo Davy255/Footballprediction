@@ -7,7 +7,7 @@ import { AdminStats } from '@/lib/types';
 import Link from 'next/link';
 
 export default function AdminDashboardPage() {
-  const { user, login } = useAuth();
+  const { user, login, logout } = useAuth();
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [syncMsg, setSyncMsg] = useState<string | null>(null);
   const [oddsMsg, setOddsMsg] = useState<string | null>(null);
@@ -18,10 +18,14 @@ export default function AdminDashboardPage() {
   const [loading, setLoading] = useState(true);
 
   // Admin login form state
-  const [username, setUsername] = useState('admin');
+  const [username, setUsername] = useState('Wes@254');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState<string | null>(null);
+  const [sessionExpiredMsg, setSessionExpiredMsg] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // 5-Minute Idle Inactivity Auto-Logout
+  const [idleSecondsLeft, setIdleSecondsLeft] = useState<number>(300); // 5 minutes
 
   useEffect(() => {
     if (user?.is_admin) {
@@ -34,13 +38,53 @@ export default function AdminDashboardPage() {
     }
   }, [user]);
 
+  // Track Inactivity while logged in on Admin Panel
+  useEffect(() => {
+    if (!user || !user.is_admin) return;
+
+    const IDLE_LIMIT_SECONDS = 300; // 5 minutes
+    let lastActivityTime = Date.now();
+
+    const handleUserActivity = () => {
+      lastActivityTime = Date.now();
+      setIdleSecondsLeft(IDLE_LIMIT_SECONDS);
+    };
+
+    const trackedEvents = ['mousemove', 'keydown', 'mousedown', 'touchstart', 'scroll', 'click'];
+    trackedEvents.forEach((ev) => window.addEventListener(ev, handleUserActivity, { passive: true }));
+
+    const timerInterval = setInterval(() => {
+      const elapsedSeconds = Math.floor((Date.now() - lastActivityTime) / 1000);
+      const remaining = Math.max(0, IDLE_LIMIT_SECONDS - elapsedSeconds);
+      setIdleSecondsLeft(remaining);
+
+      if (remaining <= 0) {
+        clearInterval(timerInterval);
+        logout();
+        setSessionExpiredMsg('⚠️ Admin session expired due to 5 minutes of inactivity. Please sign in again.');
+      }
+    }, 1000);
+
+    return () => {
+      trackedEvents.forEach((ev) => window.removeEventListener(ev, handleUserActivity));
+      clearInterval(timerInterval);
+    };
+  }, [user, logout]);
+
+  const formatTimer = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  };
+
   const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError(null);
+    setSessionExpiredMsg(null);
     setIsSubmitting(true);
     try {
       const formData = new FormData();
-      formData.append('username', username);
+      formData.append('username', username.trim());
       formData.append('password', password);
       
       const res = await loginUser(formData);
@@ -51,6 +95,7 @@ export default function AdminDashboardPage() {
       }
 
       login(res.access_token, res.user);
+      setIdleSecondsLeft(300);
     } catch (err: any) {
       setLoginError(err.message || 'Invalid admin credentials');
     } finally {
@@ -58,101 +103,9 @@ export default function AdminDashboardPage() {
     }
   };
 
-  if (!user || !user.is_admin) {
-    return (
-      <div className="container" style={{ marginTop: '4rem', textAlign: 'center' }}>
-        <div className="glass-panel" style={{ padding: '2.5rem', maxWidth: '440px', margin: '0 auto', textAlign: 'left' }}>
-          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <h2 style={{ fontSize: '1.8rem', fontWeight: 800 }}>Admin Portal Login 🔒</h2>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.4rem' }}>
-              Sign in with your administrator account to access controls.
-            </p>
-          </div>
-
-          {loginError && (
-            <div style={{
-              padding: '0.8rem 1rem',
-              borderRadius: '8px',
-              background: 'rgba(239, 68, 68, 0.15)',
-              border: '1px solid rgba(239, 68, 68, 0.3)',
-              color: '#f87171',
-              fontSize: '0.88rem',
-              marginBottom: '1.2rem',
-            }}>
-              {loginError}
-            </div>
-          )}
-
-          <form onSubmit={handleAdminLogin}>
-            <div style={{ marginBottom: '1.2rem' }}>
-              <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>
-                Admin Username
-              </label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
-                required
-                style={{
-                  width: '100%',
-                  padding: '0.8rem 1rem',
-                  borderRadius: '8px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  color: '#fff',
-                  fontSize: '0.95rem',
-                  outline: 'none',
-                }}
-              />
-            </div>
-
-            <div style={{ marginBottom: '1.8rem' }}>
-              <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>
-                Admin Password
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                style={{
-                  width: '100%',
-                  padding: '0.8rem 1rem',
-                  borderRadius: '8px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  color: '#fff',
-                  fontSize: '0.95rem',
-                  outline: 'none',
-                }}
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="btn btn-primary"
-              style={{ width: '100%', padding: '0.85rem', fontSize: '1rem', fontWeight: 600 }}
-            >
-              {isSubmitting ? 'Authenticating...' : 'Sign In to Admin Dashboard'}
-            </button>
-          </form>
-
-          <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-            <Link href="/" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textDecoration: 'underline' }}>
-              Return to Public Site
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   const handleSync = async () => {
     try {
-      setSyncMsg('Syncing matches from football-data.org in background...');
+      setSyncMsg('Triggering full competition season sync in background...');
       const res = await triggerAdminSync();
       setSyncMsg(res.detail);
     } catch (err: any) {
@@ -207,100 +160,271 @@ export default function AdminDashboardPage() {
     }
   };
 
+  if (!user || !user.is_admin) {
+    return (
+      <div className="container" style={{ marginTop: '3.5rem', paddingBottom: '3rem', textAlign: 'center' }}>
+        <div className="glass-panel" style={{ padding: '2.5rem', maxWidth: '440px', margin: '0 auto', textAlign: 'left' }}>
+          <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
+            <div style={{ fontSize: '2.5rem', marginBottom: '0.4rem' }}>🔒</div>
+            <h2 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Admin Portal Login</h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.86rem', marginTop: '0.3rem' }}>
+              Restricted management area. Sign in with your administrator account.
+            </p>
+          </div>
+
+          {sessionExpiredMsg && (
+            <div style={{
+              padding: '0.8rem 1rem',
+              borderRadius: '8px',
+              background: 'rgba(234, 179, 8, 0.15)',
+              border: '1px solid rgba(234, 179, 8, 0.3)',
+              color: '#facc15',
+              fontSize: '0.86rem',
+              marginBottom: '1.2rem',
+              lineHeight: 1.4,
+            }}>
+              {sessionExpiredMsg}
+            </div>
+          )}
+
+          {loginError && (
+            <div style={{
+              padding: '0.8rem 1rem',
+              borderRadius: '8px',
+              background: 'rgba(239, 68, 68, 0.15)',
+              border: '1px solid rgba(239, 68, 68, 0.3)',
+              color: '#f87171',
+              fontSize: '0.88rem',
+              marginBottom: '1.2rem',
+            }}>
+              {loginError}
+            </div>
+          )}
+
+          <form onSubmit={handleAdminLogin}>
+            <div style={{ marginBottom: '1.2rem' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.4rem', fontWeight: 600 }}>
+                Admin Username or Email
+              </label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username or email"
+                required
+                style={{
+                  width: '100%',
+                  padding: '0.8rem 1rem',
+                  borderRadius: '8px',
+                  background: 'var(--bg-card-hover)',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-primary)',
+                  fontSize: '0.95rem',
+                  outline: 'none',
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: '1.8rem' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.4rem', fontWeight: 600 }}>
+                Admin Password
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                required
+                style={{
+                  width: '100%',
+                  padding: '0.8rem 1rem',
+                  borderRadius: '8px',
+                  background: 'var(--bg-card-hover)',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-primary)',
+                  fontSize: '0.95rem',
+                  outline: 'none',
+                }}
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn btn-primary"
+              style={{ width: '100%', padding: '0.85rem', fontSize: '1rem', fontWeight: 700 }}
+            >
+              {isSubmitting ? 'Authenticating...' : 'Sign In to Admin Dashboard →'}
+            </button>
+          </form>
+
+          <div style={{ marginTop: '1.75rem', textAlign: 'center', borderTop: '1px solid var(--border-color)', paddingTop: '1rem' }}>
+            <Link href="/" style={{ color: 'var(--accent-blue)', fontSize: '0.85rem', fontWeight: 600 }}>
+              ← Return to Public Website
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="container" style={{ marginTop: '2rem' }}>
-      <div style={{ marginBottom: '2rem' }}>
-        <h1 style={{ fontSize: '2.2rem', marginBottom: '0.5rem' }}>Admin Dashboard ⚙️</h1>
-        <p style={{ color: 'var(--text-secondary)' }}>
-          System telemetry, manual data sync triggers, live bookmaker odds integration, and prediction scoring controls.
+    <div className="container" style={{ marginTop: '1.5rem', paddingBottom: '3rem' }}>
+      
+      {/* Top Admin Status Ribbon & Navigation Bar */}
+      <div className="glass-panel" style={{
+        padding: '0.85rem 1.25rem',
+        marginBottom: '1.75rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '0.75rem',
+        background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.12) 0%, rgba(124, 58, 237, 0.12) 100%)',
+        border: '1px solid rgba(59, 130, 246, 0.3)',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+          <span style={{ fontSize: '1.3rem' }}>🛡️</span>
+          <div>
+            <div style={{ fontWeight: 800, fontSize: '0.92rem', color: 'var(--text-primary)' }}>
+              Logged in as: <span style={{ color: 'var(--accent-blue)' }}>{user.username}</span> (Super Admin)
+            </div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              System Administrator • Full Permissions
+            </div>
+          </div>
+
+          {/* 5-Minute Inactivity Auto-Logout Badge */}
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.35rem',
+            padding: '0.25rem 0.65rem',
+            borderRadius: '20px',
+            background: idleSecondsLeft < 60 ? 'rgba(239, 68, 68, 0.2)' : 'rgba(234, 179, 8, 0.15)',
+            border: idleSecondsLeft < 60 ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(234, 179, 8, 0.3)',
+            color: idleSecondsLeft < 60 ? '#f87171' : '#facc15',
+            fontSize: '0.76rem',
+            fontWeight: 800,
+          }}>
+            <span>⏱️ Inactivity Logout:</span>
+            <span>{formatTimer(idleSecondsLeft)}</span>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+          <Link
+            href="/"
+            className="btn btn-secondary btn-sm"
+            style={{ fontSize: '0.80rem', padding: '0.4rem 0.85rem', fontWeight: 700 }}
+          >
+            🌐 View Public Site →
+          </Link>
+          <button
+            onClick={() => logout()}
+            className="btn btn-secondary btn-sm"
+            style={{ fontSize: '0.80rem', padding: '0.4rem 0.85rem', borderColor: 'rgba(239, 68, 68, 0.4)', color: '#f87171' }}
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+
+      {/* Main Header */}
+      <div style={{ marginBottom: '1.75rem' }}>
+        <h1 style={{ fontSize: '2rem', fontWeight: 900, marginBottom: '0.35rem', letterSpacing: '-0.02em' }}>
+          Admin Dashboard ⚙️
+        </h1>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem' }}>
+          System telemetry, manual data sync triggers, live bookmaker odds integration, email tester, and prediction scoring controls.
         </p>
       </div>
 
       {loading ? (
         <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center' }}>
-          Loading stats...
+          Loading telemetry stats...
         </div>
       ) : (
         <div>
           {/* Stats Cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.2rem', marginBottom: '2.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
             <div className="glass-panel" style={{ padding: '1.2rem', textAlign: 'center' }}>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Total Users</div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent-blue)', marginTop: '0.2rem' }}>
+              <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Total Registered Users</div>
+              <div style={{ fontSize: '1.9rem', fontWeight: 900, color: 'var(--accent-blue)', marginTop: '0.2rem' }}>
                 {stats?.total_users || 0}
               </div>
             </div>
             <div className="glass-panel" style={{ padding: '1.2rem', textAlign: 'center' }}>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Total Matches</div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent-purple)', marginTop: '0.2rem' }}>
+              <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Total Fixture Matches</div>
+              <div style={{ fontSize: '1.9rem', fontWeight: 900, color: 'var(--accent-purple)', marginTop: '0.2rem' }}>
                 {stats?.total_matches || 0}
               </div>
             </div>
             <div className="glass-panel" style={{ padding: '1.2rem', textAlign: 'center' }}>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Total Predictions</div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent-green)', marginTop: '0.2rem' }}>
+              <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Total User Predictions</div>
+              <div style={{ fontSize: '1.9rem', fontWeight: 900, color: 'var(--accent-green)', marginTop: '0.2rem' }}>
                 {stats?.total_predictions || 0}
               </div>
             </div>
             <div className="glass-panel" style={{ padding: '1.2rem', textAlign: 'center' }}>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Scheduled Matches</div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent-amber)', marginTop: '0.2rem' }}>
+              <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Upcoming Scheduled</div>
+              <div style={{ fontSize: '1.9rem', fontWeight: 900, color: 'var(--accent-amber)', marginTop: '0.2rem' }}>
                 {stats?.scheduled_matches || 0}
               </div>
             </div>
           </div>
 
           {/* Admin Control Actions */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
-            <div className="glass-panel" style={{ padding: '1.8rem' }}>
-              <h2 style={{ fontSize: '1.3rem', marginBottom: '0.8rem' }}>🔄 Sync Live Fixtures</h2>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+            <div className="glass-panel" style={{ padding: '1.5rem' }}>
+              <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.6rem' }}>🔄 Sync Live Fixtures</h2>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.25rem', lineHeight: 1.5 }}>
                 Fetch current season schedules, live scores, and finished match results from football-data.org.
               </p>
-              <button onClick={handleSync} className="btn btn-primary" style={{ width: '100%' }}>
+              <button onClick={handleSync} className="btn btn-primary" style={{ width: '100%', fontSize: '0.86rem' }}>
                 Trigger Match Sync Now
               </button>
               {syncMsg && (
-                <div style={{ marginTop: '1rem', padding: '0.8rem', borderRadius: '8px', background: 'rgba(59, 130, 246, 0.15)', fontSize: '0.85rem' }}>
+                <div style={{ marginTop: '1rem', padding: '0.8rem', borderRadius: '8px', background: 'rgba(59, 130, 246, 0.15)', fontSize: '0.82rem' }}>
                   {syncMsg}
                 </div>
               )}
             </div>
 
-            <div className="glass-panel" style={{ padding: '1.8rem' }}>
-              <h2 style={{ fontSize: '1.3rem', marginBottom: '0.8rem' }}>🏷️ Sync Live Bookmaker Odds</h2>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
+            <div className="glass-panel" style={{ padding: '1.5rem' }}>
+              <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.6rem' }}>🏷️ Sync Live Bookmaker Odds</h2>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.25rem', lineHeight: 1.5 }}>
                 Fetch live real-time Bet365 / Pinnacle bookmaker odds from <strong>The Odds API</strong>.
               </p>
-              <button onClick={handleOddsSync} className="btn btn-secondary" style={{ width: '100%', borderColor: 'var(--accent-amber)', color: 'var(--accent-amber)' }}>
+              <button onClick={handleOddsSync} className="btn btn-secondary" style={{ width: '100%', fontSize: '0.86rem', borderColor: 'var(--accent-amber)', color: 'var(--accent-amber)' }}>
                 Sync Live Odds API Now
               </button>
               {oddsMsg && (
-                <div style={{ marginTop: '1rem', padding: '0.8rem', borderRadius: '8px', background: 'rgba(245, 158, 11, 0.15)', fontSize: '0.85rem' }}>
+                <div style={{ marginTop: '1rem', padding: '0.8rem', borderRadius: '8px', background: 'rgba(245, 158, 11, 0.15)', fontSize: '0.82rem' }}>
                   {oddsMsg}
                 </div>
               )}
             </div>
 
-            <div className="glass-panel" style={{ padding: '1.8rem' }}>
-              <h2 style={{ fontSize: '1.3rem', marginBottom: '0.8rem' }}>🎯 Score Predictions</h2>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
+            <div className="glass-panel" style={{ padding: '1.5rem' }}>
+              <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.6rem' }}>🎯 Score Predictions</h2>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.25rem', lineHeight: 1.5 }}>
                 Process all unscored user predictions for finished matches and update user leaderboard points.
               </p>
-              <button onClick={handleScore} className="btn btn-accent" style={{ width: '100%' }}>
+              <button onClick={handleScore} className="btn btn-accent" style={{ width: '100%', fontSize: '0.86rem' }}>
                 Calculate &amp; Score Predictions
               </button>
               {scoreMsg && (
-                <div style={{ marginTop: '1rem', padding: '0.8rem', borderRadius: '8px', background: 'rgba(16, 185, 129, 0.15)', fontSize: '0.85rem' }}>
+                <div style={{ marginTop: '1rem', padding: '0.8rem', borderRadius: '8px', background: 'rgba(16, 185, 129, 0.15)', fontSize: '0.82rem' }}>
                   {scoreMsg}
                 </div>
               )}
             </div>
 
             {/* Email Testing & Reminder Dispatch Card */}
-            <div className="glass-panel" style={{ padding: '1.8rem' }}>
-              <h2 style={{ fontSize: '1.3rem', marginBottom: '0.8rem' }}>📧 Email Service &amp; Reminders</h2>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+            <div className="glass-panel" style={{ padding: '1.5rem' }}>
+              <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.6rem' }}>📧 Email Service &amp; Reminders</h2>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem', lineHeight: 1.5 }}>
                 Test live transactional email delivery (Welcome, Daily Digest, Password Reset) or trigger daily reminders.
               </p>
 
@@ -316,7 +440,7 @@ export default function AdminDashboardPage() {
                     borderRadius: '8px',
                     border: '1px solid var(--border-color)',
                     background: 'var(--bg-card-hover)',
-                    color: '#fff',
+                    color: 'var(--text-primary)',
                     fontSize: '0.85rem',
                     marginBottom: '0.6rem',
                   }}
