@@ -25,7 +25,17 @@ export async function fetchApi<T>(endpoint: string, options: RequestInit = {}): 
 
   if (!res.ok) {
     const errorData = await res.json().catch(() => ({ detail: 'An error occurred' }));
-    throw new Error(errorData.detail || `HTTP Error ${res.status}`);
+    let message = 'An error occurred';
+    if (typeof errorData.detail === 'string') {
+      message = errorData.detail;
+    } else if (Array.isArray(errorData.detail)) {
+      message = errorData.detail.map((e: any) => e.msg || e.message || JSON.stringify(e)).join(', ');
+    } else if (errorData.message) {
+      message = typeof errorData.message === 'string' ? errorData.message : JSON.stringify(errorData.message);
+    } else {
+      message = `HTTP Error ${res.status}`;
+    }
+    throw new Error(message);
   }
 
   return res.json();

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
+from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks, Body
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from sqlalchemy import func
@@ -10,7 +10,7 @@ from app.core.security import (
     create_password_reset_token, verify_password_reset_token,
 )
 from app.models.user import User
-from app.schemas.schemas import UserCreate, UserOut, Token, ForgotPasswordRequest, ResetPasswordRequest
+from app.schemas.schemas import UserCreate, UserOut, Token, ForgotPasswordRequest, ResetPasswordRequest, GoogleAuthRequest
 from app.services.email_service import send_welcome_email, send_password_reset_email
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
@@ -144,7 +144,7 @@ def reset_password(payload: ResetPasswordRequest, db: Session = Depends(get_db))
 
 
 @router.post("/google", response_model=Token, dependencies=[Depends(login_rate_limiter)])
-def google_auth(payload: GoogleAuthRequest, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
+def google_auth(payload: GoogleAuthRequest = Body(...), background_tasks: BackgroundTasks = None, db: Session = Depends(get_db)):
     """
     Google OAuth 2.0 Sign In / Sign Up handler.
     Verifies Google ID token, logs in existing users or creates new user profiles automatically.
@@ -237,7 +237,8 @@ def google_auth(payload: GoogleAuthRequest, background_tasks: BackgroundTasks, d
         db.refresh(user)
 
         # Dispatch welcome email asynchronously
-        background_tasks.add_task(send_welcome_email, user.email, user.username)
+        if background_tasks:
+            background_tasks.add_task(send_welcome_email, user.email, user.username)
 
     token = create_access_token({"sub": str(user.id)})
     return {"access_token": token, "token_type": "bearer", "user": user}
