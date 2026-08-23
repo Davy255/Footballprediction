@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Match, League } from '@/lib/types';
-import { fetchLeagues, fetchMatches } from '@/lib/api';
+import { fetchTodayMatches, fetchUpcomingMatches, fetchLiveMatches, fetchLeagues, fetchMatches } from '@/lib/api';
 import LeagueAccordionSection from '@/components/LeagueAccordionSection';
 import HowToPlayModal from '@/components/HowToPlayModal';
 import AdBanner from '@/components/AdBanner';
@@ -29,6 +29,8 @@ function getMatchDateKey(utc_date: string): { key: string; label: string; isToda
     if (!s.endsWith('Z') && !s.includes('+') && !s.match(/-\d{2}:\d{2}$/)) s = s.replace(' ', 'T') + 'Z';
     else s = s.replace(' ', 'T');
     const d = new Date(s);
+    if (isNaN(d.getTime())) return { key: '9999-99-99', label: 'Upcoming Matches', isToday: false, isTomorrow: false };
+
     const now = new Date();
     const isToday = d.toDateString() === now.toDateString();
     const tomorrow = new Date(now);
@@ -75,36 +77,56 @@ export default function HomePage() {
   const [showGuide, setShowGuide] = useState(false);
 
   const loadData = async (isInitial = true) => {
-    // Try client cache first
+    // Try client cache first for instant display
     if (isInitial && typeof window !== 'undefined') {
       try {
         const cachedMatches = sessionStorage.getItem('fp_cache_all_matches');
         const cachedLeagues = sessionStorage.getItem('fp_cache_leagues');
         if (cachedMatches && cachedLeagues) {
-          setAllMatches(JSON.parse(cachedMatches));
-          setLeagues(JSON.parse(cachedLeagues));
-          setLoading(false);
+          const parsed = JSON.parse(cachedMatches);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setAllMatches(parsed);
+            setLeagues(JSON.parse(cachedLeagues));
+            setLoading(false);
+          }
         }
       } catch {}
     }
 
     try {
-      const [matchesData, lgs] = await Promise.all([
-        fetchMatches({ limit: 100 }).catch(() => []),
+      const [today, upcoming, live, finished, lgs] = await Promise.all([
+        fetchTodayMatches().catch(() => []),
+        fetchUpcomingMatches(45).catch(() => []),
+        fetchLiveMatches().catch(() => []),
+        fetchMatches({ status: 'FINISHED', limit: 40 }).catch(() => []),
         fetchLeagues().catch(() => []),
       ]);
 
-      if (matchesData.length > 0) setAllMatches(matchesData);
-      if (lgs.length > 0) setLeagues(lgs);
+      const matchMap = new Map<number, Match>();
+      [...today, ...upcoming, ...live, ...finished].forEach((m) => {
+        if (m && m.id) matchMap.set(m.id, m);
+      });
 
-      if (typeof window !== 'undefined') {
-        try {
-          if (matchesData.length > 0) sessionStorage.setItem('fp_cache_all_matches', JSON.stringify(matchesData));
-          if (lgs.length > 0) sessionStorage.setItem('fp_cache_leagues', JSON.stringify(lgs));
-        } catch {}
+      const merged = Array.from(matchMap.values());
+      if (merged.length > 0) {
+        setAllMatches(merged);
+        if (typeof window !== 'undefined') {
+          try {
+            sessionStorage.setItem('fp_cache_all_matches', JSON.stringify(merged));
+          } catch {}
+        }
+      }
+
+      if (lgs.length > 0) {
+        setLeagues(lgs);
+        if (typeof window !== 'undefined') {
+          try {
+            sessionStorage.setItem('fp_cache_leagues', JSON.stringify(lgs));
+          } catch {}
+        }
       }
     } catch (err) {
-      console.error(err);
+      console.error('Error loading homepage fixtures:', err);
     } finally {
       setLoading(false);
     }
@@ -116,7 +138,7 @@ export default function HomePage() {
 
   // Filter matches based on Search Query, selected Status & League
   const filteredMatches = allMatches.filter((m) => {
-    // Search Query filter (checks team names, league names, countries)
+    // Search Query filter
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
       const hn = (m.home_team?.name || '').toLowerCase();
