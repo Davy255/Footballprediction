@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Match, League } from '@/lib/types';
-import { fetchTodayMatches, fetchUpcomingMatches, fetchLiveMatches, fetchLeagues, fetchMatches } from '@/lib/api';
+import { fetchTodayMatches, fetchUpcomingMatches, fetchLiveMatches, fetchLeagues, fetchMatches, fetchMatchesFeed } from '@/lib/api';
 import LeagueAccordionSection from '@/components/LeagueAccordionSection';
 import HowToPlayModal from '@/components/HowToPlayModal';
 import AdBanner from '@/components/AdBanner';
@@ -79,8 +79,8 @@ export default function HomePage() {
   const loadData = async (isInitial = true) => {
     if (isInitial && typeof window !== 'undefined') {
       try {
-        const cachedMatches = sessionStorage.getItem('fp_cache_all_matches');
-        const cachedLeagues = sessionStorage.getItem('fp_cache_leagues');
+        const cachedMatches = localStorage.getItem('fp_cache_all_matches') || sessionStorage.getItem('fp_cache_all_matches');
+        const cachedLeagues = localStorage.getItem('fp_cache_leagues') || sessionStorage.getItem('fp_cache_leagues');
         if (cachedMatches && cachedLeagues) {
           const parsed = JSON.parse(cachedMatches);
           if (Array.isArray(parsed) && parsed.length > 0) {
@@ -93,6 +93,24 @@ export default function HomePage() {
     }
 
     try {
+      // 1. Try Ultra-Fast Unified Feed in a single HTTP request
+      const feed = await fetchMatchesFeed().catch(() => null);
+      if (feed && Array.isArray(feed.matches) && feed.matches.length > 0) {
+        setAllMatches(feed.matches);
+        if (Array.isArray(feed.leagues) && feed.leagues.length > 0) {
+          setLeagues(feed.leagues);
+        }
+        if (typeof window !== 'undefined') {
+          try {
+            localStorage.setItem('fp_cache_all_matches', JSON.stringify(feed.matches));
+            if (feed.leagues) localStorage.setItem('fp_cache_leagues', JSON.stringify(feed.leagues));
+          } catch {}
+        }
+        setLoading(false);
+        return;
+      }
+
+      // 2. Fallback to parallel fetch if feed is empty
       const [today, upcoming, live, finished, lgs] = await Promise.all([
         fetchTodayMatches().catch(() => []),
         fetchUpcomingMatches(45).catch(() => []),
@@ -111,7 +129,7 @@ export default function HomePage() {
         setAllMatches(merged);
         if (typeof window !== 'undefined') {
           try {
-            sessionStorage.setItem('fp_cache_all_matches', JSON.stringify(merged));
+            localStorage.setItem('fp_cache_all_matches', JSON.stringify(merged));
           } catch {}
         }
       }
@@ -120,7 +138,7 @@ export default function HomePage() {
         setLeagues(lgs);
         if (typeof window !== 'undefined') {
           try {
-            sessionStorage.setItem('fp_cache_leagues', JSON.stringify(lgs));
+            localStorage.setItem('fp_cache_leagues', JSON.stringify(lgs));
           } catch {}
         }
       }

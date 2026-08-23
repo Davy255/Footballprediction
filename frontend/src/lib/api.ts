@@ -70,6 +70,10 @@ export async function fetchMe() {
 }
 
 // Matches API
+export async function fetchMatchesFeed() {
+  return fetchApi<{ matches: Match[]; leagues: League[]; total: number }>('/api/matches/feed');
+}
+
 export async function fetchMatches(params?: { league_code?: string; status?: string; date?: string; limit?: number }) {
   const query = new URLSearchParams();
   if (params?.league_code) query.append('league_code', params.league_code);

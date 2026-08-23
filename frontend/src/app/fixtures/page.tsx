@@ -71,7 +71,7 @@ function FixturesContent() {
     const cacheKey = `fp_fix_${selectedLeague}_${selectedStatus}`;
     if (useCache && typeof window !== 'undefined') {
       try {
-        const cached = sessionStorage.getItem(cacheKey);
+        const cached = localStorage.getItem(cacheKey) || sessionStorage.getItem(cacheKey);
         if (cached) {
           setMatches(JSON.parse(cached));
           setLoading(false);
@@ -85,11 +85,13 @@ function FixturesContent() {
         status: selectedStatus || undefined,
         limit: 80,
       });
-      setMatches(data);
-      if (typeof window !== 'undefined') {
-        try {
-          sessionStorage.setItem(cacheKey, JSON.stringify(data));
-        } catch {}
+      if (data && data.length > 0) {
+        setMatches(data);
+        if (typeof window !== 'undefined') {
+          try {
+            localStorage.setItem(cacheKey, JSON.stringify(data));
+          } catch {}
+        }
       }
     } catch (err) {
       console.error(err);

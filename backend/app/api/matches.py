@@ -1,22 +1,23 @@
 import time
 import json
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Response
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import or_
-from typing import Optional, Dict, Any, Tuple
+from typing import Optional, Dict, Any, Tuple, List
 from datetime import datetime, timezone, timedelta
 from app.core.database import get_db
 from app.models.match import Match, League, Team
-from app.schemas.schemas import MatchOut
+from app.schemas.schemas import MatchOut, LeagueOut
 from app.services.ml_predictor import predict_match, get_team_manager
 
 router = APIRouter(prefix="/api/matches", tags=["matches"])
 
 # High-Performance In-Memory Cache with TTL
 _cache_store: Dict[str, Tuple[float, Any]] = {}
+_PREDICTION_MEM_CACHE: Dict[Tuple[int, int], dict] = {}
 
 
-def get_from_cache(key: str, ttl_seconds: float = 10.0) -> Optional[Any]:
+def get_from_cache(key: str, ttl_seconds: float = 20.0) -> Optional[Any]:
     if key in _cache_store:
         timestamp, data = _cache_store[key]
         if time.time() - timestamp < ttl_seconds:
@@ -29,13 +30,19 @@ def set_in_cache(key: str, data: Any):
 
 
 def ensure_match_predictions(matches: list[Match], db: Session):
-    """Ensures returned matches have AI prediction fields populated with zero blocking overhead."""
+    """Ensures returned matches have AI prediction fields populated with sub-millisecond memory caching."""
     for m in matches:
         if not m.home_team or not m.away_team or m.status == "FINISHED":
             continue
         try:
             if not m.prediction_description or '"analytics"' not in m.prediction_description:
-                pred = predict_match(m.home_team, m.away_team, db)
+                pair_key = (m.home_team.id, m.away_team.id)
+                if pair_key in _PREDICTION_MEM_CACHE:
+                    pred = _PREDICTION_MEM_CACHE[pair_key]
+                else:
+                    pred = predict_match(m.home_team, m.away_team, db)
+                    _PREDICTION_MEM_CACHE[pair_key] = pred
+
                 m.ai_home_prob = pred["ai_home_prob"]
                 m.ai_draw_prob = pred["ai_draw_prob"]
                 m.ai_away_prob = pred["ai_away_prob"]
@@ -57,6 +64,59 @@ def ensure_match_predictions(matches: list[Match], db: Session):
             pass
 
 
+@router.get("/feed")
+def get_unified_matches_feed(response: Response, db: Session = Depends(get_db)):
+    """
+    High-Speed Unified Feed Endpoint.
+    Returns all active fixtures (Upcoming, Live, Finished) + Leagues in a single, ultra-fast response.
+    """
+    # Cache for 20 seconds in server memory
+    cached = get_from_cache("unified_matches_feed", ttl_seconds=20.0)
+    if cached is not None:
+        response.headers["Cache-Control"] = "public, max-age=15, s-maxage=30, stale-while-revalidate=60"
+        return cached
+
+    now = datetime.now(timezone.utc)
+    future_limit = now + timedelta(days=60)
+    past_limit = now - timedelta(days=7)
+
+    # 1. Fetch matches with eager-loaded relations in single query
+    matches = (
+        db.query(Match)
+        .options(
+            joinedload(Match.league),
+            joinedload(Match.home_team),
+            joinedload(Match.away_team),
+        )
+        .filter(
+            or_(
+                Match.status.in_(["LIVE", "IN_PLAY", "PAUSED", "HALFTIME"]),
+                Match.utc_date >= past_limit,
+                Match.utc_date <= future_limit,
+            )
+        )
+        .order_by(Match.utc_date.asc())
+        .limit(120)
+        .all()
+    )
+
+    # 2. Fetch leagues
+    leagues = db.query(League).all()
+
+    ensure_match_predictions(matches, db)
+
+    result = {
+        "matches": matches,
+        "leagues": leagues,
+        "timestamp": now.isoformat(),
+        "total": len(matches),
+    }
+
+    set_in_cache("unified_matches_feed", result)
+    response.headers["Cache-Control"] = "public, max-age=15, s-maxage=30, stale-while-revalidate=60"
+    return result
+
+
 @router.get("/", response_model=list[MatchOut])
 def get_matches(
     league_code: Optional[str] = None,
@@ -68,7 +128,7 @@ def get_matches(
     db: Session = Depends(get_db),
 ):
     cache_key = f"matches_{league_code}_{status}_{date}_{season}_{skip}_{limit}"
-    cached = get_from_cache(cache_key, ttl_seconds=15.0)
+    cached = get_from_cache(cache_key, ttl_seconds=20.0)
     if cached is not None:
         return cached
 
@@ -115,7 +175,7 @@ def get_matches(
 @router.get("/today", response_model=list[MatchOut])
 def get_today_matches(db: Session = Depends(get_db)):
     cache_key = "matches_today"
-    cached = get_from_cache(cache_key, ttl_seconds=10.0)
+    cached = get_from_cache(cache_key, ttl_seconds=15.0)
     if cached is not None:
         return cached
 
@@ -132,7 +192,7 @@ def get_today_matches(db: Session = Depends(get_db)):
         )
         .filter(Match.utc_date >= start, Match.utc_date <= end)
         .order_by(Match.utc_date.asc())
-        .limit(20)
+        .limit(30)
         .all()
     )
 
@@ -148,7 +208,7 @@ def get_today_matches(db: Session = Depends(get_db)):
 @router.get("/live", response_model=list[MatchOut])
 def get_live_matches(db: Session = Depends(get_db)):
     cache_key = "matches_live"
-    cached = get_from_cache(cache_key, ttl_seconds=3.0)
+    cached = get_from_cache(cache_key, ttl_seconds=5.0)
     if cached is not None:
         return cached
 
@@ -175,9 +235,8 @@ def get_upcoming(
     limit: int = Query(50, ge=1, le=100),
     db: Session = Depends(get_db),
 ):
-    """Returns upcoming matches (SCHEDULED and TIMED) ordered chronologically with sub-millisecond caching."""
     cache_key = f"matches_upcoming_{league_code}_{days}_{limit}"
-    cached = get_from_cache(cache_key, ttl_seconds=15.0)
+    cached = get_from_cache(cache_key, ttl_seconds=20.0)
     if cached is not None:
         return cached
 
@@ -214,7 +273,7 @@ def get_match(match_id: int, db: Session = Depends(get_db)):
     from fastapi import HTTPException
 
     cache_key = f"match_detail_{match_id}"
-    cached = get_from_cache(cache_key, ttl_seconds=20.0)
+    cached = get_from_cache(cache_key, ttl_seconds=30.0)
     if cached is not None:
         return cached
 
