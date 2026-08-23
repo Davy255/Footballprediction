@@ -20,8 +20,9 @@ class Settings(BaseSettings):
     FRONTEND_URL: str = "http://localhost:3000"
 
     # Admin bootstrap
-    ADMIN_EMAIL: str = "admin@footballpredict.com"
-    ADMIN_PASSWORD: str = "admin123"
+    ADMIN_EMAIL: str = "davidwesonga776@gmail.com"
+    ADMIN_USERNAME: str = "Wes@254"
+    ADMIN_PASSWORD: str = "@David2211."
 
     # SMTP / Email Service
     SMTP_HOST: str = ""

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from app.core.database import get_db
 from app.core.security import (
     verify_password, get_password_hash,
@@ -20,10 +21,20 @@ def register(user_in: UserCreate, background_tasks: BackgroundTasks, db: Session
     clean_email = user_in.email.strip().lower()
     clean_username = user_in.username.strip()
 
-    if db.query(User).filter(User.email == clean_email).first():
-        raise HTTPException(status_code=400, detail="Email already registered")
-    if db.query(User).filter(User.username == clean_username).first():
-        raise HTTPException(status_code=400, detail="Username already taken")
+    if not clean_email or "@" not in clean_email:
+        raise HTTPException(status_code=400, detail="Please provide a valid email address.")
+    if len(clean_username) < 3:
+        raise HTTPException(status_code=400, detail="Username must be at least 3 characters long.")
+
+    # Check for existing email (case-insensitive)
+    existing_email = db.query(User).filter(func.lower(User.email) == clean_email).first()
+    if existing_email:
+        raise HTTPException(status_code=400, detail="This email address is already registered. Please sign in instead.")
+
+    # Check for existing username (case-insensitive)
+    existing_username = db.query(User).filter(func.lower(User.username) == clean_username.lower()).first()
+    if existing_username:
+        raise HTTPException(status_code=400, detail="This username is already taken. Please choose another username.")
 
     user = User(
         username=clean_username,

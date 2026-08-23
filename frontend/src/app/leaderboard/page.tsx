@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { LeaderboardEntry } from '@/lib/types';
 import { fetchLeaderboard, fetchMyRank } from '@/lib/api';
 import Leaderboard from '@/components/Leaderboard';
+import AdBanner from '@/components/AdBanner';
 import { useAuth } from '@/context/AuthContext';
 
 export default function LeaderboardPage() {
@@ -20,13 +21,15 @@ export default function LeaderboardPage() {
   }, [user]);
 
   return (
-    <div className="container" style={{ marginTop: '2rem' }}>
+    <div className="container" style={{ marginTop: '2rem', paddingBottom: '3rem' }}>
       <div style={{ marginBottom: '2rem' }}>
         <h1 style={{ fontSize: '2.2rem', marginBottom: '0.5rem' }}>Global Leaderboard 👑</h1>
         <p style={{ color: 'var(--text-secondary)' }}>
           See where you stand against the top football predictors in the community.
         </p>
       </div>
+
+      <AdBanner slot="hero-top" />
 
       {user && myRank && (
         <div className="glass-panel" style={{ padding: '1.5rem', marginBottom: '2rem', background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%)' }}>
@@ -59,6 +62,8 @@ export default function LeaderboardPage() {
       ) : (
         <Leaderboard entries={entries} />
       )}
+
+      <AdBanner slot="leaderboard-footer" />
     </div>
   );
 }

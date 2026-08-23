@@ -385,6 +385,9 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Top Hero Ad Banner */}
+          <AdBanner slot="hero-top" />
+
           {/* Matches Categorized by Date & Day */}
           <div style={{ marginBottom: '2.5rem' }}>
             {loading ? (
@@ -395,60 +398,68 @@ export default function HomePage() {
               </div>
             ) : dateGroups.length > 0 ? (
               <div>
-                {dateGroups.map((group) => (
-                  <div key={group.dateKey} style={{ marginBottom: '1.75rem' }}>
-                    {/* Clean Date Header Ribbon */}
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      background: group.isToday
-                        ? 'linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%)'
-                        : 'var(--bg-card-hover)',
-                      border: group.isToday ? '1px solid rgba(59, 130, 246, 0.35)' : '1px solid var(--border-color)',
-                      borderRadius: '12px',
-                      padding: '0.55rem 0.9rem',
-                      marginBottom: '0.75rem',
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-                        <span style={{ fontSize: '1rem' }}>📅</span>
-                        <span style={{
-                          fontWeight: 800,
-                          fontSize: '0.88rem',
-                          color: group.isToday ? 'var(--accent-blue)' : 'var(--text-primary)',
-                          letterSpacing: '-0.01em',
-                        }}>
-                          {group.dateLabel}
-                        </span>
-                        {group.isToday && (
+                {dateGroups.map((group, groupIdx) => (
+                  <React.Fragment key={group.dateKey}>
+                    <div style={{ marginBottom: '1.75rem' }}>
+                      {/* Clean Date Header Ribbon */}
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        background: group.isToday
+                          ? 'linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%)'
+                          : 'var(--bg-card-hover)',
+                        border: group.isToday ? '1px solid rgba(59, 130, 246, 0.35)' : '1px solid var(--border-color)',
+                        borderRadius: '12px',
+                        padding: '0.55rem 0.9rem',
+                        marginBottom: '0.75rem',
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                          <span style={{ fontSize: '1rem' }}>📅</span>
                           <span style={{
-                            fontSize: '0.66rem',
-                            padding: '0.12rem 0.45rem',
-                            borderRadius: '12px',
-                            background: 'rgba(37, 99, 235, 0.25)',
-                            color: '#60a5fa',
                             fontWeight: 800,
+                            fontSize: '0.88rem',
+                            color: group.isToday ? 'var(--accent-blue)' : 'var(--text-primary)',
+                            letterSpacing: '-0.01em',
                           }}>
-                            Today
+                            {group.dateLabel}
                           </span>
-                        )}
+                          {group.isToday && (
+                            <span style={{
+                              fontSize: '0.66rem',
+                              padding: '0.12rem 0.45rem',
+                              borderRadius: '12px',
+                              background: 'rgba(37, 99, 235, 0.25)',
+                              color: '#60a5fa',
+                              fontWeight: 800,
+                            }}>
+                              Today
+                            </span>
+                          )}
+                        </div>
+
+                        <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                          {group.totalMatches} {group.totalMatches === 1 ? 'game' : 'games'}
+                        </span>
                       </div>
 
-                      <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                        {group.totalMatches} {group.totalMatches === 1 ? 'game' : 'games'}
-                      </span>
+                      {/* Leagues for this Date */}
+                      {Object.values(group.leagueGroups).map(({ league, matches }) => (
+                        <LeagueAccordionSection
+                          key={`${group.dateKey}-${league.id || league.code}`}
+                          league={league}
+                          matches={matches}
+                          onPredictionChange={loadData}
+                        />
+                      ))}
                     </div>
 
-                    {/* Leagues for this Date */}
-                    {Object.values(group.leagueGroups).map(({ league, matches }) => (
-                      <LeagueAccordionSection
-                        key={`${group.dateKey}-${league.id || league.code}`}
-                        league={league}
-                        matches={matches}
-                        onPredictionChange={loadData}
-                      />
-                    ))}
-                  </div>
+                    {/* In-feed Ad after 1st date group */}
+                    {groupIdx === 0 && <AdBanner slot="in-feed-match" />}
+
+                    {/* In-feed Ad after 3rd date group */}
+                    {groupIdx === 2 && <AdBanner slot="vip-coach-ai" />}
+                  </React.Fragment>
                 ))}
               </div>
             ) : (
@@ -473,8 +484,11 @@ export default function HomePage() {
             )}
           </div>
 
-          {/* Ad Banner Placement */}
-          <AdBanner />
+          {/* Bottom Merch & Sports Gear Ad Placement */}
+          <AdBanner slot="merch-sports" />
+
+          {/* Leaderboard Rewards Ad Placement */}
+          <AdBanner slot="leaderboard-footer" />
 
           {/* Informational Cards & How It Works (Bottom of page) */}
           <section style={{

@@ -38,17 +38,29 @@ def bootstrap_db():
 
     db = SessionLocal()
     try:
-        # Create admin user
-        if not db.query(User).filter(User.email == settings.ADMIN_EMAIL).first():
+        # Create or update admin user
+        admin_user = db.query(User).filter(
+            (User.email == settings.ADMIN_EMAIL) | (User.username == settings.ADMIN_USERNAME)
+        ).first()
+        if not admin_user:
             admin_user = User(
-                username="admin",
+                username=settings.ADMIN_USERNAME,
                 email=settings.ADMIN_EMAIL,
                 hashed_password=get_password_hash(settings.ADMIN_PASSWORD),
                 is_admin=True,
+                is_active=True,
             )
             db.add(admin_user)
             db.commit()
-            logger.info(f"Admin user created: {settings.ADMIN_EMAIL}")
+            logger.info(f"Admin user created: {settings.ADMIN_USERNAME} ({settings.ADMIN_EMAIL})")
+        else:
+            admin_user.username = settings.ADMIN_USERNAME
+            admin_user.email = settings.ADMIN_EMAIL
+            admin_user.hashed_password = get_password_hash(settings.ADMIN_PASSWORD)
+            admin_user.is_admin = True
+            admin_user.is_active = True
+            db.commit()
+            logger.info(f"Admin user verified & updated: {settings.ADMIN_USERNAME} ({settings.ADMIN_EMAIL})")
 
         # Seed leagues
         for code, info in SUPPORTED_COMPETITIONS.items():

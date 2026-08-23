@@ -4,6 +4,7 @@ import React, { useEffect, useState, Suspense } from 'react';
 import { Match, League } from '@/lib/types';
 import { fetchMatches, fetchLeagues } from '@/lib/api';
 import LeagueAccordionSection from '@/components/LeagueAccordionSection';
+import AdBanner from '@/components/AdBanner';
 import { useSearchParams } from 'next/navigation';
 
 function getMatchDateKey(utc_date: string): { key: string; label: string; isToday: boolean; isTomorrow: boolean } {
@@ -268,6 +269,9 @@ function FixturesContent() {
         </div>
       </div>
 
+      {/* Top Hero Ad Banner */}
+      <AdBanner slot="hero-top" />
+
       {/* Matches Categorized by Date & Day */}
       {loading ? (
         <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center' }}>
@@ -275,61 +279,66 @@ function FixturesContent() {
         </div>
       ) : dateGroups.length > 0 ? (
         <div>
-          {dateGroups.map((group) => (
-            <div key={group.dateKey} style={{ marginBottom: '2rem' }}>
-              {/* Date Header Ribbon */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                background: group.isToday
-                  ? 'linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%)'
-                  : 'var(--bg-card-hover)',
-                border: group.isToday ? '1px solid rgba(59, 130, 246, 0.35)' : '1px solid var(--border-color)',
-                borderRadius: '10px',
-                padding: '0.65rem 1rem',
-                marginBottom: '0.85rem',
-                boxShadow: group.isToday ? '0 0 15px rgba(59, 130, 246, 0.1)' : 'none',
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ fontSize: '1.1rem' }}>📅</span>
-                  <span style={{
-                    fontWeight: 800,
-                    fontSize: '0.94rem',
-                    color: group.isToday ? 'var(--accent-blue)' : 'var(--text-primary)',
-                    letterSpacing: '-0.01em',
-                  }}>
-                    {group.dateLabel}
-                  </span>
-                  {group.isToday && (
+          {dateGroups.map((group, groupIdx) => (
+            <React.Fragment key={group.dateKey}>
+              <div style={{ marginBottom: '2rem' }}>
+                {/* Date Header Ribbon */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  background: group.isToday
+                    ? 'linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%)'
+                    : 'var(--bg-card-hover)',
+                  border: group.isToday ? '1px solid rgba(59, 130, 246, 0.35)' : '1px solid var(--border-color)',
+                  borderRadius: '10px',
+                  padding: '0.65rem 1rem',
+                  marginBottom: '0.85rem',
+                  boxShadow: group.isToday ? '0 0 15px rgba(59, 130, 246, 0.1)' : 'none',
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ fontSize: '1.1rem' }}>📅</span>
                     <span style={{
-                      fontSize: '0.68rem',
-                      padding: '0.15rem 0.5rem',
-                      borderRadius: '12px',
-                      background: 'rgba(37, 99, 235, 0.2)',
-                      color: '#60a5fa',
                       fontWeight: 800,
+                      fontSize: '0.94rem',
+                      color: group.isToday ? 'var(--accent-blue)' : 'var(--text-primary)',
+                      letterSpacing: '-0.01em',
                     }}>
-                      Today
+                      {group.dateLabel}
                     </span>
-                  )}
+                    {group.isToday && (
+                      <span style={{
+                        fontSize: '0.68rem',
+                        padding: '0.15rem 0.5rem',
+                        borderRadius: '12px',
+                        background: 'rgba(37, 99, 235, 0.2)',
+                        color: '#60a5fa',
+                        fontWeight: 800,
+                      }}>
+                        Today
+                      </span>
+                    )}
+                  </div>
+
+                  <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                    {group.totalMatches} {group.totalMatches === 1 ? 'game' : 'games'}
+                  </span>
                 </div>
 
-                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                  {group.totalMatches} {group.totalMatches === 1 ? 'game' : 'games'}
-                </span>
+                {/* Leagues for this Date */}
+                {Object.values(group.leagueGroups).map(({ league, matches: leagueMatches }) => (
+                  <LeagueAccordionSection
+                    key={`${group.dateKey}-${league.id || league.code}`}
+                    league={league}
+                    matches={leagueMatches}
+                    onPredictionChange={loadMatches}
+                  />
+                ))}
               </div>
 
-              {/* Leagues for this Date */}
-              {Object.values(group.leagueGroups).map(({ league, matches: leagueMatches }) => (
-                <LeagueAccordionSection
-                  key={`${group.dateKey}-${league.id || league.code}`}
-                  league={league}
-                  matches={leagueMatches}
-                  onPredictionChange={loadMatches}
-                />
-              ))}
-            </div>
+              {/* In-feed Ad after first date */}
+              {groupIdx === 0 && <AdBanner slot="in-feed-match" />}
+            </React.Fragment>
           ))}
         </div>
       ) : (
@@ -337,6 +346,9 @@ function FixturesContent() {
           No matches found for the selected filters.
         </div>
       )}
+
+      {/* Bottom Ad Placement */}
+      <AdBanner slot="merch-sports" />
     </div>
   );
 }
