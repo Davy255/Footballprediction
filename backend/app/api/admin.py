@@ -176,4 +176,62 @@ def get_stats(
         "finished_matches": db.query(Match).filter(Match.status == "FINISHED").count(),
         "live_matches": db.query(Match).filter(Match.status.in_(["LIVE", "IN_PLAY", "PAUSED"])).count(),
         "leagues": db.query(League).count(),
+        "smtp_configured": bool(settings.SMTP_HOST and settings.SMTP_USER),
+        "smtp_host": settings.SMTP_HOST or "Not configured (DEV mock mode)",
     }
+
+
+class TestEmailRequest(BaseModel):
+    to_email: str
+    email_type: str = "welcome"  # "welcome" | "reminder" | "reset"
+
+
+@router.post("/test-email")
+def test_send_email(
+    payload: TestEmailRequest,
+    _=Depends(get_current_admin),
+):
+    """
+    Sends a test email to verify SMTP configuration and live delivery.
+    """
+    from app.services.email_service import (
+        send_welcome_email,
+        send_password_reset_email,
+        send_daily_match_reminder_email,
+    )
+    
+    target_email = payload.to_email.strip().lower()
+    if not target_email or "@" not in target_email:
+        raise HTTPException(status_code=400, detail="Invalid email address provided.")
+
+    if payload.email_type == "welcome":
+        success = send_welcome_email(target_email, username="Valued Member")
+    elif payload.email_type == "reminder":
+        success = send_daily_match_reminder_email(target_email, username="Valued Member")
+    elif payload.email_type == "reset":
+        success = send_password_reset_email(target_email, reset_token="test-token-12345", username="Valued Member")
+    else:
+        raise HTTPException(status_code=400, detail=f"Unknown email type: '{payload.email_type}'. Use 'welcome', 'reminder', or 'reset'.")
+
+    smtp_status = "live SMTP server" if settings.SMTP_HOST else "development log mode (no SMTP credentials configured)"
+    return {
+        "success": success,
+        "recipient": target_email,
+        "email_type": payload.email_type,
+        "mode": smtp_status,
+        "message": f"Test {payload.email_type} email processed via {smtp_status}.",
+    }
+
+
+@router.post("/trigger-daily-reminders")
+def trigger_daily_reminders(
+    background_tasks: BackgroundTasks,
+    _=Depends(get_current_admin),
+):
+    """
+    Dispatches today's match reminder emails to all registered active users.
+    """
+    from app.services.email_service import dispatch_daily_reminders_to_all_users
+    background_tasks.add_task(dispatch_daily_reminders_to_all_users)
+    return {"detail": "Daily match reminder dispatch initiated in background."}
+

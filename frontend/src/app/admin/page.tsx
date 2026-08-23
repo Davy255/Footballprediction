@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { fetchAdminStats, triggerAdminSync, triggerAdminOddsSync, triggerAdminScoring, loginUser } from '@/lib/api';
+import { fetchAdminStats, triggerAdminSync, triggerAdminOddsSync, triggerAdminScoring, testSendAdminEmail, triggerAdminDailyReminders, loginUser } from '@/lib/api';
 import { AdminStats } from '@/lib/types';
 import Link from 'next/link';
 
@@ -12,6 +12,9 @@ export default function AdminDashboardPage() {
   const [syncMsg, setSyncMsg] = useState<string | null>(null);
   const [oddsMsg, setOddsMsg] = useState<string | null>(null);
   const [scoreMsg, setScoreMsg] = useState<string | null>(null);
+  const [testEmailRecipient, setTestEmailRecipient] = useState<string>('');
+  const [emailStatusMsg, setEmailStatusMsg] = useState<string | null>(null);
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // Admin login form state
@@ -177,6 +180,33 @@ export default function AdminDashboardPage() {
     }
   };
 
+  const handleSendTestEmail = async (type: string) => {
+    if (!testEmailRecipient || !testEmailRecipient.includes('@')) {
+      setEmailStatusMsg('❌ Please enter a valid recipient email address first.');
+      return;
+    }
+    setIsSendingEmail(true);
+    setEmailStatusMsg(`Sending test ${type} email to ${testEmailRecipient}...`);
+    try {
+      const res = await testSendAdminEmail(testEmailRecipient, type);
+      setEmailStatusMsg(`✅ Result: ${res.message} (Mode: ${res.mode})`);
+    } catch (err: any) {
+      setEmailStatusMsg(`❌ Error sending email: ${err.message}`);
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
+
+  const handleTriggerDailyReminders = async () => {
+    setEmailStatusMsg('Dispatching daily match reminders to all active users in background...');
+    try {
+      const res = await triggerAdminDailyReminders();
+      setEmailStatusMsg(`✅ ${res.detail}`);
+    } catch (err: any) {
+      setEmailStatusMsg(`❌ Error triggering reminders: ${err.message}`);
+    }
+  };
+
   return (
     <div className="container" style={{ marginTop: '2rem' }}>
       <div style={{ marginBottom: '2rem' }}>
@@ -258,11 +288,69 @@ export default function AdminDashboardPage() {
                 Process all unscored user predictions for finished matches and update user leaderboard points.
               </p>
               <button onClick={handleScore} className="btn btn-accent" style={{ width: '100%' }}>
-                Calculate & Score Predictions
+                Calculate &amp; Score Predictions
               </button>
               {scoreMsg && (
                 <div style={{ marginTop: '1rem', padding: '0.8rem', borderRadius: '8px', background: 'rgba(16, 185, 129, 0.15)', fontSize: '0.85rem' }}>
                   {scoreMsg}
+                </div>
+              )}
+            </div>
+
+            {/* Email Testing & Reminder Dispatch Card */}
+            <div className="glass-panel" style={{ padding: '1.8rem' }}>
+              <h2 style={{ fontSize: '1.3rem', marginBottom: '0.8rem' }}>📧 Email Service &amp; Reminders</h2>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+                Test live transactional email delivery (Welcome, Daily Digest, Password Reset) or trigger daily reminders.
+              </p>
+
+              <div style={{ marginBottom: '1rem' }}>
+                <input
+                  type="email"
+                  value={testEmailRecipient}
+                  onChange={(e) => setTestEmailRecipient(e.target.value)}
+                  placeholder="Enter recipient email..."
+                  style={{
+                    width: '100%',
+                    padding: '0.6rem 0.8rem',
+                    borderRadius: '8px',
+                    border: '1px solid var(--border-color)',
+                    background: 'var(--bg-card-hover)',
+                    color: '#fff',
+                    fontSize: '0.85rem',
+                    marginBottom: '0.6rem',
+                  }}
+                />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.6rem' }}>
+                  <button
+                    onClick={() => handleSendTestEmail('welcome')}
+                    disabled={isSendingEmail}
+                    className="btn btn-secondary btn-sm"
+                    style={{ fontSize: '0.78rem' }}
+                  >
+                    Send Welcome Email
+                  </button>
+                  <button
+                    onClick={() => handleSendTestEmail('reminder')}
+                    disabled={isSendingEmail}
+                    className="btn btn-secondary btn-sm"
+                    style={{ fontSize: '0.78rem' }}
+                  >
+                    Send Match Reminder
+                  </button>
+                </div>
+                <button
+                  onClick={handleTriggerDailyReminders}
+                  className="btn btn-primary btn-sm"
+                  style={{ width: '100%', fontSize: '0.82rem', padding: '0.5rem' }}
+                >
+                  🚀 Dispatch Daily Reminders to All Users
+                </button>
+              </div>
+
+              {emailStatusMsg && (
+                <div style={{ marginTop: '0.8rem', padding: '0.75rem', borderRadius: '8px', background: 'rgba(59, 130, 246, 0.15)', fontSize: '0.82rem', border: '1px solid rgba(59, 130, 246, 0.3)' }}>
+                  {emailStatusMsg}
                 </div>
               )}
             </div>

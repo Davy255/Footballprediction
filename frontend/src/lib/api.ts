@@ -160,6 +160,17 @@ export async function triggerAdminScoring() {
   return fetchApi<{ detail: string }>('/api/admin/score-predictions', { method: 'POST' });
 }
 
+export async function testSendAdminEmail(to_email: string, email_type: string = 'welcome') {
+  return fetchApi<{ success: boolean; recipient: string; email_type: string; mode: string; message: string }>('/api/admin/test-email', {
+    method: 'POST',
+    body: JSON.stringify({ to_email, email_type }),
+  });
+}
+
+export async function triggerAdminDailyReminders() {
+  return fetchApi<{ detail: string }>('/api/admin/trigger-daily-reminders', { method: 'POST' });
+}
+
 // Chatbot API
 export async function sendChatMessage(message: string, history: ChatMessage[] = []): Promise<ChatResponse> {
   return fetchApi<ChatResponse>('/api/chat/', {

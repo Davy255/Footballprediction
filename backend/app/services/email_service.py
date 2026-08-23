@@ -239,3 +239,159 @@ Scoring Rules:
 """
 
     return send_raw_email(to_email, subject, html_content, text_content)
+
+
+def send_daily_match_reminder_email(to_email: str, username: str, featured_matches: list = None) -> bool:
+    """
+    Sends a Daily Match Digest & Reminder email with today's featured fixtures.
+    """
+    frontend_base = settings.FRONTEND_URL.rstrip("/")
+    if "localhost" in frontend_base and "vercel.app" not in frontend_base:
+        frontend_base = "https://footballprediction-lovat.vercel.app"
+
+    subject = "⚽ Today's Big Matches & AI Projections — Make Your Picks!"
+
+    match_rows_html = ""
+    if featured_matches:
+        for m in featured_matches[:5]:
+            home_name = getattr(m.home_team, 'name', 'Home Team') if hasattr(m, 'home_team') else (m.get('home_team', 'Home') if isinstance(m, dict) else 'Home')
+            away_name = getattr(m.away_team, 'name', 'Away Team') if hasattr(m, 'away_team') else (m.get('away_team', 'Away') if isinstance(m, dict) else 'Away')
+            league_name = getattr(m.league, 'name', 'League') if hasattr(m, 'league') else (m.get('league', 'League') if isinstance(m, dict) else 'League')
+            time_str = str(getattr(m, 'utc_date', 'Today'))[:16].replace('T', ' ')
+            match_rows_html += f"""
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+              <td style="padding: 12px 8px; color: #60a5fa; font-size: 13px; font-weight: 700;">{league_name}</td>
+              <td style="padding: 12px 8px; color: #ffffff; font-size: 14px; font-weight: 600;">{home_name} vs {away_name}</td>
+              <td style="padding: 12px 8px; color: #94a3b8; font-size: 12px; text-align: right;">{time_str}</td>
+            </tr>
+            """
+    else:
+        match_rows_html = """
+        <tr>
+          <td colspan="3" style="padding: 16px; text-align: center; color: #94a3b8; font-size: 14px;">
+            Exciting games are scheduled across the Premier League, La Liga, Serie A and Champions League!
+          </td>
+        </tr>
+        """
+
+    html_content = f"""<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Daily Match Reminder</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #0b0f19; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #e2e8f0;">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #0b0f19; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 580px; background: linear-gradient(180deg, #131b2e 0%, #0f172a 100%); border-radius: 16px; border: 1px solid rgba(59, 130, 246, 0.25); overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+          
+          <!-- Header -->
+          <tr>
+            <td style="padding: 32px 32px 20px 32px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.06);">
+              <div style="font-size: 32px; margin-bottom: 8px;">⚽🔥</div>
+              <h1 style="margin: 0; font-size: 24px; font-weight: 800; color: #ffffff;">Today's Match Predictions</h1>
+              <p style="margin: 6px 0 0 0; color: #94a3b8; font-size: 14px;">Daily Digest for {username}</p>
+            </td>
+          </tr>
+
+          <!-- Content -->
+          <tr>
+            <td style="padding: 32px;">
+              <p style="margin: 0 0 18px 0; font-size: 15px; line-height: 1.6; color: #cbd5e1;">
+                Hello <strong>{username}</strong>! Don&apos;t miss today&apos;s matches. Lock in your predictions before kickoff to climb the community leaderboard!
+              </p>
+
+              <!-- Featured Matches Table -->
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background: rgba(15, 23, 42, 0.6); border-radius: 10px; border: 1px solid rgba(255,255,255,0.08); margin: 16px 0;">
+                <thead>
+                  <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(59, 130, 246, 0.1);">
+                    <th style="padding: 10px 8px; text-align: left; font-size: 12px; color: #60a5fa; text-transform: uppercase;">League</th>
+                    <th style="padding: 10px 8px; text-align: left; font-size: 12px; color: #60a5fa; text-transform: uppercase;">Match</th>
+                    <th style="padding: 10px 8px; text-align: right; font-size: 12px; color: #60a5fa; text-transform: uppercase;">Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {match_rows_html}
+                </tbody>
+              </table>
+
+              <!-- CTA Button -->
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 28px 0;">
+                <tr>
+                  <td align="center">
+                    <a href="{frontend_base}/" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); color: #ffffff; text-decoration: none; padding: 14px 36px; font-size: 16px; font-weight: 700; border-radius: 10px; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);">
+                      Place Predictions &amp; View Stats →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin: 0; font-size: 13px; color: #64748b; text-align: center;">
+                Need tactical advice? Chat with <strong>Coach AI</strong> directly on the platform!
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 20px 32px; background-color: #090d16; text-align: center; border-top: 1px solid rgba(255,255,255,0.06);">
+              <p style="margin: 0; font-size: 12px; color: #64748b;">
+                © 2026 FootballPredict Platform. You are receiving this because you registered for daily reminders.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>"""
+
+    text_content = f"""Hello {username}!
+
+Here are today's top football matches. Don't forget to submit your predictions and earn leaderboard points:
+{frontend_base}/
+
+© 2026 FootballPredict
+"""
+
+    return send_raw_email(to_email, subject, html_content, text_content)
+
+
+def dispatch_daily_reminders_to_all_users() -> dict:
+    """
+    Finds today's scheduled matches and sends the Daily Reminder to all active registered users.
+    """
+    from app.core.database import SessionLocal
+    from app.models.user import User
+    from app.models.match import Match
+    from datetime import date, datetime, timedelta
+
+    db = SessionLocal()
+    try:
+        users = db.query(User).filter(User.is_active == True).all()
+        today = date.today()
+        tomorrow = today + timedelta(days=1)
+
+        today_matches = db.query(Match).filter(
+            Match.utc_date >= datetime.combine(today, datetime.min.time()),
+            Match.utc_date < datetime.combine(tomorrow, datetime.max.time()),
+        ).limit(10).all()
+
+        sent_count = 0
+        for u in users:
+            if u.email and "@" in u.email:
+                success = send_daily_match_reminder_email(u.email, u.username, today_matches)
+                if success:
+                    sent_count += 1
+
+        logger.info(f"📧 Dispatched {sent_count} daily match reminders to active users.")
+        return {"users_total": len(users), "sent_count": sent_count, "matches_count": len(today_matches)}
+    except Exception as e:
+        logger.error(f"Error in dispatch_daily_reminders_to_all_users: {e}")
+        return {"error": str(e)}
+    finally:
+        db.close()
+

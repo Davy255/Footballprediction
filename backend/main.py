@@ -92,8 +92,11 @@ async def lifespan(app: FastAPI):
     scheduler.add_job(auto_manage_live_matches, "interval", seconds=5, id="live_poll")
     # Score finished predictions every hour
     scheduler.add_job(score_finished_predictions, "interval", hours=1, id="score_preds")
+    # Daily match digest & reminders: scheduled daily at 08:00 UTC
+    from app.services.email_service import dispatch_daily_reminders_to_all_users
+    scheduler.add_job(dispatch_daily_reminders_to_all_users, "cron", hour=8, minute=0, id="daily_match_reminders")
     scheduler.start()
-    logger.info("Scheduler started")
+    logger.info("Scheduler started with daily match reminders job")
 
     yield
 
