@@ -92,18 +92,27 @@ export default function AdBanner({
     }
   }, [adClient, slot]);
 
-  // If real Google AdSense ID is provided, render the official AdSense unit
-  if (adClient && slot.match(/^\d+$/)) {
+  // If real Google AdSense Client ID is set, automatically render live Google Ads across all placements!
+  if (adClient) {
+    const isNumericSlot = slot && /^\d+$/.test(slot);
     return (
       <div
         className={`ad-slot-wrapper ${className}`}
-        style={{ margin: '1.25rem auto', maxWidth: '980px', width: '100%', textAlign: 'center', ...style }}
+        style={{
+          margin: '1.25rem auto',
+          maxWidth: '980px',
+          width: '100%',
+          textAlign: 'center',
+          minHeight: '90px',
+          overflow: 'hidden',
+          ...style,
+        }}
       >
         <ins
           className="adsbygoogle"
-          style={{ display: 'block', ...style }}
+          style={{ display: 'block', minHeight: '90px', ...style }}
           data-ad-client={adClient}
-          data-ad-slot={slot}
+          {...(isNumericSlot ? { 'data-ad-slot': slot } : {})}
           data-ad-format={format}
           data-full-width-responsive={responsive ? 'true' : 'false'}
         />
