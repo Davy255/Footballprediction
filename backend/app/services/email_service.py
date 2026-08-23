@@ -18,37 +18,52 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
     Sends an HTML email using configured SMTP settings.
     If SMTP_HOST is not configured, logs the message (development mode) and returns True.
     """
+    import ssl
+
     if not settings.SMTP_HOST or not settings.SMTP_USER:
         logger.info(f"📧 [DEV EMAIL MODE] Email to: {to_email} | Subject: '{subject}'")
         logger.info(f"📧 [DEV EMAIL CONTENT Preview]:\n{text_content or html_content[:300]}...")
         return True
 
+    clean_host = settings.SMTP_HOST.strip()
+    clean_user = settings.SMTP_USER.strip()
+    clean_password = (settings.SMTP_PASSWORD or "").replace(" ", "").strip()
+    clean_port = int(settings.SMTP_PORT or 587)
+    from_addr = (settings.SMTP_FROM_EMAIL or clean_user).strip()
+    from_header = f"{settings.SMTP_FROM_NAME} <{from_addr}>"
+
     try:
         msg = MIMEMultipart("alternative")
         msg["Subject"] = subject
-        msg["From"] = f"{settings.SMTP_FROM_NAME} <{settings.SMTP_FROM_EMAIL or settings.SMTP_USER}>"
+        msg["From"] = from_header
         msg["To"] = to_email
 
         if text_content:
             msg.attach(MIMEText(text_content, "plain", "utf-8"))
         msg.attach(MIMEText(html_content, "html", "utf-8"))
 
-        if settings.SMTP_PORT == 465:
-            with smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT, timeout=15) as server:
-                server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
-                server.sendmail(settings.SMTP_FROM_EMAIL or settings.SMTP_USER, [to_email], msg.as_string())
-        else:
-            with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=15) as server:
-                if settings.SMTP_TLS:
-                    server.starttls()
-                if settings.SMTP_PASSWORD:
-                    server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
-                server.sendmail(settings.SMTP_FROM_EMAIL or settings.SMTP_USER, [to_email], msg.as_string())
+        context = ssl.create_default_context()
 
-        logger.info(f"✅ Email successfully sent to {to_email} with subject: '{subject}'")
+        if clean_port == 465:
+            with smtplib.SMTP_SSL(clean_host, clean_port, context=context, timeout=20) as server:
+                server.ehlo()
+                if clean_password:
+                    server.login(clean_user, clean_password)
+                server.sendmail(from_addr, [to_email], msg.as_string())
+        else:
+            with smtplib.SMTP(clean_host, clean_port, timeout=20) as server:
+                server.ehlo()
+                if settings.SMTP_TLS:
+                    server.starttls(context=context)
+                    server.ehlo()
+                if clean_password:
+                    server.login(clean_user, clean_password)
+                server.sendmail(from_addr, [to_email], msg.as_string())
+
+        logger.info(f"✅ Email successfully delivered to {to_email} with subject: '{subject}'")
         return True
     except Exception as e:
-        logger.error(f"❌ Failed to send email to {to_email}: {e}")
+        logger.error(f"❌ Failed to deliver email to {to_email} via {clean_host}:{clean_port}: {e}")
         return False
 
 
