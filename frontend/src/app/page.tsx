@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Match, League } from '@/lib/types';
-import { fetchTodayMatches, fetchUpcomingMatches, fetchLeagues } from '@/lib/api';
+import { fetchTodayMatches, fetchUpcomingMatches, fetchLeagues, fetchMatches } from '@/lib/api';
 import LeagueAccordionSection from '@/components/LeagueAccordionSection';
 import HowToPlayModal from '@/components/HowToPlayModal';
 import AdBanner from '@/components/AdBanner';
@@ -24,9 +24,10 @@ function SkeletonCard() {
 
 export default function HomePage() {
   const { user } = useAuth();
-  const [todayMatches, setTodayMatches] = useState<Match[]>([]);
-  const [upcomingMatches, setUpcomingMatches] = useState<Match[]>([]);
+  const [allMatches, setAllMatches] = useState<Match[]>([]);
   const [leagues, setLeagues] = useState<League[]>([]);
+  const [selectedStatus, setSelectedStatus] = useState<string>('SCHEDULED');
+  const [selectedLeague, setSelectedLeague] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [showGuide, setShowGuide] = useState(false);
 
@@ -34,34 +35,29 @@ export default function HomePage() {
     // Try restoring from instant client cache first
     if (isInitial && typeof window !== 'undefined') {
       try {
-        const cachedToday = sessionStorage.getItem('fp_cache_today');
-        const cachedUpcoming = sessionStorage.getItem('fp_cache_upcoming');
+        const cachedMatches = sessionStorage.getItem('fp_cache_all_matches');
         const cachedLeagues = sessionStorage.getItem('fp_cache_leagues');
-        if (cachedToday && cachedLeagues) {
-          setTodayMatches(JSON.parse(cachedToday));
+        if (cachedMatches && cachedLeagues) {
+          setAllMatches(JSON.parse(cachedMatches));
           setLeagues(JSON.parse(cachedLeagues));
-          if (cachedUpcoming) setUpcomingMatches(JSON.parse(cachedUpcoming));
           setLoading(false);
         }
       } catch {}
     }
 
     try {
-      const [today, upcoming, lgs] = await Promise.all([
-        fetchTodayMatches().catch(() => []),
-        fetchUpcomingMatches(10).catch(() => []),
+      const [matchesData, lgs] = await Promise.all([
+        fetchMatches({ limit: 60 }).catch(() => []),
         fetchLeagues().catch(() => []),
       ]);
 
-      if (today.length > 0) setTodayMatches(today);
-      if (upcoming.length > 0) setUpcomingMatches(upcoming);
+      if (matchesData.length > 0) setAllMatches(matchesData);
       if (lgs.length > 0) setLeagues(lgs);
 
       // Save to instant client cache
       if (typeof window !== 'undefined') {
         try {
-          if (today.length > 0) sessionStorage.setItem('fp_cache_today', JSON.stringify(today));
-          if (upcoming.length > 0) sessionStorage.setItem('fp_cache_upcoming', JSON.stringify(upcoming));
+          if (matchesData.length > 0) sessionStorage.setItem('fp_cache_all_matches', JSON.stringify(matchesData));
           if (lgs.length > 0) sessionStorage.setItem('fp_cache_leagues', JSON.stringify(lgs));
         } catch {}
       }
@@ -76,6 +72,26 @@ export default function HomePage() {
     loadData(true);
   }, []);
 
+  // Filter matches based on selected status & league
+  const filteredMatches = allMatches.filter((m) => {
+    // League filter
+    if (selectedLeague && (m.league.code !== selectedLeague && m.league.name !== selectedLeague)) {
+      return false;
+    }
+
+    // Status filter
+    if (selectedStatus === 'LIVE') {
+      return ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME'].includes(m.status);
+    }
+    if (selectedStatus === 'FINISHED') {
+      return ['FINISHED', 'AWARDED'].includes(m.status);
+    }
+    if (selectedStatus === 'SCHEDULED') {
+      return ['SCHEDULED', 'TIMED', 'POSTPONED'].includes(m.status);
+    }
+    return true;
+  });
+
   const groupMatchesByLeague = (matchesList: Match[]) => {
     return matchesList.reduce<Record<string, { league: League; matches: Match[] }>>((acc, m) => {
       const code = m.league.code || m.league.name;
@@ -87,50 +103,116 @@ export default function HomePage() {
     }, {});
   };
 
-  const groupedToday = groupMatchesByLeague(todayMatches);
-  const groupedUpcoming = groupMatchesByLeague(upcomingMatches);
+  const groupedMatches = groupMatchesByLeague(filteredMatches);
 
   return (
     <div>
-      {/* Main Content - Fixtures Column */}
-      <div className="container" style={{ marginTop: '1rem', paddingBottom: '2rem' }}>
+      {/* Main Content Container */}
+      <div className="container" style={{ marginTop: '1.25rem', paddingBottom: '2.5rem' }}>
         <div style={{ maxWidth: '980px', margin: '0 auto' }}>
 
-          {/* League Pills Bar */}
-          {leagues.length > 0 && (
-            <div className="league-pills" style={{ marginBottom: '1.25rem' }}>
-              <Link href="/fixtures" className="league-pill">
-                🌍 All Leagues
-              </Link>
-              {leagues.map((lg) => (
-                <Link
-                  key={lg.code}
-                  href={`/fixtures?league=${lg.code}`}
-                  className="league-pill"
-                >
-                  <span>{lg.flag}</span>
-                  <span>{lg.name}</span>
-                </Link>
-              ))}
-            </div>
-          )}
+          {/* Hero Header Title */}
+          <div style={{ marginBottom: '1.25rem' }}>
+            <h1 style={{
+              fontSize: '1.75rem',
+              fontWeight: 900,
+              color: 'var(--text-primary)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              marginBottom: '0.35rem',
+              letterSpacing: '-0.02em',
+            }}>
+              Match Fixtures &amp; Predictions <span style={{ fontSize: '1.5rem' }}>⚽</span>
+            </h1>
+            <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', margin: 0 }}>
+              Browse upcoming matches, view comprehensive probability breakdowns, and place your predictions.
+            </p>
+          </div>
 
-          {/* Today's Matches Section */}
-          <div style={{ marginBottom: '2rem' }}>
-            <div className="section-header">
-              <h2 className="section-title">🔥 Matches Today &amp; Imminent</h2>
-              <Link href="/fixtures" className="section-link">View All →</Link>
+          {/* Status & League Filter Card (Image Reference Layout) */}
+          <div className="glass-panel" style={{
+            padding: '1rem 1.25rem',
+            marginBottom: '1.5rem',
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '1rem',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border-color)',
+            borderRadius: '14px',
+            boxShadow: 'var(--shadow-card)',
+          }}>
+            {/* Status Filter Buttons */}
+            <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', flexWrap: 'wrap' }}>
+              <span style={{ fontWeight: 700, fontSize: '0.88rem', color: 'var(--text-primary)' }}>Status:</span>
+              <button
+                type="button"
+                onClick={() => setSelectedStatus('SCHEDULED')}
+                className={`btn ${selectedStatus === 'SCHEDULED' ? 'btn-primary' : 'btn-secondary'}`}
+                style={{ fontSize: '0.82rem', padding: '0.4rem 0.95rem', borderRadius: '10px', fontWeight: 700 }}
+              >
+                Upcoming
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedStatus('LIVE')}
+                className={`btn ${selectedStatus === 'LIVE' ? 'btn-primary' : 'btn-secondary'}`}
+                style={{ fontSize: '0.82rem', padding: '0.4rem 0.95rem', borderRadius: '10px', fontWeight: 700 }}
+              >
+                🔴 Live
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedStatus('FINISHED')}
+                className={`btn ${selectedStatus === 'FINISHED' ? 'btn-primary' : 'btn-secondary'}`}
+                style={{ fontSize: '0.82rem', padding: '0.4rem 0.95rem', borderRadius: '10px', fontWeight: 700 }}
+              >
+                Completed
+              </button>
             </div>
 
+            {/* League Dropdown Selector */}
+            <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', minWidth: '220px' }}>
+              <span style={{ fontWeight: 700, fontSize: '0.88rem', color: 'var(--text-primary)' }}>League:</span>
+              <select
+                value={selectedLeague}
+                onChange={(e) => setSelectedLeague(e.target.value)}
+                style={{
+                  flex: 1,
+                  padding: '0.45rem 0.85rem',
+                  borderRadius: '10px',
+                  border: '1px solid var(--border-color)',
+                  background: 'var(--bg-card-hover)',
+                  color: 'var(--text-primary)',
+                  fontWeight: 600,
+                  fontSize: '0.85rem',
+                  outline: 'none',
+                  cursor: 'pointer',
+                }}
+              >
+                <option value="">🚩 All Leagues</option>
+                {leagues.map((lg) => (
+                  <option key={lg.code} value={lg.code}>
+                    {lg.flag} {lg.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Match Fixtures List */}
+          <div style={{ marginBottom: '2.5rem' }}>
             {loading ? (
               <div>
                 <SkeletonCard />
                 <SkeletonCard />
                 <SkeletonCard />
               </div>
-            ) : Object.keys(groupedToday).length > 0 ? (
+            ) : Object.keys(groupedMatches).length > 0 ? (
               <div>
-                {Object.values(groupedToday).map(({ league, matches }) => (
+                {Object.values(groupedMatches).map(({ league, matches }) => (
                   <LeagueAccordionSection
                     key={league.id || league.code}
                     league={league}
@@ -140,96 +222,53 @@ export default function HomePage() {
                 ))}
               </div>
             ) : (
-              <div className="glass-panel" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
-                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📅</div>
-                <p style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-primary)' }}>No matches scheduled for today</p>
-                <p style={{ fontSize: '0.82rem', marginTop: '0.2rem' }}>Check the upcoming fixtures below!</p>
+              <div className="glass-panel" style={{ padding: '2.5rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⚽</div>
+                <p style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--text-primary)' }}>
+                  No matches found for {selectedStatus.toLowerCase()} status
+                </p>
+                <p style={{ fontSize: '0.82rem', marginTop: '0.3rem' }}>
+                  Try switching to <button onClick={() => setSelectedStatus('SCHEDULED')} style={{ background: 'none', border: 'none', color: 'var(--accent-blue)', fontWeight: 700, cursor: 'pointer', textDecoration: 'underline' }}>Upcoming</button> or select another league.
+                </p>
               </div>
             )}
           </div>
 
-          {/* Leaderboard Ad Placement Slot */}
+          {/* Ad Banner Placement */}
           <AdBanner />
 
-          {/* Upcoming Matches Section */}
-          <div style={{ marginBottom: '3rem' }}>
-            <div className="section-header">
-              <h2 className="section-title">📅 Upcoming Featured Fixtures</h2>
-              <Link href="/fixtures?status=SCHEDULED" className="section-link">View All Fixtures →</Link>
-            </div>
-
-            {loading ? (
-              <div>
-                <SkeletonCard />
-                <SkeletonCard />
-              </div>
-            ) : Object.keys(groupedUpcoming).length > 0 ? (
-              <div>
-                {Object.values(groupedUpcoming).map(({ league, matches }) => (
-                  <LeagueAccordionSection
-                    key={league.id || league.code}
-                    league={league}
-                    matches={matches}
-                    onPredictionChange={loadData}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="glass-panel" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
-                <p>No upcoming matches found</p>
-              </div>
-            )}
-          </div>
-
-          {/* Bottom Platform Feature & Historical Stats Banner */}
+          {/* Informational Cards & How It Works (Bottom of page) */}
           <section style={{
             background: 'var(--bg-card)',
             border: '1px solid var(--border-color)',
             borderRadius: '16px',
-            padding: '2rem 1.5rem',
-            textAlign: 'center',
+            padding: '1.5rem',
+            marginTop: '2rem',
             boxShadow: 'var(--shadow-card)',
           }}>
-            <div className="hero-tag" style={{ display: 'inline-block', marginBottom: '0.5rem' }}>
-              🏆 Expert Football Intelligence Hub
-            </div>
-            <h3 style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
-              Backed by 87,000+ Match History
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <span>🏆</span> Football Intelligence &amp; Multi-Market Predictions
             </h3>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', maxWidth: '650px', margin: '0 auto 1.25rem', lineHeight: 1.5 }}>
-              Statistical outcome breakdowns, live bookmaker odds, historical Head-to-Head records, 
-              multi-market analysis (BTTS, O/U 2.5, Double Chance), and competitive community points settlement.
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1rem' }}>
+              Explore tactical form ratings, H2H statistics, Over/Under 2.5 projections, and Both Teams to Score (BTTS) probabilities powered by deep match analytics.
             </p>
 
-            <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
-              <Link href="/fixtures" className="btn btn-primary" style={{ padding: '0.45rem 1.2rem', fontSize: '0.85rem' }}>
-                Explore All Fixtures 🎯
-              </Link>
-              <button
-                type="button"
-                onClick={() => setShowGuide(true)}
-                className="btn btn-secondary"
-                style={{ padding: '0.45rem 1.1rem', fontSize: '0.85rem' }}
-              >
-                📖 How Scoring Works
-              </button>
-            </div>
-
-            {/* Stats Row Strip */}
-            <div className="stats-row">
-              {[
-                { value: '87k+', label: 'Historical Matches', color: '#2563eb', bg: 'rgba(37, 99, 235, 0.08)' },
-                { value: '12', label: 'Top Leagues', color: '#7c3aed', bg: 'rgba(124, 58, 237, 0.08)' },
-                { value: '+5pts', label: 'Exact Score Bonus', color: '#16a34a', bg: 'rgba(22, 163, 74, 0.08)' },
-                { value: '+3pts', label: 'Outcome Winner', color: '#0284c7', bg: 'rgba(2, 132, 199, 0.08)' },
-                { value: '+2pts', label: 'BTTS & O/U 2.5', color: '#d97706', bg: 'rgba(217, 119, 6, 0.08)' },
-                { value: '⚡ Live', label: 'Real-time Data', color: '#dc2626', bg: 'rgba(220, 38, 38, 0.08)' },
-              ].map((s) => (
-                <div className="stat-item" key={s.label} style={{ background: s.bg, border: `1px solid ${s.color}35` }}>
-                  <span className="stat-value" style={{ color: s.color }}>{s.value}</span>
-                  <span className="stat-label">{s.label}</span>
-                </div>
-              ))}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.85rem' }}>
+              <div style={{ background: 'var(--bg-card-hover)', padding: '0.85rem', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
+                <div style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>🤖</div>
+                <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Coach AI Assistant</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Real-time match forecasts &amp; supporter</div>
+              </div>
+              <div style={{ background: 'var(--bg-card-hover)', padding: '0.85rem', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
+                <div style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>📊</div>
+                <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>WhoScored Tactical Hub</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Formations, referee stats &amp; style</div>
+              </div>
+              <div style={{ background: 'var(--bg-card-hover)', padding: '0.85rem', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
+                <div style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>👑</div>
+                <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Global Leaderboard</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Compete with fans &amp; earn points</div>
+              </div>
             </div>
           </section>
 

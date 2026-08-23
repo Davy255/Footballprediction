@@ -1801,10 +1801,17 @@ img {
   .fs-center-sub {
     font-size: 0.62rem;
   }
-  .fs-center-score {
-    font-size: 0.92rem;
+  .guide-btn-desktop { 
+    display: inline-flex !important; 
+    padding: 0.3rem 0.6rem !important;
+    font-size: 0.78rem !important;
   }
-  .guide-btn-desktop { display: none !important; }
+  .guide-text-desktop { 
+    display: inline !important; 
+  }
+  .user-info-desktop { 
+    display: flex !important; 
+  }
   .hero-tag { font-size: 0.70rem !important; padding: 3px 8px !important; }
   .stats-row { gap: 0.4rem !important; }
   .stat-item { min-width: 90px !important; padding: 0.4rem 0.6rem !important; }
