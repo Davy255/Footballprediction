@@ -20,6 +20,7 @@ export const metadata: Metadata = {
       { url: '/favicon.svg', type: 'image/svg+xml' },
     ],
     apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
       { url: '/apple-icon.svg', type: 'image/svg+xml' },
     ],
     shortcut: ['/icon.svg'],
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
     siteName: 'FootballPredict',
     images: [
       {
-        url: '/opengraph-image',
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: 'FootballPredict Match Intelligence',
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'FootballPredict — Match Analytics & Statistical Predictions',
     description: 'Data-driven football match analytics, statistical probabilities (1X2, BTTS, Over/Under 2.5), and head-to-head form.',
-    images: ['/opengraph-image'],
+    images: ['/og-image.png'],
   },
 };
 
