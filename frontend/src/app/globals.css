@@ -1568,133 +1568,202 @@ img {
 .fs-btn-view-stats { display: inline-flex; align-items: center; gap: 4px; background: rgba(37, 99, 235, 0.08); border: 1px solid rgba(37, 99, 235, 0.2); color: var(--accent-blue); font-size: 0.74rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; transition: all 0.15s ease; }
 .fs-btn-view-stats:hover { background: rgba(37, 99, 235, 0.18); color: var(--accent-blue); border-color: var(--accent-blue); }
 .fs-view-arrow { font-size: 0.65rem; }
+/* Left Time & Status Column */
+.fs-col-time {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 60px;
+}
+.fs-time-main {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.fs-time-rel {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--accent-green);
+  margin-top: 2px;
+  background: rgba(22, 163, 74, 0.12);
+  padding: 1px 5px;
+  border-radius: 4px;
+  display: inline-block;
+  white-space: nowrap;
+}
+.fs-time-date {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-top: 2px;
+  white-space: nowrap;
+}
 
-.ws-league-header { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: var(--bg-card-hover); border-bottom: 1px solid var(--border-color); cursor: pointer; font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); user-select: none; transition: background 0.15s; border-radius: 8px 8px 0 0; }
-.ws-league-header:hover { background: var(--bg-card); }
-.ws-league-flag { font-size: 1rem; }
-.ws-league-name { flex: 1; color: var(--text-primary); }
-.ws-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #dc2626; animation: pulseBadge 1.5s infinite; display: inline-block; }
+/* Center Parallel Team Rows */
+.fs-col-teams {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+}
+.fs-team-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+.fs-crest-box {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.fs-crest-img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+.fs-crest-fallback {
+  font-size: 0.85rem;
+}
+.fs-team-name {
+  font-size: 0.90rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+.fs-team-row.is-winner .fs-team-name {
+  color: var(--accent-green);
+  font-weight: 800;
+}
+.fs-row-score {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  padding: 0 4px;
+  min-width: 20px;
+  text-align: right;
+}
+.fs-row-score.winner {
+  color: var(--accent-green);
+  font-weight: 900;
+}
+.fs-form-pill {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-family: 'Outfit', sans-serif;
+  flex-shrink: 0;
+}
 
-/* Responsive tweaks for match rows & mobile layout */
+/* Right Status / Action Column */
+.fs-col-result {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 70px;
+  text-align: right;
+}
+.fs-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(220, 38, 38, 0.35);
+  padding: 2px 7px;
+  border-radius: 12px;
+  color: #dc2626;
+  font-size: 0.72rem;
+  font-weight: 800;
+  font-family: 'Outfit', sans-serif;
+}
+.fs-live-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #dc2626;
+  animation: pulseBadge 1.2s infinite;
+  display: inline-block;
+}
+.fs-badge-ft {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  background: var(--bg-card-hover);
+  border: 1px solid var(--border-color);
+  padding: 2px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+}
+.fs-badge-pst {
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #d97706;
+  background: rgba(217, 119, 6, 0.14);
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+.fs-badge-canc {
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.12);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+.fs-btn-view-stats {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  color: var(--accent-blue);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+.fs-btn-view-stats:hover {
+  background: var(--accent-blue);
+  color: #ffffff;
+}
+
+/* Mobile Responsiveness */
 @media (max-width: 640px) {
   .ws-fixture-row {
-    grid-template-columns: 58px 1fr 68px !important;
-    padding: 9px 10px !important;
-    gap: 8px !important;
-  }
-  
-  .fs-col-time {
-    min-width: 52px !important;
-  }
-  .fs-time-main {
-    font-size: 0.78rem !important;
-    font-weight: 800 !important;
-  }
-  .fs-time-rel, .fs-time-date {
-    font-size: 0.62rem !important;
-  }
-
-  /* Stack teams vertically so team names are 100% visible */
-  .fs-col-teams {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 5px !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    align-items: flex-start !important;
-  }
-
-  .fs-team-item {
-    display: flex !important;
-    align-items: center !important;
+    grid-template-columns: 55px 1fr 65px !important;
+    padding: 8px 10px !important;
     gap: 6px !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    justify-content: flex-start !important;
-    text-align: left !important;
   }
-
-  .fs-team-item.home-team {
-    justify-content: flex-start !important;
-    text-align: left !important;
-    flex-direction: row !important;
-  }
-
-  .fs-team-item.away-team {
-    justify-content: flex-start !important;
-    text-align: left !important;
-  }
-
-  .fs-team-name {
-    font-size: 0.86rem !important;
-    font-weight: 700 !important;
-    color: var(--text-primary) !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    display: inline-block !important;
-    flex: 1 !important;
-    max-width: 180px !important;
-  }
-
-  .fs-team-item.is-winner .fs-team-name {
-    color: var(--accent-green) !important;
-    font-weight: 800 !important;
-  }
-
-  .fs-crest-box {
-    width: 18px !important;
-    height: 18px !important;
-    flex-shrink: 0 !important;
-  }
-  .fs-crest-img {
-    width: 16px !important;
-    height: 16px !important;
-  }
-
-  .fs-form-pill {
-    font-size: 0.62rem !important;
-    padding: 1px 4px !important;
-    margin-left: auto !important;
-    flex-shrink: 0 !important;
-  }
-
-  .fs-mid-divider {
-    display: none !important;
-  }
-
-  .fs-col-result {
-    min-width: 60px !important;
-  }
-  .fs-live-scorebox, .fs-score-box {
-    font-size: 0.96rem !important;
-    padding: 2px 6px !important;
-  }
-  .fs-badge-ft {
-    font-size: 0.60rem !important;
-    padding: 1px 4px !important;
-  }
-  .fs-btn-view-stats {
-    padding: 2px 6px !important;
-    font-size: 0.68rem !important;
-  }
-
-  /* Header adjustments for mobile */
-  .hero-tag {
-    font-size: 0.70rem !important;
-    padding: 3px 8px !important;
-  }
-  .stats-row {
-    gap: 0.4rem !important;
-  }
-  .stat-item {
-    min-width: 90px !important;
-    padding: 0.4rem 0.6rem !important;
-  }
-  .stat-value {
-    font-size: 1rem !important;
-  }
-  .stat-label {
-    font-size: 0.62rem !important;
-  }
+  .fs-col-time { min-width: 50px !important; }
+  .fs-time-main { font-size: 0.78rem !important; }
+  .fs-time-rel, .fs-time-date { font-size: 0.60rem !important; }
+  .fs-team-name { font-size: 0.85rem !important; }
+  .fs-row-score { font-size: 0.95rem !important; }
+  .fs-col-result { min-width: 60px !important; }
+  .fs-btn-view-stats { padding: 3px 7px !important; font-size: 0.70rem !important; }
+  .guide-btn-desktop { display: none !important; }
+  .hero-tag { font-size: 0.70rem !important; padding: 3px 8px !important; }
+  .stats-row { gap: 0.4rem !important; }
+  .stat-item { min-width: 90px !important; padding: 0.4rem 0.6rem !important; }
+  .stat-value { font-size: 1rem !important; }
+  .stat-label { font-size: 0.62rem !important; }
 }

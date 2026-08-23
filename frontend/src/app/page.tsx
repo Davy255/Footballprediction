@@ -92,46 +92,6 @@ export default function HomePage() {
 
   return (
     <div>
-      {/* Compact, Clean Top Header Bar */}
-      <section style={{
-        background: 'var(--bg-card)',
-        borderBottom: '1px solid var(--border-color)',
-        padding: '0.85rem 0',
-      }}>
-        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span style={{ fontSize: '1.25rem' }}>⚽</span>
-            <div>
-              <h1 style={{ fontSize: '1.05rem', fontWeight: 900, color: 'var(--text-primary)', margin: 0, lineHeight: 1.2 }}>
-                Football Intelligence &amp; Match Predictions
-              </h1>
-              <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', margin: 0 }}>
-                AI Projections • WhoScored Analytics • Live Odds &amp; Leaderboards
-              </p>
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <button
-              type="button"
-              onClick={() => setShowGuide(true)}
-              className="btn btn-secondary"
-              style={{ padding: '0.35rem 0.8rem', fontSize: '0.80rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}
-            >
-              📖 Rules
-            </button>
-            <Link href="/leaderboard" className="btn btn-secondary" style={{ padding: '0.35rem 0.8rem', fontSize: '0.80rem' }}>
-              👑 Leaderboard
-            </Link>
-            {!user && (
-              <Link href="/register" className="btn btn-primary" style={{ padding: '0.35rem 0.9rem', fontSize: '0.80rem' }}>
-                Sign Up 🚀
-              </Link>
-            )}
-          </div>
-        </div>
-      </section>
-
       {/* Main Content - Fixtures Column */}
       <div className="container" style={{ marginTop: '1rem', paddingBottom: '2rem' }}>
         <div style={{ maxWidth: '980px', margin: '0 auto' }}>

@@ -399,89 +399,78 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
           )}
         </div>
 
-        {/* Center: Teams (FootyStats / WhoScored Layout with Form/Rating Pills) */}
+        {/* Center: Parallel Team Rows with Crests, Names, and Scores */}
         <div className="fs-col-teams">
-          {/* Home Team */}
-          <div className={`fs-team-item home-team ${homeWin ? 'is-winner' : ''}`}>
+          {/* Home Team Row */}
+          <div className={`fs-team-row ${homeWin ? 'is-winner' : ''}`}>
+            <div className="fs-crest-box">
+              {match.home_team?.crest ? (
+                <img src={match.home_team.crest} alt={HN} width={18} height={18} className="fs-crest-img" />
+              ) : (
+                <span className="fs-crest-fallback">⚽</span>
+              )}
+            </div>
             <span className="fs-team-name">{HN}</span>
             {homeStats?.ws_rating && (
-              <span className={`fs-form-pill ${getRatingClass(homeStats.ws_rating)}`} title={`Rating: ${homeStats.ws_rating.toFixed(2)}`}>
+              <span className={`fs-form-pill ${getRatingClass(homeStats.ws_rating)}`} title={`Rating: ${homeStats.ws_rating.toFixed(1)}`}>
                 {homeStats.ws_rating.toFixed(1)}
               </span>
             )}
-            <div className="fs-crest-box">
-              {match.home_team?.crest ? (
-                <img src={match.home_team.crest} alt={HN} width={20} height={20} className="fs-crest-img" />
-              ) : (
-                <span className="fs-crest-fallback">⚽</span>
-              )}
-            </div>
+            {(status.isLive || status.isFinished) && (
+              <span className={`fs-row-score ${homeWin ? 'winner' : ''}`}>
+                {hs ?? 0}
+              </span>
+            )}
           </div>
 
-          {/* Center Divider / Stats Icon */}
-          <div className="fs-mid-divider">
-            <span className="fs-stats-icon" title="View Match Analysis & Stats">📊</span>
-          </div>
-
-          {/* Away Team */}
-          <div className={`fs-team-item away-team ${awayWin ? 'is-winner' : ''}`}>
+          {/* Away Team Row */}
+          <div className={`fs-team-row ${awayWin ? 'is-winner' : ''}`}>
             <div className="fs-crest-box">
               {match.away_team?.crest ? (
-                <img src={match.away_team.crest} alt={AN} width={20} height={20} className="fs-crest-img" />
+                <img src={match.away_team.crest} alt={AN} width={18} height={18} className="fs-crest-img" />
               ) : (
                 <span className="fs-crest-fallback">⚽</span>
               )}
             </div>
+            <span className="fs-team-name">{AN}</span>
             {awayStats?.ws_rating && (
-              <span className={`fs-form-pill ${getRatingClass(awayStats.ws_rating)}`} title={`Rating: ${awayStats.ws_rating.toFixed(2)}`}>
+              <span className={`fs-form-pill ${getRatingClass(awayStats.ws_rating)}`} title={`Rating: ${awayStats.ws_rating.toFixed(1)}`}>
                 {awayStats.ws_rating.toFixed(1)}
               </span>
             )}
-            <span className="fs-team-name">{AN}</span>
+            {(status.isLive || status.isFinished) && (
+              <span className={`fs-row-score ${awayWin ? 'winner' : ''}`}>
+                {as_ ?? 0}
+              </span>
+            )}
           </div>
         </div>
 
-        {/* Right: Scores & Match Results / Live Minute / Status (NO BETTING ODDS) */}
+        {/* Right: Action Pill & Status Badge */}
         <div className="fs-col-result">
           {status.isLive ? (
-            /* LIVE MATCH: Glowing Live Minute + Live Score */
             <div className="fs-result-live">
-              <div className="fs-live-scorebox">
-                <span className="fs-score-val">{hs ?? 0}</span>
-                <span className="fs-score-dash">-</span>
-                <span className="fs-score-val">{as_ ?? 0}</span>
-              </div>
-              <div className="fs-live-badge-box">
+              <span className="fs-live-badge">
                 <span className="fs-live-pulse-dot" />
-                <span className="fs-live-minute-text">{status.minuteText}</span>
-              </div>
+                <span>{status.minuteText}</span>
+              </span>
             </div>
           ) : status.isFinished ? (
-            /* FINISHED MATCH: Score + FT Badge */
             <div className="fs-result-finished">
-              <div className="fs-score-box">
-                <span className={`fs-score-val ${homeWin ? 'winner' : ''}`}>{hs}</span>
-                <span className="fs-score-dash">-</span>
-                <span className={`fs-score-val ${awayWin ? 'winner' : ''}`}>{as_}</span>
-              </div>
               <span className="fs-badge-ft">FT</span>
             </div>
           ) : status.isPostponed ? (
-            /* POSTPONED MATCH: PST Badge (NOT FT!) */
             <div className="fs-result-pst">
               <span className="fs-badge-pst">PST</span>
-              <span className="fs-pst-sub">Postponed</span>
             </div>
           ) : status.isCancelled ? (
-            /* CANCELLED MATCH: CANC Badge */
             <div className="fs-result-canc">
               <span className="fs-badge-canc">CANC</span>
             </div>
           ) : (
-            /* UPCOMING / SCHEDULED: Clean Stats / Preview button */
             <div className="fs-result-sched">
               <span className="fs-btn-view-stats">
-                <span>Preview</span>
+                <span>Predict</span>
                 <span className="fs-view-arrow">▸</span>
               </span>
             </div>

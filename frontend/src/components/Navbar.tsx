@@ -75,11 +75,11 @@ export default function Navbar() {
           </ul>
 
           {/* Right Section */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            {/* Guide Button */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+            {/* Guide Button (Desktop only) */}
             <button
               onClick={() => setShowGuide(true)}
-              className="btn btn-secondary btn-sm"
+              className="btn btn-secondary btn-sm guide-btn-desktop"
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.35rem',
                 border: '1px solid rgba(59,130,246,0.3)',
@@ -96,23 +96,15 @@ export default function Navbar() {
             <ThemeToggle />
 
             {user ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <div style={{ textAlign: 'right', display: 'none' }} className="user-info-desktop">
-                  <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-primary)' }}>
-                    {user.username}
-                  </div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--accent-green)', fontWeight: 700 }}>
-                    🏆 {user.total_points} pts
-                  </div>
-                </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <div
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer' }}
                   onClick={() => setMenuOpen(false)}
                 >
                   <div className="user-avatar">{initials}</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>
-                    <span style={{ fontSize: '0.82rem', fontWeight: 700 }}>{user.username}</span>
-                    <span style={{ fontSize: '0.72rem', color: 'var(--accent-green)', fontWeight: 700 }}>
+                  <div className="user-info-desktop" style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
+                    <span style={{ fontSize: '0.80rem', fontWeight: 700 }}>{user.username}</span>
+                    <span style={{ fontSize: '0.70rem', color: 'var(--accent-green)', fontWeight: 700 }}>
                       {user.total_points} pts
                     </span>
                   </div>
@@ -120,17 +112,15 @@ export default function Navbar() {
                 <button
                   onClick={() => { logout(); setMenuOpen(false); }}
                   className="btn btn-secondary btn-sm"
+                  style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem' }}
                 >
                   Logout
                 </button>
               </div>
             ) : (
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <Link href="/login" className="btn btn-secondary btn-sm">
-                  Login
-                </Link>
-                <Link href="/register" className="btn btn-primary btn-sm">
-                  Sign Up
+              <div style={{ display: 'flex', gap: '0.35rem' }}>
+                <Link href="/login" className="btn btn-primary btn-sm" style={{ padding: '0.32rem 0.75rem', fontSize: '0.80rem', whiteSpace: 'nowrap' }}>
+                  Sign In
                 </Link>
               </div>
             )}
