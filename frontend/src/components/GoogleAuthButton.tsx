@@ -20,7 +20,9 @@ export default function GoogleAuthButton({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '';
+  const clientId =
+    process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ||
+    '705959190306-83n3aesdq2mpfu7hn5fbq12mm120rl99.apps.googleusercontent.com';
 
   useEffect(() => {
     if (!clientId) return;
