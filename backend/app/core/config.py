@@ -24,7 +24,9 @@ class Settings(BaseSettings):
     ADMIN_USERNAME: str = "Wes@254"
     ADMIN_PASSWORD: str = "@David2211."
 
-    # SMTP / Email Service
+    # SMTP / Email Service (Supports direct HTTPS APIs & traditional SMTP)
+    RESEND_API_KEY: str = ""
+    BREVO_API_KEY: str = ""
     SMTP_HOST: str = ""
     SMTP_PORT: int = 587
     SMTP_USER: str = ""

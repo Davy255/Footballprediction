@@ -18,24 +18,91 @@ _LAST_EMAIL_ERROR: str = ""
 
 def send_raw_email(to_email: str, subject: str, html_content: str, text_content: str = "") -> bool:
     """
-    Sends an HTML email using configured SMTP settings.
-    If SMTP_HOST is not configured, logs the message (development mode) and returns True.
+    Sends an HTML email using configured HTTPS APIs (Resend, Brevo) or traditional SMTP.
+    HTTPS APIs (Port 443) are prioritized as cloud providers (like Render) block outbound SMTP ports.
     """
     global _LAST_EMAIL_ERROR
     _LAST_EMAIL_ERROR = ""
+    import json
+    import urllib.request
     import ssl
 
+    clean_user = (settings.SMTP_USER or "").strip()
+    from_addr = (settings.SMTP_FROM_EMAIL or clean_user or "no-reply@footballpredict.com").strip()
+    from_header = f"{settings.SMTP_FROM_NAME} <{from_addr}>"
+
+    # 1. Primary Cloud Dispatch: Resend REST HTTPS API (Port 443 - 100% unblocked)
+    resend_key = getattr(settings, "RESEND_API_KEY", "")
+    if resend_key and len(resend_key.strip()) > 5:
+        try:
+            sender_email = from_addr if "@" in from_addr and not from_addr.endswith("gmail.com") else "FootballPredict <onboarding@resend.dev>"
+            resend_payload = {
+                "from": sender_email,
+                "to": [to_email],
+                "subject": subject,
+                "html": html_content,
+            }
+            if text_content:
+                resend_payload["text"] = text_content
+
+            req = urllib.request.Request(
+                "https://api.resend.com/emails",
+                data=json.dumps(resend_payload).encode("utf-8"),
+                headers={
+                    "Authorization": f"Bearer {resend_key.strip()}",
+                    "Content-Type": "application/json",
+                    "User-Agent": "FootballPredict-Mailer/1.0",
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                if resp.status in (200, 201):
+                    logger.info(f"✅ Email delivered via Resend HTTPS API to {to_email} ('{subject}')")
+                    return True
+        except Exception as e:
+            _LAST_EMAIL_ERROR = f"Resend API error: {e}"
+            logger.error(f"❌ Resend API delivery failed to {to_email}: {e}")
+
+    # 2. Secondary Cloud Dispatch: Brevo REST HTTPS API (Port 443 - 100% unblocked)
+    brevo_key = getattr(settings, "BREVO_API_KEY", "")
+    if brevo_key and len(brevo_key.strip()) > 5:
+        try:
+            brevo_payload = {
+                "sender": {"name": settings.SMTP_FROM_NAME, "email": from_addr if "@" in from_addr else "admin@footballpredict.com"},
+                "to": [{"email": to_email}],
+                "subject": subject,
+                "htmlContent": html_content,
+            }
+            if text_content:
+                brevo_payload["textContent"] = text_content
+
+            req = urllib.request.Request(
+                "https://api.brevo.com/v3/smtp/email",
+                data=json.dumps(brevo_payload).encode("utf-8"),
+                headers={
+                    "api-key": brevo_key.strip(),
+                    "Content-Type": "application/json",
+                    "User-Agent": "FootballPredict-Mailer/1.0",
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                if resp.status in (200, 201):
+                    logger.info(f"✅ Email delivered via Brevo HTTPS API to {to_email} ('{subject}')")
+                    return True
+        except Exception as e:
+            _LAST_EMAIL_ERROR = f"Brevo API error: {e}"
+            logger.error(f"❌ Brevo API delivery failed to {to_email}: {e}")
+
+    # 3. Traditional SMTP Dispatch
     if not settings.SMTP_HOST or not settings.SMTP_USER:
         logger.info(f"📧 [DEV EMAIL MODE] Email to: {to_email} | Subject: '{subject}'")
         logger.info(f"📧 [DEV EMAIL CONTENT Preview]:\n{text_content or html_content[:300]}...")
         return True
 
     clean_host = settings.SMTP_HOST.strip()
-    clean_user = settings.SMTP_USER.strip()
     clean_password = (settings.SMTP_PASSWORD or "").replace(" ", "").strip()
     clean_port = int(settings.SMTP_PORT or 587)
-    from_addr = (settings.SMTP_FROM_EMAIL or clean_user).strip()
-    from_header = f"{settings.SMTP_FROM_NAME} <{from_addr}>"
 
     try:
         msg = MIMEMultipart("alternative")
