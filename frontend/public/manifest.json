@@ -1,0 +1,17 @@
+{
+  "name": "FootballPredict — Expert Football Predictions",
+  "short_name": "FootballPredict",
+  "description": "Football match predictions, live scores, and tactical analysis",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090d16",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

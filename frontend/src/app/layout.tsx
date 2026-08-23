@@ -13,6 +13,17 @@ export const metadata: Metadata = {
   description:
     'Comprehensive football match predictions, live bookmaker odds, standings, multi-market analysis (BTTS, O/U 2.5, Double Chance), and community leaderboard rankings.',
   keywords: 'football predictions, soccer odds, match analysis, head-to-head, team stats, betting tips, fixture previews',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: '/apple-icon.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: ['/favicon.svg'],
+  },
+  manifest: '/manifest.json',
   openGraph: {
     title: 'FootballPredict — Expert Match Predictions',
     description: 'Comprehensive football match predictions with live odds and multi-market match analysis.',
