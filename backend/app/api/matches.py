@@ -77,30 +77,53 @@ def get_unified_matches_feed(response: Response, db: Session = Depends(get_db)):
         return cached
 
     now = datetime.now(timezone.utc)
-    future_limit = now + timedelta(days=60)
-    past_limit = now - timedelta(days=7)
+    # Fetch dedicated sets for each category to guarantee balanced feed
+    opts = [
+        joinedload(Match.league),
+        joinedload(Match.home_team),
+        joinedload(Match.away_team),
+    ]
 
-    # 1. Fetch matches with eager-loaded relations in single query
-    matches = (
+    # 1. Live Matches
+    live_matches = (
         db.query(Match)
-        .options(
-            joinedload(Match.league),
-            joinedload(Match.home_team),
-            joinedload(Match.away_team),
-        )
-        .filter(
-            or_(
-                Match.status.in_(["LIVE", "IN_PLAY", "PAUSED", "HALFTIME"]),
-                Match.utc_date >= past_limit,
-                Match.utc_date <= future_limit,
-            )
-        )
+        .options(*opts)
+        .filter(Match.status.in_(["LIVE", "IN_PLAY", "PAUSED", "HALFTIME"]))
         .order_by(Match.utc_date.asc())
-        .limit(120)
         .all()
     )
 
-    # 2. Fetch leagues
+    # 2. Upcoming Scheduled Matches (ordered chronologically from today forward)
+    upcoming_matches = (
+        db.query(Match)
+        .options(*opts)
+        .filter(
+            Match.status.in_(["SCHEDULED", "TIMED", "POSTPONED"]),
+        )
+        .order_by(Match.utc_date.asc())
+        .limit(60)
+        .all()
+    )
+
+    # 3. Recently Finished Matches (most recent first)
+    finished_matches = (
+        db.query(Match)
+        .options(*opts)
+        .filter(Match.status.in_(["FINISHED", "AWARDED"]))
+        .order_by(Match.utc_date.desc())
+        .limit(30)
+        .all()
+    )
+
+    # Merge into deduplicated list
+    match_map = {}
+    for m in (live_matches + upcoming_matches + finished_matches):
+        if m.id not in match_map:
+            match_map[m.id] = m
+
+    matches = list(match_map.values())
+
+    # 4. Fetch all active leagues
     leagues = db.query(League).all()
 
     ensure_match_predictions(matches, db)
