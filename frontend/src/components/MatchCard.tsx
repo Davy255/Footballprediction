@@ -517,11 +517,13 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
   ];
 
   const homePpg = getTeamFormPpg(homeStats, 1.70);
-  const awayPpg = getTeamFormPpg(awayStats, 1.50);
+  const homeOddsFormatted = typeof odds.home === 'number' ? odds.home.toFixed(2) : '2.10';
+  const drawOddsFormatted = typeof odds.draw === 'number' ? odds.draw.toFixed(2) : '3.30';
+  const awayOddsFormatted = typeof odds.away === 'number' ? odds.away.toFixed(2) : '3.60';
 
   return (
     <div style={{ marginBottom: 0 }}>
-      {/* FootyStats Authentic Match Row */}
+      {/* FootyStats Authentic Match Row with 1X2 Odds */}
       <div
         className={`footystats-match-row ${isEven ? 'row-even' : 'row-odd'} ${status.isLive ? 'live-row' : ''}`}
         onClick={() => {
@@ -533,17 +535,20 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
           if (!open && activeTab === 'predict') loadPred();
         }}
       >
-        {/* Home Side: Team Name (right) + Form Badge */}
+        {/* Home Side: Team Name (right) + Odds badge + Form Badge */}
         <div className="fs-home-side">
           <span className={`fs-team-name-home ${homeWin ? 'is-winner' : ''}`} title={HN}>
             {HN}
           </span>
-          <span className={`fs-ppg-badge ${getFormBadgeColor(homePpg)}`}>
+          <span className="fs-odds-badge" title={`${HN} Win Odds: @${homeOddsFormatted}`}>
+            @{homeOddsFormatted}
+          </span>
+          <span className={`fs-ppg-badge ${getFormBadgeColor(homePpg)}`} title={`PPG Form: ${homePpg}`}>
             {homePpg}
           </span>
         </div>
 
-        {/* Center Column: Kickoff Time / Score + "Stats" link */}
+        {/* Center Column: Kickoff Time / Score + Draw Odds */}
         <div className="fs-center-side">
           {status.isLive ? (
             <>
@@ -568,15 +573,20 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
           ) : (
             <>
               <span className="fs-center-time">{dateTime.time}</span>
-              <span className="fs-center-sub">Stats</span>
+              <span className="fs-center-draw-odds" title={`Draw Odds: @${drawOddsFormatted}`}>
+                X @{drawOddsFormatted}
+              </span>
             </>
           )}
         </div>
 
-        {/* Away Side: Form Badge + Team Name (left) */}
+        {/* Away Side: Form Badge + Odds badge + Team Name (left) */}
         <div className="fs-away-side">
-          <span className={`fs-ppg-badge ${getFormBadgeColor(awayPpg)}`}>
+          <span className={`fs-ppg-badge ${getFormBadgeColor(awayPpg)}`} title={`PPG Form: ${awayPpg}`}>
             {awayPpg}
+          </span>
+          <span className="fs-odds-badge" title={`${AN} Win Odds: @${awayOddsFormatted}`}>
+            @{awayOddsFormatted}
           </span>
           <span className={`fs-team-name-away ${awayWin ? 'is-winner' : ''}`} title={AN}>
             {AN}
@@ -634,6 +644,25 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
               </div>
             </div>
 
+            {/* Quick 1X2 Bookmaker Odds Bar */}
+            <div className="ws-1x2-quick-bar">
+              <div className="ws-1x2-quick-pill">
+                <span className="ws-1x2-quick-tag">1</span>
+                <span className="ws-1x2-quick-name">{HN}</span>
+                <strong className="ws-1x2-quick-val">@{homeOddsFormatted}</strong>
+              </div>
+              <div className="ws-1x2-quick-pill">
+                <span className="ws-1x2-quick-tag">X</span>
+                <span className="ws-1x2-quick-name">Draw</span>
+                <strong className="ws-1x2-quick-val">@{drawOddsFormatted}</strong>
+              </div>
+              <div className="ws-1x2-quick-pill">
+                <span className="ws-1x2-quick-tag">2</span>
+                <span className="ws-1x2-quick-name">{AN}</span>
+                <strong className="ws-1x2-quick-val">@{awayOddsFormatted}</strong>
+              </div>
+            </div>
+
             {/* Match Venue / Attendance / Referee */}
             <div className="ws-match-footer">
               <span>🏟️ {ws?.stadium || `${HN} Arena`}</span>
@@ -662,11 +691,23 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
             {/* ── TAB 1: FORECAST & ODDS ── */}
             {activeTab === 'ai' && (
               <div>
-                <div className="ws-section-title">Win Probability Distribution</div>
+                <div className="ws-section-title">Win Probability Distribution &amp; 1X2 Match Odds</div>
                 <div className="ws-prob-labels">
-                  <div><strong>{probs.home_pct}%</strong>{HN}</div>
-                  <div><strong>{probs.draw_pct}%</strong>Draw</div>
-                  <div><strong>{probs.away_pct}%</strong>{AN}</div>
+                  <div>
+                    <strong>{probs.home_pct}%</strong>
+                    <span>{HN}</span>
+                    <span className="ws-prob-odds-tag">@{homeOddsFormatted}</span>
+                  </div>
+                  <div>
+                    <strong>{probs.draw_pct}%</strong>
+                    <span>Draw</span>
+                    <span className="ws-prob-odds-tag">@{drawOddsFormatted}</span>
+                  </div>
+                  <div>
+                    <strong>{probs.away_pct}%</strong>
+                    <span>{AN}</span>
+                    <span className="ws-prob-odds-tag">@{awayOddsFormatted}</span>
+                  </div>
                 </div>
                 <div className="ws-prob-bar-wrap">
                   <div className="ws-prob-bar-h" style={{ width: `${probs.home_pct}%` }} />
@@ -707,7 +748,35 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
                   </>
                 )}
 
-                <div className="ws-section-title">Real Bookmaker Market Odds & Probabilities</div>
+                <div className="ws-section-title">🎯 1X2 Full-Time Match Odds (Match Winner)</div>
+                <div className="ws-1x2-market-grid">
+                  <div className="ws-1x2-market-card">
+                    <div className="ws-1x2-market-header">
+                      <span className="ws-1x2-market-code">1</span>
+                      <span className="ws-1x2-market-team">{HN}</span>
+                    </div>
+                    <div className="ws-1x2-market-odds">@{homeOddsFormatted}</div>
+                    <div className="ws-1x2-market-sub">{probs.home_pct}% win chance</div>
+                  </div>
+                  <div className="ws-1x2-market-card">
+                    <div className="ws-1x2-market-header">
+                      <span className="ws-1x2-market-code">X</span>
+                      <span className="ws-1x2-market-team">Draw</span>
+                    </div>
+                    <div className="ws-1x2-market-odds">@{drawOddsFormatted}</div>
+                    <div className="ws-1x2-market-sub">{probs.draw_pct}% draw chance</div>
+                  </div>
+                  <div className="ws-1x2-market-card">
+                    <div className="ws-1x2-market-header">
+                      <span className="ws-1x2-market-code">2</span>
+                      <span className="ws-1x2-market-team">{AN}</span>
+                    </div>
+                    <div className="ws-1x2-market-odds">@{awayOddsFormatted}</div>
+                    <div className="ws-1x2-market-sub">{probs.away_pct}% win chance</div>
+                  </div>
+                </div>
+
+                <div className="ws-section-title">Real Bookmaker Market Odds &amp; Probabilities</div>
                 <div className="ws-markets-grid">
                   <div className="ws-market-item">
                     <span className="ws-market-label">Over 2.5 Goals</span>
@@ -733,9 +802,14 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
                     <span className="ws-market-label">Double Chance X2 (Draw/Away)</span>
                     <span><span className="ws-market-val">{markets.dc_x2_pct}%</span><span className="ws-market-odds">@{markets.dc_x2_odds}</span></span>
                   </div>
+                  <div className="ws-market-item">
+                    <span className="ws-market-label">Double Chance 12 (Home/Away)</span>
+                    <span><span className="ws-market-val">{markets.dc_12_pct}%</span><span className="ws-market-odds">@{markets.dc_12_odds}</span></span>
+                  </div>
                 </div>
               </div>
             )}
+
 
             {/* ── TAB 2: WRITTEN MATCH ANALYSIS CARD ── */}
             {activeTab === 'analytics' && (
