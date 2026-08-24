@@ -1517,37 +1517,35 @@ div[id^="google-btn-container"] iframe {
   display: flex;
   background: var(--bg-card);
   border-bottom: 1px solid var(--border-color);
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 10px 14px;
+  width: 100%;
+  overflow-x: hidden;
 }
 .ws-tab {
-  flex-shrink: 0;
-  padding: 7px 13px;
-  font-size: 0.78rem;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 10px 2px;
+  font-size: 0.76rem;
   font-weight: 700;
   color: var(--text-secondary);
   cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 8px;
+  border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
   transition: all 0.2s ease;
   white-space: nowrap;
   font-family: 'Inter', sans-serif;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
+  gap: 3px;
+  text-align: center;
 }
 .ws-tab:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.15);
 }
 .ws-tab.active {
-  color: #ffffff;
-  background: var(--accent-green);
-  border-color: var(--accent-green);
-  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.35);
+  color: var(--accent-green);
+  border-bottom-color: var(--accent-green);
 }
 .ws-tab-content { background: var(--bg-card); border-radius: 0 0 12px 12px; padding: 16px 20px; animation: fadeIn 0.2s ease; border: 1px solid var(--border-color); border-top: none; }
 .ws-section-title { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: #94a3b8; margin: 16px 0 10px; padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.07); }

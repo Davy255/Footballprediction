@@ -1039,13 +1039,13 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
   const awayWin = showScore && as_! > hs!;
 
   const tabs: { key: TabKey; label: string }[] = [
-    { key: 'ai', label: '📊 Forecast & Odds' },
-    { key: 'lineups', label: '👕 Lineups & Pitch' },
-    { key: 'analytics', label: '📝 Tactical Report' },
-    { key: 'sw', label: '⚡ Strengths & Style' },
-    { key: 'predict', label: status.isFinished ? '📋 Settlement' : '🎯 Multi-Predict' },
-    { key: 'stats', label: '📈 Stats & Form' },
-    { key: 'h2h', label: '🔄 H2H History' },
+    { key: 'ai', label: '📊 Forecast' },
+    { key: 'lineups', label: '👕 Lineups' },
+    { key: 'analytics', label: '📝 Analysis' },
+    { key: 'sw', label: '⚡ Style' },
+    { key: 'predict', label: status.isFinished ? '📋 Result' : '🎯 Predict' },
+    { key: 'stats', label: '📈 Stats' },
+    { key: 'h2h', label: '🔄 H2H' },
   ];
 
   const homeOddsFormatted = typeof odds.home === 'number' ? odds.home.toFixed(2) : '2.10';
