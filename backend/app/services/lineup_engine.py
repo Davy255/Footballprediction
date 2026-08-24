@@ -621,8 +621,8 @@ REAL_CLUB_SQUADS: Dict[str, Dict[str, Any]] = {
                 "yellow_cards": 3
             },
             {
-                "name": "Marc Cucurella",
-                "number": 3,
+                "name": "Renato Veiga",
+                "number": 40,
                 "pos": "LB",
                 "rating": 7.5,
                 "goals": 0,
@@ -725,10 +725,10 @@ REAL_CLUB_SQUADS: Dict[str, Dict[str, Any]] = {
                 "rating": 7.15
             },
             {
-                "name": "Renato Veiga",
-                "number": 40,
-                "pos": "MF",
-                "rating": 7.2
+                "name": "Benoît Badiashile",
+                "number": 5,
+                "pos": "DF",
+                "rating": 7.15
             },
             {
                 "name": "Roméo Lavia",
