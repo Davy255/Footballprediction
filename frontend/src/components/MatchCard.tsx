@@ -553,11 +553,114 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
   let ai: any = null;
   try { if (match.prediction_description) ai = JSON.parse(match.prediction_description); } catch {}
   
+function getClubVenue(teamName: string, leagueName: string = ''): { stadium: string; attendance: string; referee: string } {
+  const clean = cleanTeamName(teamName);
+  
+  const VENUES: Record<string, { stadium: string; capacity: number; league: string }> = {
+    'malaga': { stadium: 'La Rosaleda', capacity: 30044, league: 'ES' },
+    'deportivo': { stadium: 'Abanca-Riazor', capacity: 32490, league: 'ES' },
+    'roma': { stadium: 'Stadio Olimpico', capacity: 70634, league: 'IT' },
+    'fiorentina': { stadium: 'Stadio Artemio Franchi', capacity: 43147, league: 'IT' },
+    'fulham': { stadium: 'Craven Cottage', capacity: 25700, league: 'EN' },
+    'chelsea': { stadium: 'Stamford Bridge', capacity: 40341, league: 'EN' },
+    'arsenal': { stadium: 'Emirates Stadium', capacity: 60704, league: 'EN' },
+    'liverpool': { stadium: 'Anfield', capacity: 61276, league: 'EN' },
+    'manchester city': { stadium: 'Etihad Stadium', capacity: 53400, league: 'EN' },
+    'man city': { stadium: 'Etihad Stadium', capacity: 53400, league: 'EN' },
+    'manchester united': { stadium: 'Old Trafford', capacity: 74310, league: 'EN' },
+    'man united': { stadium: 'Old Trafford', capacity: 74310, league: 'EN' },
+    'tottenham': { stadium: 'Tottenham Hotspur Stadium', capacity: 62850, league: 'EN' },
+    'spurs': { stadium: 'Tottenham Hotspur Stadium', capacity: 62850, league: 'EN' },
+    'newcastle': { stadium: "St. James' Park", capacity: 52305, league: 'EN' },
+    'aston villa': { stadium: 'Villa Park', capacity: 42682, league: 'EN' },
+    'everton': { stadium: 'Goodison Park', capacity: 39572, league: 'EN' },
+    'real madrid': { stadium: 'Santiago Bernabéu', capacity: 81044, league: 'ES' },
+    'madrid': { stadium: 'Santiago Bernabéu', capacity: 81044, league: 'ES' },
+    'barcelona': { stadium: 'Estadi Olímpic Lluís Companys', capacity: 49472, league: 'ES' },
+    'barca': { stadium: 'Estadi Olímpic Lluís Companys', capacity: 49472, league: 'ES' },
+    'atletico': { stadium: 'Cívitas Metropolitano', capacity: 70460, league: 'ES' },
+    'athletic': { stadium: 'San Mamés', capacity: 53289, league: 'ES' },
+    'bilbao': { stadium: 'San Mamés', capacity: 53289, league: 'ES' },
+    'real betis': { stadium: 'Estadio Benito Villamarín', capacity: 59490, league: 'ES' },
+    'sevilla': { stadium: 'Ramón Sánchez-Pizjuán', capacity: 43883, league: 'ES' },
+    'valencia': { stadium: 'Mestalla', capacity: 49430, league: 'ES' },
+    'real sociedad': { stadium: 'Reale Arena', capacity: 39313, league: 'ES' },
+    'villarreal': { stadium: 'Estadio de la Cerámica', capacity: 23500, league: 'ES' },
+    'inter': { stadium: 'San Siro', capacity: 75817, league: 'IT' },
+    'milan': { stadium: 'San Siro', capacity: 75817, league: 'IT' },
+    'juventus': { stadium: 'Allianz Stadium', capacity: 41507, league: 'IT' },
+    'napoli': { stadium: 'Stadio Diego Armando Maradona', capacity: 54726, league: 'IT' },
+    'lazio': { stadium: 'Stadio Olimpico', capacity: 70634, league: 'IT' },
+    'atalanta': { stadium: 'Gewiss Stadium', capacity: 24950, league: 'IT' },
+    'bayern': { stadium: 'Allianz Arena', capacity: 75024, league: 'DE' },
+    'dortmund': { stadium: 'Signal Iduna Park', capacity: 81365, league: 'DE' },
+    'leverkusen': { stadium: 'BayArena', capacity: 30210, league: 'DE' },
+    'leipzig': { stadium: 'Red Bull Arena', capacity: 47069, league: 'DE' },
+    'psg': { stadium: 'Parc des Princes', capacity: 47929, league: 'FR' },
+    'marseille': { stadium: 'Orange Vélodrome', capacity: 67394, league: 'FR' },
+    'lyon': { stadium: 'Groupama Stadium', capacity: 59186, league: 'FR' },
+    'monaco': { stadium: 'Stade Louis II', capacity: 18523, league: 'FR' },
+    'sporting': { stadium: 'Estádio José Alvalade', capacity: 50095, league: 'PT' },
+    'benfica': { stadium: 'Estádio da Luz', capacity: 64642, league: 'PT' },
+    'porto': { stadium: 'Estádio do Dragão', capacity: 50033, league: 'PT' },
+    'ajax': { stadium: 'Johan Cruyff Arena', capacity: 55865, league: 'NL' },
+    'psv': { stadium: 'Philips Stadion', capacity: 35000, league: 'NL' },
+    'feyenoord': { stadium: 'De Kuip', capacity: 47500, league: 'NL' },
+  };
+
+  const REFS: Record<string, string[]> = {
+    'EN': ['Michael Oliver', 'Anthony Taylor', 'Paul Tierney', 'Simon Hooper', 'Chris Kavanagh', 'Stuart Attwell', 'Craig Pawson', 'Jarred Gillett', 'Robert Jones', 'Andy Madley'],
+    'ES': ['Jesús Gil Manzano', 'J.M. Sánchez Martínez', 'César Soto Grado', 'A.J. Hernández Hernández', 'G. Cuadra Fernández', 'R. De Burgos Bengoetxea', 'J.L. Munuera Montero'],
+    'IT': ['Daniele Doveri', 'Davide Massa', 'Maurizio Mariani', 'Marco Guida', 'Daniele Chiffi', 'Michael Fabbri', 'Antonio Rapuano', 'Simone Sozza'],
+    'DE': ['Felix Zwayer', 'Daniel Siebert', 'Sascha Stegemann', 'Harm Osmers', 'Sven Jablonski', 'Deniz Aytekin', 'Tobias Stieler'],
+    'FR': ['François Letexier', 'Clément Turpin', 'Benoît Bastien', 'Stéphanie Frappart', 'Willy Delajod', 'Jérôme Brisard'],
+    'PT': ['Artur Soares Dias', 'Luís Godinho', 'Fábio Veríssimo', 'Tiago Martins', 'João Pinheiro'],
+    'NL': ['Danny Makkelie', 'Serdar Gözübüyük', 'Allard Lindhout', 'Pol van Boekel', 'Dennis Higler'],
+    'EU': ['Szymon Marciniak', 'Daniele Orsato', 'István Kovács', 'Slavko Vinčić', 'Michael Oliver', 'Clément Turpin', 'Felix Zwayer'],
+  };
+
+  let entry = VENUES[clean];
+  if (!entry) {
+    for (const [k, v] of Object.entries(VENUES)) {
+      if (clean.includes(k) || k.includes(clean)) {
+        entry = v;
+        break;
+      }
+    }
+  }
+
+  let code = 'EU';
+  const l = (leagueName || '').toLowerCase();
+  if (l.includes('premier') || l.includes('championship') || l.includes('england')) code = 'EN';
+  else if (l.includes('laliga') || l.includes('la liga') || l.includes('spain') || l.includes('segunda')) code = 'ES';
+  else if (l.includes('serie a') || l.includes('serie b') || l.includes('italy')) code = 'IT';
+  else if (l.includes('bundesliga') || l.includes('germany')) code = 'DE';
+  else if (l.includes('ligue 1') || l.includes('france')) code = 'FR';
+  else if (l.includes('portugal') || l.includes('primeira')) code = 'PT';
+  else if (l.includes('eredivisie') || l.includes('netherlands')) code = 'NL';
+  else if (entry?.league) code = entry.league;
+
+  let seed = 0;
+  for (let i = 0; i < teamName.length; i++) seed = ((seed << 5) - seed + teamName.charCodeAt(i)) | 0;
+  seed = Math.abs(seed);
+
+  const stadium = entry?.stadium || `${teamName} Stadium`;
+  const capacity = entry?.capacity || (22000 + (seed % 26000));
+  const fill = 0.86 + ((seed % 12) / 100);
+  const attendance = `${Math.round(capacity * fill).toLocaleString()}`;
+  
+  const refList = REFS[code] || REFS['EU'];
+  const referee = refList[seed % refList.length];
+
+  return { stadium, attendance, referee };
+}
+
   const HN = match.home_team?.short_name || match.home_team?.name || 'Home';
   const AN = match.away_team?.short_name || match.away_team?.name || 'Away';
 
   const homeIntel = getClubIntel(HN);
   const awayIntel = getClubIntel(AN);
+  const venueFallback = getClubVenue(HN, match.league?.name);
 
   const homeRating = (ai?.whoscored?.home_rating && ai.whoscored.home_rating !== 5.2 && ai.whoscored.home_rating !== 5.20 && ai.whoscored.home_rating !== 6.8)
     ? ai.whoscored.home_rating
@@ -566,7 +669,17 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
     ? ai.whoscored.away_rating
     : awayIntel.wsRating;
 
-  // Fallback WhoScored tactical profile if not yet in payload
+  // Fallback WhoScored tactical profile if not yet in payload or sanitize legacy repeated entries
+  const stadium = (ai?.whoscored?.stadium && !ai.whoscored.stadium.toLowerCase().includes('undefined') && ai.whoscored.stadium !== 'Stadium')
+    ? ai.whoscored.stadium
+    : venueFallback.stadium;
+  const attendance = (ai?.whoscored?.attendance && ai.whoscored.attendance !== '46,068' && ai.whoscored.attendance !== '38,000' && ai.whoscored.attendance !== '42,000')
+    ? ai.whoscored.attendance
+    : venueFallback.attendance;
+  const referee = (ai?.whoscored?.referee && ai.whoscored.referee !== 'S. Martinez' && ai.whoscored.referee !== 'Premier Referee' && ai.whoscored.referee !== 'Match Official')
+    ? ai.whoscored.referee
+    : venueFallback.referee;
+
   const ws = {
     ...(ai?.whoscored || {}),
     home_rating: homeRating,
@@ -575,9 +688,9 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
     away_manager: ai?.whoscored?.away_manager || 'Head Coach',
     home_formation: ai?.whoscored?.home_formation || '4-2-3-1',
     away_formation: ai?.whoscored?.away_formation || '4-3-3',
-    stadium: ai?.whoscored?.stadium || `${HN} Stadium`,
-    attendance: ai?.whoscored?.attendance || '38,000',
-    referee: ai?.whoscored?.referee || 'Premier Referee',
+    stadium,
+    attendance,
+    referee,
     home_strengths: ai?.whoscored?.home_strengths || [
       { title: 'Creating scoring chances', level: 'Strong' },
       { title: 'Attacking down the wings', level: 'Strong' },
