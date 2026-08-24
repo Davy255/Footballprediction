@@ -657,16 +657,16 @@ REAL_CLUB_SQUADS: Dict[str, Dict[str, Any]] = {
                 "yellow_cards": 3
             },
             {
-                "name": "Noni Madueke",
-                "number": 11,
+                "name": "Pedro Neto",
+                "number": 7,
                 "pos": "RW",
-                "rating": 7.7,
-                "goals": 7,
-                "assists": 4,
-                "tackles": 1.2,
-                "key_passes": 2.1,
-                "shots": 3.1,
-                "yellow_cards": 2
+                "rating": 7.8,
+                "goals": 5,
+                "assists": 6,
+                "tackles": 1.4,
+                "key_passes": 2.6,
+                "shots": 2.8,
+                "yellow_cards": 1
             },
             {
                 "name": "Cole Palmer",
@@ -681,15 +681,15 @@ REAL_CLUB_SQUADS: Dict[str, Dict[str, Any]] = {
                 "yellow_cards": 2
             },
             {
-                "name": "Pedro Neto",
-                "number": 7,
+                "name": "Jadon Sancho",
+                "number": 19,
                 "pos": "LW",
-                "rating": 7.65,
-                "goals": 4,
-                "assists": 5,
-                "tackles": 1.4,
-                "key_passes": 2.5,
-                "shots": 2.6,
+                "rating": 7.75,
+                "goals": 5,
+                "assists": 7,
+                "tackles": 1.2,
+                "key_passes": 2.9,
+                "shots": 2.4,
                 "yellow_cards": 1
             },
             {
