@@ -36,7 +36,7 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
     resend_key = os.environ.get("RESEND_API_KEY", "").strip() or getattr(settings, "RESEND_API_KEY", "").strip()
     if resend_key and len(resend_key) > 5:
         try:
-            sender_email = from_addr if "@" in from_addr and not from_addr.endswith("gmail.com") else "FootballPredict <onboarding@resend.dev>"
+            sender_email = "FootballPredict <onboarding@resend.dev>"
             resend_payload = {
                 "from": sender_email,
                 "to": [to_email],
@@ -60,9 +60,15 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
                 if resp.status in (200, 201):
                     logger.info(f"✅ Email delivered via Resend HTTPS API to {to_email} ('{subject}')")
                     return True
+        except urllib.error.HTTPError as he:
+            err_body = he.read().decode("utf-8", errors="ignore")
+            _LAST_EMAIL_ERROR = f"Resend API HTTP {he.code}: {err_body}"
+            logger.error(f"❌ Resend API HTTP error sending to {to_email}: {he.code} - {err_body}")
+            return False
         except Exception as e:
             _LAST_EMAIL_ERROR = f"Resend API error: {e}"
             logger.error(f"❌ Resend API delivery failed to {to_email}: {e}")
+            return False
 
     # 2. Secondary Cloud Dispatch: Brevo REST HTTPS API (Port 443 - 100% unblocked)
     brevo_key = getattr(settings, "BREVO_API_KEY", "")
