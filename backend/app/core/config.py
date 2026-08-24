@@ -6,6 +6,8 @@ class Settings(BaseSettings):
     # API
     FOOTBALL_DATA_API_KEY: str = ""
     FOOTBALL_DATA_BASE_URL: str = "https://api.football-data.org/v4"
+    API_FOOTBALL_KEY: str = ""
+    API_FOOTBALL_BASE_URL: str = "https://v3.football.api-sports.io"
     ODDS_API_KEY: str = "0bd3aee3e6502b25b30cf2bf619c9525"
 
     # Security
