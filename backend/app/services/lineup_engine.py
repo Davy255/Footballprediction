@@ -558,7 +558,7 @@ REAL_CLUB_SQUADS: Dict[str, Dict[str, Any]] = {
                 "name": "Robert Sánchez",
                 "number": 1,
                 "pos": "GK",
-                "rating": 7.2,
+                "rating": 7.3,
                 "goals": 0,
                 "assists": 0,
                 "tackles": 0.2,
@@ -567,25 +567,25 @@ REAL_CLUB_SQUADS: Dict[str, Dict[str, Any]] = {
                 "yellow_cards": 2
             },
             {
-                "name": "Reece James",
-                "number": 24,
+                "name": "Malo Gusto",
+                "number": 27,
                 "pos": "RB",
                 "rating": 7.35,
-                "goals": 1,
-                "assists": 2,
-                "tackles": 2.4,
-                "key_passes": 1.7,
-                "shots": 1.1,
+                "goals": 0,
+                "assists": 3,
+                "tackles": 2.6,
+                "key_passes": 1.5,
+                "shots": 0.6,
                 "yellow_cards": 2
             },
             {
                 "name": "Wesley Fofana",
                 "number": 29,
                 "pos": "CB",
-                "rating": 7.3,
+                "rating": 7.4,
                 "goals": 0,
                 "assists": 0,
-                "tackles": 2.3,
+                "tackles": 2.4,
                 "key_passes": 0.3,
                 "shots": 0.4,
                 "yellow_cards": 4
@@ -594,11 +594,11 @@ REAL_CLUB_SQUADS: Dict[str, Dict[str, Any]] = {
                 "name": "Levi Colwill",
                 "number": 6,
                 "pos": "CB",
-                "rating": 7.45,
+                "rating": 7.5,
                 "goals": 1,
                 "assists": 0,
-                "tackles": 2.2,
-                "key_passes": 0.6,
+                "tackles": 2.3,
+                "key_passes": 0.5,
                 "shots": 0.5,
                 "yellow_cards": 3
             },
@@ -606,11 +606,11 @@ REAL_CLUB_SQUADS: Dict[str, Dict[str, Any]] = {
                 "name": "Marc Cucurella",
                 "number": 3,
                 "pos": "LB",
-                "rating": 7.4,
+                "rating": 7.45,
                 "goals": 0,
                 "assists": 2,
-                "tackles": 2.9,
-                "key_passes": 1.1,
+                "tackles": 3.0,
+                "key_passes": 1.2,
                 "shots": 0.4,
                 "yellow_cards": 4
             },
@@ -618,11 +618,11 @@ REAL_CLUB_SQUADS: Dict[str, Dict[str, Any]] = {
                 "name": "Moisés Caicedo",
                 "number": 25,
                 "pos": "DM",
-                "rating": 7.85,
+                "rating": 7.9,
                 "goals": 2,
                 "assists": 3,
-                "tackles": 3.8,
-                "key_passes": 1.6,
+                "tackles": 3.9,
+                "key_passes": 1.7,
                 "shots": 1.2,
                 "yellow_cards": 4
             },
@@ -630,11 +630,11 @@ REAL_CLUB_SQUADS: Dict[str, Dict[str, Any]] = {
                 "name": "Enzo Fernández",
                 "number": 8,
                 "pos": "CM",
-                "rating": 7.5,
+                "rating": 7.6,
                 "goals": 3,
-                "assists": 4,
-                "tackles": 2.1,
-                "key_passes": 2.4,
+                "assists": 5,
+                "tackles": 2.2,
+                "key_passes": 2.5,
                 "shots": 1.8,
                 "yellow_cards": 3
             },
@@ -642,48 +642,48 @@ REAL_CLUB_SQUADS: Dict[str, Dict[str, Any]] = {
                 "name": "Noni Madueke",
                 "number": 11,
                 "pos": "RW",
-                "rating": 7.55,
-                "goals": 5,
-                "assists": 2,
+                "rating": 7.65,
+                "goals": 6,
+                "assists": 3,
                 "tackles": 1.2,
-                "key_passes": 1.9,
-                "shots": 2.8,
+                "key_passes": 2.0,
+                "shots": 2.9,
                 "yellow_cards": 2
             },
             {
                 "name": "Cole Palmer",
                 "number": 20,
                 "pos": "AM",
-                "rating": 8.35,
-                "goals": 11,
-                "assists": 7,
+                "rating": 8.4,
+                "goals": 12,
+                "assists": 8,
                 "tackles": 1.3,
-                "key_passes": 3.5,
-                "shots": 3.7,
+                "key_passes": 3.6,
+                "shots": 3.8,
                 "yellow_cards": 2
             },
             {
-                "name": "Jadon Sancho",
-                "number": 19,
+                "name": "Pedro Neto",
+                "number": 7,
                 "pos": "LW",
-                "rating": 7.4,
-                "goals": 2,
+                "rating": 7.55,
+                "goals": 3,
                 "assists": 4,
-                "tackles": 1.1,
-                "key_passes": 2.2,
-                "shots": 1.6,
-                "yellow_cards": 0
+                "tackles": 1.3,
+                "key_passes": 2.3,
+                "shots": 2.4,
+                "yellow_cards": 1
             },
             {
                 "name": "Nicolas Jackson",
                 "number": 15,
                 "pos": "ST",
-                "rating": 7.75,
-                "goals": 9,
+                "rating": 7.8,
+                "goals": 10,
                 "assists": 3,
                 "tackles": 0.8,
-                "key_passes": 1.4,
-                "shots": 3.2,
+                "key_passes": 1.5,
+                "shots": 3.3,
                 "yellow_cards": 3
             }
         ],
@@ -695,10 +695,10 @@ REAL_CLUB_SQUADS: Dict[str, Dict[str, Any]] = {
                 "rating": 6.85
             },
             {
-                "name": "Malo Gusto",
-                "number": 27,
+                "name": "Reece James",
+                "number": 24,
                 "pos": "DF",
-                "rating": 7.2
+                "rating": 7.4
             },
             {
                 "name": "Tosin Adarabioyo",
@@ -716,19 +716,19 @@ REAL_CLUB_SQUADS: Dict[str, Dict[str, Any]] = {
                 "name": "Roméo Lavia",
                 "number": 45,
                 "pos": "MF",
-                "rating": 7.25
+                "rating": 7.3
             },
             {
-                "name": "Pedro Neto",
-                "number": 7,
+                "name": "Jadon Sancho",
+                "number": 19,
                 "pos": "FW",
-                "rating": 7.4
+                "rating": 7.45
             },
             {
                 "name": "Christopher Nkunku",
                 "number": 18,
                 "pos": "FW",
-                "rating": 7.6
+                "rating": 7.65
             }
         ]
     },
@@ -3625,6 +3625,368 @@ REAL_CLUB_SQUADS: Dict[str, Dict[str, Any]] = {
                 "number": 9,
                 "pos": "FW",
                 "rating": 7.4
+            }
+        ]
+    },
+    "fulham": {
+        "formation": "4-2-3-1",
+        "starting_xi": [
+            {
+                "name": "Bernd Leno",
+                "number": 1,
+                "pos": "GK",
+                "rating": 7.4,
+                "goals": 0,
+                "assists": 0,
+                "tackles": 0.2,
+                "key_passes": 0.1,
+                "shots": 0.0,
+                "yellow_cards": 1
+            },
+            {
+                "name": "Kenny Tete",
+                "number": 2,
+                "pos": "RB",
+                "rating": 7.25,
+                "goals": 0,
+                "assists": 2,
+                "tackles": 2.8,
+                "key_passes": 1.1,
+                "shots": 0.4,
+                "yellow_cards": 2
+            },
+            {
+                "name": "Joachim Andersen",
+                "number": 5,
+                "pos": "CB",
+                "rating": 7.5,
+                "goals": 1,
+                "assists": 1,
+                "tackles": 2.5,
+                "key_passes": 0.6,
+                "shots": 0.6,
+                "yellow_cards": 3
+            },
+            {
+                "name": "Calvin Bassey",
+                "number": 3,
+                "pos": "CB",
+                "rating": 7.35,
+                "goals": 0,
+                "assists": 0,
+                "tackles": 2.4,
+                "key_passes": 0.3,
+                "shots": 0.4,
+                "yellow_cards": 3
+            },
+            {
+                "name": "Antonee Robinson",
+                "number": 33,
+                "pos": "LB",
+                "rating": 7.65,
+                "goals": 0,
+                "assists": 6,
+                "tackles": 3.1,
+                "key_passes": 2.4,
+                "shots": 0.8,
+                "yellow_cards": 2
+            },
+            {
+                "name": "Sander Berge",
+                "number": 16,
+                "pos": "DM",
+                "rating": 7.35,
+                "goals": 1,
+                "assists": 1,
+                "tackles": 3.0,
+                "key_passes": 1.2,
+                "shots": 0.7,
+                "yellow_cards": 2
+            },
+            {
+                "name": "Saša Lukić",
+                "number": 28,
+                "pos": "CM",
+                "rating": 7.3,
+                "goals": 1,
+                "assists": 2,
+                "tackles": 2.7,
+                "key_passes": 1.5,
+                "shots": 1.0,
+                "yellow_cards": 4
+            },
+            {
+                "name": "Adama Traoré",
+                "number": 11,
+                "pos": "RW",
+                "rating": 7.55,
+                "goals": 3,
+                "assists": 4,
+                "tackles": 1.1,
+                "key_passes": 2.5,
+                "shots": 2.3,
+                "yellow_cards": 1
+            },
+            {
+                "name": "Emile Smith Rowe",
+                "number": 32,
+                "pos": "AM",
+                "rating": 7.75,
+                "goals": 5,
+                "assists": 4,
+                "tackles": 1.4,
+                "key_passes": 2.7,
+                "shots": 2.5,
+                "yellow_cards": 1
+            },
+            {
+                "name": "Alex Iwobi",
+                "number": 17,
+                "pos": "LW",
+                "rating": 7.6,
+                "goals": 4,
+                "assists": 5,
+                "tackles": 1.5,
+                "key_passes": 2.4,
+                "shots": 2.2,
+                "yellow_cards": 2
+            },
+            {
+                "name": "Raúl Jiménez",
+                "number": 7,
+                "pos": "ST",
+                "rating": 7.7,
+                "goals": 8,
+                "assists": 3,
+                "tackles": 0.9,
+                "key_passes": 1.4,
+                "shots": 3.4,
+                "yellow_cards": 2
+            }
+        ],
+        "bench": [
+            {
+                "name": "Steven Benda",
+                "number": 23,
+                "pos": "GK",
+                "rating": 6.7
+            },
+            {
+                "name": "Timothy Castagne",
+                "number": 21,
+                "pos": "DF",
+                "rating": 7.15
+            },
+            {
+                "name": "Issa Diop",
+                "number": 31,
+                "pos": "DF",
+                "rating": 7.1
+            },
+            {
+                "name": "Harrison Reed",
+                "number": 6,
+                "pos": "MF",
+                "rating": 7.15
+            },
+            {
+                "name": "Andreas Pereira",
+                "number": 18,
+                "pos": "MF",
+                "rating": 7.45
+            },
+            {
+                "name": "Harry Wilson",
+                "number": 8,
+                "pos": "FW",
+                "rating": 7.4
+            },
+            {
+                "name": "Rodrigo Muniz",
+                "number": 9,
+                "pos": "ST",
+                "rating": 7.35
+            }
+        ]
+    },
+    "aston villa": {
+        "formation": "4-2-3-1",
+        "starting_xi": [
+            {
+                "name": "Emiliano Martínez",
+                "number": 23,
+                "pos": "GK",
+                "rating": 7.45,
+                "goals": 0,
+                "assists": 0,
+                "tackles": 0.2,
+                "key_passes": 0.1,
+                "shots": 0.0,
+                "yellow_cards": 2
+            },
+            {
+                "name": "Matty Cash",
+                "number": 2,
+                "pos": "RB",
+                "rating": 7.2,
+                "goals": 1,
+                "assists": 1,
+                "tackles": 2.4,
+                "key_passes": 1.1,
+                "shots": 0.6,
+                "yellow_cards": 3
+            },
+            {
+                "name": "Ezri Konsa",
+                "number": 4,
+                "pos": "CB",
+                "rating": 7.4,
+                "goals": 1,
+                "assists": 0,
+                "tackles": 2.3,
+                "key_passes": 0.3,
+                "shots": 0.4,
+                "yellow_cards": 2
+            },
+            {
+                "name": "Pau Torres",
+                "number": 14,
+                "pos": "CB",
+                "rating": 7.45,
+                "goals": 1,
+                "assists": 1,
+                "tackles": 2.2,
+                "key_passes": 0.7,
+                "shots": 0.5,
+                "yellow_cards": 1
+            },
+            {
+                "name": "Lucas Digne",
+                "number": 12,
+                "pos": "LB",
+                "rating": 7.5,
+                "goals": 0,
+                "assists": 4,
+                "tackles": 2.5,
+                "key_passes": 2.4,
+                "shots": 0.8,
+                "yellow_cards": 3
+            },
+            {
+                "name": "Amadou Onana",
+                "number": 24,
+                "pos": "DM",
+                "rating": 7.6,
+                "goals": 3,
+                "assists": 1,
+                "tackles": 3.4,
+                "key_passes": 1.1,
+                "shots": 1.2,
+                "yellow_cards": 3
+            },
+            {
+                "name": "Youri Tielemans",
+                "number": 8,
+                "pos": "CM",
+                "rating": 7.75,
+                "goals": 2,
+                "assists": 5,
+                "tackles": 2.6,
+                "key_passes": 2.9,
+                "shots": 1.9,
+                "yellow_cards": 2
+            },
+            {
+                "name": "Leon Bailey",
+                "number": 31,
+                "pos": "RW",
+                "rating": 7.55,
+                "goals": 4,
+                "assists": 4,
+                "tackles": 1.2,
+                "key_passes": 2.2,
+                "shots": 2.6,
+                "yellow_cards": 1
+            },
+            {
+                "name": "Morgan Rogers",
+                "number": 27,
+                "pos": "AM",
+                "rating": 7.8,
+                "goals": 5,
+                "assists": 4,
+                "tackles": 1.7,
+                "key_passes": 2.8,
+                "shots": 2.7,
+                "yellow_cards": 2
+            },
+            {
+                "name": "John McGinn",
+                "number": 7,
+                "pos": "LW",
+                "rating": 7.5,
+                "goals": 3,
+                "assists": 3,
+                "tackles": 2.3,
+                "key_passes": 2.1,
+                "shots": 1.8,
+                "yellow_cards": 3
+            },
+            {
+                "name": "Ollie Watkins",
+                "number": 11,
+                "pos": "ST",
+                "rating": 8.0,
+                "goals": 10,
+                "assists": 5,
+                "tackles": 0.9,
+                "key_passes": 1.7,
+                "shots": 3.6,
+                "yellow_cards": 2
+            }
+        ],
+        "bench": [
+            {
+                "name": "Robin Olsen",
+                "number": 25,
+                "pos": "GK",
+                "rating": 6.7
+            },
+            {
+                "name": "Diego Carlos",
+                "number": 3,
+                "pos": "DF",
+                "rating": 7.1
+            },
+            {
+                "name": "Ian Maatsen",
+                "number": 22,
+                "pos": "DF",
+                "rating": 7.25
+            },
+            {
+                "name": "Boubacar Kamara",
+                "number": 44,
+                "pos": "MF",
+                "rating": 7.35
+            },
+            {
+                "name": "Ross Barkley",
+                "number": 6,
+                "pos": "MF",
+                "rating": 7.2
+            },
+            {
+                "name": "Emiliano Buendía",
+                "number": 10,
+                "pos": "MF",
+                "rating": 7.3
+            },
+            {
+                "name": "Jhon Durán",
+                "number": 9,
+                "pos": "FW",
+                "rating": 7.7
             }
         ]
     }
