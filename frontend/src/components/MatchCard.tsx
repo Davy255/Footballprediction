@@ -637,25 +637,6 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
               </div>
             </div>
 
-            {/* Quick 1X2 Bookmaker Odds Bar */}
-            <div className="ws-1x2-quick-bar">
-              <div className="ws-1x2-quick-pill">
-                <span className="ws-1x2-quick-tag">1</span>
-                <span className="ws-1x2-quick-name">{HN}</span>
-                <strong className="ws-1x2-quick-val">@{homeOddsFormatted}</strong>
-              </div>
-              <div className="ws-1x2-quick-pill">
-                <span className="ws-1x2-quick-tag">X</span>
-                <span className="ws-1x2-quick-name">Draw</span>
-                <strong className="ws-1x2-quick-val">@{drawOddsFormatted}</strong>
-              </div>
-              <div className="ws-1x2-quick-pill">
-                <span className="ws-1x2-quick-tag">2</span>
-                <span className="ws-1x2-quick-name">{AN}</span>
-                <strong className="ws-1x2-quick-val">@{awayOddsFormatted}</strong>
-              </div>
-            </div>
-
             {/* Match Venue / Attendance / Referee */}
             <div className="ws-match-footer">
               <span>🏟️ {ws?.stadium || `${HN} Arena`}</span>
@@ -684,28 +665,32 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
             {/* ── TAB 1: FORECAST & ODDS ── */}
             {activeTab === 'ai' && (
               <div>
-                <div className="ws-section-title">Win Probability Distribution &amp; 1X2 Match Odds</div>
-                <div className="ws-prob-labels">
-                  <div>
-                    <strong>{probs.home_pct}%</strong>
-                    <span>{HN}</span>
-                    <span className="ws-prob-odds-tag">@{homeOddsFormatted}</span>
+                <div className="ws-section-title">🎯 1X2 Full-Time Match Odds (Match Winner)</div>
+                <div className="ws-1x2-market-grid">
+                  <div className="ws-1x2-market-card">
+                    <div className="ws-1x2-market-header">
+                      <span className="ws-1x2-market-code">1</span>
+                      <span className="ws-1x2-market-team">{HN}</span>
+                    </div>
+                    <div className="ws-1x2-market-odds">@{homeOddsFormatted}</div>
+                    <div className="ws-1x2-market-sub">{probs.home_pct}% win chance</div>
                   </div>
-                  <div>
-                    <strong>{probs.draw_pct}%</strong>
-                    <span>Draw</span>
-                    <span className="ws-prob-odds-tag">@{drawOddsFormatted}</span>
+                  <div className="ws-1x2-market-card">
+                    <div className="ws-1x2-market-header">
+                      <span className="ws-1x2-market-code">X</span>
+                      <span className="ws-1x2-market-team">Draw</span>
+                    </div>
+                    <div className="ws-1x2-market-odds">@{drawOddsFormatted}</div>
+                    <div className="ws-1x2-market-sub">{probs.draw_pct}% draw chance</div>
                   </div>
-                  <div>
-                    <strong>{probs.away_pct}%</strong>
-                    <span>{AN}</span>
-                    <span className="ws-prob-odds-tag">@{awayOddsFormatted}</span>
+                  <div className="ws-1x2-market-card">
+                    <div className="ws-1x2-market-header">
+                      <span className="ws-1x2-market-code">2</span>
+                      <span className="ws-1x2-market-team">{AN}</span>
+                    </div>
+                    <div className="ws-1x2-market-odds">@{awayOddsFormatted}</div>
+                    <div className="ws-1x2-market-sub">{probs.away_pct}% win chance</div>
                   </div>
-                </div>
-                <div className="ws-prob-bar-wrap">
-                  <div className="ws-prob-bar-h" style={{ width: `${probs.home_pct}%` }} />
-                  <div className="ws-prob-bar-d" style={{ width: `${probs.draw_pct}%` }} />
-                  <div className="ws-prob-bar-a" style={{ width: `${probs.away_pct}%` }} />
                 </div>
 
                 <div className="ws-section-title">Projected Scoreline</div>
@@ -740,34 +725,6 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
                     </div>
                   </>
                 )}
-
-                <div className="ws-section-title">🎯 1X2 Full-Time Match Odds (Match Winner)</div>
-                <div className="ws-1x2-market-grid">
-                  <div className="ws-1x2-market-card">
-                    <div className="ws-1x2-market-header">
-                      <span className="ws-1x2-market-code">1</span>
-                      <span className="ws-1x2-market-team">{HN}</span>
-                    </div>
-                    <div className="ws-1x2-market-odds">@{homeOddsFormatted}</div>
-                    <div className="ws-1x2-market-sub">{probs.home_pct}% win chance</div>
-                  </div>
-                  <div className="ws-1x2-market-card">
-                    <div className="ws-1x2-market-header">
-                      <span className="ws-1x2-market-code">X</span>
-                      <span className="ws-1x2-market-team">Draw</span>
-                    </div>
-                    <div className="ws-1x2-market-odds">@{drawOddsFormatted}</div>
-                    <div className="ws-1x2-market-sub">{probs.draw_pct}% draw chance</div>
-                  </div>
-                  <div className="ws-1x2-market-card">
-                    <div className="ws-1x2-market-header">
-                      <span className="ws-1x2-market-code">2</span>
-                      <span className="ws-1x2-market-team">{AN}</span>
-                    </div>
-                    <div className="ws-1x2-market-odds">@{awayOddsFormatted}</div>
-                    <div className="ws-1x2-market-sub">{probs.away_pct}% win chance</div>
-                  </div>
-                </div>
 
                 <div className="ws-section-title">Real Bookmaker Market Odds &amp; Probabilities</div>
                 <div className="ws-markets-grid">
