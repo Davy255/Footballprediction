@@ -50,7 +50,7 @@ interface TacticalPitchProps {
   onRefresh?: () => void;
 }
 
-const SQUADS_DB: Record<string, { formation: string; xi: Player[]; bench: Player[] }> = {
+const REAL_SQUADS: Record<string, { formation: string; xi: Player[]; bench: Player[] }> = {
   "chelsea": {
     "formation": "4-2-3-1",
     "xi": [
