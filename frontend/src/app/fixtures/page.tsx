@@ -85,7 +85,7 @@ function FixturesContent() {
         status: selectedStatus || undefined,
         limit: 80,
       });
-      if (data && data.length > 0) {
+      if (Array.isArray(data)) {
         setMatches(data);
         if (typeof window !== 'undefined') {
           try {
@@ -358,9 +358,66 @@ function FixturesContent() {
             </React.Fragment>
           ))}
         </div>
+      ) : selectedStatus === 'LIVE' ? (
+        <div className="glass-panel" style={{
+          padding: '2.5rem 1.5rem',
+          textAlign: 'center',
+          background: 'var(--bg-card)',
+          border: '1px solid rgba(239, 68, 68, 0.25)',
+          borderRadius: '16px',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+        }}>
+          <div style={{
+            width: '64px', height: '64px', borderRadius: '50%',
+            background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.3)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '2rem', margin: '0 auto 1rem auto'
+          }}>
+            📡
+          </div>
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
+            No Live Matches In-Play Right Now
+          </h3>
+          <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', maxWidth: '480px', margin: '0 auto 1.4rem auto', lineHeight: 1.5 }}>
+            There are currently no games actively in-play across supported leagues. New live fixtures appear automatically as matches kick off!
+          </p>
+          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button
+              type="button"
+              onClick={() => setSelectedStatus('SCHEDULED')}
+              className="btn btn-primary"
+              style={{ padding: '0.55rem 1.25rem', borderRadius: '10px', fontWeight: 700, fontSize: '0.84rem' }}
+            >
+              📅 View Upcoming Matches
+            </button>
+            <button
+              type="button"
+              onClick={() => loadMatches(false)}
+              className="btn btn-secondary"
+              style={{ padding: '0.55rem 1.25rem', borderRadius: '10px', fontWeight: 700, fontSize: '0.84rem' }}
+            >
+              🔄 Refresh Live Scores
+            </button>
+            <a
+              href="/live"
+              className="btn btn-secondary"
+              style={{ padding: '0.55rem 1.25rem', borderRadius: '10px', fontWeight: 700, fontSize: '0.84rem', border: '1px solid rgba(239,68,68,0.3)', color: '#f87171' }}
+            >
+              🔴 Live Match Centre ➔
+            </a>
+          </div>
+        </div>
       ) : (
         <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
-          No matches found for the selected filters.
+          <p style={{ fontWeight: 700, fontSize: '0.96rem', color: 'var(--text-primary)' }}>
+            No matches found for the selected filters.
+          </p>
+          <button
+            onClick={() => { setSelectedStatus('SCHEDULED'); setSelectedLeague(''); setSearchQuery(''); }}
+            style={{ marginTop: '0.5rem', background: 'none', border: 'none', color: 'var(--accent-blue)', fontWeight: 700, cursor: 'pointer', textDecoration: 'underline' }}
+          >
+            Reset all filters
+          </button>
         </div>
       )}
 

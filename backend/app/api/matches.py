@@ -177,6 +177,10 @@ def get_matches(
         statuses = status.split(",")
         if "SCHEDULED" in statuses and "TIMED" not in statuses:
             statuses.append("TIMED")
+        if "LIVE" in statuses:
+            for s in ["IN_PLAY", "PAUSED", "HALFTIME", "1H", "2H", "HT"]:
+                if s not in statuses:
+                    statuses.append(s)
         q = q.filter(Match.status.in_(statuses))
 
     if date:
