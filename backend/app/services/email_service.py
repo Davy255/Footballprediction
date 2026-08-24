@@ -48,16 +48,16 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
             #   b) A Resend-verified email address (e.g. footballlpredict@gmail.com).
             # We use the SMTP_FROM_EMAIL setting so it's configurable via Render env vars.
             configured_from = (os.environ.get("SMTP_FROM_EMAIL", "") or getattr(settings, "SMTP_FROM_EMAIL", "")).strip()
-            from_name = (os.environ.get("SMTP_FROM_NAME", "") or getattr(settings, "SMTP_FROM_NAME", "FootballPredict âš½")).strip()
+            from_name = (os.environ.get("SMTP_FROM_NAME", "") or getattr(settings, "SMTP_FROM_NAME", "FootballPredict ⚽")).strip()
 
             if configured_from and "@" in configured_from and "footballpredict.com" not in configured_from:
                 # Use the admin's verified email address as sender (e.g. footballlpredict@gmail.com)
                 sender_email = f"{from_name} <{configured_from}>"
             else:
-                # Fallback: Resend sandbox â€” NOTE: only delivers to resend account owner!
+                # Fallback: Resend sandbox — NOTE: only delivers to resend account owner!
                 sender_email = f"{from_name} <onboarding@resend.dev>"
                 logger.warning(
-                    "âš ï¸  Using Resend sandbox sender (onboarding@resend.dev). "
+                    "⚠️ Using Resend sandbox sender (onboarding@resend.dev). "
                     "Emails will ONLY reach the Resend account owner. "
                     "Set SMTP_FROM_EMAIL=footballlpredict@gmail.com in Render env vars and verify it in Resend dashboard."
                 )
@@ -84,20 +84,20 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
             with urllib.request.urlopen(req, timeout=10) as resp:
                 resp_body = resp.read().decode("utf-8", errors="ignore")
                 if resp.status in (200, 201):
-                    logger.info(f"âœ… Email delivered via Resend HTTPS API to {to_email} ('{subject}') from '{sender_email}'")
+                    logger.info(f"✅ Email delivered via Resend HTTPS API to {to_email} ('{subject}') from '{sender_email}'")
                     return True
                 else:
                     _LAST_EMAIL_ERROR = f"Resend API returned status {resp.status}: {resp_body}"
-                    logger.error(f"âŒ Resend API non-success {resp.status} for {to_email}: {resp_body} â€” falling back to SMTP")
+                    logger.error(f"❌ Resend API non-success {resp.status} for {to_email}: {resp_body} — falling back to SMTP")
                     # Fall through to SMTP below
         except urllib.error.HTTPError as he:
             err_body = he.read().decode("utf-8", errors="ignore")
             _LAST_EMAIL_ERROR = f"Resend API HTTP {he.code}: {err_body}"
-            logger.error(f"âŒ Resend API HTTP {he.code} for {to_email}: {err_body} â€” falling back to SMTP")
+            logger.error(f"❌ Resend API HTTP {he.code} for {to_email}: {err_body} — falling back to SMTP")
             # Fall through to SMTP below
         except Exception as e:
             _LAST_EMAIL_ERROR = f"Resend API error: {e}"
-            logger.error(f"âŒ Resend API error for {to_email}: {e} â€” falling back to SMTP")
+            logger.error(f"❌ Resend API error for {to_email}: {e} — falling back to SMTP")
       # 2. Secondary Cloud Dispatch: Brevo REST HTTPS API (Port 443 - 100% unblocked)
     brevo_key = os.environ.get("BREVO_API_KEY", "").strip() or getattr(settings, "BREVO_API_KEY", "").strip()
     if brevo_key and len(brevo_key.strip()) > 5:
@@ -169,21 +169,21 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
     smtp_user_env  = _os.environ.get("SMTP_USER",       "").strip() or (settings.SMTP_USER       or "").strip()
     smtp_port_env  = int(_os.environ.get("SMTP_PORT",   str(settings.SMTP_PORT or 587)))
     smtp_from_env  = _os.environ.get("SMTP_FROM_EMAIL", "").strip() or (settings.SMTP_FROM_EMAIL or "").strip()
-    smtp_name_env  = _os.environ.get("SMTP_FROM_NAME",  "").strip() or (settings.SMTP_FROM_NAME  or "FootballPredict âš½").strip()
+    smtp_name_env  = _os.environ.get("SMTP_FROM_NAME",  "").strip() or (settings.SMTP_FROM_NAME  or "FootballPredict ⚽").strip()
     smtp_tls_env   = _os.environ.get("SMTP_TLS", "true").strip().lower() not in ("false", "0", "no")
 
     logger.info(
-        f"ðŸ“§ SMTP config check â†’ host={smtp_host_env!r} port={smtp_port_env} "
+        f"📧 SMTP config check -> host={smtp_host_env!r} port={smtp_port_env} "
         f"user={smtp_user_env!r} from={smtp_from_env!r} tls={smtp_tls_env} "
         f"password_set={'yes' if smtp_pass_env else 'NO'}"
     )
 
     if not smtp_host_env or not smtp_user_env:
         logger.warning(
-            f"âš ï¸  SMTP not configured (SMTP_HOST={smtp_host_env!r}, SMTP_USER={smtp_user_env!r}). "
+            f"⚠️ SMTP not configured (SMTP_HOST={smtp_host_env!r}, SMTP_USER={smtp_user_env!r}). "
             "No email dispatched. Add SMTP_HOST, SMTP_USER, SMTP_PASSWORD to Render env vars."
         )
-        _LAST_EMAIL_ERROR = "SMTP not configured â€” SMTP_HOST or SMTP_USER missing"
+        _LAST_EMAIL_ERROR = "SMTP not configured — SMTP_HOST or SMTP_USER missing"
         return False
 
     effective_from = smtp_from_env or smtp_user_env
@@ -219,13 +219,12 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
                     server.login(smtp_user_env, clean_password)
                 server.sendmail(effective_from, [to_email], msg.as_string())
 
-        logger.info(f"âœ… Email delivered via SMTP ({smtp_host_env}:{smtp_port_env}) to {to_email} | subject: '{subject}'")
+        logger.info(f"✅ Email delivered via SMTP ({smtp_host_env}:{smtp_port_env}) to {to_email} | subject: '{subject}'")
         return True
     except Exception as e:
         _LAST_EMAIL_ERROR = str(e)
-        logger.error(f"âŒ SMTP delivery failed to {to_email} via {smtp_host_env}:{smtp_port_env}: {e}")
+        logger.error(f"❌ SMTP delivery failed to {to_email} via {smtp_host_env}:{smtp_port_env}: {e}")
         return False
-
 
 
 def send_password_reset_email(to_email: str, reset_token: str, username: str = "") -> bool:
@@ -240,7 +239,7 @@ def send_password_reset_email(to_email: str, reset_token: str, username: str = "
     reset_url = f"{frontend_base}/forgot-password?token={reset_token}"
     greeting = f"Hello {username}," if username else "Hello,"
 
-    subject = "ðŸ”‘ Reset Your FootballPredict Password"
+    subject = "🔑 Reset Your FootballPredict Password"
 
     html_content = f"""<!DOCTYPE html>
 <html>
@@ -257,7 +256,7 @@ def send_password_reset_email(to_email: str, reset_token: str, username: str = "
         <!-- Header -->
         <tr>
           <td style="padding:28px 32px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.07);">
-            <div style="font-size:28px;margin-bottom:6px;">âš½</div>
+            <div style="font-size:28px;margin-bottom:6px;">⚽</div>
             <h1 style="margin:0;font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.3px;">FootballPredict</h1>
             <p style="margin:4px 0 0;font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:1px;">AI-Powered Match Intelligence</p>
           </td>
@@ -278,7 +277,7 @@ def send_password_reset_email(to_email: str, reset_token: str, username: str = "
             <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin:24px 0;">
               <tr><td align="center">
                 <a href="{reset_url}" style="display:inline-block;background:linear-gradient(135deg,#3b82f6 0%,#1d4ed8 100%);color:#fff;text-decoration:none;padding:14px 36px;font-size:16px;font-weight:700;border-radius:10px;box-shadow:0 4px 15px rgba(37,99,235,0.45);">
-                  Reset My Password â†’
+                  Reset My Password →
                 </a>
               </td></tr>
             </table>
@@ -290,7 +289,7 @@ def send_password_reset_email(to_email: str, reset_token: str, username: str = "
             </div>
 
             <p style="margin:20px 0 0;font-size:13px;line-height:1.6;color:#475569;">
-              If you didn't request this, simply ignore this email â€” your password won't change.
+              If you didn't request this, simply ignore this email — your password won't change.
             </p>
           </td>
         </tr>
@@ -298,7 +297,7 @@ def send_password_reset_email(to_email: str, reset_token: str, username: str = "
         <!-- Footer -->
         <tr>
           <td style="padding:18px 32px;background-color:#070b14;border-top:1px solid rgba(255,255,255,0.06);text-align:center;">
-            <p style="margin:0;font-size:12px;color:#334155;">Â© 2026 FootballPredict Â· AI Match Intelligence Platform</p>
+            <p style="margin:0;font-size:12px;color:#334155;">© 2026 FootballPredict • AI Match Intelligence Platform</p>
           </td>
         </tr>
 
@@ -320,7 +319,7 @@ Or use this code manually:
 
 If you did not request this, ignore this email.
 
-â€” FootballPredict Team
+— FootballPredict Team
 """
 
     return send_raw_email(to_email, subject, html_content, text_content)
@@ -335,7 +334,7 @@ def send_welcome_email(to_email: str, username: str) -> bool:
     if "localhost" in frontend_base:
         frontend_base = "https://footballprediction-lovat.vercel.app"
 
-    subject = "âš½ Welcome to FootballPredict â€” Your AI Betting Edge Starts Here"
+    subject = "⚽ Welcome to FootballPredict — Your AI Betting Edge Starts Here"
 
     html_content = f"""<!DOCTYPE html>
 <html>
@@ -352,7 +351,7 @@ def send_welcome_email(to_email: str, username: str) -> bool:
         <!-- Hero Header -->
         <tr>
           <td style="padding:36px 32px 28px;text-align:center;background:linear-gradient(135deg,#0f2347 0%,#0a1a35 100%);border-bottom:1px solid rgba(255,255,255,0.07);">
-            <div style="font-size:36px;margin-bottom:10px;">âš½ ðŸ¤–</div>
+            <div style="font-size:36px;margin-bottom:10px;">⚽ 🤖</div>
             <h1 style="margin:0 0 6px;font-size:26px;font-weight:800;color:#fff;letter-spacing:-0.5px;">Welcome, {username}!</h1>
             <p style="margin:0;font-size:14px;color:#64748b;letter-spacing:0.5px;">Your AI-Powered Football Intelligence Platform</p>
           </td>
@@ -362,10 +361,10 @@ def send_welcome_email(to_email: str, username: str) -> bool:
         <tr>
           <td style="padding:28px 32px 0;">
             <p style="margin:0 0 18px;font-size:15px;line-height:1.75;color:#cbd5e1;">
-              You've joined <strong style="color:#60a5fa;">FootballPredict</strong> â€” the platform built to give you a <strong style="color:#fff;">real analytical edge</strong> before you place a bet on Betway, Sportpesa, 1xBet, or any other bookmaker.
+              You've joined <strong style="color:#60a5fa;">FootballPredict</strong> — the platform built to give you a <strong style="color:#fff;">real analytical edge</strong> before you place a bet on Betway, Sportpesa, 1xBet, or any other bookmaker.
             </p>
             <p style="margin:0 0 24px;font-size:15px;line-height:1.75;color:#94a3b8;">
-              We analyse hundreds of data points per match â€” form, head-to-head records, goal averages, home/away strength, and bookmaker odds â€” to deliver <strong style="color:#fff;">clear, data-backed predictions</strong> for every fixture.
+              We analyse hundreds of data points per match — form, head-to-head records, goal averages, home/away strength, and bookmaker odds — to deliver <strong style="color:#fff;">clear, data-backed predictions</strong> for every fixture.
             </p>
           </td>
         </tr>
@@ -381,7 +380,7 @@ def send_welcome_email(to_email: str, username: str) -> bool:
                 <td style="padding:14px 16px;">
                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                      <td width="36" style="font-size:22px;vertical-align:middle;">ðŸ“Š</td>
+                      <td width="36" style="font-size:22px;vertical-align:middle;">📊</td>
                       <td style="padding-left:10px;vertical-align:middle;">
                         <strong style="color:#93c5fd;font-size:14px;">Win Probability %</strong>
                         <p style="margin:3px 0 0;font-size:13px;color:#94a3b8;line-height:1.5;">AI-calculated Home Win / Draw / Away Win chances for every game</p>
@@ -398,7 +397,7 @@ def send_welcome_email(to_email: str, username: str) -> bool:
                 <td style="padding:14px 16px;">
                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                      <td width="36" style="font-size:22px;vertical-align:middle;">ðŸŽ¯</td>
+                      <td width="36" style="font-size:22px;vertical-align:middle;">🎯</td>
                       <td style="padding-left:10px;vertical-align:middle;">
                         <strong style="color:#6ee7b7;font-size:14px;">Projected Scoreline</strong>
                         <p style="margin:3px 0 0;font-size:13px;color:#94a3b8;line-height:1.5;">AI-predicted final score based on attack/defence strength and form</p>
@@ -415,7 +414,7 @@ def send_welcome_email(to_email: str, username: str) -> bool:
                 <td style="padding:14px 16px;">
                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                      <td width="36" style="font-size:22px;vertical-align:middle;">âš¡</td>
+                      <td width="36" style="font-size:22px;vertical-align:middle;">⚡</td>
                       <td style="padding-left:10px;vertical-align:middle;">
                         <strong style="color:#c4b5fd;font-size:14px;">BTTS &amp; Over/Under Tips</strong>
                         <p style="margin:3px 0 0;font-size:13px;color:#94a3b8;line-height:1.5;">Both Teams to Score and Over/Under 2.5 Goals insights per fixture</p>
@@ -432,9 +431,9 @@ def send_welcome_email(to_email: str, username: str) -> bool:
                 <td style="padding:14px 16px;">
                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                      <td width="36" style="font-size:22px;vertical-align:middle;">ðŸ¤–</td>
+                      <td width="36" style="font-size:22px;vertical-align:middle;">🤖</td>
                       <td style="padding-left:10px;vertical-align:middle;">
-                        <strong style="color:#fcd34d;font-size:14px;">Coach AI â€” Your Personal Analyst</strong>
+                        <strong style="color:#fcd34d;font-size:14px;">Coach AI — Your Personal Analyst</strong>
                         <p style="margin:3px 0 0;font-size:13px;color:#94a3b8;line-height:1.5;">Ask any match question and get instant AI analysis, team news, and betting advice</p>
                       </td>
                     </tr>
@@ -449,7 +448,7 @@ def send_welcome_email(to_email: str, username: str) -> bool:
         <tr>
           <td style="padding:0 32px 28px;">
             <div style="background:rgba(0,0,0,0.3);border-radius:10px;padding:18px 20px;border-left:3px solid #3b82f6;">
-              <p style="margin:0 0 8px;font-size:13px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:0.5px;">ðŸ’¡ How to use FootballPredict</p>
+              <p style="margin:0 0 8px;font-size:13px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:0.5px;">💡 How to use FootballPredict</p>
               <ol style="margin:0;padding-left:18px;color:#94a3b8;font-size:14px;line-height:2;">
                 <li>Browse today's fixtures and click any match</li>
                 <li>Review the AI win probabilities and projected score</li>
@@ -467,7 +466,7 @@ def send_welcome_email(to_email: str, username: str) -> bool:
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr><td align="center">
                 <a href="{frontend_base}/" style="display:inline-block;background:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%);color:#fff;text-decoration:none;padding:15px 40px;font-size:16px;font-weight:700;border-radius:11px;box-shadow:0 4px 20px rgba(37,99,235,0.45);">
-                  View Today's Predictions â†’
+                  View Today's Predictions →
                 </a>
               </td></tr>
             </table>
@@ -477,7 +476,7 @@ def send_welcome_email(to_email: str, username: str) -> bool:
         <!-- Footer -->
         <tr>
           <td style="padding:18px 32px;background-color:#060b14;border-top:1px solid rgba(255,255,255,0.06);text-align:center;">
-            <p style="margin:0;font-size:12px;color:#334155;">Â© 2026 FootballPredict Â· AI Match Intelligence Â· <a href="{frontend_base}/" style="color:#475569;text-decoration:none;">Visit Platform</a></p>
+            <p style="margin:0;font-size:12px;color:#334155;">© 2026 FootballPredict • AI Match Intelligence • <a href="{frontend_base}/" style="color:#475569;text-decoration:none;">Visit Platform</a></p>
           </td>
         </tr>
 
@@ -492,10 +491,10 @@ def send_welcome_email(to_email: str, username: str) -> bool:
 Your AI-powered betting intelligence platform is ready.
 
 What you get on every match:
-â€¢ AI Win Probability % (Home / Draw / Away)
-â€¢ Projected Final Scoreline
-â€¢ BTTS & Over/Under 2.5 Tips
-â€¢ Coach AI â€” ask any match question and get instant analysis
+• AI Win Probability % (Home / Draw / Away)
+• Projected Final Scoreline
+• BTTS & Over/Under 2.5 Tips
+• Coach AI — ask any match question and get instant analysis
 
 How to use it:
 1. Browse today's fixtures
@@ -506,7 +505,7 @@ How to use it:
 
 View today's predictions: {frontend_base}/
 
-â€” FootballPredict Team
+— FootballPredict Team
 """
 
     return send_raw_email(to_email, subject, html_content, text_content)
@@ -523,12 +522,11 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
         frontend_base = "https://footballprediction-lovat.vercel.app"
 
     today_str = datetime.now().strftime("%A, %d %B %Y")
-    subject = f"âš½ Today's Betting Tips â€” {datetime.now().strftime('%d %b')} | FootballPredict AI"
+    subject = f"⚽ Today's Betting Tips — {datetime.now().strftime('%d %b')} | FootballPredict AI"
 
     # Build match cards HTML
     match_cards_html = ""
     if featured_matches:
-        tip_labels = ["Home Win", "Draw", "Away Win", "Both Teams Score", "Over 2.5 Goals", "Under 2.5 Goals"]
         for i, m in enumerate(featured_matches[:5]):
             # Extract match details (works for ORM objects or dicts)
             if hasattr(m, 'home_team'):
@@ -551,22 +549,38 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
             pred_h  = getattr(m, 'ai_predicted_home', None) if not isinstance(m, dict) else m.get('ai_predicted_home')
             pred_a  = getattr(m, 'ai_predicted_away', None) if not isinstance(m, dict) else m.get('ai_predicted_away')
 
-            # Build probability bar
+            # Build probability bar & intelligent betting tip
             if ai_home and ai_draw and ai_away:
                 h_pct = int(round(ai_home * 100))
                 d_pct = int(round(ai_draw * 100))
                 a_pct = int(round(ai_away * 100))
-                # Determine tip
-                max_prob = max(ai_home, ai_draw, ai_away)
-                if max_prob == ai_home:
-                    tip_text = f"Home Win ({h_pct}%)"
-                    tip_color = "#10b981"
-                elif max_prob == ai_away:
-                    tip_text = f"Away Win ({a_pct}%)"
-                    tip_color = "#f59e0b"
+
+                # If projected is a draw (1-1, 0-0, 2-2) or tight game -> Recommend Double Chance
+                if pred_h is not None and pred_a is not None and int(pred_h) == int(pred_a):
+                    if ai_home >= ai_away:
+                        comb_pct = min(95, h_pct + d_pct)
+                        tip_text = f"Double Chance (1X) {comb_pct}%"
+                        tip_color = "#10b981"
+                    else:
+                        comb_pct = min(95, d_pct + a_pct)
+                        tip_text = f"Double Chance (X2) {comb_pct}%"
+                        tip_color = "#f59e0b"
                 else:
-                    tip_text = f"Draw ({d_pct}%)"
-                    tip_color = "#8b5cf6"
+                    max_prob = max(ai_home, ai_draw, ai_away)
+                    if max_prob == ai_home and h_pct >= 45:
+                        tip_text = f"Home Win ({h_pct}%)"
+                        tip_color = "#10b981"
+                    elif max_prob == ai_away and a_pct >= 45:
+                        tip_text = f"Away Win ({a_pct}%)"
+                        tip_color = "#f59e0b"
+                    elif ai_home >= ai_away:
+                        comb_pct = min(95, h_pct + d_pct)
+                        tip_text = f"Double Chance (1X) {comb_pct}%"
+                        tip_color = "#10b981"
+                    else:
+                        comb_pct = min(95, d_pct + a_pct)
+                        tip_text = f"Double Chance (X2) {comb_pct}%"
+                        tip_color = "#f59e0b"
 
                 prob_html = f"""
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin:10px 0 8px;">
@@ -583,10 +597,10 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
                     <td align="right" style="font-size:11px;color:#f59e0b;">A {a_pct}%</td>
                   </tr>
                 </table>"""
-                tip_badge = f'<span style="display:inline-block;background:{tip_color};color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:6px;">ðŸŽ¯ Tip: {tip_text}</span>'
+                tip_badge = f'<span style="display:inline-block;background:{tip_color};color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:6px;">🎯 Tip: {tip_text}</span>'
             else:
                 prob_html = ""
-                tip_badge = '<span style="display:inline-block;background:#1e3a5f;color:#60a5fa;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:6px;">ðŸ“Š View Full Analysis</span>'
+                tip_badge = '<span style="display:inline-block;background:#1e3a5f;color:#60a5fa;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:6px;">📊 View Full Analysis</span>'
 
             score_html = f'<span style="color:#94a3b8;font-size:12px;">Projected: <strong style="color:#fff;">{int(pred_h)}-{int(pred_a)}</strong></span>' if pred_h is not None and pred_a is not None else ""
 
@@ -594,7 +608,7 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
             <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:10px;margin-bottom:12px;">
               <tr>
                 <td style="padding:14px 16px;">
-                  <p style="margin:0 0 2px;font-size:11px;color:#60a5fa;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">{league_name} Â· {time_str} UTC</p>
+                  <p style="margin:0 0 2px;font-size:11px;color:#60a5fa;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">{league_name} • {time_str} UTC</p>
                   <p style="margin:0 0 8px;font-size:15px;font-weight:700;color:#fff;">{home_name} <span style="color:#475569;">vs</span> {away_name}</p>
                   {prob_html}
                   <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:6px;">
@@ -610,7 +624,7 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
         match_cards_html = """
         <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background:rgba(15,23,42,0.6);border:1px solid rgba(59,130,246,0.15);border-radius:10px;">
           <tr><td style="padding:20px;text-align:center;">
-            <div style="font-size:28px;margin-bottom:8px;">ðŸ“…</div>
+            <div style="font-size:28px;margin-bottom:8px;">📅</div>
             <p style="margin:0;font-size:14px;color:#94a3b8;line-height:1.6;">
               Top games are scheduled today across the Premier League, La Liga, Serie A, Bundesliga and Champions League.<br>
               <strong style="color:#60a5fa;">Visit the platform for full AI predictions and tips.</strong>
@@ -633,7 +647,7 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
         <!-- Header -->
         <tr>
           <td style="padding:28px 32px 22px;text-align:center;background:linear-gradient(135deg,#0f2347 0%,#0a1a35 100%);border-bottom:1px solid rgba(255,255,255,0.07);">
-            <div style="font-size:30px;margin-bottom:8px;">âš½ ðŸ”¥</div>
+            <div style="font-size:30px;margin-bottom:8px;">⚽ 🔥</div>
             <h1 style="margin:0 0 4px;font-size:22px;font-weight:800;color:#fff;">Today's AI Betting Tips</h1>
             <p style="margin:0;font-size:13px;color:#64748b;">{today_str}</p>
           </td>
@@ -643,7 +657,7 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
         <tr>
           <td style="padding:24px 32px 16px;">
             <p style="margin:0;font-size:15px;line-height:1.75;color:#cbd5e1;">
-              Hey <strong style="color:#fff;">{username}</strong>! Here are today's top fixtures with AI-powered predictions to help you bet smarter. Analyse each match, check the win probabilities, and make your move before kickoff. ðŸŽ¯
+              Hey <strong style="color:#fff;">{username}</strong>! Here are today's top fixtures with AI-powered predictions to help you bet smarter. Analyse each match, check the win probabilities, and make your move before kickoff. 🎯
             </p>
           </td>
         </tr>
@@ -659,9 +673,9 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
         <tr>
           <td style="padding:0 32px 24px;">
             <div style="background:rgba(37,99,235,0.1);border:1px solid rgba(59,130,246,0.2);border-radius:10px;padding:14px 16px;">
-              <p style="margin:0 0 6px;font-size:12px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:0.5px;">ðŸ’¡ Today's Betting Reminder</p>
+              <p style="margin:0 0 6px;font-size:12px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:0.5px;">💡 Today's Betting Reminder</p>
               <p style="margin:0;font-size:13px;color:#94a3b8;line-height:1.6;">
-                Always check our <strong style="color:#fff;">Coach AI</strong> before placing bets â€” ask about team news, injuries, or head-to-head history for any fixture.
+                Always check our <strong style="color:#fff;">Coach AI</strong> before placing bets — ask about team news, injuries, or head-to-head history for any fixture.
                 Combine our AI tips with your own research for the best results.
               </p>
             </div>
@@ -674,7 +688,7 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr><td align="center">
                 <a href="{frontend_base}/" style="display:inline-block;background:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%);color:#fff;text-decoration:none;padding:15px 40px;font-size:16px;font-weight:700;border-radius:11px;box-shadow:0 4px 20px rgba(37,99,235,0.45);">
-                  View Full Predictions &amp; Analytics â†’
+                  View Full Predictions &amp; Analytics →
                 </a>
               </td></tr>
             </table>
@@ -684,7 +698,7 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
         <!-- Footer -->
         <tr>
           <td style="padding:18px 32px;background-color:#060b14;border-top:1px solid rgba(255,255,255,0.06);text-align:center;">
-            <p style="margin:0 0 4px;font-size:12px;color:#334155;">Â© 2026 FootballPredict Â· AI Match Intelligence Platform</p>
+            <p style="margin:0 0 4px;font-size:12px;color:#334155;">© 2026 FootballPredict • AI Match Intelligence Platform</p>
             <p style="margin:0;font-size:11px;color:#1e293b;">You're receiving this because you have a FootballPredict account.</p>
           </td>
         </tr>
@@ -695,17 +709,17 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
 </body>
 </html>"""
 
-    text_content = f"""Hey {username}! Today's AI Betting Tips â€” {today_str}
+    text_content = f"""Hey {username}! Today's AI Betting Tips — {today_str}
 
 Here are today's top fixtures with AI predictions to help you bet smarter.
 
 Visit FootballPredict for full match analysis, win probabilities, BTTS tips, Over/Under predictions and Coach AI:
 {frontend_base}/
 
-Remember to check Coach AI before placing any bet â€” ask about team news, injuries, or head-to-head records.
+Remember to check Coach AI before placing any bet — ask about team news, injuries, or head-to-head records.
 
-â€” FootballPredict Team
-Â© 2026 FootballPredict Â· AI Match Intelligence
+— FootballPredict Team
+© 2026 FootballPredict • AI Match Intelligence
 """
 
     return send_raw_email(to_email, subject, html_content, text_content)
@@ -739,7 +753,7 @@ def dispatch_daily_reminders_to_all_users() -> dict:
                 if success:
                     sent_count += 1
 
-        logger.info(f"ðŸ“§ Dispatched {sent_count}/{len(users)} daily match reminders.")
+        logger.info(f"📧 Dispatched {sent_count}/{len(users)} daily match reminders.")
         return {"users_total": len(users), "sent_count": sent_count, "matches_count": len(today_matches)}
     except Exception as e:
         logger.error(f"Error in dispatch_daily_reminders_to_all_users: {e}")
