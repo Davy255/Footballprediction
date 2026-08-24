@@ -51,277 +51,90 @@ interface TacticalPitchProps {
 }
 
 const REAL_SQUADS: Record<string, { formation: string; xi: Player[]; bench: Player[] }> = {
-  "manchester city": {
-    "formation": "4-2-3-1",
-    "starting_xi": [
-      {
-        "name": "Ederson",
-        "number": 31,
-        "pos": "GK",
-        "rating": 7.35,
-        "goals": 0,
-        "assists": 1,
-        "tackles": 0.2,
-        "key_passes": 0.3,
-        "shots": 0.0,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Rico Lewis",
-        "number": 82,
-        "pos": "RB",
-        "rating": 7.45,
-        "goals": 1,
-        "assists": 3,
-        "tackles": 2.2,
-        "key_passes": 1.8,
-        "shots": 0.8,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Rúben Dias",
-        "number": 3,
-        "pos": "CB",
-        "rating": 7.55,
-        "goals": 1,
-        "assists": 0,
-        "tackles": 2.3,
-        "key_passes": 0.4,
-        "shots": 0.5,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Manuel Akanji",
-        "number": 25,
-        "pos": "CB",
-        "rating": 7.4,
-        "goals": 0,
-        "assists": 1,
-        "tackles": 2.1,
-        "key_passes": 0.5,
-        "shots": 0.4,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Joško Gvardiol",
-        "number": 24,
-        "pos": "LB",
-        "rating": 7.75,
-        "goals": 5,
-        "assists": 3,
-        "tackles": 2.4,
-        "key_passes": 1.6,
-        "shots": 1.6,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Mateo Kovačić",
-        "number": 8,
-        "pos": "DM",
-        "rating": 7.5,
-        "goals": 3,
-        "assists": 2,
-        "tackles": 2.7,
-        "key_passes": 1.7,
-        "shots": 1.4,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Ilkay Gündogan",
-        "number": 19,
-        "pos": "CM",
-        "rating": 7.6,
-        "goals": 3,
-        "assists": 4,
-        "tackles": 1.8,
-        "key_passes": 2.5,
-        "shots": 1.6,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Bernardo Silva",
-        "number": 20,
-        "pos": "RW",
-        "rating": 7.8,
-        "goals": 4,
-        "assists": 7,
-        "tackles": 2.2,
-        "key_passes": 2.9,
-        "shots": 2.0,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Kevin De Bruyne",
-        "number": 17,
-        "pos": "AM",
-        "rating": 8.3,
-        "goals": 6,
-        "assists": 12,
-        "tackles": 1.2,
-        "key_passes": 3.9,
-        "shots": 3.0,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Phil Foden",
-        "number": 47,
-        "pos": "LW",
-        "rating": 7.95,
-        "goals": 8,
-        "assists": 6,
-        "tackles": 1.4,
-        "key_passes": 2.8,
-        "shots": 3.3,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Erling Haaland",
-        "number": 9,
-        "pos": "ST",
-        "rating": 8.5,
-        "goals": 21,
-        "assists": 2,
-        "tackles": 0.3,
-        "key_passes": 1.0,
-        "shots": 4.8,
-        "yellow_cards": 1
-      }
-    ],
-    "bench": [
-      {
-        "name": "Stefan Ortega",
-        "number": 18,
-        "pos": "GK",
-        "rating": 7.0
-      },
-      {
-        "name": "Kyle Walker",
-        "number": 2,
-        "pos": "DF",
-        "rating": 7.15
-      },
-      {
-        "name": "John Stones",
-        "number": 5,
-        "pos": "DF",
-        "rating": 7.35
-      },
-      {
-        "name": "Nathan Aké",
-        "number": 6,
-        "pos": "DF",
-        "rating": 7.25
-      },
-      {
-        "name": "Matheus Nunes",
-        "number": 27,
-        "pos": "MF",
-        "rating": 7.15
-      },
-      {
-        "name": "Jérémy Doku",
-        "number": 11,
-        "pos": "FW",
-        "rating": 7.65
-      },
-      {
-        "name": "Savinho",
-        "number": 26,
-        "pos": "FW",
-        "rating": 7.6
-      },
-      {
-        "name": "Jack Grealish",
-        "number": 10,
-        "pos": "FW",
-        "rating": 7.45
-      }
-    ]
-  },
   "arsenal": {
     "formation": "4-3-3",
     "starting_xi": [
       {
-        "name": "David Raya",
-        "number": 22,
+        "name": "Kepa Arrizabalaga",
+        "number": 1,
         "pos": "GK",
-        "rating": 7.5,
+        "rating": 7.4,
         "goals": 0,
         "assists": 0,
         "tackles": 0.2,
-        "key_passes": 0.2,
+        "key_passes": 0.1,
         "shots": 0.0,
         "yellow_cards": 1
       },
       {
         "name": "Ben White",
-        "number": 4,
-        "pos": "RB",
-        "rating": 7.35,
-        "goals": 1,
-        "assists": 3,
-        "tackles": 2.3,
-        "key_passes": 1.4,
-        "shots": 0.6,
-        "yellow_cards": 2
-      },
-      {
-        "name": "William Saliba",
         "number": 2,
-        "pos": "CB",
-        "rating": 7.7,
+        "pos": "RB",
+        "rating": 7.3,
         "goals": 1,
-        "assists": 0,
-        "tackles": 2.5,
-        "key_passes": 0.4,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
         "shots": 0.4,
         "yellow_cards": 2
       },
       {
         "name": "Gabriel Magalhães",
-        "number": 6,
+        "number": 3,
         "pos": "CB",
-        "rating": 7.7,
-        "goals": 4,
+        "rating": 7.4,
+        "goals": 0,
         "assists": 0,
-        "tackles": 2.4,
-        "key_passes": 0.3,
-        "shots": 1.2,
-        "yellow_cards": 3
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
       },
       {
-        "name": "Jurriën Timber",
-        "number": 12,
+        "name": "William Saliba",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jurrien Timber",
+        "number": 5,
         "pos": "LB",
-        "rating": 7.4,
+        "rating": 7.3,
         "goals": 0,
         "assists": 2,
         "tackles": 2.6,
-        "key_passes": 1.2,
-        "shots": 0.5,
-        "yellow_cards": 1
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
       },
       {
-        "name": "Thomas Partey",
-        "number": 5,
+        "name": "Bruno Guimarães",
+        "number": 6,
         "pos": "DM",
-        "rating": 7.45,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 2.9,
-        "key_passes": 1.2,
-        "shots": 1.0,
-        "yellow_cards": 3
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
       },
       {
-        "name": "Declan Rice",
-        "number": 41,
+        "name": "Eberechi Eze",
+        "number": 7,
         "pos": "CM",
-        "rating": 7.85,
-        "goals": 3,
+        "rating": 7.75,
+        "goals": 4,
         "assists": 5,
-        "tackles": 3.0,
-        "key_passes": 2.4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
         "shots": 1.8,
         "yellow_cards": 2
       },
@@ -329,490 +142,466 @@ const REAL_SQUADS: Record<string, { formation: string; xi: Player[]; bench: Play
         "name": "Martin Ødegaard",
         "number": 8,
         "pos": "AM",
-        "rating": 8.15,
-        "goals": 6,
-        "assists": 8,
-        "tackles": 1.5,
-        "key_passes": 3.5,
-        "shots": 2.8,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Bukayo Saka",
-        "number": 7,
-        "pos": "RW",
-        "rating": 8.35,
-        "goals": 10,
-        "assists": 11,
-        "tackles": 1.8,
-        "key_passes": 3.7,
-        "shots": 3.5,
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
         "yellow_cards": 2
       },
       {
         "name": "Kai Havertz",
-        "number": 29,
-        "pos": "ST",
+        "number": 9,
+        "pos": "RW",
         "rating": 7.8,
-        "goals": 9,
+        "goals": 8,
         "assists": 4,
-        "tackles": 1.7,
-        "key_passes": 1.6,
-        "shots": 2.8,
-        "yellow_cards": 3
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
       },
       {
-        "name": "Gabriel Martinelli",
+        "name": "Gabriel Jesus",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Reiss Nelson",
         "number": 11,
         "pos": "LW",
-        "rating": 7.6,
-        "goals": 6,
-        "assists": 4,
-        "tackles": 1.4,
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
         "key_passes": 2.2,
-        "shots": 2.6,
+        "shots": 3.4,
         "yellow_cards": 1
       }
     ],
     "bench": [
       {
-        "name": "Neto",
-        "number": 32,
+        "name": "David Raya",
+        "number": 12,
         "pos": "GK",
-        "rating": 6.8
-      },
-      {
-        "name": "Riccardo Calafiori",
-        "number": 33,
-        "pos": "DF",
-        "rating": 7.35
-      },
-      {
-        "name": "Oleksandr Zinchenko",
-        "number": 17,
-        "pos": "DF",
         "rating": 7.1
       },
       {
-        "name": "Mikel Merino",
-        "number": 23,
-        "pos": "MF",
-        "rating": 7.35
+        "name": "Piero Hincapié",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
       },
       {
-        "name": "Ethan Nwaneri",
-        "number": 53,
-        "pos": "MF",
-        "rating": 7.25
-      },
-      {
-        "name": "Leandro Trossard",
-        "number": 19,
-        "pos": "FW",
-        "rating": 7.55
-      },
-      {
-        "name": "Gabriel Jesus",
-        "number": 9,
-        "pos": "FW",
+        "name": "Riccardo Calafiori",
+        "number": 14,
+        "pos": "DF",
         "rating": 7.3
       },
       {
-        "name": "Raheem Sterling",
-        "number": 30,
+        "name": "Mikel Merino",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Declan Rice",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Viktor Gyökeres",
+        "number": 17,
         "pos": "FW",
-        "rating": 7.35
+        "rating": 7.2
+      },
+      {
+        "name": "Martinelli",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
       }
     ]
   },
-  "liverpool": {
-    "formation": "4-2-3-1",
+  "aston villa": {
+    "formation": "4-3-3",
     "starting_xi": [
       {
-        "name": "Alisson Becker",
+        "name": "Emiliano Martínez",
         "number": 1,
         "pos": "GK",
-        "rating": 7.5,
+        "rating": 7.4,
         "goals": 0,
         "assists": 0,
         "tackles": 0.2,
         "key_passes": 0.1,
         "shots": 0.0,
-        "yellow_cards": 0
+        "yellow_cards": 1
       },
       {
-        "name": "Trent Alexander-Arnold",
-        "number": 66,
+        "name": "Lucas Digne",
+        "number": 2,
         "pos": "RB",
-        "rating": 7.85,
-        "goals": 3,
-        "assists": 8,
-        "tackles": 2.1,
-        "key_passes": 3.3,
-        "shots": 1.9,
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
         "yellow_cards": 2
       },
       {
-        "name": "Ibrahima Konaté",
-        "number": 5,
+        "name": "Victor Nilsson-Lindelöf",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ezri Konsa",
+        "number": 4,
         "pos": "CB",
         "rating": 7.5,
         "goals": 1,
-        "assists": 1,
+        "assists": 0,
         "tackles": 2.6,
-        "key_passes": 0.3,
-        "shots": 0.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
         "yellow_cards": 2
       },
       {
-        "name": "Virgil van Dijk",
-        "number": 4,
-        "pos": "CB",
-        "rating": 7.8,
-        "goals": 2,
-        "assists": 1,
-        "tackles": 2.2,
-        "key_passes": 0.5,
-        "shots": 1.0,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Andrew Robertson",
-        "number": 26,
+        "name": "Tyrone Mings",
+        "number": 5,
         "pos": "LB",
-        "rating": 7.35,
+        "rating": 7.3,
         "goals": 0,
-        "assists": 4,
-        "tackles": 2.3,
-        "key_passes": 1.9,
-        "shots": 0.7,
-        "yellow_cards": 1
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
       },
       {
-        "name": "Ryan Gravenberch",
-        "number": 38,
+        "name": "Ross Barkley",
+        "number": 6,
         "pos": "DM",
-        "rating": 7.8,
-        "goals": 1,
-        "assists": 3,
-        "tackles": 3.4,
-        "key_passes": 1.9,
-        "shots": 1.2,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Alexis Mac Allister",
-        "number": 10,
-        "pos": "CM",
-        "rating": 7.65,
-        "goals": 4,
+        "rating": 7.6,
+        "goals": 3,
         "assists": 4,
-        "tackles": 2.8,
-        "key_passes": 2.2,
-        "shots": 1.6,
-        "yellow_cards": 3
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
       },
       {
-        "name": "Mohamed Salah",
-        "number": 11,
-        "pos": "RW",
-        "rating": 8.5,
-        "goals": 16,
-        "assists": 12,
-        "tackles": 0.9,
-        "key_passes": 3.7,
-        "shots": 4.3,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Dominik Szoboszlai",
-        "number": 8,
-        "pos": "AM",
-        "rating": 7.55,
+        "name": "Boubacar Kamara",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
         "goals": 4,
         "assists": 5,
-        "tackles": 1.9,
+        "tackles": 2.4,
         "key_passes": 2.5,
-        "shots": 2.4,
+        "shots": 1.8,
         "yellow_cards": 2
       },
       {
-        "name": "Luis Díaz",
-        "number": 7,
-        "pos": "LW",
+        "name": "John McGinn",
+        "number": 8,
+        "pos": "AM",
         "rating": 7.9,
-        "goals": 10,
-        "assists": 4,
-        "tackles": 1.6,
-        "key_passes": 2.6,
-        "shots": 3.4,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
         "yellow_cards": 2
       },
       {
-        "name": "Diogo Jota",
-        "number": 20,
-        "pos": "ST",
-        "rating": 7.75,
+        "name": "Leon Bailey",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
         "goals": 8,
-        "assists": 3,
+        "assists": 4,
         "tackles": 1.1,
-        "key_passes": 1.6,
-        "shots": 3.2,
-        "yellow_cards": 2
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ollie Watkins",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Tammy Abraham",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
       }
     ],
     "bench": [
       {
-        "name": "Caoimhín Kelleher",
-        "number": 62,
+        "name": "Marco Bizot",
+        "number": 12,
         "pos": "GK",
-        "rating": 7.25
+        "rating": 7.1
       },
       {
-        "name": "Conor Bradley",
-        "number": 84,
+        "name": "Matty Cash",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Pau Torres",
+        "number": 14,
         "pos": "DF",
         "rating": 7.3
       },
       {
-        "name": "Kostas Tsimikas",
-        "number": 21,
-        "pos": "DF",
-        "rating": 7.15
-      },
-      {
-        "name": "Curtis Jones",
-        "number": 17,
+        "name": "Morgan Rogers",
+        "number": 15,
         "pos": "MF",
         "rating": 7.4
       },
       {
-        "name": "Harvey Elliott",
-        "number": 19,
+        "name": "Amadou Onana",
+        "number": 16,
         "pos": "MF",
-        "rating": 7.3
+        "rating": 7.1
       },
       {
-        "name": "Cody Gakpo",
+        "name": "Emiliano Buendía",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Evann Guessand",
         "number": 18,
         "pos": "FW",
-        "rating": 7.65
-      },
-      {
-        "name": "Federico Chiesa",
-        "number": 14,
-        "pos": "FW",
-        "rating": 7.25
-      },
-      {
-        "name": "Darwin Núñez",
-        "number": 9,
-        "pos": "FW",
-        "rating": 7.5
+        "rating": 7.3
       }
     ]
   },
   "chelsea": {
-    "formation": "4-2-3-1",
+    "formation": "4-3-3",
     "starting_xi": [
       {
         "name": "Robert Sánchez",
         "number": 1,
         "pos": "GK",
-        "rating": 7.35,
+        "rating": 7.4,
         "goals": 0,
         "assists": 0,
         "tackles": 0.2,
         "key_passes": 0.1,
         "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Axel Disasi",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
         "yellow_cards": 2
       },
       {
-        "name": "Malo Gusto",
-        "number": 27,
-        "pos": "RB",
+        "name": "Trevoh Chalobah",
+        "number": 3,
+        "pos": "CB",
         "rating": 7.4,
         "goals": 0,
-        "assists": 4,
-        "tackles": 2.8,
-        "key_passes": 1.6,
-        "shots": 0.6,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Wesley Fofana",
-        "number": 29,
-        "pos": "CB",
-        "rating": 7.45,
-        "goals": 1,
         "assists": 0,
-        "tackles": 2.5,
-        "key_passes": 0.3,
-        "shots": 0.5,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Levi Colwill",
-        "number": 6,
-        "pos": "CB",
-        "rating": 7.55,
-        "goals": 1,
-        "assists": 0,
-        "tackles": 2.4,
-        "key_passes": 0.6,
-        "shots": 0.5,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Renato Veiga",
-        "number": 40,
-        "pos": "LB",
-        "rating": 7.5,
-        "goals": 0,
-        "assists": 2,
-        "tackles": 3.2,
-        "key_passes": 1.4,
+        "tackles": 2.6,
+        "key_passes": 1.1,
         "shots": 0.4,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Moisés Caicedo",
-        "number": 25,
-        "pos": "DM",
-        "rating": 8.0,
-        "goals": 2,
-        "assists": 4,
-        "tackles": 4.1,
-        "key_passes": 1.8,
-        "shots": 1.2,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Enzo Fernández",
-        "number": 8,
-        "pos": "CM",
-        "rating": 7.75,
-        "goals": 4,
-        "assists": 6,
-        "tackles": 2.3,
-        "key_passes": 2.7,
-        "shots": 1.9,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Pedro Neto",
-        "number": 7,
-        "pos": "RW",
-        "rating": 7.8,
-        "goals": 5,
-        "assists": 6,
-        "tackles": 1.4,
-        "key_passes": 2.6,
-        "shots": 2.8,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Cole Palmer",
-        "number": 20,
-        "pos": "AM",
-        "rating": 8.45,
-        "goals": 14,
-        "assists": 9,
-        "tackles": 1.4,
-        "key_passes": 3.8,
-        "shots": 4.0,
         "yellow_cards": 2
-      },
-      {
-        "name": "Jadon Sancho",
-        "number": 19,
-        "pos": "LW",
-        "rating": 7.75,
-        "goals": 5,
-        "assists": 7,
-        "tackles": 1.2,
-        "key_passes": 2.9,
-        "shots": 2.4,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Nicolas Jackson",
-        "number": 15,
-        "pos": "ST",
-        "rating": 7.9,
-        "goals": 12,
-        "assists": 4,
-        "tackles": 0.8,
-        "key_passes": 1.6,
-        "shots": 3.5,
-        "yellow_cards": 3
-      }
-    ],
-    "bench": [
-      {
-        "name": "Filip Jörgensen",
-        "number": 12,
-        "pos": "GK",
-        "rating": 6.9
-      },
-      {
-        "name": "Reece James",
-        "number": 24,
-        "pos": "DF",
-        "rating": 7.45
       },
       {
         "name": "Tosin Adarabioyo",
         "number": 4,
-        "pos": "DF",
-        "rating": 7.15
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
       },
       {
-        "name": "Benoît Badiashile",
+        "name": "Wesley Fofana",
         "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jordan Henderson",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Morgan Rogers",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Enzo Fernández",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pedro Neto",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Danny Welbeck",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Mykhailo Mudryk",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Gabriel Slonina",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Reece James",
+        "number": 13,
         "pos": "DF",
-        "rating": 7.15
+        "rating": 7.2
       },
       {
-        "name": "Roméo Lavia",
-        "number": 45,
-        "pos": "MF",
-        "rating": 7.35
-      },
-      {
-        "name": "Jadon Sancho",
-        "number": 19,
-        "pos": "FW",
-        "rating": 7.5
-      },
-      {
-        "name": "João Félix",
+        "name": "Maxence Lacroix",
         "number": 14,
-        "pos": "FW",
-        "rating": 7.45
+        "pos": "DF",
+        "rating": 7.3
       },
       {
-        "name": "Christopher Nkunku",
+        "name": "Moisés Caicedo",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Cole Palmer",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "João Pedro",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Emanuel Emegha",
         "number": 18,
         "pos": "FW",
-        "rating": 7.7
-      },
-      {
-        "name": "Marc Guiu",
-        "number": 38,
-        "pos": "ST",
-        "rating": 7.1
+        "rating": 7.3
       }
     ]
   },
-  "manchester united": {
-    "formation": "4-2-3-1",
+  "everton": {
+    "formation": "4-3-3",
     "starting_xi": [
       {
-        "name": "André Onana",
-        "number": 24,
+        "name": "Jordan Pickford",
+        "number": 1,
         "pos": "GK",
-        "rating": 7.35,
+        "rating": 7.4,
         "goals": 0,
         "assists": 0,
         "tackles": 0.2,
@@ -821,2900 +610,173 @@ const REAL_SQUADS: Record<string, { formation: string; xi: Player[]; bench: Play
         "yellow_cards": 1
       },
       {
-        "name": "Noussair Mazraoui",
-        "number": 3,
+        "name": "James Tarkowski",
+        "number": 2,
         "pos": "RB",
-        "rating": 7.4,
-        "goals": 0,
-        "assists": 3,
-        "tackles": 2.7,
-        "key_passes": 1.3,
-        "shots": 0.5,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Matthijs de Ligt",
-        "number": 4,
-        "pos": "CB",
-        "rating": 7.45,
-        "goals": 1,
-        "assists": 0,
-        "tackles": 2.4,
-        "key_passes": 0.3,
-        "shots": 0.6,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Lisandro Martínez",
-        "number": 6,
-        "pos": "CB",
-        "rating": 7.5,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 2.8,
-        "key_passes": 0.8,
-        "shots": 0.3,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Diogo Dalot",
-        "number": 20,
-        "pos": "LB",
         "rating": 7.3,
         "goals": 1,
         "assists": 2,
-        "tackles": 2.5,
-        "key_passes": 1.2,
-        "shots": 0.8,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Manuel Ugarte",
-        "number": 25,
-        "pos": "DM",
-        "rating": 7.45,
-        "goals": 0,
-        "assists": 1,
-        "tackles": 3.8,
-        "key_passes": 0.9,
+        "tackles": 2.6,
+        "key_passes": 1.1,
         "shots": 0.4,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Kobbie Mainoo",
-        "number": 37,
-        "pos": "CM",
-        "rating": 7.55,
-        "goals": 2,
-        "assists": 3,
-        "tackles": 2.3,
-        "key_passes": 2.0,
-        "shots": 1.3,
         "yellow_cards": 2
       },
       {
-        "name": "Amad Diallo",
-        "number": 16,
-        "pos": "RW",
-        "rating": 7.75,
-        "goals": 6,
-        "assists": 5,
-        "tackles": 1.5,
-        "key_passes": 2.6,
-        "shots": 2.9,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Bruno Fernandes",
-        "number": 8,
-        "pos": "AM",
-        "rating": 8.05,
-        "goals": 7,
-        "assists": 9,
-        "tackles": 1.9,
-        "key_passes": 3.8,
-        "shots": 3.3,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Alejandro Garnacho",
-        "number": 17,
-        "pos": "LW",
-        "rating": 7.7,
-        "goals": 8,
-        "assists": 4,
-        "tackles": 1.2,
-        "key_passes": 2.5,
-        "shots": 3.5,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Rasmus Højlund",
-        "number": 9,
-        "pos": "ST",
-        "rating": 7.55,
-        "goals": 9,
-        "assists": 1,
-        "tackles": 0.6,
-        "key_passes": 1.0,
-        "shots": 3.0,
-        "yellow_cards": 2
-      }
-    ],
-    "bench": [
-      {
-        "name": "Altay Bayındır",
-        "number": 1,
-        "pos": "GK",
-        "rating": 6.85
-      },
-      {
-        "name": "Leny Yoro",
-        "number": 15,
-        "pos": "DF",
-        "rating": 7.3
-      },
-      {
-        "name": "Harry Maguire",
-        "number": 5,
-        "pos": "DF",
-        "rating": 7.2
-      },
-      {
-        "name": "Casemiro",
-        "number": 18,
-        "pos": "MF",
-        "rating": 7.3
-      },
-      {
-        "name": "Christian Eriksen",
-        "number": 14,
-        "pos": "MF",
-        "rating": 7.25
-      },
-      {
-        "name": "Marcus Rashford",
-        "number": 10,
-        "pos": "FW",
-        "rating": 7.5
-      },
-      {
-        "name": "Joshua Zirkzee",
-        "number": 11,
-        "pos": "FW",
-        "rating": 7.25
-      }
-    ]
-  },
-  "tottenham": {
-    "formation": "4-3-3",
-    "starting_xi": [
-      {
-        "name": "Guglielmo Vicario",
-        "number": 1,
-        "pos": "GK",
+        "name": "Michael Keane",
+        "number": 3,
+        "pos": "CB",
         "rating": 7.4,
         "goals": 0,
         "assists": 0,
-        "tackles": 0.3,
-        "key_passes": 0.1,
-        "shots": 0.0,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Pedro Porro",
-        "number": 23,
-        "pos": "RB",
-        "rating": 7.7,
-        "goals": 2,
-        "assists": 5,
-        "tackles": 2.9,
-        "key_passes": 2.6,
-        "shots": 2.0,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Cristian Romero",
-        "number": 17,
-        "pos": "CB",
-        "rating": 7.6,
-        "goals": 2,
-        "assists": 0,
-        "tackles": 2.8,
-        "key_passes": 0.4,
-        "shots": 0.7,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Micky van de Ven",
-        "number": 37,
-        "pos": "CB",
-        "rating": 7.65,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 2.5,
-        "key_passes": 0.5,
+        "tackles": 2.6,
+        "key_passes": 1.1,
         "shots": 0.4,
         "yellow_cards": 2
       },
       {
-        "name": "Destiny Udogie",
-        "number": 13,
-        "pos": "LB",
-        "rating": 7.45,
-        "goals": 0,
-        "assists": 3,
-        "tackles": 2.7,
-        "key_passes": 1.5,
-        "shots": 0.6,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Rodrigo Bentancur",
-        "number": 30,
-        "pos": "DM",
+        "name": "Vitalii Mykolenko",
+        "number": 4,
+        "pos": "CB",
         "rating": 7.5,
         "goals": 1,
-        "assists": 2,
-        "tackles": 3.0,
-        "key_passes": 1.7,
-        "shots": 1.2,
-        "yellow_cards": 4
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
       },
       {
-        "name": "Pape Matar Sarr",
-        "number": 29,
-        "pos": "CM",
-        "rating": 7.4,
+        "name": "Jarrad Branthwaite",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Christian Nørgaard",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
         "goals": 3,
-        "assists": 2,
+        "assists": 4,
         "tackles": 2.4,
-        "key_passes": 1.6,
-        "shots": 1.5,
+        "key_passes": 2.5,
+        "shots": 1.8,
         "yellow_cards": 2
       },
       {
-        "name": "James Maddison",
-        "number": 10,
-        "pos": "AM",
-        "rating": 7.95,
-        "goals": 6,
-        "assists": 7,
-        "tackles": 1.7,
-        "key_passes": 3.4,
-        "shots": 2.9,
+        "name": "James Garner",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
         "yellow_cards": 2
+      },
+      {
+        "name": "Hayden Hackney",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dwight McNeil",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Iliman Ndiaye",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
       },
       {
         "name": "Brennan Johnson",
-        "number": 22,
-        "pos": "RW",
+        "number": 11,
+        "pos": "LW",
         "rating": 7.8,
-        "goals": 9,
-        "assists": 4,
-        "tackles": 1.2,
-        "key_passes": 1.9,
-        "shots": 3.0,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Dominic Solanke",
-        "number": 19,
-        "pos": "ST",
-        "rating": 7.75,
-        "goals": 8,
-        "assists": 3,
-        "tackles": 1.3,
-        "key_passes": 1.5,
-        "shots": 3.2,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Son Heung-min",
-        "number": 7,
-        "pos": "LW",
-        "rating": 8.1,
-        "goals": 9,
-        "assists": 8,
-        "tackles": 0.9,
-        "key_passes": 3.2,
-        "shots": 3.6,
-        "yellow_cards": 1
-      }
-    ],
-    "bench": [
-      {
-        "name": "Fraser Forster",
-        "number": 20,
-        "pos": "GK",
-        "rating": 6.75
-      },
-      {
-        "name": "Radu Drăgușin",
-        "number": 6,
-        "pos": "DF",
-        "rating": 7.15
-      },
-      {
-        "name": "Archie Gray",
-        "number": 14,
-        "pos": "DF",
-        "rating": 7.2
-      },
-      {
-        "name": "Yves Bissouma",
-        "number": 8,
-        "pos": "MF",
-        "rating": 7.35
-      },
-      {
-        "name": "Lucas Bergvall",
-        "number": 15,
-        "pos": "MF",
-        "rating": 7.25
-      },
-      {
-        "name": "Dejan Kulusevski",
-        "number": 21,
-        "pos": "MF",
-        "rating": 7.75
-      },
-      {
-        "name": "Richarlison",
-        "number": 9,
-        "pos": "FW",
-        "rating": 7.35
-      },
-      {
-        "name": "Timo Werner",
-        "number": 16,
-        "pos": "FW",
-        "rating": 7.2
-      }
-    ]
-  },
-  "real madrid": {
-    "formation": "4-3-3",
-    "starting_xi": [
-      {
-        "name": "Thibaut Courtois",
-        "number": 1,
-        "pos": "GK",
-        "rating": 7.45,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 0.4,
-        "key_passes": 0.1,
-        "shots": 0.0,
-        "yellow_cards": 0
-      },
-      {
-        "name": "Dani Carvajal",
-        "number": 2,
-        "pos": "RB",
-        "rating": 7.35,
-        "goals": 1,
-        "assists": 2,
-        "tackles": 2.1,
-        "key_passes": 1.2,
-        "shots": 0.8,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Éder Militão",
-        "number": 3,
-        "pos": "CB",
-        "rating": 7.3,
-        "goals": 1,
-        "assists": 0,
-        "tackles": 1.9,
-        "key_passes": 0.3,
-        "shots": 0.6,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Antonio Rüdiger",
-        "number": 22,
-        "pos": "CB",
-        "rating": 7.45,
-        "goals": 2,
-        "assists": 0,
-        "tackles": 1.8,
-        "key_passes": 0.2,
-        "shots": 0.9,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Ferland Mendy",
-        "number": 23,
-        "pos": "LB",
-        "rating": 7.1,
-        "goals": 0,
-        "assists": 1,
-        "tackles": 1.7,
-        "key_passes": 0.6,
-        "shots": 0.3,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Federico Valverde",
-        "number": 8,
-        "pos": "CM",
-        "rating": 7.85,
-        "goals": 4,
-        "assists": 5,
-        "tackles": 2.4,
-        "key_passes": 2.2,
-        "shots": 2.6,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Aurélien Tchouaméni",
-        "number": 14,
-        "pos": "DM",
-        "rating": 7.35,
-        "goals": 0,
-        "assists": 1,
-        "tackles": 2.8,
-        "key_passes": 0.9,
-        "shots": 0.8,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Jude Bellingham",
-        "number": 5,
-        "pos": "AM",
-        "rating": 8.2,
-        "goals": 9,
-        "assists": 7,
-        "tackles": 1.9,
-        "key_passes": 2.6,
-        "shots": 3.2,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Rodrygo",
-        "number": 11,
-        "pos": "RW",
-        "rating": 7.6,
-        "goals": 7,
-        "assists": 5,
-        "tackles": 1.1,
-        "key_passes": 2.1,
-        "shots": 2.9,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Kylian Mbappé",
-        "number": 9,
-        "pos": "ST",
-        "rating": 8.25,
-        "goals": 16,
-        "assists": 3,
-        "tackles": 0.4,
-        "key_passes": 1.9,
-        "shots": 4.6,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Vinícius Júnior",
-        "number": 7,
-        "pos": "LW",
-        "rating": 8.4,
-        "goals": 13,
-        "assists": 9,
-        "tackles": 1.2,
-        "key_passes": 3.3,
-        "shots": 4.0,
-        "yellow_cards": 4
-      }
-    ],
-    "bench": [
-      {
-        "name": "Andriy Lunin",
-        "number": 13,
-        "pos": "GK",
-        "rating": 7.15
-      },
-      {
-        "name": "Lucas Vázquez",
-        "number": 17,
-        "pos": "DF",
-        "rating": 7.05
-      },
-      {
-        "name": "Luka Modrić",
-        "number": 10,
-        "pos": "MF",
-        "rating": 7.5
-      },
-      {
-        "name": "Eduardo Camavinga",
-        "number": 6,
-        "pos": "MF",
-        "rating": 7.35
-      },
-      {
-        "name": "Arda Güler",
-        "number": 15,
-        "pos": "MF",
-        "rating": 7.25
-      },
-      {
-        "name": "Brahim Díaz",
-        "number": 21,
-        "pos": "FW",
-        "rating": 7.4
-      },
-      {
-        "name": "Endrick",
-        "number": 16,
-        "pos": "FW",
-        "rating": 7.2
-      }
-    ]
-  },
-  "barcelona": {
-    "formation": "4-2-3-1",
-    "starting_xi": [
-      {
-        "name": "Marc-André ter Stegen",
-        "number": 1,
-        "pos": "GK",
-        "rating": 7.35,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 0.2,
-        "key_passes": 0.1,
-        "shots": 0.0,
-        "yellow_cards": 0
-      },
-      {
-        "name": "Jules Koundé",
-        "number": 23,
-        "pos": "RB",
-        "rating": 7.65,
-        "goals": 2,
-        "assists": 4,
-        "tackles": 2.6,
-        "key_passes": 1.6,
-        "shots": 0.6,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Pau Cubarsí",
-        "number": 2,
-        "pos": "CB",
-        "rating": 7.5,
-        "goals": 0,
-        "assists": 1,
-        "tackles": 2.2,
-        "key_passes": 0.8,
-        "shots": 0.2,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Íñigo Martínez",
-        "number": 5,
-        "pos": "CB",
-        "rating": 7.4,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 2.1,
-        "key_passes": 0.4,
-        "shots": 0.5,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Alejandro Balde",
-        "number": 3,
-        "pos": "LB",
-        "rating": 7.35,
-        "goals": 1,
-        "assists": 3,
-        "tackles": 1.9,
-        "key_passes": 1.5,
-        "shots": 0.7,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Marc Casadó",
-        "number": 17,
-        "pos": "DM",
-        "rating": 7.45,
-        "goals": 0,
-        "assists": 3,
-        "tackles": 3.0,
-        "key_passes": 1.4,
-        "shots": 0.4,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Pedri",
-        "number": 8,
-        "pos": "CM",
-        "rating": 8.0,
-        "goals": 4,
-        "assists": 6,
-        "tackles": 2.3,
-        "key_passes": 2.9,
-        "shots": 1.8,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Lamine Yamal",
-        "number": 19,
-        "pos": "RW",
-        "rating": 8.3,
-        "goals": 8,
-        "assists": 10,
-        "tackles": 1.5,
-        "key_passes": 3.5,
-        "shots": 3.3,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Dani Olmo",
-        "number": 20,
-        "pos": "AM",
-        "rating": 7.85,
-        "goals": 7,
-        "assists": 4,
-        "tackles": 1.4,
-        "key_passes": 2.7,
-        "shots": 3.0,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Raphinha",
-        "number": 11,
-        "pos": "LW",
-        "rating": 8.35,
         "goals": 14,
-        "assists": 9,
-        "tackles": 1.7,
-        "key_passes": 3.6,
-        "shots": 3.9,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Robert Lewandowski",
-        "number": 9,
-        "pos": "ST",
-        "rating": 8.15,
-        "goals": 18,
-        "assists": 2,
-        "tackles": 0.5,
-        "key_passes": 1.2,
-        "shots": 4.2,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
         "yellow_cards": 1
       }
     ],
     "bench": [
       {
-        "name": "Wojciech Szczęsny",
-        "number": 25,
+        "name": "Thomas King",
+        "number": 12,
         "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Jake O'Brien",
+        "number": 13,
+        "pos": "DF",
         "rating": 7.2
       },
       {
-        "name": "Andreas Christensen",
-        "number": 15,
+        "name": "Nathan Patterson",
+        "number": 14,
         "pos": "DF",
-        "rating": 7.15
-      },
-      {
-        "name": "Frenkie de Jong",
-        "number": 21,
-        "pos": "MF",
-        "rating": 7.55
-      },
-      {
-        "name": "Gavi",
-        "number": 6,
-        "pos": "MF",
-        "rating": 7.5
-      },
-      {
-        "name": "Fermín López",
-        "number": 16,
-        "pos": "MF",
         "rating": 7.3
       },
       {
-        "name": "Ferran Torres",
-        "number": 7,
-        "pos": "FW",
-        "rating": 7.2
-      },
-      {
-        "name": "Ansu Fati",
-        "number": 10,
-        "pos": "FW",
-        "rating": 7.1
-      }
-    ]
-  },
-  "atletico madrid": {
-    "formation": "5-3-2",
-    "starting_xi": [
-      {
-        "name": "Jan Oblak",
-        "number": 13,
-        "pos": "GK",
-        "rating": 7.4,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 0.2,
-        "key_passes": 0.1,
-        "shots": 0.0,
-        "yellow_cards": 0
-      },
-      {
-        "name": "Nahuel Molina",
-        "number": 16,
-        "pos": "RWB",
-        "rating": 7.2,
-        "goals": 1,
-        "assists": 2,
-        "tackles": 2.2,
-        "key_passes": 1.3,
-        "shots": 0.6,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Robin Le Normand",
-        "number": 24,
-        "pos": "CB",
-        "rating": 7.35,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 2.4,
-        "key_passes": 0.2,
-        "shots": 0.4,
-        "yellow_cards": 3
-      },
-      {
-        "name": "José María Giménez",
-        "number": 2,
-        "pos": "CB",
-        "rating": 7.5,
-        "goals": 1,
-        "assists": 0,
-        "tackles": 2.6,
-        "key_passes": 0.3,
-        "shots": 0.5,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Reinildo Mandava",
-        "number": 23,
-        "pos": "CB",
-        "rating": 7.25,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 2.5,
-        "key_passes": 0.4,
-        "shots": 0.2,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Samuel Lino",
-        "number": 12,
-        "pos": "LWB",
-        "rating": 7.45,
-        "goals": 3,
-        "assists": 3,
-        "tackles": 2.0,
-        "key_passes": 2.1,
-        "shots": 1.8,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Rodrigo De Paul",
-        "number": 5,
-        "pos": "CM",
-        "rating": 7.6,
-        "goals": 2,
-        "assists": 4,
-        "tackles": 2.5,
-        "key_passes": 2.4,
-        "shots": 1.5,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Koke",
-        "number": 6,
-        "pos": "DM",
-        "rating": 7.4,
-        "goals": 1,
-        "assists": 3,
-        "tackles": 2.7,
-        "key_passes": 1.8,
-        "shots": 0.6,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Conor Gallagher",
-        "number": 4,
-        "pos": "CM",
-        "rating": 7.55,
-        "goals": 3,
-        "assists": 2,
-        "tackles": 3.1,
-        "key_passes": 1.6,
-        "shots": 1.7,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Antoine Griezmann",
-        "number": 7,
-        "pos": "ST",
-        "rating": 8.1,
-        "goals": 9,
-        "assists": 7,
-        "tackles": 1.5,
-        "key_passes": 3.3,
-        "shots": 3.2,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Julián Álvarez",
-        "number": 19,
-        "pos": "ST",
-        "rating": 7.9,
-        "goals": 8,
-        "assists": 3,
-        "tackles": 1.1,
-        "key_passes": 2.1,
-        "shots": 3.4,
-        "yellow_cards": 1
-      }
-    ],
-    "bench": [
-      {
-        "name": "Juan Musso",
-        "number": 1,
-        "pos": "GK",
-        "rating": 6.8
-      },
-      {
-        "name": "César Azpilicueta",
-        "number": 3,
-        "pos": "DF",
-        "rating": 7.05
-      },
-      {
-        "name": "Axel Witsel",
-        "number": 20,
-        "pos": "DF",
-        "rating": 7.2
-      },
-      {
-        "name": "Pablo Barrios",
-        "number": 8,
-        "pos": "MF",
-        "rating": 7.35
-      },
-      {
-        "name": "Rodrigo Riquelme",
-        "number": 17,
-        "pos": "MF",
-        "rating": 7.2
-      },
-      {
-        "name": "Alexander Sørloth",
-        "number": 9,
-        "pos": "FW",
-        "rating": 7.5
-      },
-      {
-        "name": "Ángel Correa",
-        "number": 10,
-        "pos": "FW",
-        "rating": 7.4
-      }
-    ]
-  },
-  "athletic club": {
-    "formation": "4-2-3-1",
-    "starting_xi": [
-      {
-        "name": "Julen Agirrezabala",
-        "number": 13,
-        "pos": "GK",
-        "rating": 7.3,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 0.2,
-        "key_passes": 0.1,
-        "shots": 0.0,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Óscar de Marcos",
-        "number": 18,
-        "pos": "RB",
-        "rating": 7.25,
-        "goals": 1,
-        "assists": 3,
-        "tackles": 2.3,
-        "key_passes": 1.3,
-        "shots": 0.5,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Dani Vivian",
-        "number": 3,
-        "pos": "CB",
-        "rating": 7.55,
-        "goals": 2,
-        "assists": 0,
-        "tackles": 2.7,
-        "key_passes": 0.2,
-        "shots": 0.6,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Aitor Paredes",
-        "number": 4,
-        "pos": "CB",
-        "rating": 7.4,
-        "goals": 2,
-        "assists": 0,
-        "tackles": 2.4,
-        "key_passes": 0.3,
-        "shots": 0.5,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Yuri Berchiche",
-        "number": 17,
-        "pos": "LB",
-        "rating": 7.35,
-        "goals": 1,
-        "assists": 2,
-        "tackles": 2.5,
-        "key_passes": 1.4,
-        "shots": 0.8,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Íñigo Ruiz de Galarreta",
-        "number": 16,
-        "pos": "DM",
-        "rating": 7.5,
-        "goals": 0,
-        "assists": 2,
-        "tackles": 3.0,
-        "key_passes": 2.1,
-        "shots": 0.6,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Beñat Prados",
-        "number": 24,
-        "pos": "CM",
-        "rating": 7.3,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 2.8,
-        "key_passes": 1.2,
-        "shots": 0.7,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Iñaki Williams",
-        "number": 9,
-        "pos": "RW",
-        "rating": 7.8,
-        "goals": 7,
-        "assists": 6,
-        "tackles": 1.3,
-        "key_passes": 2.4,
-        "shots": 3.1,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Oihan Sancet",
-        "number": 8,
-        "pos": "AM",
-        "rating": 7.9,
-        "goals": 8,
-        "assists": 3,
-        "tackles": 1.4,
-        "key_passes": 2.5,
-        "shots": 2.9,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Nico Williams",
-        "number": 10,
-        "pos": "LW",
-        "rating": 8.25,
-        "goals": 6,
-        "assists": 8,
-        "tackles": 1.2,
-        "key_passes": 3.5,
-        "shots": 3.4,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Gorka Guruzeta",
-        "number": 12,
-        "pos": "ST",
-        "rating": 7.6,
-        "goals": 7,
-        "assists": 2,
-        "tackles": 0.8,
-        "key_passes": 1.3,
-        "shots": 2.8,
-        "yellow_cards": 1
-      }
-    ],
-    "bench": [
-      {
-        "name": "Unai Simón",
-        "number": 1,
-        "pos": "GK",
-        "rating": 7.4
-      },
-      {
-        "name": "Yeray Álvarez",
-        "number": 5,
-        "pos": "DF",
-        "rating": 7.15
-      },
-      {
-        "name": "Adama Boiro",
-        "number": 32,
-        "pos": "DF",
-        "rating": 6.95
-      },
-      {
-        "name": "Mikel Vesga",
-        "number": 6,
-        "pos": "MF",
-        "rating": 7.1
-      },
-      {
-        "name": "Unai Gómez",
-        "number": 20,
-        "pos": "MF",
-        "rating": 7.15
-      },
-      {
-        "name": "Álex Berenguer",
-        "number": 7,
-        "pos": "FW",
-        "rating": 7.5
-      },
-      {
-        "name": "Álvaro Djaló",
-        "number": 11,
-        "pos": "FW",
-        "rating": 7.2
-      }
-    ]
-  },
-  "osasuna": {
-    "formation": "4-2-3-1",
-    "starting_xi": [
-      {
-        "name": "Sergio Herrera",
-        "number": 1,
-        "pos": "GK",
-        "rating": 7.25,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 0.2,
-        "key_passes": 0.1,
-        "shots": 0.0,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Jesús Areso",
-        "number": 12,
-        "pos": "RB",
-        "rating": 7.15,
-        "goals": 1,
-        "assists": 3,
-        "tackles": 2.2,
-        "key_passes": 1.4,
-        "shots": 0.7,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Alejandro Catena",
-        "number": 24,
-        "pos": "CB",
-        "rating": 7.2,
-        "goals": 0,
-        "assists": 1,
-        "tackles": 2.1,
-        "key_passes": 0.3,
-        "shots": 0.5,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Enzo Boyomo",
-        "number": 22,
-        "pos": "CB",
-        "rating": 7.35,
-        "goals": 2,
-        "assists": 0,
-        "tackles": 2.6,
-        "key_passes": 0.2,
-        "shots": 0.4,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Juan Cruz",
-        "number": 3,
-        "pos": "LB",
-        "rating": 6.95,
-        "goals": 0,
-        "assists": 1,
-        "tackles": 2.0,
-        "key_passes": 0.6,
-        "shots": 0.3,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Lucas Torró",
-        "number": 6,
-        "pos": "DM",
-        "rating": 7.3,
-        "goals": 2,
-        "assists": 0,
-        "tackles": 3.1,
-        "key_passes": 0.8,
-        "shots": 0.9,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Jon Moncayola",
-        "number": 7,
-        "pos": "CM",
-        "rating": 7.1,
-        "goals": 1,
-        "assists": 2,
-        "tackles": 2.3,
-        "key_passes": 1.5,
-        "shots": 1.2,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Rubén Peña",
+        "name": "Kiernan Dewsbury Hall",
         "number": 15,
-        "pos": "RW",
-        "rating": 7.05,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 1.7,
-        "key_passes": 1.2,
-        "shots": 1.1,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Aimar Oroz",
-        "number": 10,
-        "pos": "AM",
-        "rating": 7.45,
-        "goals": 3,
-        "assists": 4,
-        "tackles": 1.8,
-        "key_passes": 2.5,
-        "shots": 1.8,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Bryan Zaragoza",
-        "number": 19,
-        "pos": "LW",
-        "rating": 7.6,
-        "goals": 4,
-        "assists": 5,
-        "tackles": 1.1,
-        "key_passes": 2.8,
-        "shots": 2.6,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Ante Budimir",
-        "number": 17,
-        "pos": "ST",
-        "rating": 7.55,
-        "goals": 8,
-        "assists": 1,
-        "tackles": 0.6,
-        "key_passes": 0.9,
-        "shots": 2.9,
-        "yellow_cards": 2
-      }
-    ],
-    "bench": [
-      {
-        "name": "Aitor Fernández",
-        "number": 13,
-        "pos": "GK",
-        "rating": 6.7
-      },
-      {
-        "name": "Unai García",
-        "number": 4,
-        "pos": "DF",
-        "rating": 6.85
-      },
-      {
-        "name": "Pablo Ibáñez",
-        "number": 18,
-        "pos": "MF",
-        "rating": 6.9
-      },
-      {
-        "name": "Moi Gómez",
-        "number": 16,
-        "pos": "MF",
-        "rating": 7.1
-      },
-      {
-        "name": "Kike Barja",
-        "number": 11,
-        "pos": "FW",
-        "rating": 6.8
-      },
-      {
-        "name": "Raúl García",
-        "number": 9,
-        "pos": "FW",
-        "rating": 7.0
-      },
-      {
-        "name": "José Arnaiz",
-        "number": 20,
-        "pos": "FW",
-        "rating": 6.85
-      }
-    ]
-  },
-  "levante": {
-    "formation": "3-4-2-1",
-    "starting_xi": [
-      {
-        "name": "Andrés Fernández",
-        "number": 1,
-        "pos": "GK",
-        "rating": 7.05,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 0.3,
-        "key_passes": 0.1,
-        "shots": 0.0,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Unai Elgezabal",
-        "number": 4,
-        "pos": "CB",
-        "rating": 7.1,
-        "goals": 1,
-        "assists": 0,
-        "tackles": 2.4,
-        "key_passes": 0.2,
-        "shots": 0.4,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Jorge Cabello",
-        "number": 14,
-        "pos": "CB",
-        "rating": 6.95,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 2.1,
-        "key_passes": 0.2,
-        "shots": 0.3,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Diego Pampín",
-        "number": 3,
-        "pos": "CB",
-        "rating": 7.0,
-        "goals": 0,
-        "assists": 1,
-        "tackles": 2.2,
-        "key_passes": 0.7,
-        "shots": 0.4,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Andrés García",
-        "number": 2,
-        "pos": "RWB",
-        "rating": 7.2,
-        "goals": 2,
-        "assists": 2,
-        "tackles": 2.1,
-        "key_passes": 1.6,
-        "shots": 1.1,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Ángel Algobia",
-        "number": 6,
-        "pos": "CM",
-        "rating": 7.05,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 2.8,
-        "key_passes": 1.1,
-        "shots": 0.8,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Oriol Rey",
-        "number": 20,
-        "pos": "CM",
-        "rating": 7.15,
-        "goals": 0,
-        "assists": 2,
-        "tackles": 2.7,
-        "key_passes": 1.4,
-        "shots": 0.6,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Marcos Navarro",
-        "number": 29,
-        "pos": "LWB",
-        "rating": 6.9,
-        "goals": 0,
-        "assists": 1,
-        "tackles": 1.9,
-        "key_passes": 0.8,
-        "shots": 0.4,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Carlos Álvarez",
-        "number": 11,
-        "pos": "AM",
-        "rating": 7.45,
-        "goals": 4,
-        "assists": 5,
-        "tackles": 1.5,
-        "key_passes": 2.7,
-        "shots": 2.2,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Pablo Martínez",
-        "number": 10,
-        "pos": "AM",
-        "rating": 7.25,
-        "goals": 3,
-        "assists": 3,
-        "tackles": 1.8,
-        "key_passes": 2.1,
-        "shots": 1.9,
-        "yellow_cards": 3
-      },
-      {
-        "name": "José Luis Morales",
-        "number": 18,
-        "pos": "ST",
-        "rating": 7.35,
-        "goals": 6,
-        "assists": 2,
-        "tackles": 0.6,
-        "key_passes": 1.3,
-        "shots": 2.8,
-        "yellow_cards": 2
-      }
-    ],
-    "bench": [
-      {
-        "name": "Alfonso Pastor",
-        "number": 13,
-        "pos": "GK",
-        "rating": 6.6
-      },
-      {
-        "name": "Adrián de la Fuente",
-        "number": 5,
-        "pos": "DF",
-        "rating": 6.85
-      },
-      {
-        "name": "Vicente Iborra",
-        "number": 8,
-        "pos": "MF",
-        "rating": 7.0
-      },
-      {
-        "name": "Giorgi Kochorashvili",
-        "number": 16,
-        "pos": "MF",
-        "rating": 7.2
-      },
-      {
-        "name": "Brugui",
-        "number": 7,
-        "pos": "FW",
-        "rating": 7.15
-      },
-      {
-        "name": "Fabrício Santos",
-        "number": 12,
-        "pos": "FW",
-        "rating": 7.05
-      },
-      {
-        "name": "Iván Romero",
-        "number": 9,
-        "pos": "FW",
-        "rating": 6.9
-      }
-    ]
-  },
-  "botafogo": {
-    "formation": "4-2-3-1",
-    "starting_xi": [
-      {
-        "name": "John Victor",
-        "number": 1,
-        "pos": "GK",
-        "rating": 7.3,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 0.2,
-        "key_passes": 0.1,
-        "shots": 0.0,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Vitinho",
-        "number": 2,
-        "pos": "RB",
-        "rating": 7.15,
-        "goals": 1,
-        "assists": 2,
-        "tackles": 2.4,
-        "key_passes": 1.2,
-        "shots": 0.6,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Bastos",
-        "number": 15,
-        "pos": "CB",
-        "rating": 7.4,
-        "goals": 3,
-        "assists": 0,
-        "tackles": 2.5,
-        "key_passes": 0.2,
-        "shots": 0.7,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Alexander Barboza",
-        "number": 20,
-        "pos": "CB",
-        "rating": 7.35,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 2.6,
-        "key_passes": 0.3,
-        "shots": 0.5,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Alex Telles",
-        "number": 13,
-        "pos": "LB",
-        "rating": 7.45,
-        "goals": 2,
-        "assists": 4,
-        "tackles": 2.1,
-        "key_passes": 2.2,
-        "shots": 1.1,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Gregore",
-        "number": 5,
-        "pos": "DM",
-        "rating": 7.5,
-        "goals": 0,
-        "assists": 1,
-        "tackles": 3.6,
-        "key_passes": 0.8,
-        "shots": 0.4,
-        "yellow_cards": 5
-      },
-      {
-        "name": "Marlon Freitas",
-        "number": 17,
-        "pos": "CM",
-        "rating": 7.6,
-        "goals": 2,
-        "assists": 5,
-        "tackles": 2.5,
-        "key_passes": 2.1,
-        "shots": 1.2,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Luiz Henrique",
-        "number": 7,
-        "pos": "RW",
-        "rating": 8.1,
-        "goals": 8,
-        "assists": 6,
-        "tackles": 1.4,
-        "key_passes": 2.9,
-        "shots": 3.4,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Thiago Almada",
-        "number": 23,
-        "pos": "AM",
-        "rating": 8.05,
-        "goals": 5,
-        "assists": 7,
-        "tackles": 1.3,
-        "key_passes": 3.2,
-        "shots": 2.8,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Jefferson Savarino",
-        "number": 10,
-        "pos": "LW",
-        "rating": 7.75,
-        "goals": 7,
-        "assists": 6,
-        "tackles": 1.1,
-        "key_passes": 2.6,
-        "shots": 2.7,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Igor Jesus",
-        "number": 9,
-        "pos": "ST",
-        "rating": 7.85,
-        "goals": 9,
-        "assists": 3,
-        "tackles": 0.8,
-        "key_passes": 1.4,
-        "shots": 3.5,
-        "yellow_cards": 2
-      }
-    ],
-    "bench": [
-      {
-        "name": "Gatito Fernández",
-        "number": 12,
-        "pos": "GK",
-        "rating": 6.8
-      },
-      {
-        "name": "Mateo Ponte",
-        "number": 4,
-        "pos": "DF",
-        "rating": 7.0
-      },
-      {
-        "name": "Lucas Halter",
-        "number": 3,
-        "pos": "DF",
-        "rating": 7.05
-      },
-      {
-        "name": "Tchê Tchê",
-        "number": 8,
-        "pos": "MF",
-        "rating": 7.2
-      },
-      {
-        "name": "Danilo Barbosa",
-        "number": 6,
-        "pos": "MF",
-        "rating": 7.15
-      },
-      {
-        "name": "Matheus Martins",
-        "number": 11,
-        "pos": "FW",
-        "rating": 7.4
-      },
-      {
-        "name": "Tiquinho Soares",
-        "number": 99,
-        "pos": "ST",
-        "rating": 7.5
-      }
-    ]
-  },
-  "paranaense": {
-    "formation": "4-2-3-1",
-    "starting_xi": [
-      {
-        "name": "Mycael",
-        "number": 1,
-        "pos": "GK",
-        "rating": 7.2,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 0.2,
-        "key_passes": 0.1,
-        "shots": 0.0,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Madson",
-        "number": 22,
-        "pos": "RB",
-        "rating": 7.05,
-        "goals": 1,
-        "assists": 2,
-        "tackles": 2.1,
-        "key_passes": 1.1,
-        "shots": 0.6,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Kaique Rocha",
-        "number": 4,
-        "pos": "CB",
-        "rating": 7.25,
-        "goals": 2,
-        "assists": 0,
-        "tackles": 2.4,
-        "key_passes": 0.2,
-        "shots": 0.4,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Thiago Heleno",
-        "number": 44,
-        "pos": "CB",
-        "rating": 7.3,
-        "goals": 1,
-        "assists": 0,
-        "tackles": 2.3,
-        "key_passes": 0.3,
-        "shots": 0.5,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Fernando",
-        "number": 6,
-        "pos": "LB",
-        "rating": 6.95,
-        "goals": 0,
-        "assists": 1,
-        "tackles": 2.0,
-        "key_passes": 0.9,
-        "shots": 0.3,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Erick",
-        "number": 26,
-        "pos": "DM",
-        "rating": 7.4,
-        "goals": 3,
-        "assists": 2,
-        "tackles": 3.1,
-        "key_passes": 1.3,
-        "shots": 1.2,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Gabriel",
-        "number": 5,
-        "pos": "CM",
-        "rating": 7.15,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 2.8,
-        "key_passes": 1.0,
-        "shots": 0.7,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Tomás Cuello",
-        "number": 28,
-        "pos": "RW",
-        "rating": 7.35,
-        "goals": 4,
-        "assists": 5,
-        "tackles": 1.5,
-        "key_passes": 2.3,
-        "shots": 2.4,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Bruno Zapelli",
-        "number": 10,
-        "pos": "AM",
-        "rating": 7.55,
-        "goals": 3,
-        "assists": 6,
-        "tackles": 1.4,
-        "key_passes": 2.9,
-        "shots": 2.1,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Nikão",
-        "number": 11,
-        "pos": "LW",
-        "rating": 7.3,
-        "goals": 4,
-        "assists": 3,
-        "tackles": 1.2,
-        "key_passes": 2.0,
-        "shots": 2.2,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Agustín Canobbio",
-        "number": 9,
-        "pos": "ST",
-        "rating": 7.5,
-        "goals": 7,
-        "assists": 4,
-        "tackles": 1.6,
-        "key_passes": 1.8,
-        "shots": 3.0,
-        "yellow_cards": 3
-      }
-    ],
-    "bench": [
-      {
-        "name": "Léo Linck",
-        "number": 24,
-        "pos": "GK",
-        "rating": 6.7
-      },
-      {
-        "name": "Leo Godoy",
-        "number": 2,
-        "pos": "DF",
-        "rating": 6.9
-      },
-      {
-        "name": "Mateo Gamarra",
-        "number": 15,
-        "pos": "DF",
-        "rating": 6.85
-      },
-      {
-        "name": "Fernandinho",
-        "number": 8,
         "pos": "MF",
         "rating": 7.4
-      },
-      {
-        "name": "Christian",
-        "number": 88,
-        "pos": "MF",
-        "rating": 7.1
-      },
-      {
-        "name": "Julimar",
-        "number": 20,
-        "pos": "FW",
-        "rating": 7.2
-      },
-      {
-        "name": "Pablo",
-        "number": 92,
-        "pos": "FW",
-        "rating": 7.15
-      }
-    ]
-  },
-  "flamengo": {
-    "formation": "4-2-3-1",
-    "starting_xi": [
-      {
-        "name": "Agustín Rossi",
-        "number": 1,
-        "pos": "GK",
-        "rating": 7.35,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 0.2,
-        "key_passes": 0.1,
-        "shots": 0.0,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Guillermo Varela",
-        "number": 2,
-        "pos": "RB",
-        "rating": 7.15,
-        "goals": 1,
-        "assists": 2,
-        "tackles": 2.3,
-        "key_passes": 1.2,
-        "shots": 0.5,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Fabrício Bruno",
-        "number": 15,
-        "pos": "CB",
-        "rating": 7.45,
-        "goals": 2,
-        "assists": 0,
-        "tackles": 2.6,
-        "key_passes": 0.2,
-        "shots": 0.6,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Léo Ortiz",
-        "number": 3,
-        "pos": "CB",
-        "rating": 7.5,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 2.5,
-        "key_passes": 0.8,
-        "shots": 0.4,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Ayrton Lucas",
-        "number": 6,
-        "pos": "LB",
-        "rating": 7.3,
-        "goals": 2,
-        "assists": 3,
-        "tackles": 2.1,
-        "key_passes": 1.5,
-        "shots": 0.9,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Erick Pulgar",
-        "number": 5,
-        "pos": "DM",
-        "rating": 7.45,
-        "goals": 1,
-        "assists": 2,
-        "tackles": 3.4,
-        "key_passes": 1.4,
-        "shots": 0.8,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Nicolás de la Cruz",
-        "number": 18,
-        "pos": "CM",
-        "rating": 7.7,
-        "goals": 3,
-        "assists": 4,
-        "tackles": 2.7,
-        "key_passes": 2.8,
-        "shots": 2.1,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Gerson",
-        "number": 8,
-        "pos": "RW",
-        "rating": 7.9,
-        "goals": 5,
-        "assists": 7,
-        "tackles": 2.2,
-        "key_passes": 3.1,
-        "shots": 2.2,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Giorgian de Arrascaeta",
-        "number": 14,
-        "pos": "AM",
-        "rating": 8.05,
-        "goals": 8,
-        "assists": 9,
-        "tackles": 1.3,
-        "key_passes": 3.6,
-        "shots": 2.8,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Bruno Henrique",
-        "number": 27,
-        "pos": "LW",
-        "rating": 7.6,
-        "goals": 7,
-        "assists": 3,
-        "tackles": 1.1,
-        "key_passes": 1.9,
-        "shots": 3.0,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Pedro",
-        "number": 9,
-        "pos": "ST",
-        "rating": 8.2,
-        "goals": 18,
-        "assists": 4,
-        "tackles": 0.5,
-        "key_passes": 1.5,
-        "shots": 4.2,
-        "yellow_cards": 2
-      }
-    ],
-    "bench": [
-      {
-        "name": "Matheus Cunha",
-        "number": 25,
-        "pos": "GK",
-        "rating": 6.8
-      },
-      {
-        "name": "Wesley",
-        "number": 43,
-        "pos": "DF",
-        "rating": 7.1
-      },
-      {
-        "name": "David Luiz",
-        "number": 23,
-        "pos": "DF",
-        "rating": 7.15
-      },
-      {
-        "name": "Allan",
-        "number": 21,
-        "pos": "MF",
-        "rating": 7.2
       },
       {
         "name": "Carlos Alcaraz",
-        "number": 37,
-        "pos": "MF",
-        "rating": 7.3
-      },
-      {
-        "name": "Michael",
-        "number": 30,
-        "pos": "FW",
-        "rating": 7.4
-      },
-      {
-        "name": "Gabriel Barbosa",
-        "number": 99,
-        "pos": "FW",
-        "rating": 7.5
-      }
-    ]
-  },
-  "palmeiras": {
-    "formation": "4-2-3-1",
-    "starting_xi": [
-      {
-        "name": "Weverton",
-        "number": 21,
-        "pos": "GK",
-        "rating": 7.35,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 0.2,
-        "key_passes": 0.1,
-        "shots": 0.0,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Marcos Rocha",
-        "number": 2,
-        "pos": "RB",
-        "rating": 7.2,
-        "goals": 0,
-        "assists": 4,
-        "tackles": 2.5,
-        "key_passes": 1.4,
-        "shots": 0.4,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Gustavo Gómez",
-        "number": 15,
-        "pos": "CB",
-        "rating": 7.6,
-        "goals": 3,
-        "assists": 1,
-        "tackles": 2.8,
-        "key_passes": 0.4,
-        "shots": 0.9,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Murilo",
-        "number": 26,
-        "pos": "CB",
-        "rating": 7.45,
-        "goals": 2,
-        "assists": 0,
-        "tackles": 2.4,
-        "key_passes": 0.3,
-        "shots": 0.6,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Joaquín Piquerez",
-        "number": 22,
-        "pos": "LB",
-        "rating": 7.5,
-        "goals": 2,
-        "assists": 4,
-        "tackles": 2.4,
-        "key_passes": 2.0,
-        "shots": 1.2,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Aníbal Moreno",
-        "number": 5,
-        "pos": "DM",
-        "rating": 7.6,
-        "goals": 2,
-        "assists": 1,
-        "tackles": 3.7,
-        "key_passes": 1.2,
-        "shots": 0.9,
-        "yellow_cards": 5
-      },
-      {
-        "name": "Richard Ríos",
-        "number": 8,
-        "pos": "CM",
-        "rating": 7.45,
-        "goals": 3,
-        "assists": 3,
-        "tackles": 2.6,
-        "key_passes": 1.8,
-        "shots": 1.6,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Estêvão",
-        "number": 41,
-        "pos": "RW",
-        "rating": 8.25,
-        "goals": 12,
-        "assists": 8,
-        "tackles": 1.4,
-        "key_passes": 3.4,
-        "shots": 3.6,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Raphael Veiga",
-        "number": 23,
-        "pos": "AM",
-        "rating": 7.9,
-        "goals": 10,
-        "assists": 6,
-        "tackles": 1.5,
-        "key_passes": 3.0,
-        "shots": 3.2,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Felipe Anderson",
-        "number": 7,
-        "pos": "LW",
-        "rating": 7.55,
-        "goals": 4,
-        "assists": 5,
-        "tackles": 1.6,
-        "key_passes": 2.4,
-        "shots": 2.1,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Flaco López",
-        "number": 42,
-        "pos": "ST",
-        "rating": 7.8,
-        "goals": 11,
-        "assists": 3,
-        "tackles": 0.7,
-        "key_passes": 1.2,
-        "shots": 3.7,
-        "yellow_cards": 2
-      }
-    ],
-    "bench": [
-      {
-        "name": "Marcelo Lomba",
-        "number": 14,
-        "pos": "GK",
-        "rating": 6.7
-      },
-      {
-        "name": "Mayke",
-        "number": 12,
-        "pos": "DF",
-        "rating": 7.15
-      },
-      {
-        "name": "Vitor Reis",
-        "number": 44,
-        "pos": "DF",
-        "rating": 7.2
-      },
-      {
-        "name": "Zé Rafael",
-        "number": 8,
-        "pos": "MF",
-        "rating": 7.3
-      },
-      {
-        "name": "Maurício",
-        "number": 18,
-        "pos": "MF",
-        "rating": 7.4
-      },
-      {
-        "name": "Dudu",
-        "number": 7,
-        "pos": "FW",
-        "rating": 7.35
-      },
-      {
-        "name": "Rony",
-        "number": 10,
-        "pos": "FW",
-        "rating": 7.25
-      }
-    ]
-  },
-  "bayern munich": {
-    "formation": "4-2-3-1",
-    "starting_xi": [
-      {
-        "name": "Manuel Neuer",
-        "number": 1,
-        "pos": "GK",
-        "rating": 7.35,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 0.2,
-        "key_passes": 0.2,
-        "shots": 0.0,
-        "yellow_cards": 0
-      },
-      {
-        "name": "Konrad Laimer",
-        "number": 27,
-        "pos": "RB",
-        "rating": 7.3,
-        "goals": 1,
-        "assists": 2,
-        "tackles": 2.9,
-        "key_passes": 1.2,
-        "shots": 0.7,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Dayot Upamecano",
-        "number": 2,
-        "pos": "CB",
-        "rating": 7.45,
-        "goals": 1,
-        "assists": 0,
-        "tackles": 2.4,
-        "key_passes": 0.3,
-        "shots": 0.5,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Kim Min-jae",
-        "number": 3,
-        "pos": "CB",
-        "rating": 7.5,
-        "goals": 1,
-        "assists": 0,
-        "tackles": 2.6,
-        "key_passes": 0.4,
-        "shots": 0.4,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Alphonso Davies",
-        "number": 19,
-        "pos": "LB",
-        "rating": 7.65,
-        "goals": 2,
-        "assists": 4,
-        "tackles": 2.3,
-        "key_passes": 2.1,
-        "shots": 1.3,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Joshua Kimmich",
-        "number": 6,
-        "pos": "DM",
-        "rating": 7.95,
-        "goals": 2,
-        "assists": 7,
-        "tackles": 2.8,
-        "key_passes": 3.3,
-        "shots": 1.5,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Aleksandar Pavlović",
-        "number": 45,
-        "pos": "CM",
-        "rating": 7.55,
-        "goals": 2,
-        "assists": 3,
-        "tackles": 2.4,
-        "key_passes": 2.0,
-        "shots": 1.2,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Michael Olise",
-        "number": 17,
-        "pos": "RW",
-        "rating": 8.1,
-        "goals": 9,
-        "assists": 8,
-        "tackles": 1.5,
-        "key_passes": 3.4,
-        "shots": 3.2,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Jamal Musiala",
-        "number": 42,
-        "pos": "AM",
-        "rating": 8.35,
-        "goals": 12,
-        "assists": 7,
-        "tackles": 1.6,
-        "key_passes": 3.5,
-        "shots": 3.8,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Serge Gnabry",
-        "number": 7,
-        "pos": "LW",
-        "rating": 7.65,
-        "goals": 7,
-        "assists": 4,
-        "tackles": 1.2,
-        "key_passes": 2.1,
-        "shots": 2.9,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Harry Kane",
-        "number": 9,
-        "pos": "ST",
-        "rating": 8.5,
-        "goals": 22,
-        "assists": 8,
-        "tackles": 0.7,
-        "key_passes": 2.4,
-        "shots": 4.5,
-        "yellow_cards": 1
-      }
-    ],
-    "bench": [
-      {
-        "name": "Daniel Peretz",
-        "number": 18,
-        "pos": "GK",
-        "rating": 6.8
-      },
-      {
-        "name": "Raphaël Guerreiro",
-        "number": 22,
-        "pos": "DF",
-        "rating": 7.3
-      },
-      {
-        "name": "Eric Dier",
-        "number": 15,
-        "pos": "DF",
-        "rating": 7.15
-      },
-      {
-        "name": "João Palhinha",
         "number": 16,
         "pos": "MF",
-        "rating": 7.45
+        "rating": 7.1
       },
       {
-        "name": "Leon Goretzka",
-        "number": 8,
-        "pos": "MF",
-        "rating": 7.35
-      },
-      {
-        "name": "Leroy Sané",
-        "number": 10,
-        "pos": "FW",
-        "rating": 7.6
-      },
-      {
-        "name": "Kingsley Coman",
-        "number": 11,
-        "pos": "FW",
-        "rating": 7.5
-      },
-      {
-        "name": "Thomas Müller",
-        "number": 25,
-        "pos": "FW",
-        "rating": 7.4
-      }
-    ]
-  },
-  "bayer leverkusen": {
-    "formation": "3-4-2-1",
-    "starting_xi": [
-      {
-        "name": "Lukáš Hrádecký",
-        "number": 1,
-        "pos": "GK",
-        "rating": 7.3,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 0.2,
-        "key_passes": 0.1,
-        "shots": 0.0,
-        "yellow_cards": 0
-      },
-      {
-        "name": "Edmond Tapsoba",
-        "number": 12,
-        "pos": "CB",
-        "rating": 7.4,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 2.3,
-        "key_passes": 0.4,
-        "shots": 0.5,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Jonathan Tah",
-        "number": 4,
-        "pos": "CB",
-        "rating": 7.55,
-        "goals": 2,
-        "assists": 0,
-        "tackles": 2.4,
-        "key_passes": 0.3,
-        "shots": 0.7,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Piero Hincapié",
-        "number": 3,
-        "pos": "CB",
-        "rating": 7.45,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 2.5,
-        "key_passes": 0.5,
-        "shots": 0.4,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Jeremie Frimpong",
-        "number": 30,
-        "pos": "RWB",
-        "rating": 7.85,
-        "goals": 5,
-        "assists": 6,
-        "tackles": 1.7,
-        "key_passes": 2.6,
-        "shots": 2.4,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Granit Xhaka",
-        "number": 34,
-        "pos": "CM",
-        "rating": 7.8,
-        "goals": 2,
-        "assists": 4,
-        "tackles": 2.8,
-        "key_passes": 2.7,
-        "shots": 1.2,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Robert Andrich",
-        "number": 8,
-        "pos": "CM",
-        "rating": 7.5,
-        "goals": 3,
-        "assists": 1,
-        "tackles": 3.2,
-        "key_passes": 1.2,
-        "shots": 1.5,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Alejandro Grimaldo",
-        "number": 20,
-        "pos": "LWB",
-        "rating": 8.1,
-        "goals": 4,
-        "assists": 8,
-        "tackles": 1.8,
-        "key_passes": 3.4,
-        "shots": 2.2,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Martin Terrier",
-        "number": 11,
-        "pos": "AM",
-        "rating": 7.45,
-        "goals": 4,
-        "assists": 2,
-        "tackles": 1.4,
-        "key_passes": 1.8,
-        "shots": 2.1,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Florian Wirtz",
-        "number": 10,
-        "pos": "AM",
-        "rating": 8.35,
-        "goals": 8,
-        "assists": 8,
-        "tackles": 1.5,
-        "key_passes": 3.6,
-        "shots": 3.5,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Victor Boniface",
-        "number": 22,
-        "pos": "ST",
-        "rating": 7.95,
-        "goals": 10,
-        "assists": 3,
-        "tackles": 0.7,
-        "key_passes": 1.6,
-        "shots": 4.1,
-        "yellow_cards": 2
-      }
-    ],
-    "bench": [
-      {
-        "name": "Matej Kovář",
+        "name": "Beto",
         "number": 17,
-        "pos": "GK",
-        "rating": 6.8
-      },
-      {
-        "name": "Nordi Mukiele",
-        "number": 23,
-        "pos": "DF",
-        "rating": 7.1
-      },
-      {
-        "name": "Arthur",
-        "number": 13,
-        "pos": "DF",
-        "rating": 6.95
-      },
-      {
-        "name": "Exequiel Palacios",
-        "number": 25,
-        "pos": "MF",
-        "rating": 7.45
-      },
-      {
-        "name": "Aleix García",
-        "number": 24,
-        "pos": "MF",
-        "rating": 7.35
-      },
-      {
-        "name": "Jonas Hofmann",
-        "number": 7,
-        "pos": "FW",
-        "rating": 7.3
-      },
-      {
-        "name": "Patrik Schick",
-        "number": 14,
-        "pos": "FW",
-        "rating": 7.6
-      }
-    ]
-  },
-  "inter milan": {
-    "formation": "3-5-2",
-    "starting_xi": [
-      {
-        "name": "Yann Sommer",
-        "number": 1,
-        "pos": "GK",
-        "rating": 7.35,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 0.2,
-        "key_passes": 0.1,
-        "shots": 0.0,
-        "yellow_cards": 0
-      },
-      {
-        "name": "Benjamin Pavard",
-        "number": 28,
-        "pos": "CB",
-        "rating": 7.4,
-        "goals": 0,
-        "assists": 1,
-        "tackles": 2.4,
-        "key_passes": 0.6,
-        "shots": 0.4,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Francesco Acerbi",
-        "number": 15,
-        "pos": "CB",
-        "rating": 7.45,
-        "goals": 1,
-        "assists": 0,
-        "tackles": 2.5,
-        "key_passes": 0.3,
-        "shots": 0.4,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Alessandro Bastoni",
-        "number": 95,
-        "pos": "CB",
-        "rating": 7.7,
-        "goals": 1,
-        "assists": 4,
-        "tackles": 2.6,
-        "key_passes": 1.8,
-        "shots": 0.6,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Denzel Dumfries",
-        "number": 2,
-        "pos": "RWB",
-        "rating": 7.5,
-        "goals": 3,
-        "assists": 3,
-        "tackles": 2.0,
-        "key_passes": 1.7,
-        "shots": 1.6,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Nicolò Barella",
-        "number": 23,
-        "pos": "CM",
-        "rating": 7.8,
-        "goals": 3,
-        "assists": 5,
-        "tackles": 2.5,
-        "key_passes": 2.6,
-        "shots": 1.8,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Hakan Çalhanoğlu",
-        "number": 20,
-        "pos": "DM",
-        "rating": 7.95,
-        "goals": 5,
-        "assists": 4,
-        "tackles": 2.8,
-        "key_passes": 3.1,
-        "shots": 2.4,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Henrikh Mkhitaryan",
-        "number": 22,
-        "pos": "CM",
-        "rating": 7.45,
-        "goals": 2,
-        "assists": 4,
-        "tackles": 2.2,
-        "key_passes": 2.1,
-        "shots": 1.4,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Federico Dimarco",
-        "number": 32,
-        "pos": "LWB",
-        "rating": 7.9,
-        "goals": 3,
-        "assists": 7,
-        "tackles": 1.9,
-        "key_passes": 3.3,
-        "shots": 2.2,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Marcus Thuram",
-        "number": 9,
-        "pos": "ST",
-        "rating": 8.1,
-        "goals": 12,
-        "assists": 4,
-        "tackles": 0.8,
-        "key_passes": 1.8,
-        "shots": 3.8,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Lautaro Martínez",
-        "number": 10,
-        "pos": "ST",
-        "rating": 8.05,
-        "goals": 10,
-        "assists": 4,
-        "tackles": 1.1,
-        "key_passes": 2.0,
-        "shots": 4.1,
-        "yellow_cards": 2
-      }
-    ],
-    "bench": [
-      {
-        "name": "Josep Martínez",
-        "number": 13,
-        "pos": "GK",
-        "rating": 6.8
-      },
-      {
-        "name": "Stefan de Vrij",
-        "number": 6,
-        "pos": "DF",
-        "rating": 7.15
-      },
-      {
-        "name": "Matteo Darmian",
-        "number": 36,
-        "pos": "DF",
-        "rating": 7.1
-      },
-      {
-        "name": "Davide Frattesi",
-        "number": 16,
-        "pos": "MF",
-        "rating": 7.45
-      },
-      {
-        "name": "Piotr Zieliński",
-        "number": 7,
-        "pos": "MF",
-        "rating": 7.3
-      },
-      {
-        "name": "Mehdi Taremi",
-        "number": 99,
-        "pos": "FW",
-        "rating": 7.25
-      },
-      {
-        "name": "Marko Arnautović",
-        "number": 8,
-        "pos": "FW",
-        "rating": 7.05
-      }
-    ]
-  },
-  "paris saint-germain": {
-    "formation": "4-3-3",
-    "starting_xi": [
-      {
-        "name": "Gianluigi Donnarumma",
-        "number": 1,
-        "pos": "GK",
-        "rating": 7.4,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 0.2,
-        "key_passes": 0.1,
-        "shots": 0.0,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Achraf Hakimi",
-        "number": 2,
-        "pos": "RB",
-        "rating": 7.85,
-        "goals": 4,
-        "assists": 6,
-        "tackles": 2.6,
-        "key_passes": 2.8,
-        "shots": 2.1,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Marquinhos",
-        "number": 5,
-        "pos": "CB",
-        "rating": 7.5,
-        "goals": 1,
-        "assists": 0,
-        "tackles": 2.3,
-        "key_passes": 0.3,
-        "shots": 0.5,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Willian Pacho",
-        "number": 51,
-        "pos": "CB",
-        "rating": 7.45,
-        "goals": 0,
-        "assists": 1,
-        "tackles": 2.7,
-        "key_passes": 0.2,
-        "shots": 0.3,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Nuno Mendes",
-        "number": 25,
-        "pos": "LB",
-        "rating": 7.55,
-        "goals": 2,
-        "assists": 3,
-        "tackles": 2.2,
-        "key_passes": 1.9,
-        "shots": 1.2,
-        "yellow_cards": 3
-      },
-      {
-        "name": "João Neves",
-        "number": 87,
-        "pos": "DM",
-        "rating": 7.75,
-        "goals": 1,
-        "assists": 7,
-        "tackles": 3.4,
-        "key_passes": 2.2,
-        "shots": 1.1,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Vitinha",
-        "number": 17,
-        "pos": "CM",
-        "rating": 7.8,
-        "goals": 3,
-        "assists": 4,
-        "tackles": 2.4,
-        "key_passes": 2.9,
-        "shots": 2.0,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Warren Zaïre-Emery",
-        "number": 33,
-        "pos": "CM",
-        "rating": 7.45,
-        "goals": 2,
-        "assists": 2,
-        "tackles": 2.3,
-        "key_passes": 1.6,
-        "shots": 1.3,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Ousmane Dembélé",
-        "number": 10,
-        "pos": "RW",
-        "rating": 8.2,
-        "goals": 8,
-        "assists": 7,
-        "tackles": 1.2,
-        "key_passes": 3.8,
-        "shots": 3.9,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Marco Asensio",
-        "number": 11,
-        "pos": "ST",
-        "rating": 7.5,
-        "goals": 5,
-        "assists": 4,
-        "tackles": 0.8,
-        "key_passes": 1.8,
-        "shots": 2.5,
-        "yellow_cards": 0
-      },
-      {
-        "name": "Bradley Barcola",
-        "number": 29,
-        "pos": "LW",
-        "rating": 8.15,
-        "goals": 11,
-        "assists": 5,
-        "tackles": 1.3,
-        "key_passes": 2.7,
-        "shots": 3.7,
-        "yellow_cards": 1
-      }
-    ],
-    "bench": [
-      {
-        "name": "Matvey Safonov",
-        "number": 39,
-        "pos": "GK",
-        "rating": 6.85
-      },
-      {
-        "name": "Lucas Beraldo",
-        "number": 35,
-        "pos": "DF",
-        "rating": 7.1
-      },
-      {
-        "name": "Lucas Hernández",
-        "number": 21,
-        "pos": "DF",
-        "rating": 7.2
-      },
-      {
-        "name": "Fabián Ruiz",
-        "number": 8,
-        "pos": "MF",
-        "rating": 7.45
-      },
-      {
-        "name": "Lee Kang-in",
-        "number": 19,
-        "pos": "MF",
-        "rating": 7.55
-      },
-      {
-        "name": "Randal Kolo Muani",
-        "number": 23,
         "pos": "FW",
         "rating": 7.2
       },
       {
-        "name": "Gonçalo Ramos",
-        "number": 9,
+        "name": "Thierno Barry",
+        "number": 18,
         "pos": "FW",
-        "rating": 7.4
+        "rating": 7.3
       }
     ]
   },
   "fulham": {
-    "formation": "4-2-3-1",
+    "formation": "4-3-3",
     "starting_xi": [
       {
         "name": "Bernd Leno",
@@ -3729,372 +791,179 @@ const REAL_SQUADS: Record<string, { formation: string; xi: Player[]; bench: Play
         "yellow_cards": 1
       },
       {
-        "name": "Kenny Tete",
+        "name": "Timothy Castagne",
         "number": 2,
         "pos": "RB",
-        "rating": 7.25,
-        "goals": 0,
+        "rating": 7.3,
+        "goals": 1,
         "assists": 2,
-        "tackles": 2.8,
+        "tackles": 2.6,
         "key_passes": 1.1,
         "shots": 0.4,
         "yellow_cards": 2
       },
       {
         "name": "Joachim Andersen",
-        "number": 5,
-        "pos": "CB",
-        "rating": 7.55,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 2.6,
-        "key_passes": 0.7,
-        "shots": 0.6,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Calvin Bassey",
         "number": 3,
         "pos": "CB",
         "rating": 7.4,
         "goals": 0,
         "assists": 0,
-        "tackles": 2.5,
-        "key_passes": 0.3,
+        "tackles": 2.6,
+        "key_passes": 1.1,
         "shots": 0.4,
-        "yellow_cards": 3
+        "yellow_cards": 2
       },
       {
         "name": "Antonee Robinson",
-        "number": 33,
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ryan Sessegnon",
+        "number": 5,
         "pos": "LB",
-        "rating": 7.7,
+        "rating": 7.3,
         "goals": 0,
-        "assists": 7,
-        "tackles": 3.3,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tom Cairney",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
         "key_passes": 2.5,
-        "shots": 0.8,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Harrison Reed",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
         "yellow_cards": 2
       },
       {
         "name": "Sander Berge",
-        "number": 16,
-        "pos": "DM",
-        "rating": 7.4,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 3.1,
-        "key_passes": 1.3,
-        "shots": 0.7,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Saša Lukić",
-        "number": 28,
-        "pos": "CM",
-        "rating": 7.35,
-        "goals": 1,
-        "assists": 2,
-        "tackles": 2.8,
-        "key_passes": 1.6,
-        "shots": 1.1,
-        "yellow_cards": 4
-      },
-      {
-        "name": "Adama Traoré",
-        "number": 11,
-        "pos": "RW",
-        "rating": 7.6,
-        "goals": 4,
-        "assists": 4,
-        "tackles": 1.1,
-        "key_passes": 2.6,
-        "shots": 2.4,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Emile Smith Rowe",
-        "number": 32,
+        "number": 8,
         "pos": "AM",
-        "rating": 7.8,
-        "goals": 6,
-        "assists": 5,
-        "tackles": 1.4,
-        "key_passes": 2.8,
-        "shots": 2.6,
-        "yellow_cards": 1
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
       },
       {
         "name": "Alex Iwobi",
-        "number": 17,
-        "pos": "LW",
-        "rating": 7.65,
-        "goals": 5,
-        "assists": 6,
-        "tackles": 1.6,
-        "key_passes": 2.5,
-        "shots": 2.3,
-        "yellow_cards": 2
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
       },
       {
-        "name": "Raúl Jiménez",
-        "number": 7,
+        "name": "Rodrigo Muniz",
+        "number": 10,
         "pos": "ST",
-        "rating": 7.75,
-        "goals": 9,
-        "assists": 3,
-        "tackles": 0.9,
-        "key_passes": 1.5,
-        "shots": 3.5,
-        "yellow_cards": 2
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Kevin Santos",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
       }
     ],
     "bench": [
       {
-        "name": "Steven Benda",
-        "number": 23,
+        "name": "Benjamin Lecomte",
+        "number": 12,
         "pos": "GK",
-        "rating": 6.75
+        "rating": 7.1
       },
       {
-        "name": "Timothy Castagne",
-        "number": 21,
+        "name": "Issa Diop",
+        "number": 13,
         "pos": "DF",
         "rating": 7.2
       },
       {
-        "name": "Issa Diop",
-        "number": 31,
-        "pos": "DF",
-        "rating": 7.15
-      },
-      {
-        "name": "Ryan Sessegnon",
-        "number": 30,
-        "pos": "DF",
-        "rating": 7.1
-      },
-      {
-        "name": "Harrison Reed",
-        "number": 6,
-        "pos": "MF",
-        "rating": 7.15
-      },
-      {
-        "name": "Andreas Pereira",
-        "number": 18,
-        "pos": "MF",
-        "rating": 7.5
-      },
-      {
-        "name": "Harry Wilson",
-        "number": 8,
-        "pos": "FW",
-        "rating": 7.45
-      },
-      {
-        "name": "Reiss Nelson",
-        "number": 24,
-        "pos": "FW",
-        "rating": 7.25
-      },
-      {
-        "name": "Rodrigo Muniz",
-        "number": 9,
-        "pos": "ST",
-        "rating": 7.4
-      }
-    ]
-  },
-  "aston villa": {
-    "formation": "4-2-3-1",
-    "starting_xi": [
-      {
-        "name": "Emiliano Martínez",
-        "number": 23,
-        "pos": "GK",
-        "rating": 7.5,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 0.2,
-        "key_passes": 0.1,
-        "shots": 0.0,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Matty Cash",
-        "number": 2,
-        "pos": "RB",
-        "rating": 7.25,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 2.5,
-        "key_passes": 1.2,
-        "shots": 0.6,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Ezri Konsa",
-        "number": 4,
-        "pos": "CB",
-        "rating": 7.45,
-        "goals": 1,
-        "assists": 0,
-        "tackles": 2.4,
-        "key_passes": 0.3,
-        "shots": 0.4,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Pau Torres",
+        "name": "Kenny Tete",
         "number": 14,
-        "pos": "CB",
-        "rating": 7.5,
-        "goals": 1,
-        "assists": 1,
-        "tackles": 2.3,
-        "key_passes": 0.8,
-        "shots": 0.5,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Lucas Digne",
-        "number": 12,
-        "pos": "LB",
-        "rating": 7.55,
-        "goals": 0,
-        "assists": 5,
-        "tackles": 2.6,
-        "key_passes": 2.5,
-        "shots": 0.8,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Amadou Onana",
-        "number": 24,
-        "pos": "DM",
-        "rating": 7.65,
-        "goals": 3,
-        "assists": 1,
-        "tackles": 3.5,
-        "key_passes": 1.2,
-        "shots": 1.3,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Youri Tielemans",
-        "number": 8,
-        "pos": "CM",
-        "rating": 7.8,
-        "goals": 2,
-        "assists": 6,
-        "tackles": 2.7,
-        "key_passes": 3.0,
-        "shots": 2.0,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Leon Bailey",
-        "number": 31,
-        "pos": "RW",
-        "rating": 7.6,
-        "goals": 5,
-        "assists": 4,
-        "tackles": 1.2,
-        "key_passes": 2.3,
-        "shots": 2.7,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Morgan Rogers",
-        "number": 27,
-        "pos": "AM",
-        "rating": 7.85,
-        "goals": 6,
-        "assists": 5,
-        "tackles": 1.8,
-        "key_passes": 2.9,
-        "shots": 2.8,
-        "yellow_cards": 2
-      },
-      {
-        "name": "John McGinn",
-        "number": 7,
-        "pos": "LW",
-        "rating": 7.55,
-        "goals": 3,
-        "assists": 4,
-        "tackles": 2.4,
-        "key_passes": 2.2,
-        "shots": 1.9,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Ollie Watkins",
-        "number": 11,
-        "pos": "ST",
-        "rating": 8.05,
-        "goals": 11,
-        "assists": 6,
-        "tackles": 0.9,
-        "key_passes": 1.8,
-        "shots": 3.7,
-        "yellow_cards": 2
-      }
-    ],
-    "bench": [
-      {
-        "name": "Robin Olsen",
-        "number": 25,
-        "pos": "GK",
-        "rating": 6.7
-      },
-      {
-        "name": "Ian Maatsen",
-        "number": 22,
         "pos": "DF",
         "rating": 7.3
       },
       {
-        "name": "Diego Carlos",
-        "number": 3,
-        "pos": "DF",
-        "rating": 7.15
-      },
-      {
-        "name": "Boubacar Kamara",
-        "number": 44,
+        "name": "Saša Lukić",
+        "number": 15,
         "pos": "MF",
         "rating": 7.4
       },
       {
-        "name": "Ross Barkley",
-        "number": 6,
+        "name": "Emile Smith Rowe",
+        "number": 16,
         "pos": "MF",
-        "rating": 7.25
+        "rating": 7.1
       },
       {
-        "name": "Emiliano Buendía",
-        "number": 10,
-        "pos": "MF",
-        "rating": 7.35
-      },
-      {
-        "name": "Jhon Durán",
-        "number": 9,
+        "name": "Oscar Bobb",
+        "number": 17,
         "pos": "FW",
-        "rating": 7.75
+        "rating": 7.2
+      },
+      {
+        "name": "Jonah Kusi-Asare",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
       }
     ]
   },
-  "brighton": {
-    "formation": "4-2-3-1",
+  "liverpool": {
+    "formation": "4-3-3",
     "starting_xi": [
       {
-        "name": "Bart Verbruggen",
+        "name": "Alisson Becker",
         "number": 1,
         "pos": "GK",
-        "rating": 7.35,
+        "rating": 7.4,
         "goals": 0,
         "assists": 0,
         "tackles": 0.2,
@@ -4103,179 +972,3437 @@ const REAL_SQUADS: Record<string, { formation: string; xi: Player[]; bench: Play
         "yellow_cards": 1
       },
       {
-        "name": "Joël Veltman",
-        "number": 34,
+        "name": "Kostas Tsimikas",
+        "number": 2,
         "pos": "RB",
-        "rating": 7.2,
-        "goals": 0,
-        "assists": 1,
-        "tackles": 2.7,
-        "key_passes": 0.9,
-        "shots": 0.3,
-        "yellow_cards": 3
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
       },
       {
-        "name": "Jan Paul van Hecke",
-        "number": 29,
+        "name": "Joe Gomez",
+        "number": 3,
         "pos": "CB",
-        "rating": 7.45,
+        "rating": 7.4,
         "goals": 0,
         "assists": 0,
-        "tackles": 2.5,
-        "key_passes": 0.4,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Virgil van Dijk",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ronald Araújo",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Wataru Endō",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Curtis Jones",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dominik Szoboszlai",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Federico Chiesa",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Alexander Isak",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Cody Gakpo",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Freddie Woodman",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Calvin Ramsay",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Jeremie Frimpong",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Florian Wirtz",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Alexis Mac Allister",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Hugo Ekitike",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Víctor Muñoz",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "manchester city": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Géronimo Rulli",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Rayan Aït Nouri",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rúben Dias",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matheus Nunes",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marc Guéhi",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mateo Kovačić",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rodri",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kalvin Phillips",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jack Grealish",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Antoine Semenyo",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Erling Haaland",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Gianluigi Donnarumma",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Joško Gvardiol",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Issa Kaboré",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Tijjani Reijnders",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Phil Foden",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Omar Marmoush",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Jeremy Doku",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "man city": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Géronimo Rulli",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Rayan Aït Nouri",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rúben Dias",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matheus Nunes",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marc Guéhi",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mateo Kovačić",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rodri",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kalvin Phillips",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jack Grealish",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Antoine Semenyo",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Erling Haaland",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Gianluigi Donnarumma",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Joško Gvardiol",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Issa Kaboré",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Tijjani Reijnders",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Phil Foden",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Omar Marmoush",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Jeremy Doku",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "manchester united": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Karl Darlow",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Harry Maguire",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matthijs de Ligt",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Noussair Mazraoui",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luke Shaw",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bruno Fernandes",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Youri Tielemans",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mason Mount",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marcus Rashford",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Bryan Mbeumo",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Matheus Cunha",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Tom Heaton",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Diogo Dalot",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Lisandro Martínez",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Manuel Ugarte",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Andrey Santos",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Joshua Zirkzee",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Benjamin Šeško",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "man united": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Karl Darlow",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Harry Maguire",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matthijs de Ligt",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Noussair Mazraoui",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luke Shaw",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bruno Fernandes",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Youri Tielemans",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mason Mount",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marcus Rashford",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Bryan Mbeumo",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Matheus Cunha",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Tom Heaton",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Diogo Dalot",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Lisandro Martínez",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Manuel Ugarte",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Andrey Santos",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Joshua Zirkzee",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Benjamin Šeško",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "newcastle united": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Nick Pope",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Fabian Schär",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dan Burn",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sven Botman",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Amar Dedić",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bruno Guimarães",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Joe Willock",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Joelinton",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yoane Wissa",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jacob Murphy",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Harvey Barnes",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Mark Gillespie",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Malick Thiaw",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Valentino Livramento",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jacob Ramsey",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Joe White",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Nick Woltemade",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Anthony Elanga",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "newcastle": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Nick Pope",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Fabian Schär",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dan Burn",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sven Botman",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Amar Dedić",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bruno Guimarães",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Joe Willock",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Joelinton",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yoane Wissa",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jacob Murphy",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Harvey Barnes",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Mark Gillespie",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Malick Thiaw",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Valentino Livramento",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jacob Ramsey",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Joe White",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Nick Woltemade",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Anthony Elanga",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "sunderland a": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Simon Moore",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Thomas Meunier",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luke O'Nien",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Arthur Masuaku",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nordi Mukiele",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Granit Xhaka",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alan Browne",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Enzo Le Fée",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Wilson Isidor",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Brian Brobbey",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Simon Adingra",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Anthony Patterson",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Reinildo",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Omar Alderete",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Abdoullah Ba",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Habib Diarra",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Romaine Mundle",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Nilson Angulo",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "sunderland": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Simon Moore",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Thomas Meunier",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luke O'Nien",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Arthur Masuaku",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nordi Mukiele",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Granit Xhaka",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alan Browne",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Enzo Le Fée",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Wilson Isidor",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Brian Brobbey",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Simon Adingra",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Anthony Patterson",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Reinildo",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Omar Alderete",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Abdoullah Ba",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Habib Diarra",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Romaine Mundle",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Nilson Angulo",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "tottenham hotspur": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Guglielmo Vicario",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Kevin Danso",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Andrew Robertson",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ben Davies",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Christian Romero",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dejan Kulusevski",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rodrigo Bentancur",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sandro Tonali",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dominic Solanke",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Richarlison",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Manor Solomon",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Martin Dúbravka",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Marcos Senesi",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Djed Spence",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "James Maddison",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Conor Gallagher",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Mohammed Kudus",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Dane Scarlett",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "tottenham": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Guglielmo Vicario",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Kevin Danso",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Andrew Robertson",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ben Davies",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Christian Romero",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dejan Kulusevski",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rodrigo Bentancur",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sandro Tonali",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dominic Solanke",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Richarlison",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Manor Solomon",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Martin Dúbravka",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Marcos Senesi",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Djed Spence",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "James Maddison",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Conor Gallagher",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Mohammed Kudus",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Dane Scarlett",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "hull city a": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Jack Butland",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Matt Targett",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Paddy McNair",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "John Egan",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lewie Coyle",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Regan Slater",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matty Crooks",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kieran Dowell",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Oliver McBurnie",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Joe Gelhardt",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Liam Millar",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Dillon Phillips",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Semi Ajayi",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Ryan John Giles",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Abdülkadir Ömür",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Hidemasa Morita",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Enis Destan",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "David Akintola",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "hull city": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Jack Butland",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Matt Targett",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Paddy McNair",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "John Egan",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lewie Coyle",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Regan Slater",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matty Crooks",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kieran Dowell",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Oliver McBurnie",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Joe Gelhardt",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Liam Millar",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Dillon Phillips",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Semi Ajayi",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Ryan John Giles",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Abdülkadir Ömür",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Hidemasa Morita",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Enis Destan",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "David Akintola",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "leeds united": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Lucas Perri",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Nico Elvedi",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jayden Bogle",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "James Justin",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Joe Rodon",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sean Longstaff",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ethan Ampadu",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ao Tanaka",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jack Harrison",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Dominic Calvert-Lewin",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Lukas Nmecha",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Alex Cairns",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Maximilian Wöber",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Sam Byram",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Anton Stach",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Ilia Gruev",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Daniel James",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Harry Wilson",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "ipswich town": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "David Button",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Darnell Furlong",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ben Johnson",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Issa Diop",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dara O'Shea",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Wes Burns",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Samuel Szmodics",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jack Taylor",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jack Clarke",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Chiedozie Ogbene",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Chuba Akpom",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Christian Walton",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Cédric Kipré",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Leif Davis",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Azor Matusiwa",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Saša Lukić",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "George Hirst",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Daizen Maeda",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "nottingham forest": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "John",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Nikola Milenković",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ola Aina",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Omar Richards",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Morato",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Morgan Gibbs-White",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ryan Yates",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ibrahim Sangaré",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Callum Hudson-Odoi",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Chris Wood",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Taiwo Awoniyi",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Matz Sels",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Neco Williams",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Luca Netz",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Xaver Schlager",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Nicolás Domínguez",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Dan Ndoye",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Arnaud Kalimuendo",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "nottingham": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "John",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Nikola Milenković",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ola Aina",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Omar Richards",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Morato",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Morgan Gibbs-White",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ryan Yates",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ibrahim Sangaré",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Callum Hudson-Odoi",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Chris Wood",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Taiwo Awoniyi",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Matz Sels",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Neco Williams",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Luca Netz",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Xaver Schlager",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Nicolás Domínguez",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Dan Ndoye",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Arnaud Kalimuendo",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "crystal palace": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Dean Henderson",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Nathaniel Clyne",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Takehiro Tomiyasu",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Borna Sosa",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Daniel Muñoz",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jefferson Lerma",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Daichi Kamada",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Will Hughes",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jean-Philippe Mateta",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ismaïla Sarr",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Eddie Nketiah",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Remi Matthews",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Maxence Lacroix",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Chris Richards",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Cheick Doucouré",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Justin Devenny",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Dwight McNeil",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Brennan Johnson",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "brighton & hove albion": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Jason Steele",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Olivier Boscagli",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pascal Struijk",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
         "shots": 0.4,
         "yellow_cards": 2
       },
       {
         "name": "Lewis Dunk",
-        "number": 5,
+        "number": 4,
         "pos": "CB",
-        "rating": 7.4,
-        "goals": 1,
-        "assists": 0,
-        "tackles": 2.3,
-        "key_passes": 0.6,
-        "shots": 0.6,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Pervis Estupiñán",
-        "number": 30,
-        "pos": "LB",
         "rating": 7.5,
         "goals": 1,
-        "assists": 3,
-        "tackles": 2.4,
-        "key_passes": 2.1,
-        "shots": 0.9,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
         "yellow_cards": 2
       },
       {
-        "name": "Carlos Baleba",
-        "number": 20,
+        "name": "Ferdi Kadıoğlu",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matt O'Riley",
+        "number": 6,
         "pos": "DM",
         "rating": 7.6,
-        "goals": 2,
-        "assists": 1,
-        "tackles": 3.5,
-        "key_passes": 1.4,
-        "shots": 1.1,
-        "yellow_cards": 3
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pascal Groß",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
       },
       {
         "name": "Yasin Ayari",
-        "number": 26,
-        "pos": "CM",
-        "rating": 7.3,
-        "goals": 1,
-        "assists": 2,
-        "tackles": 2.3,
-        "key_passes": 1.6,
-        "shots": 1.0,
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
         "yellow_cards": 2
       },
       {
-        "name": "Yankuba Minteh",
-        "number": 11,
+        "name": "Danny Welbeck",
+        "number": 9,
         "pos": "RW",
-        "rating": 7.55,
-        "goals": 4,
-        "assists": 3,
-        "tackles": 1.6,
-        "key_passes": 2.1,
-        "shots": 2.7,
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
         "yellow_cards": 1
       },
       {
         "name": "Georginio Rutter",
-        "number": 14,
-        "pos": "AM",
-        "rating": 7.7,
-        "goals": 4,
-        "assists": 4,
-        "tackles": 1.9,
-        "key_passes": 2.6,
-        "shots": 2.8,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Kaoru Mitoma",
-        "number": 22,
-        "pos": "LW",
-        "rating": 7.95,
-        "goals": 6,
-        "assists": 6,
-        "tackles": 1.5,
-        "key_passes": 3.0,
-        "shots": 3.1,
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
         "yellow_cards": 1
       },
       {
-        "name": "Danny Welbeck",
-        "number": 18,
-        "pos": "ST",
-        "rating": 7.75,
-        "goals": 8,
-        "assists": 3,
-        "tackles": 0.8,
-        "key_passes": 1.5,
-        "shots": 3.3,
-        "yellow_cards": 2
+        "name": "Evan Ferguson",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
       }
     ],
     "bench": [
       {
-        "name": "Jason Steele",
-        "number": 23,
+        "name": "Bart Verbruggen",
+        "number": 12,
         "pos": "GK",
-        "rating": 6.8
+        "rating": 7.1
       },
       {
-        "name": "Tariq Lamptey",
-        "number": 2,
+        "name": "Igor Julio",
+        "number": 13,
         "pos": "DF",
-        "rating": 7.15
+        "rating": 7.2
       },
       {
-        "name": "Ferdi Kadıoğlu",
-        "number": 24,
+        "name": "Michael Svoboda",
+        "number": 14,
         "pos": "DF",
         "rating": 7.3
       },
       {
-        "name": "Mats Wieffer",
-        "number": 27,
+        "name": "Carlos Baleba",
+        "number": 15,
         "pos": "MF",
-        "rating": 7.25
-      },
-      {
-        "name": "Matt O'Riley",
-        "number": 25,
-        "pos": "MF",
-        "rating": 7.35
-      },
-      {
-        "name": "Simon Adingra",
-        "number": 24,
-        "pos": "FW",
-        "rating": 7.45
-      },
-      {
-        "name": "Evan Ferguson",
-        "number": 28,
-        "pos": "ST",
         "rating": 7.4
+      },
+      {
+        "name": "Diego Gómez",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Kaoru Mitoma",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Yankubah Minteh",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
       }
     ]
   },
-  "west ham": {
-    "formation": "4-2-3-1",
+  "brighton hove": {
+    "formation": "4-3-3",
     "starting_xi": [
       {
-        "name": "Alphonse Areola",
-        "number": 23,
+        "name": "Jason Steele",
+        "number": 1,
         "pos": "GK",
-        "rating": 7.35,
+        "rating": 7.4,
         "goals": 0,
         "assists": 0,
         "tackles": 0.2,
@@ -4284,176 +4411,22216 @@ const REAL_SQUADS: Record<string, { formation: string; xi: Player[]; bench: Play
         "yellow_cards": 1
       },
       {
-        "name": "Aaron Wan-Bissaka",
-        "number": 29,
+        "name": "Olivier Boscagli",
+        "number": 2,
         "pos": "RB",
-        "rating": 7.4,
-        "goals": 0,
-        "assists": 2,
-        "tackles": 3.4,
-        "key_passes": 1.0,
-        "shots": 0.4,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Jean-Clair Todibo",
-        "number": 25,
-        "pos": "CB",
-        "rating": 7.4,
-        "goals": 0,
-        "assists": 0,
-        "tackles": 2.5,
-        "key_passes": 0.3,
-        "shots": 0.4,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Max Kilman",
-        "number": 26,
-        "pos": "CB",
-        "rating": 7.45,
-        "goals": 1,
-        "assists": 0,
-        "tackles": 2.4,
-        "key_passes": 0.4,
-        "shots": 0.5,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Emerson Palmieri",
-        "number": 33,
-        "pos": "LB",
         "rating": 7.3,
         "goals": 1,
         "assists": 2,
-        "tackles": 2.5,
-        "key_passes": 1.4,
-        "shots": 0.7,
-        "yellow_cards": 3
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
       },
       {
-        "name": "Edson Álvarez",
-        "number": 19,
-        "pos": "DM",
+        "name": "Pascal Struijk",
+        "number": 3,
+        "pos": "CB",
         "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lewis Dunk",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
         "goals": 1,
         "assists": 0,
-        "tackles": 3.6,
-        "key_passes": 0.8,
-        "shots": 0.6,
-        "yellow_cards": 5
-      },
-      {
-        "name": "Tomáš Souček",
-        "number": 28,
-        "pos": "CM",
-        "rating": 7.4,
-        "goals": 4,
-        "assists": 1,
-        "tackles": 2.7,
+        "tackles": 2.6,
         "key_passes": 1.1,
-        "shots": 1.8,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Jarrod Bowen",
-        "number": 20,
-        "pos": "RW",
-        "rating": 7.85,
-        "goals": 8,
-        "assists": 5,
-        "tackles": 1.3,
-        "key_passes": 2.7,
-        "shots": 3.2,
+        "shots": 0.4,
         "yellow_cards": 2
       },
       {
-        "name": "Lucas Paquetá",
-        "number": 10,
-        "pos": "AM",
+        "name": "Ferdi Kadıoğlu",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matt O'Riley",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pascal Groß",
+        "number": 7,
+        "pos": "CM",
         "rating": 7.75,
         "goals": 4,
-        "assists": 4,
-        "tackles": 2.2,
-        "key_passes": 2.9,
-        "shots": 2.3,
-        "yellow_cards": 4
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
       },
       {
-        "name": "Mohammed Kudus",
-        "number": 14,
+        "name": "Yasin Ayari",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Danny Welbeck",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Georginio Rutter",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Evan Ferguson",
+        "number": 11,
         "pos": "LW",
         "rating": 7.8,
-        "goals": 6,
-        "assists": 4,
-        "tackles": 1.8,
-        "key_passes": 2.5,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
         "shots": 3.4,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Michail Antonio",
-        "number": 9,
-        "pos": "ST",
-        "rating": 7.45,
-        "goals": 5,
-        "assists": 2,
-        "tackles": 0.9,
-        "key_passes": 1.2,
-        "shots": 2.8,
-        "yellow_cards": 2
+        "yellow_cards": 1
       }
     ],
     "bench": [
       {
-        "name": "Łukasz Fabiański",
-        "number": 1,
+        "name": "Bart Verbruggen",
+        "number": 12,
         "pos": "GK",
-        "rating": 6.8
-      },
-      {
-        "name": "Vladimír Coufal",
-        "number": 5,
-        "pos": "DF",
         "rating": 7.1
       },
       {
-        "name": "Konstantinos Mavropanos",
-        "number": 15,
+        "name": "Igor Julio",
+        "number": 13,
         "pos": "DF",
-        "rating": 7.15
+        "rating": 7.2
       },
       {
-        "name": "Guido Rodríguez",
-        "number": 24,
-        "pos": "MF",
-        "rating": 7.25
-      },
-      {
-        "name": "Carlos Soler",
-        "number": 4,
-        "pos": "MF",
+        "name": "Michael Svoboda",
+        "number": 14,
+        "pos": "DF",
         "rating": 7.3
       },
       {
-        "name": "Crysencio Summerville",
-        "number": 7,
-        "pos": "FW",
-        "rating": 7.45
+        "name": "Carlos Baleba",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
       },
       {
-        "name": "Niclas Füllkrug",
-        "number": 11,
-        "pos": "ST",
-        "rating": 7.5
+        "name": "Diego Gómez",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Kaoru Mitoma",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Yankubah Minteh",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
       }
     ]
   },
-  "psg": {
+  "brentford": {
     "formation": "4-3-3",
     "starting_xi": [
       {
-        "name": "Gianluigi Donnarumma",
+        "name": "Ellery Balcombe",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ethan Pinnock",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rico Henry",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sepp van den Berg",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kristoffer Ajer",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jordan Henderson",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Josh Dasilva",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Vitaly Janelt",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Callum Wilson",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Kevin Schade",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Thiago",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Caoimhin Kelleher",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Aaron Hickey",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Nathan Collins",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mathias Jensen",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Mikkel Damsgaard",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Jaidon Anthony",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Dango Ouattara",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "a bournemouth": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Fraser Forster",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Adam Smith",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Max Aarons",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "James Hill",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bafodé Diakité",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lewis Cook",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marcus Tavernier",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Justin Kluivert",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "David Brooks",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Enes Ünal",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Evanilson",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Đorđe Petrović",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Julian Araujo",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Adrien Truffert",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Ryan Christie",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Tyler Adams",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Amine Adli",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Daniel Jebbison",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "bournemouth": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Fraser Forster",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Adam Smith",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Max Aarons",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "James Hill",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bafodé Diakité",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lewis Cook",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marcus Tavernier",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Justin Kluivert",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "David Brooks",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Enes Ünal",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Evanilson",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Đorđe Petrović",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Julian Araujo",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Adrien Truffert",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Ryan Christie",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Tyler Adams",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Amine Adli",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Daniel Jebbison",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "coventry city": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Ben Wilson",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jake Bidwell",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luke Woolfenden",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jay Dasilva",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Liam Kitching",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ephron Mason-Clark",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matt Grimes",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gustavo Hamer",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Brandon Thomas-Asante",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Taiwo Awoniyi",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Haji Wright",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Oliver Dovin",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Milan van Ewijk",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Joel Latibeaudiere",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Victor Torp",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Frank Onyeka",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Tatsuhiro Sakamoto",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Raphael Borges Rodrigues",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "athletic club": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Unai Simón",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Aymeric Laporte",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yuri Berchiche",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yeray Álvarez",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Daniel Vivian",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ruiz de Galarreta",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Oihan Sancet",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Unai Vencedor Paris",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Álex Berenguer",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Iñaki Williams",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gorka Guruzeta",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Julen Agirrezabala",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Andoni Gorosabel",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Jesús Areso",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Benat Prados",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Mikel Jauregizar",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Roberto Navarro",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Nico Williams",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "athletic": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Unai Simón",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Aymeric Laporte",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yuri Berchiche",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yeray Álvarez",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Daniel Vivian",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ruiz de Galarreta",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Oihan Sancet",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Unai Vencedor Paris",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Álex Berenguer",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Iñaki Williams",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gorka Guruzeta",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Julen Agirrezabala",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Andoni Gorosabel",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Jesús Areso",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Benat Prados",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Mikel Jauregizar",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Roberto Navarro",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Nico Williams",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "club atlético de madrid": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Jan Oblak",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Marcos Llorente",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dávid Hancko",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alejandro Grimaldo",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Christian Romero",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Koke",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thomas Lemar",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Morten Hjulmand",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alexander Sørloth",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ademola Lookman",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Julián Álvarez",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Juan Musso",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Nahuel Molina",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Robin Le Normand",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Johnny",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Obed Vargas",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Alejandro Baena",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Giuliano Simeone",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "atleti": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Jan Oblak",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Marcos Llorente",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dávid Hancko",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alejandro Grimaldo",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Christian Romero",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Koke",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thomas Lemar",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Morten Hjulmand",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alexander Sørloth",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ademola Lookman",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Julián Álvarez",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Juan Musso",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Nahuel Molina",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Robin Le Normand",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Johnny",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Obed Vargas",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Alejandro Baena",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Giuliano Simeone",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "ca osasuna": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Sergio Herrera",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Diego Rico",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Valentin Rosier",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Catena",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Flavien Boyomo",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Torró",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Moi Gómez",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jon Moncayola",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ante Budimir",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Kike Barja",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Rubén García",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Aitor Fernández",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Jorge Herrando",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Abel Bretones",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Aimar Oroz",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Iker Munoz",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Raúl",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Raúl Moro",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "osasuna": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Sergio Herrera",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Diego Rico",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Valentin Rosier",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Catena",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Flavien Boyomo",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Torró",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Moi Gómez",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jon Moncayola",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ante Budimir",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Kike Barja",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Rubén García",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Aitor Fernández",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Jorge Herrando",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Abel Bretones",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Aimar Oroz",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Iker Munoz",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Raúl",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Raúl Moro",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "rcd espanyol de barcelona": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Marko Dmitrović",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Leandro Cabrera",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Unai Núñez",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Vanja Drkušič",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Clemens Riedel",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Edu Expósito",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pol Lozano",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Urko González",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pere Milla",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Kike García",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Javi Puado",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Ángel Fortuño Viñas",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Miguel Rubio",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Quilindschy Hartman",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Moscardo",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Álex Calatrava",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Tyrhys Dolan",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Jofre Carreras Pagès",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "espanyol": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Marko Dmitrović",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Leandro Cabrera",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Unai Núñez",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Vanja Drkušič",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Clemens Riedel",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Edu Expósito",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pol Lozano",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Urko González",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pere Milla",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Kike García",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Javi Puado",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Ángel Fortuño Viñas",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Miguel Rubio",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Quilindschy Hartman",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Moscardo",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Álex Calatrava",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Tyrhys Dolan",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Jofre Carreras Pagès",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "barcelona": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Wojciech Szczęsny",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "João Cancelo",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Andreas Christensen",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jules Koundé",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ronald Araújo",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rodri",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Frenkie de Jong",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dani Olmo",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Anthony Gordon",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ferrán Torres",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Raphinha",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Joan García",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Eric García",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Álex Balde",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Pedri",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Pablo Gavira",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Karim Adeyemi",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Roony Bardghji",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "barça": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Wojciech Szczęsny",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "João Cancelo",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Andreas Christensen",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jules Koundé",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ronald Araújo",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rodri",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Frenkie de Jong",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dani Olmo",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Anthony Gordon",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ferrán Torres",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Raphinha",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Joan García",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Eric García",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Álex Balde",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Pedri",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Pablo Gavira",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Karim Adeyemi",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Roony Bardghji",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "getafe": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "David Soria",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Dakonam Djené",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Johan Mojica",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Femenía Far",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Juan Berrocal",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Orel Mangala",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Javi Muñoz",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yvan Neyou",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Juanmi",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Borja Mayoral",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Enes Ünal",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Jiří Letáček",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Abdelkabir Abqar",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Saba Sazonov",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Francho Serrano",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "RamónTerrats Espacio",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Martin Satriano",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Alejandro Sancris",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "málaga": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Alfonso Herrero",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Fernando Calero",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alex Pastor Carayol",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "José Salinas",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Angel Recio",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Juan Melero",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ramón Enríquez Rodríguez",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dani Lorenzo",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Eneko Jauregi Escobar",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Juan Cruz",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Joaquín Muñoz",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Lopez Nogueras",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Diego Murillo",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Moussa Diarra",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Carlos Dotor",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Rafa Rodriguez",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Julen Lobete",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "David Larrubia",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "real madrid": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Thibaut Courtois",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Éder Militão",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Antonio Rüdiger",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Denzel Dumfries",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Trent Alexander-Arnold",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Federico Valverde",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bernardo Silva",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Aurélien Tchouameni",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rodrygo",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Vinicius Junior",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Kylian Mbappé",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Andriy Lunin",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Ferland Mendy",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Ibrahima Konaté",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Eduardo Camavinga",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Jude Bellingham",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Brahim Diaz",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Endrick",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "rayo vallano de madrid": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Augusto Batalla",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Luiz Felipe",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marash Kumbulla",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Florian Lejeune",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Iván Balliu",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Óscar Valentín",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Unai López",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pedro Díaz",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Raúl de Tomás",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Álvaro García",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Isi Palazón",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Dani Cárdenas",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Andrei Rațiu",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Pep Chavarría",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Pathé Ciss",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Randy Ntekja",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Alexandre Alemão",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Sergio Camello",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "rayo vallecano": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Augusto Batalla",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Luiz Felipe",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marash Kumbulla",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Florian Lejeune",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Iván Balliu",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Óscar Valentín",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Unai López",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pedro Díaz",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Raúl de Tomás",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Álvaro García",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Isi Palazón",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Dani Cárdenas",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Andrei Rațiu",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Pep Chavarría",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Pathé Ciss",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Randy Ntekja",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Alexandre Alemão",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Sergio Camello",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "levante ud": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Maty Ryan",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Aïssa Mandi",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jeremy Toljan",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Adrián de la Fuente",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Manuel Sánchez",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Oriol Rey",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Carlos Álvarez",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jon Olasagasti",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Roger Brugué",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Víctor García",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Iván Romero",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Pablo Cuñat",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Xavi Grande",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Jorge Cabello",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Hugo Sotelo",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Enzo Bardeli",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Thiago Fernandez",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Karl Etta Eyong",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "levante": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Maty Ryan",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Aïssa Mandi",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jeremy Toljan",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Adrián de la Fuente",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Manuel Sánchez",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Oriol Rey",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Carlos Álvarez",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jon Olasagasti",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Roger Brugué",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Víctor García",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Iván Romero",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Pablo Cuñat",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Xavi Grande",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Jorge Cabello",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Hugo Sotelo",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Enzo Bardeli",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Thiago Fernandez",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Karl Etta Eyong",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "real betis balompié": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Álvaro Vallés Rosa",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Diego Llorente",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Héctor Bellerín",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Júnior Firpo",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bartra",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Isco",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giovani Lo Celso",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marc Roca",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Cucho Hernández",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Aitor Ruibal",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Antony",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Diego Conde",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Francisco Garcia",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Natan",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Pablo Fornals",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Álvaro Fidalgo",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Iker Losada",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Rodrigo Riquelme",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "real betis": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Álvaro Vallés Rosa",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Diego Llorente",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Héctor Bellerín",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Júnior Firpo",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bartra",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Isco",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giovani Lo Celso",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marc Roca",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Cucho Hernández",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Aitor Ruibal",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Antony",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Diego Conde",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Francisco Garcia",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Natan",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Pablo Fornals",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Álvaro Fidalgo",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Iker Losada",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Rodrigo Riquelme",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "real sociedad de fútbol": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Álex Remiro",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Álvaro Odriozola",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Igor Zubeldía",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sergio Gómez",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Javi López",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Carlos Soler",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yangel Herrera",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luka Sučić",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gonçalo Guedes",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Takefusa Kubo",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ander Barrenetxea",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Unai Marrero",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Aihen Muñoz",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Jon Aramburu",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Beñat Turrientes",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Arsen Zakharyan",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Jon Karrikaburu",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Mikel Oyarzabal",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "real sociedad": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Álex Remiro",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Álvaro Odriozola",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Igor Zubeldía",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sergio Gómez",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Javi López",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Carlos Soler",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yangel Herrera",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luka Sučić",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gonçalo Guedes",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Takefusa Kubo",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ander Barrenetxea",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Unai Marrero",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Aihen Muñoz",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Jon Aramburu",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Beñat Turrientes",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Arsen Zakharyan",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Jon Karrikaburu",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Mikel Oyarzabal",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "villarreal": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Péter Gulácsi",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Logan Costa",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Juan Foyth",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alex Freeman",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Renato Veiga",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pape Gueye",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Santiago Comesaña",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alassane Diatta",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ayoze Pérez",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Nicolas Pépé",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Hugo López",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Luiz Lúcio Reis Júnior",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Sergi Cardona",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Carlos Romero",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Carlos Macià",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Gerard Moreno",
+        "number": 16,
+        "pos": "FW",
+        "rating": 7.1
+      },
+      {
+        "name": "Tajon Buchanan",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      }
+    ]
+  },
+  "valencia": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Cristian",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Mouctar Diakhaby",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dimitri Foulquier",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gaya",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pablo Maffeo",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Filip Ugrinic",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pepelu",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "André Almeida",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sergi Canós",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Umar Sadiq",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Arnaut Danjuma",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Stole Dimitrievski",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Justin de Haas",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Jesus Vazquez Alcalde",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Guido Rodríguez",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Javier Guerra",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Hugo Duro",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Dani Raba",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "deportivo alavés": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Sivera",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jonny Otto",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nikola Maraš",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Facundo Garcés",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nahuel Tenaglia",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Aleñà",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Denís Suárez",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Carlos Benavidez",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mariano Díaz",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Lucas Boyé",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Toni Martínez",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Jesús Owono",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Moussa Diarra",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Ville Koski",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Ander Guevara",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Antonio Blanco",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Miguel Rodríguez",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Abde Rebbach",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "alavés": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Sivera",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jonny Otto",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nikola Maraš",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Facundo Garcés",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nahuel Tenaglia",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Aleñà",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Denís Suárez",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Carlos Benavidez",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mariano Díaz",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Lucas Boyé",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Toni Martínez",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Jesús Owono",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Moussa Diarra",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Ville Koski",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Ander Guevara",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Antonio Blanco",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Miguel Rodríguez",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Abde Rebbach",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "elche": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Matías Dituro",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Pedro Bigas",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bambo Diaby",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "David Affengruber",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Víctor Chust",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gonzalo Villar",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marc Aguado",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Martim Neto",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Grady Diangana",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ezequiel Ponce",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Josán Fernández",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Alejandro Iturbe",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Buba",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Matia Barzic",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Federico Redondo",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Facundo Buonanotte",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Tete Morente",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Germán Valera",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "rc celta de vigo": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Ionuț Radu",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Marcos Alonso",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Carl Starfelt",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Javier Galán",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Abdoulaye Fayé",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matías Vecino",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Aleix Febas",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ilaix Moriba",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Iago Aspas",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Borja Iglesias",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Carles Pérez",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Altay Bayındır",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Sergio Carreira",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Carlos Dominguez",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Miguel Román",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Ferran Jutglà",
+        "number": 16,
+        "pos": "FW",
+        "rating": 7.1
+      },
+      {
+        "name": "Williot Swedberg",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      }
+    ]
+  },
+  "celta": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Ionuț Radu",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Marcos Alonso",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Carl Starfelt",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Javier Galán",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Abdoulaye Fayé",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matías Vecino",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Aleix Febas",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ilaix Moriba",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Iago Aspas",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Borja Iglesias",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Carles Pérez",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Altay Bayındır",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Sergio Carreira",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Carlos Dominguez",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Miguel Román",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Ferran Jutglà",
+        "number": 16,
+        "pos": "FW",
+        "rating": 7.1
+      },
+      {
+        "name": "Williot Swedberg",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      }
+    ]
+  },
+  "sevilla": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Odisseas Vlachodimos",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gabriel Suazo",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Fábio Cardoso",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marcão",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Federico Gattoni",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jon Guridi",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jordán",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucien Agoume",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ruben Vargas",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Alfonso González",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Chidera Ejuke",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Fran Gonzalez",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Juan Iglesias",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Pedrosa",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Manu Bueno",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Nicolás Guillén",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Peque",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Robbie Ure",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "sevilla fc": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Odisseas Vlachodimos",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gabriel Suazo",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Fábio Cardoso",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marcão",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Federico Gattoni",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jon Guridi",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jordán",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucien Agoume",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ruben Vargas",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Alfonso González",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Chidera Ejuke",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Fran Gonzalez",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Juan Iglesias",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Pedrosa",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Manu Bueno",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Nicolás Guillén",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Peque",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Robbie Ure",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "rc deportivo la coruña": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Álvaro Fernández",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ximo Navarro",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Angeliño",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giacomo Quagliata",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Arnau Comas",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "José Jurado",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mario Soriano",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Riki Rodríguez",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pierre-Emerick Aubameyang",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Zakaria Eddahchouri",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Luismi Cruz",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "German Parreno",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Lucas Noubi",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Adrià Altimira",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Charlie Patino",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Lorenzo Amatucci",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "David Mella",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Peke",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "deportivo": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Álvaro Fernández",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ximo Navarro",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Angeliño",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giacomo Quagliata",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Arnau Comas",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "José Jurado",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mario Soriano",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Riki Rodríguez",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pierre-Emerick Aubameyang",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Zakaria Eddahchouri",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Luismi Cruz",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "German Parreno",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Lucas Noubi",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Adrià Altimira",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Charlie Patino",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Lorenzo Amatucci",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "David Mella",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Peke",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "real racing club de santander": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Julen Agirrezabala",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "José Manuel",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pablo Ramon",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Álvaro Mantilla",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Facundo González",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Canales",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Iván Martín",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Íñigo Sainz Maza",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Andrés Martín",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Asier Villalibre",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Iñigo Vicente",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Simon Eriksson",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Pedro Felipe",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Salinas",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Maguette Gueye",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Gustavo Puerta",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Giorgi Guliashvili",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Arana",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "santander": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Julen Agirrezabala",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "José Manuel",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pablo Ramon",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Álvaro Mantilla",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Facundo González",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Canales",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Iván Martín",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Íñigo Sainz Maza",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Andrés Martín",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Asier Villalibre",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Iñigo Vicente",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Simon Eriksson",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Pedro Felipe",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Salinas",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Maguette Gueye",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Gustavo Puerta",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Giorgi Guliashvili",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Arana",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "1.  köln": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Matthias Köbbing",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Timo Hübers",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alessio Castro-Montes",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gideon Mensah",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jusuf Gazibegović",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tom Krauß",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ísak Bergmann Jóhannesson",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Paul Okon-Engstler",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Linton Maina",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gian-Luca Waldschmidt",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ragnar Ache",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Ron-Robert Zieler",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Luka Lochoshvili",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Joël Schmied",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Gil Neves",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Thijs Dallinga",
+        "number": 16,
+        "pos": "FW",
+        "rating": 7.1
+      },
+      {
+        "name": "Imad Rondić",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      }
+    ]
+  },
+  "1. fc köln": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Matthias Köbbing",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Timo Hübers",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alessio Castro-Montes",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gideon Mensah",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jusuf Gazibegović",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tom Krauß",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ísak Bergmann Jóhannesson",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Paul Okon-Engstler",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Linton Maina",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gian-Luca Waldschmidt",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ragnar Ache",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Ron-Robert Zieler",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Luka Lochoshvili",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Joël Schmied",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Gil Neves",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Thijs Dallinga",
+        "number": 16,
+        "pos": "FW",
+        "rating": 7.1
+      },
+      {
+        "name": "Imad Rondić",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      }
+    ]
+  },
+  "tsg 1899 hoffenheim": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Oliver Baumann",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Bernardo",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ozan Kabak",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Koki Machida",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Vladimir Coufal",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dennis Geiger",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Wouter Burger",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alexander Prass",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Andrej Kramarić",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Adam Hložek",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Patrick Wimmer",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Luca Philipp",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Valentin Gendrey",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Albian Hajdari",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Bambase Conte",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Muhammed Damar",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Tim Lemperle",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Fisnik Asllani",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "hoffenheim": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Oliver Baumann",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Bernardo",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ozan Kabak",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Koki Machida",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Vladimir Coufal",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dennis Geiger",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Wouter Burger",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alexander Prass",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Andrej Kramarić",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Adam Hložek",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Patrick Wimmer",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Luca Philipp",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Valentin Gendrey",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Albian Hajdari",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Bambase Conte",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Muhammed Damar",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Tim Lemperle",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Fisnik Asllani",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "bayer 04 leverkusen": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Niklas Lomb",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Lucas Vázquez",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Abdoulaye Fayé",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Facundo Medina",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Edmond Tapsoba",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jonas Hofmann",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Exequiel Palacios",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Aleix García",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Patrik Schick",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Martin Terrier",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Victor Boniface",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Janis Blaswich",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Loïc Bade",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Miguel Gutiérrez",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Robert Andrich",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Malik Tillman",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Nathan Tella",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Ernest Poku",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "leverkusen": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Niklas Lomb",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Lucas Vázquez",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Abdoulaye Fayé",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Facundo Medina",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Edmond Tapsoba",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jonas Hofmann",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Exequiel Palacios",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Aleix García",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Patrik Schick",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Martin Terrier",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Victor Boniface",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Janis Blaswich",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Loïc Bade",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Miguel Gutiérrez",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Robert Andrich",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Malik Tillman",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Nathan Tella",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Ernest Poku",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "borussia dortmund": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Gregor Kobel",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Waldemar Anton",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Emre Can",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ramy Bensebaini",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Julian Ryerson",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marcel Sabitzer",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Joey Veerman",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Felix Kalu Nmecha",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sehrou Guirassy",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Karim Adeyemi",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Fábio Silva",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Patrick Drewes",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Nico Schlotterbeck",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Yan Couto",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Giannis Konstantelias",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Carney Chukwuemeka",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Maximilian Beier",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Samuele Inácio",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "dortmund": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Gregor Kobel",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Waldemar Anton",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Emre Can",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ramy Bensebaini",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Julian Ryerson",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marcel Sabitzer",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Joey Veerman",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Felix Kalu Nmecha",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sehrou Guirassy",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Karim Adeyemi",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Fábio Silva",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Patrick Drewes",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Nico Schlotterbeck",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Yan Couto",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Giannis Konstantelias",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Carney Chukwuemeka",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Maximilian Beier",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Samuele Inácio",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "bayern münchen": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Manuel Neuer",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jonathan Tah",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dayot Upamecano",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Konrad Laimer",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alphonso Davies",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Joshua Kimmich",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "João Palhinha",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ismael Saibari",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Serge Gnabry",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Harry Kane",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Luis Díaz",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Sven Ulreich",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Hiroki Ito",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Sacha Boey",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jamal Musiala",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Tom Bischof",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Michael Olise",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Armindo Sieb",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "bayern": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Manuel Neuer",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jonathan Tah",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dayot Upamecano",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Konrad Laimer",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alphonso Davies",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Joshua Kimmich",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "João Palhinha",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ismael Saibari",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Serge Gnabry",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Harry Kane",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Luis Díaz",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Sven Ulreich",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Hiroki Ito",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Sacha Boey",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jamal Musiala",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Tom Bischof",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Michael Olise",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Armindo Sieb",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "schalke 04": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Kevin Müller",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Robin Gosens",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tomáš Kalas",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Maximilian Wöber",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Timo Becker",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kenan Karaman",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Janik Bachmann",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Finn Porath",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bryan Lasme",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Edin Džeko",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Moussa Sylla",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Loris Karius",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Nikola Katić",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Anton Donkor",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Dejan Ljubicic",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Ron Schallenberg",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Chikwubuike Adamu",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Christian Gomis",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "schalke": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Kevin Müller",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Robin Gosens",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tomáš Kalas",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Maximilian Wöber",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Timo Becker",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kenan Karaman",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Janik Bachmann",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Finn Porath",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bryan Lasme",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Edin Džeko",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Moussa Sylla",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Loris Karius",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Nikola Katić",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Anton Donkor",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Dejan Ljubicic",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Ron Schallenberg",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Chikwubuike Adamu",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Christian Gomis",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "hamburger sv": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Daniel Fernandes",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jordan Torunarigha",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sebastiaan Bornauw",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Miro Muheim",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nicolás Capaldo",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Albert Sambi Lokonga",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Immanuel Pherai",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Albert Gronbaek Erlykke",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yussuf Poulsen",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Bakery Jatta",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jean-Luc Dompé",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Sander Tangvik",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Warmed Omari",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Daniel Elfadli",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Nicolai Remberg",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Bilal Nadir",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Patson Daka",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Emir Sahiti",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "hsv": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Daniel Fernandes",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jordan Torunarigha",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sebastiaan Bornauw",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Miro Muheim",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nicolás Capaldo",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Albert Sambi Lokonga",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Immanuel Pherai",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Albert Gronbaek Erlykke",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yussuf Poulsen",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Bakery Jatta",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jean-Luc Dompé",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Sander Tangvik",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Warmed Omari",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Daniel Elfadli",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Nicolai Remberg",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Bilal Nadir",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Patson Daka",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Emir Sahiti",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "vfb stuttgart": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Fabian Bredlow",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Dan-Axel Zagadou",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Josha Vagnoman",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Maximilian Mittelstädt",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Julian Chabot",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nikolas Nartey",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Grischa Prömel",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Atakan Karazor",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Chris Führich",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Deniz Undav",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ermedin Demirovic",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Marius Funk",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Leonidas Stergiou",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Lorenz Assignon",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Angelo Stiller",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Laurin Ulrich",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Jamie Leweling",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Tiago Tomás",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "stuttgart": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Fabian Bredlow",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Dan-Axel Zagadou",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Josha Vagnoman",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Maximilian Mittelstädt",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Julian Chabot",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nikolas Nartey",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Grischa Prömel",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Atakan Karazor",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Chris Führich",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Deniz Undav",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ermedin Demirovic",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Marius Funk",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Leonidas Stergiou",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Lorenz Assignon",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Angelo Stiller",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Laurin Ulrich",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Jamie Leweling",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Tiago Tomás",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "sv werder bremen": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Alexander Schlager",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Mitchell Weiser",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Niklas Stark",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marco Friedl",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Felix Agu",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ludovit Reis",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Senne Lynen",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Romano Schmid",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Niclas Füllkrug",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Dawid Kownacki",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Cédric Itten",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Markus Kolke",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Amos Pieper",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Olivier Deman",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jens Stage",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Skelly Alvero",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Marco Grüll",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Justin Njinmah",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "bremen": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Alexander Schlager",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Mitchell Weiser",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Niklas Stark",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marco Friedl",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Felix Agu",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ludovit Reis",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Senne Lynen",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Romano Schmid",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Niclas Füllkrug",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Dawid Kownacki",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Cédric Itten",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Markus Kolke",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Amos Pieper",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Olivier Deman",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jens Stage",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Skelly Alvero",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Marco Grüll",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Justin Njinmah",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "1. fsv mainz 05": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Robin Zentner",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Dominik Kohr",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Stefan Posch",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Silvan Widmer",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Philipp Mwene",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nadiem Amiri",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lee Jaesung",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marco Richter",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sheraldo Becker",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Phillip Tietz",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Silas Wamangituka",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Alexander Schwolow",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Stefan Bell",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Danny da Costa",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Lennart Maloney",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Kaishu Sano",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Ransford Königsdörffer",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Benedict Hollerbach",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "mainz": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Robin Zentner",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Dominik Kohr",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Stefan Posch",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Silvan Widmer",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Philipp Mwene",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nadiem Amiri",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lee Jaesung",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marco Richter",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sheraldo Becker",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Phillip Tietz",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Silas Wamangituka",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Alexander Schwolow",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Stefan Bell",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Danny da Costa",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Lennart Maloney",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Kaishu Sano",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Ransford Königsdörffer",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Benedict Hollerbach",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "augsburg": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Finn Dahmen",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jeffrey Gouweleeuw",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marius Wolf",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mads Pedersen",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dimitris Giannoulis",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alexis Claude Maurice",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kristijan Jakić",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Robin Fellhauer",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Michael Gregoritsch",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Steve Mounié",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Nathanael Mbuku",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Nediljko Labrović",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Keven Schlotterbeck",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Calvin Brackelmann",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Yannik Keitel",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Han-Noah Massengo",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Yusuf Kabadayi",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Rodrigo Ribeiro",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "sc freiburg": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Florian Müller",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Matthias Ginter",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Christian Günter",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lukas Kübler",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Philipp Lienhart",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Maximilian Eggestein",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rihito Yamamoto",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Patrick Osterhage",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jan-Niklas Beste",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Vincenzo Grifo",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Florent Muslija",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Jannik Huth",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Anthony Jung",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Philipp Treu",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Yannik Engelhardt",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Rouven Tarnutzer",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Lucas Höler",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Yuito Suzuki",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "freiburg": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Florian Müller",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Matthias Ginter",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Christian Günter",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lukas Kübler",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Philipp Lienhart",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Maximilian Eggestein",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rihito Yamamoto",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Patrick Osterhage",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jan-Niklas Beste",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Vincenzo Grifo",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Florent Muslija",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Jannik Huth",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Anthony Jung",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Philipp Treu",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Yannik Engelhardt",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Rouven Tarnutzer",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Lucas Höler",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Yuito Suzuki",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "borussia mönchengladbach": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Tobias Sippel",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Nico Elvedi",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kevin Diks",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Daiki Hashioka",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ko Itakura",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Florian Neuhaus",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kevin Stöger",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Philipp Sander",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Robin Hack",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Franck Honorat",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Tim Kleindienst",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Moritz Nicolas",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Joseph Scally",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Yukhym Konoplya",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Enzo Leopold",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Gio Reyna",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Isac Lidberg",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Tomáš Čvančara",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "m'gladbach": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Tobias Sippel",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Nico Elvedi",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kevin Diks",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Daiki Hashioka",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ko Itakura",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Florian Neuhaus",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kevin Stöger",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Philipp Sander",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Robin Hack",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Franck Honorat",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Tim Kleindienst",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Moritz Nicolas",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Joseph Scally",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Yukhym Konoplya",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Enzo Leopold",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Gio Reyna",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Isac Lidberg",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Tomáš Čvančara",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "eintracht frankfurt": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Jens Grahl",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Timmy Chandler",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Robin Koch",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Niels Nkounkou",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Arthur Theate",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mario Götze",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ellyes Skhiri",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dina Ebimbe",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Michy Batshuayi",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ritsu Doan",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jonathan Burkardt",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Michael Zetterer",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Nnamdi Collins",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Elias Baum",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Raphael Onyedika",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Fares Chaïbi",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Jessic Ngankam",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Noel Futkeu",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "frankfurt": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Jens Grahl",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Timmy Chandler",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Robin Koch",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Niels Nkounkou",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Arthur Theate",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mario Götze",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ellyes Skhiri",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dina Ebimbe",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Michy Batshuayi",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ritsu Doan",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jonathan Burkardt",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Michael Zetterer",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Nnamdi Collins",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Elias Baum",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Raphael Onyedika",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Fares Chaïbi",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Jessic Ngankam",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Noel Futkeu",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "1.  union berlin": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Frederik Rønnow",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Marvin Friedrich",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Christopher Trimmel",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Josip Juranović",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Derrick Köhn",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rani Khedira",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Janik Haberer",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Robert Skov",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Emmanuel Latte Lath",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Tim Skarke",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Oliver Burke",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Carl Klaus",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Leopold Querfeld",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Tom Rothe",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Michel Aebischer",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "András Schafer",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Andrej Ilic",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Marin Ljubicic",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "union berlin": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Frederik Rønnow",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Marvin Friedrich",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Christopher Trimmel",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Josip Juranović",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Derrick Köhn",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rani Khedira",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Janik Haberer",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Robert Skov",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Emmanuel Latte Lath",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Tim Skarke",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Oliver Burke",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Carl Klaus",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Leopold Querfeld",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Tom Rothe",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Michel Aebischer",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "András Schafer",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Andrej Ilic",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Marin Ljubicic",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "sc paderborn 07": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Markus Schubert",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Felix Götze",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marcel Hoffmeier",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tjark Scheller",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mattes Hansen",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tom Baack",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sebastian Klaas",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Raphael Obermair",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Steffen Tigges",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Sven Michel",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gabriel Vidovic",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Nahuel Noll",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Tristan Zobel",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Nyamekye Awortwie-Grant",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Oliver Batista-Meier",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Timur Gayret",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Stefano Marino",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Kennedy Okpala",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "sc paderborn": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Markus Schubert",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Felix Götze",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marcel Hoffmeier",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tjark Scheller",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mattes Hansen",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tom Baack",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sebastian Klaas",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Raphael Obermair",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Steffen Tigges",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Sven Michel",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gabriel Vidovic",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Nahuel Noll",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Tristan Zobel",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Nyamekye Awortwie-Grant",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Oliver Batista-Meier",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Timur Gayret",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Stefano Marino",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Kennedy Okpala",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "sv 07 elversberg": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Tim Boss",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Florian Le Joncour",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jan Gyamerah",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luca Sirch",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Maximilian Rohr",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Carlo Sickinger",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Amara Condé",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Łukasz Poręba",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luca Schnellbacher",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Tom Zimmerschied",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Luca Pfeiffer",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Frank Lehmann",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Lukas Pinckert",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Lasse Günther",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Frederik Schmahl",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Noah Darvich",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Lukas Petkov",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Jason Ceka",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "elversberg": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Tim Boss",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Florian Le Joncour",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jan Gyamerah",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luca Sirch",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Maximilian Rohr",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Carlo Sickinger",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Amara Condé",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Łukasz Poręba",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luca Schnellbacher",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Tom Zimmerschied",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Luca Pfeiffer",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Frank Lehmann",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Lukas Pinckert",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Lasse Günther",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Frederik Schmahl",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Noah Darvich",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Lukas Petkov",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Jason Ceka",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "rb leipzig": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Ørjan Nyland",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Benjamin Henrichs",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ridle Baku",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lutsharel Geertruida",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lukas Klostermann",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Eljif Elmas",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Christoph Baumgartner",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nicolas  Seiwald",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Johan Bakayoko",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Antonio Nusa",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Romulo Cruz",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Péter Gulácsi",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Willi Orban",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "David Raum",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Rocco Reitz",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Ezechiel Banzuzi",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Conrad Harder",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Tidiam Gomis",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "ac milan": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Pietro Terracciano",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Matteo Gabbia",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Fikayo Tomori",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pervis Estupiñán",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Strahinja Pavlović",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luka Modrić",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Adrien Rabiot",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ruben Loftus-Cheek",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Christian Pulisic",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Christopher Nkunku",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Rafael Leão",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Mike Maignan",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Filippo Terracciano",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Koni De Winter",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Alexis Saelemaekers",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Youssouf Fofana",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Samuel Chukwueze",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Santiago Giménez",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "milan": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Pietro Terracciano",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Matteo Gabbia",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Fikayo Tomori",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pervis Estupiñán",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Strahinja Pavlović",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luka Modrić",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Adrien Rabiot",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ruben Loftus-Cheek",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Christian Pulisic",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Christopher Nkunku",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Rafael Leão",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Mike Maignan",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Filippo Terracciano",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Koni De Winter",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Alexis Saelemaekers",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Youssouf Fofana",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Samuel Chukwueze",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Santiago Giménez",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "a fiorentina": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Luca Lezzerini",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Luca Ranieri",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marin Pongračić",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dodô",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "João Mário Lopes",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Antonín Barák",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rolando Mandragora",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nicolò Fagioli",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Riccardo Sottil",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Moise Kean",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Mbala N'Zola",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "David De Gea",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Fabiano Parisi",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Radu Drăgușin",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Marco Brescianini",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Giovanni Fabbian",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Albert Guðmundsson",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Mateo Pellegrino",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "fiorentina": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Luca Lezzerini",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Luca Ranieri",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marin Pongračić",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dodô",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "João Mário Lopes",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Antonín Barák",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rolando Mandragora",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nicolò Fagioli",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Riccardo Sottil",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Moise Kean",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Mbala N'Zola",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "David De Gea",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Fabiano Parisi",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Radu Drăgușin",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Marco Brescianini",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Giovanni Fabbian",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Albert Guðmundsson",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Mateo Pellegrino",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "as roma": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Pierluigi Gollini",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Evan N'Dicka",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gianluca Mancini",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mario Hermoso",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nahuel Molina",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lorenzo Pellegrini",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bryan Cristante",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Manu Koné",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Paulo Dybala",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Donyell Malen",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Santiago Castro",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Mile Svilar",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Anass Salah-Eddine",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Devyne Rensch",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Neil El Aynaoui",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Niccolo Pisilli",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Matias Soule",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Robinio Vaz",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "roma": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Pierluigi Gollini",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Evan N'Dicka",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gianluca Mancini",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mario Hermoso",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nahuel Molina",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lorenzo Pellegrini",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bryan Cristante",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Manu Koné",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Paulo Dybala",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Donyell Malen",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Santiago Castro",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Mile Svilar",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Anass Salah-Eddine",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Devyne Rensch",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Neil El Aynaoui",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Niccolo Pisilli",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Matias Soule",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Robinio Vaz",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "atalanta bc": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Marco Sportiello",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Sead Kolašinac",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thomas Kristensen",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giorgio Scalvini",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Isak Hien",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Éderson",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Raoul Bellanova",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marten de Roon",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gianluca Scamacca",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Giacomo Raspadori",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Nikola Krstović",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Francesco Rossi",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Odilon Kossounou",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Honest Ahanor",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mario Pašalić",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Mitchel Bakker",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Kamal Deen Sulemana",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Vanja Vlahovic",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "atalanta": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Marco Sportiello",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Sead Kolašinac",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thomas Kristensen",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giorgio Scalvini",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Isak Hien",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Éderson",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Raoul Bellanova",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marten de Roon",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gianluca Scamacca",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Giacomo Raspadori",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Nikola Krstović",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Francesco Rossi",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Odilon Kossounou",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Honest Ahanor",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mario Pašalić",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Mitchel Bakker",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Kamal Deen Sulemana",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Vanja Vlahovic",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "bologna  1909": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Łukasz Skorupski",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Lorenzo De Silvestri",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Torbjørn Heggem",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Juan Miranda",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nicolò Casale",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jens Odgaard",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nikola Moro",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lewis Ferguson",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Riccardo Orsolini",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Federico Bernardeschi",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Artem Dovbyk",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Massimo Pessina",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Emil Holm",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Nadir Zortea",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Tommaso Pobega",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Oussama El Azzouzi",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Jesper Karlsson",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Roberto Piccoli",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "bologna": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Łukasz Skorupski",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Lorenzo De Silvestri",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Torbjørn Heggem",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Juan Miranda",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nicolò Casale",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jens Odgaard",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nikola Moro",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lewis Ferguson",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Riccardo Orsolini",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Federico Bernardeschi",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Artem Dovbyk",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Massimo Pessina",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Emil Holm",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Nadir Zortea",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Tommaso Pobega",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Oussama El Azzouzi",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Jesper Karlsson",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Roberto Piccoli",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "cagliari calcio": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Boris Radunović",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Yerry Mina",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Zé Pedro Figueiredo",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gabriele Zappa",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giuseppe Aurelio",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alessandro Deiola",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Harry Winks",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Daniel Maldini",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mattia Felici",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Sebastiano Esposito",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gennaro Borrelli",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Elia Caprile",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Adam Obert",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Raphael Kofler",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Matteo Prati",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Nicolo Cavuoti",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Kevin Carlos",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Kingstone Mutandwa",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "cagliari": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Boris Radunović",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Yerry Mina",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Zé Pedro Figueiredo",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gabriele Zappa",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giuseppe Aurelio",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alessandro Deiola",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Harry Winks",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Daniel Maldini",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mattia Felici",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Sebastiano Esposito",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gennaro Borrelli",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Elia Caprile",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Adam Obert",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Raphael Kofler",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Matteo Prati",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Nicolo Cavuoti",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Kevin Carlos",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Kingstone Mutandwa",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "genoa c": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Justin Bijlow",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Stefano Sabelli",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Aaron Martín",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Johan Vásquez",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Leo Østigård",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Djibril Sow",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Morten Frendrup",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tommaso Baldanzi",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Hamed Traoré",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Junior Messias",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Lorenzo Colombo",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Daniele Sommariva",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Mario Mitaj",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Brooke Norton-Cuffy",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mikael Egill Ellertsson",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Alexsandro Amorim",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Vitor Oliveira",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Elias Havel",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "genoa": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Justin Bijlow",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Stefano Sabelli",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Aaron Martín",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Johan Vásquez",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Leo Østigård",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Djibril Sow",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Morten Frendrup",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tommaso Baldanzi",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Hamed Traoré",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Junior Messias",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Lorenzo Colombo",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Daniele Sommariva",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Mario Mitaj",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Brooke Norton-Cuffy",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mikael Egill Ellertsson",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Alexsandro Amorim",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Vitor Oliveira",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Elias Havel",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "internazionale milano": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Ivan Provedel",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Manuel Akanji",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yann Aurel Bisseck",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alessandro Bastoni",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "John Stones",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Hakan Çalhanoğlu",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nicolò Barella",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Piotr Zieliński",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lautaro Martínez",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Marcus Thuram-Ulien",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ange-Yoan Bonny",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Raffaele Di Gennaro",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Benjamin Pavard",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Carlos",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Henrikh Mkhitaryan",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Luis Henrique",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Francesco Esposito",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      }
+    ]
+  },
+  "inter": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Ivan Provedel",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Manuel Akanji",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yann Aurel Bisseck",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alessandro Bastoni",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "John Stones",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Hakan Çalhanoğlu",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nicolò Barella",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Piotr Zieliński",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lautaro Martínez",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Marcus Thuram-Ulien",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ange-Yoan Bonny",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Raffaele Di Gennaro",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Benjamin Pavard",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Carlos",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Henrikh Mkhitaryan",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Luis Henrique",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Francesco Esposito",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      }
+    ]
+  },
+  "juventus": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Mattia Perin",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Bremer",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Daniele Rugani",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lloyd Kelly",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jhon Lucumí",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Arthur",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Manuel Locatelli",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Weston McKennie",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Arkadiusz Milik",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jérémie Boga",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Randal Kolo Muani",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Carlo Pinsoglio",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Zeki Çelik",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Juan Cabal",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Teun Koopmeiners",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Douglas Luiz",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Jonathan David",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Edon Zhegrova",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "ss lazio": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Christos Mandas",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Alfonso Pedraza",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alessio Romagnoli",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luca Pellegrini",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Patric",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Davide Frattesi",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Danilo Cataldi",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kenneth Taylor",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mattia Zaccagni",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Boulaye Dia",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gustav Isaksen",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Alessio Furlanetto",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Adam Marušić",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Mohamed Salim Fares",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Nicolò Rovella",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Fisayo Dele-Bashiru",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Gabriele Artistico",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Matteo Cancellieri",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "lazio": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Christos Mandas",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Alfonso Pedraza",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alessio Romagnoli",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luca Pellegrini",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Patric",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Davide Frattesi",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Danilo Cataldi",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kenneth Taylor",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mattia Zaccagni",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Boulaye Dia",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gustav Isaksen",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Alessio Furlanetto",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Adam Marušić",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Mohamed Salim Fares",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Nicolò Rovella",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Fisayo Dele-Bashiru",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Gabriele Artistico",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Matteo Cancellieri",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "parma calcio 1913": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Zion Suzuki",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Enrico Del Prato",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Emanuele Valeri",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lautaro Valenti",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Botond Balogh",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Adrián Bernabé",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Hans Nicolussi Caviglia",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mandela Keita",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pontus Almqvist",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "El Bilal Touré",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "José Romero",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Edoardo Corvi",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Franco Carboni",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Alessandro Circati",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Oliver Sørensen",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Rachid Kouda",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Matija Frigan",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Antoine Joujou",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "parma": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Zion Suzuki",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Enrico Del Prato",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Emanuele Valeri",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lautaro Valenti",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Botond Balogh",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Adrián Bernabé",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Hans Nicolussi Caviglia",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mandela Keita",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pontus Almqvist",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "El Bilal Touré",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "José Romero",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Edoardo Corvi",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Franco Carboni",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Alessandro Circati",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Oliver Sørensen",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Rachid Kouda",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Matija Frigan",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Antoine Joujou",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "ssc napoli": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Vanja Milinković-Savić",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Leonardo Spinazzola",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alessandro Buongiorno",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pasquale Mazzocchi",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giovanni Di Lorenzo",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kevin De Bruyne",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Scott McTominay",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "André Zambo Anguissa",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matteo Politano",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Noa Lang",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "David Neres",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Alex Meret",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Amir Rrahmani",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Mathías Olivera",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jens Cajuste",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Stanislav Lobotka",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Lorenzo Lucca",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Jesper Lindstrøm",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "napoli": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Vanja Milinković-Savić",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Leonardo Spinazzola",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alessandro Buongiorno",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pasquale Mazzocchi",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giovanni Di Lorenzo",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kevin De Bruyne",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Scott McTominay",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "André Zambo Anguissa",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matteo Politano",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Noa Lang",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "David Neres",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Alex Meret",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Amir Rrahmani",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Mathías Olivera",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jens Cajuste",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Stanislav Lobotka",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Lorenzo Lucca",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Jesper Lindstrøm",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "udinese calcio": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Daniele Padelli",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Enzo Ebosse",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Hassane Kamara",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alessandro Zanoli",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Christian Kabasele",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jurgen Ekkelenkamp",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giorgi Chakvetadze",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sandi Lovric",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nicolò Zaniolo",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Keinan Davis",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Adam Buksa",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Maduka Okoye",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Oumar Solet",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Mërgim Vojvoda",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jesper Karlström",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Jakub Piotrowski",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Vakoun Issouf Bayo",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Idrissa Guèye",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "udinese": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Daniele Padelli",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Enzo Ebosse",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Hassane Kamara",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alessandro Zanoli",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Christian Kabasele",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jurgen Ekkelenkamp",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giorgi Chakvetadze",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sandi Lovric",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nicolò Zaniolo",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Keinan Davis",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Adam Buksa",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Maduka Okoye",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Oumar Solet",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Mërgim Vojvoda",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jesper Karlström",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Jakub Piotrowski",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Vakoun Issouf Bayo",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Idrissa Guèye",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "venezia": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Alessio Pozzi",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Marin Šverko",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ridgeciano Haps",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thierry Correia",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Armel Bella Kotchap",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alfred Duncan",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Þórir Jóhann Helgason",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Toma Bašić",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lion Lauberbach",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Akor Adams",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "John Yeboah",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Lorenzo Montipò",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Bartol Franjić",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Redouane Halhal",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Kike Pérez",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Emil Bohinen",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Andrea Adorante",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Alvin Okoro",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "venezia fc": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Alessio Pozzi",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Marin Šverko",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ridgeciano Haps",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thierry Correia",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Armel Bella Kotchap",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alfred Duncan",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Þórir Jóhann Helgason",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Toma Bašić",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lion Lauberbach",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Akor Adams",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "John Yeboah",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Lorenzo Montipò",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Bartol Franjić",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Redouane Halhal",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Kike Pérez",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Emil Bohinen",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Andrea Adorante",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Alvin Okoro",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "frosinone calcio": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Matteo Pisseri",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Kevin Akpoguma",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Aleksa Terzić",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sergio Kalaj",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Niccolò Corrado",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Florian Grillitsch",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alessio Zerbin",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ben Lhassine Kone",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Antonio Raimondo",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Seydou Fini",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Giorgi Kvernadze",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Sebastiano Desplanches",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Ilario Monterisi",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Anthony Oyono",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Romano Schmid",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Francesco Gelli",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Kevin Barcella",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Farés Ghedjemis",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "frosinone": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Matteo Pisseri",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Kevin Akpoguma",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Aleksa Terzić",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sergio Kalaj",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Niccolò Corrado",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Florian Grillitsch",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alessio Zerbin",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ben Lhassine Kone",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Antonio Raimondo",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Seydou Fini",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Giorgi Kvernadze",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Sebastiano Desplanches",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Ilario Monterisi",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Anthony Oyono",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Romano Schmid",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Francesco Gelli",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Kevin Barcella",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Farés Ghedjemis",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "us sassuolo calcio": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Giacomo Satalino",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jay Idzes",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sebastian Walukiewicz",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Fali Candé",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Josh Doig",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Fabrizio Caligara",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nemanja Matić",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kristian Thorstvedt",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Andrea Pinamonti",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Domenico Berardi",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Nicholas Pierini",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Stefano Turati",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Cas Odenthal",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Filippo Missori",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Andrea Ghion",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Daniel Boloca",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Armand Lauriente",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Kieron Bowie",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "sassuolo": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Giacomo Satalino",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jay Idzes",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sebastian Walukiewicz",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Fali Candé",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Josh Doig",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Fabrizio Caligara",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nemanja Matić",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kristian Thorstvedt",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Andrea Pinamonti",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Domenico Berardi",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Nicholas Pierini",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Stefano Turati",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Cas Odenthal",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Filippo Missori",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Andrea Ghion",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Daniel Boloca",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Armand Lauriente",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Kieron Bowie",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "torino": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Alberto Paleari",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Cristiano Biraghi",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ardian Ismajli",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Eray Cömert",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marcus Pedersen",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nikola Vlašić",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ivan Ilić",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Faustino Anjorin",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giovanni Simeone",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Duván Zapata",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Che Adams",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Franco Israel",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Saúl Coco",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Ali Dembele",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Kian Fitz-Jim",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Gaetano Oristanio",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Pietro Pellegri",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Sandro Kulenović",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "us lce": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Marco Bleve",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Antonino Gallo",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gaby Jean",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Corrie Ndaba",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jamil Siebert",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lassana Coulibaly",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Youssef Maleh",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Omri Gandelman",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Willem Geubbels",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Santiago Pierotti",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Lameck Banda",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Wladimiro Falcone",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Danilo Veiga",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Sebastian Esposito",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mohamed Kaba",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Sadik Fofana",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Nikola Štulić",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Konan N'Dri",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "lecce": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Marco Bleve",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Antonino Gallo",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gaby Jean",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Corrie Ndaba",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jamil Siebert",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lassana Coulibaly",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Youssef Maleh",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Omri Gandelman",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Willem Geubbels",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Santiago Pierotti",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Lameck Banda",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Wladimiro Falcone",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Danilo Veiga",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Sebastian Esposito",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mohamed Kaba",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Sadik Fofana",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Nikola Štulić",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Konan N'Dri",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "ac monza": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Semuel Pizzignacco",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Valentin Antov",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Samuele Birindelli",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ricardo Mangas",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Filippo Delli Carri",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Andrea Colpani",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matteo Pessina",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Patrick Ciurria",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Patrick Cutrone",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Andrea Petagna",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Dany Mota Carvalho",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Demba Thiam",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Andrea Carboni",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Lorenzo Lucchesi",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Idrissa Touré",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Nicolas Galazzi",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Keïta Baldé",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Omari Forson",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "monza": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Semuel Pizzignacco",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Valentin Antov",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Samuele Birindelli",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ricardo Mangas",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Filippo Delli Carri",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Andrea Colpani",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matteo Pessina",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Patrick Ciurria",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Patrick Cutrone",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Andrea Petagna",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Dany Mota Carvalho",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Demba Thiam",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Andrea Carboni",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Lorenzo Lucchesi",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Idrissa Touré",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Nicolas Galazzi",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Keïta Baldé",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Omari Forson",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "como 1907": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Mauro Vigorito",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Edoardo Goldaniga",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Trevoh Chalobah",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marc-Oliver Kempf",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alberto Dossena",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luca Mazzitelli",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luis Milla",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Maxence Caqueret",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Álvaro Morata",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Anastasios Douvikas",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Nicolas Kühn",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Emil Audero",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Ivan Smolčić",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Ignace Van Der Brempt",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Lucas Da Cunha",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Matthias Braunöder",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Alessandro Gabrielloni",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Tommaso Fumagalli",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "toulouse": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Guillaume Restes",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Rasmus Nicolaisen",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mark McKenzie",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Charlie Cresswell",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "David Odogu",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Niklas Schmidt",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Cristian Cásseres Jr.",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Francis Abu",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yann Gboho",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jacen Russell-Rowe",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Santiago Hidalgo",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Mathys Niflore",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Ilyes Aradj",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Rafik Messali",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Aron Dönnum",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Thomas Jørgensen",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Sion Oppong",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Enzo Faty",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "stade brestois 29": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Grégoire Coudert",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Brendan Chardonnet",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gautier Lloris",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kenny Lala",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bradley Locko",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Tousart",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Hugo Magnetti",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Joris Chotard",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ludovic Ajorque",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Romain Del Castillo",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Mama Baldé",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Egil Selvik",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Luc Zogbe",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Raphaël Le Guen",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mamady Diambou",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Kamory Doumbia",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Axel Camblan",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Pathé Mboup",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "brest": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Grégoire Coudert",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Brendan Chardonnet",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gautier Lloris",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kenny Lala",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bradley Locko",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Tousart",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Hugo Magnetti",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Joris Chotard",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ludovic Ajorque",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Romain Del Castillo",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Mama Baldé",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Egil Selvik",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Luc Zogbe",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Raphaël Le Guen",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mamady Diambou",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Kamory Doumbia",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Axel Camblan",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Pathé Mboup",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "olympique de marseille": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Géronimo Rulli",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ulisses Garcia",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Emerson",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Facundo Medina",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nayef Aguerd",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Angel Gomes",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pierre Emile Højbjerg",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tim Weah",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Amine Harit",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Neal Maupay",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Amine Gouiri",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Jeffrey De Lange",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Leonardo Balerdi",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Derek Cornelius",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Geoffrey Kondogbia",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Himad Abdelli",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Igor Paixão",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Faris Moumbagna",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "marseille": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Géronimo Rulli",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ulisses Garcia",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Emerson",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Facundo Medina",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nayef Aguerd",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Angel Gomes",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pierre Emile Højbjerg",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tim Weah",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Amine Harit",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Neal Maupay",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Amine Gouiri",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Jeffrey De Lange",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Leonardo Balerdi",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Derek Cornelius",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Geoffrey Kondogbia",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Himad Abdelli",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Igor Paixão",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Faris Moumbagna",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "aj auxerre": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Paul Nardi",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Francisco Sierralta",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bryan Okoh",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sinaly Diomandé",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marvin Senaya",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Assane Dioussé",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Elisha Owusu",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Romain Faivre",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Daniel Namaso",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Eros Maddy",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Theo Bair",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Mamadou Diop",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Fredrik Oppegard",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Lamine Sy",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Naouirou Ahamada",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Kevin Danois",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Josué Casimir",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Lasso Coulibaly",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "auxerre": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Paul Nardi",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Francisco Sierralta",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bryan Okoh",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sinaly Diomandé",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marvin Senaya",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Assane Dioussé",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Elisha Owusu",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Romain Faivre",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Daniel Namaso",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Eros Maddy",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Theo Bair",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Mamadou Diop",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Fredrik Oppegard",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Lamine Sy",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Naouirou Ahamada",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Kevin Danois",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Josué Casimir",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Lasso Coulibaly",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "lille osc": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Arnaud Bodart",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Romain Perraud",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Calvin Verdonk",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nianzou Kouassi",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alexsandro Ribeiro",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nabil Bentaleb",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Benjamin André",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Hákon Arnar Haraldsson",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mohamed Bayo",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gaëtan Perrin",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Olivier Giroud",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Berke Özer",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Tiago Santos",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Nathan Ngoy",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Ugo Raghouber",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Ngal'ayel Mukau",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Osame Sahraoui",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Félix Correia",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "lille": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Arnaud Bodart",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Romain Perraud",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Calvin Verdonk",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nianzou Kouassi",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alexsandro Ribeiro",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nabil Bentaleb",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Benjamin André",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Hákon Arnar Haraldsson",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mohamed Bayo",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gaëtan Perrin",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Olivier Giroud",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Berke Özer",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Tiago Santos",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Nathan Ngoy",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Ugo Raghouber",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Ngal'ayel Mukau",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Osame Sahraoui",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Félix Correia",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "ogc nice": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Yehvann Diouf",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jonathan Clauss",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ali El Abdi",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mattia Viti",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Melvin Bard",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Laurent Abergel",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Axel Witsel",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Morgan Sanson",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gauthier Hein",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Sofiane Diop",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Isak Jansson",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Teddy Boulhendi",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Antoine Mendy",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Youssouf Ndayishimiye",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Everton",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Salis Abdul Samed",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Nathan N'Goumou",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Terem Moffi",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "nice": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Yehvann Diouf",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jonathan Clauss",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ali El Abdi",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mattia Viti",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Melvin Bard",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Laurent Abergel",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Axel Witsel",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Morgan Sanson",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gauthier Hein",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Sofiane Diop",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Isak Jansson",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Teddy Boulhendi",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Antoine Mendy",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Youssouf Ndayishimiye",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Everton",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Salis Abdul Samed",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Nathan N'Goumou",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Terem Moffi",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "olympique lyonnais": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Rémy Descamps",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Nicolás Tagliafico",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ainsley Maitland-Niles",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Moussa Niakhaté",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Clinton Mata",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Corentin Tolisso",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Orel Mangala",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Paul Akouokou",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Loïs Openda",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Julien Duranville",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ernest Nuamah",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Dominik Greif",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Duje Ćaleta-Car",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Felix Bacher",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Pavel Šulc",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Tanner Tessmann",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Malick Fofana",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Kaïl Boudache",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "olympique lyon": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Rémy Descamps",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Nicolás Tagliafico",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ainsley Maitland-Niles",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Moussa Niakhaté",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Clinton Mata",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Corentin Tolisso",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Orel Mangala",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Paul Akouokou",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Loïs Openda",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Julien Duranville",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ernest Nuamah",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Dominik Greif",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Duje Ćaleta-Car",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Felix Bacher",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Pavel Šulc",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Tanner Tessmann",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Malick Fofana",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Kaïl Boudache",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "paris saint-germain": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Matvei Safonov",
         "number": 1,
         "pos": "GK",
         "rating": 7.4,
@@ -4468,171 +26635,9209 @@ const REAL_SQUADS: Record<string, { formation: string; xi: Player[]; bench: Play
         "name": "Achraf Hakimi",
         "number": 2,
         "pos": "RB",
-        "rating": 7.8,
-        "goals": 4,
-        "assists": 6,
-        "tackles": 2.4,
-        "key_passes": 2.6,
-        "shots": 2.0,
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
         "yellow_cards": 2
       },
       {
         "name": "Marquinhos",
-        "number": 5,
+        "number": 3,
         "pos": "CB",
-        "rating": 7.55,
-        "goals": 2,
-        "assists": 0,
-        "tackles": 2.5,
-        "key_passes": 0.4,
-        "shots": 0.6,
-        "yellow_cards": 2
-      },
-      {
-        "name": "Willian Pacho",
-        "number": 51,
-        "pos": "CB",
-        "rating": 7.45,
+        "rating": 7.4,
         "goals": 0,
         "assists": 0,
-        "tackles": 2.8,
-        "key_passes": 0.3,
-        "shots": 0.3,
-        "yellow_cards": 3
-      },
-      {
-        "name": "Nuno Mendes",
-        "number": 25,
-        "pos": "LB",
-        "rating": 7.6,
-        "goals": 1,
-        "assists": 4,
-        "tackles": 2.3,
-        "key_passes": 2.1,
-        "shots": 1.1,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
         "yellow_cards": 2
       },
       {
-        "name": "Vitinha",
-        "number": 17,
-        "pos": "DM",
-        "rating": 7.85,
-        "goals": 3,
-        "assists": 5,
+        "name": "Lucas Digne",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
         "tackles": 2.6,
-        "key_passes": 3.1,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Hernández",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Fabián Ruiz",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
         "shots": 1.8,
         "yellow_cards": 2
       },
       {
-        "name": "Warren Zaïre-Emery",
-        "number": 33,
+        "name": "Renato Sanches",
+        "number": 7,
         "pos": "CM",
-        "rating": 7.55,
-        "goals": 3,
-        "assists": 3,
-        "tackles": 2.5,
-        "key_passes": 1.9,
-        "shots": 1.4,
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
         "yellow_cards": 2
       },
       {
-        "name": "João Neves",
-        "number": 87,
-        "pos": "CM",
-        "rating": 7.75,
-        "goals": 2,
-        "assists": 7,
-        "tackles": 3.2,
+        "name": "Vitinha",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
         "key_passes": 2.5,
-        "shots": 1.2,
-        "yellow_cards": 3
+        "shots": 1.8,
+        "yellow_cards": 2
       },
       {
         "name": "Ousmane Dembélé",
-        "number": 10,
-        "pos": "RW",
-        "rating": 8.0,
-        "goals": 7,
-        "assists": 9,
-        "tackles": 1.1,
-        "key_passes": 3.5,
-        "shots": 3.6,
-        "yellow_cards": 1
-      },
-      {
-        "name": "Gonçalo Ramos",
         "number": 9,
-        "pos": "ST",
-        "rating": 7.7,
-        "goals": 10,
-        "assists": 2,
-        "tackles": 0.8,
-        "key_passes": 1.2,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
         "shots": 3.4,
         "yellow_cards": 1
       },
       {
-        "name": "Bradley Barcola",
-        "number": 29,
+        "name": "Randal Kolo Muani",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ferrán Torres",
+        "number": 11,
         "pos": "LW",
-        "rating": 8.2,
-        "goals": 12,
+        "rating": 7.8,
+        "goals": 14,
         "assists": 6,
-        "tackles": 1.3,
-        "key_passes": 2.9,
-        "shots": 3.7,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
         "yellow_cards": 1
       }
     ],
     "bench": [
       {
-        "name": "Matvey Safonov",
-        "number": 39,
+        "name": "Lucas Chevalier",
+        "number": 12,
         "pos": "GK",
-        "rating": 6.9
+        "rating": 7.1
       },
       {
-        "name": "Lucas Beraldo",
-        "number": 35,
+        "name": "William Pacho",
+        "number": 13,
         "pos": "DF",
         "rating": 7.2
       },
       {
-        "name": "Lucas Hernández",
-        "number": 21,
-        "pos": "DF",
-        "rating": 7.25
-      },
-      {
-        "name": "Fabián Ruiz",
-        "number": 8,
-        "pos": "MF",
-        "rating": 7.45
-      },
-      {
-        "name": "Kang-in Lee",
-        "number": 19,
-        "pos": "MF",
-        "rating": 7.5
-      },
-      {
-        "name": "Marco Asensio",
-        "number": 11,
-        "pos": "FW",
-        "rating": 7.35
-      },
-      {
-        "name": "Désiré Doué",
+        "name": "Illia Zabarnyi",
         "number": 14,
-        "pos": "FW",
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Warren Zaïre-Emery",
+        "number": 15,
+        "pos": "MF",
         "rating": 7.4
       },
       {
-        "name": "Randal Kolo Muani",
-        "number": 23,
+        "name": "Joao Neves",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Khvicha Kvaratskhelia",
+        "number": 17,
         "pos": "FW",
-        "rating": 7.35
+        "rating": 7.2
+      },
+      {
+        "name": "Bradley Barcola",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "psg": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Matvei Safonov",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Achraf Hakimi",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marquinhos",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Digne",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Hernández",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Fabián Ruiz",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Renato Sanches",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Vitinha",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ousmane Dembélé",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Randal Kolo Muani",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ferrán Torres",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Lucas Chevalier",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "William Pacho",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Illia Zabarnyi",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Warren Zaïre-Emery",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Joao Neves",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Khvicha Kvaratskhelia",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Bradley Barcola",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "lorient": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Benjamin Leroy",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Alec Georgen",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Souleymane Isaak Toure",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Formose Mendy",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Montassar Talbi",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jean-Victor Makengo",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Noah Cadiou",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bandiougou Fadiga",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Aiyegun Tosin",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Mohamed Bamba",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jérémy Hatchi",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Bingourou Kamara",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Dembo Sylla",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Nathaniel Adjei",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Joel Mugisha",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Noah Mbamba",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Souleymane Faye",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      }
+    ]
+  },
+  "stade rennais  1901": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Nicolas Lemaître",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Przemysław Frankowski",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bryan Reynolds",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lilian Brassier",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alidu Seidu",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Seko Fofana",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mahdi Camara",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Valentin Rongier",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Arnaud Nordin",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Breel Embolo",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Musa Al Taamari",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Brice Samba",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Anthony Rouault",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Charlie Cresswell",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Adrien Thomasson",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Sebastian Szymański",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Esteban Lepaul",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Issa Soumaré",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "stade rennais": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Nicolas Lemaître",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Przemysław Frankowski",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bryan Reynolds",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lilian Brassier",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alidu Seidu",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Seko Fofana",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mahdi Camara",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Valentin Rongier",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Arnaud Nordin",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Breel Embolo",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Musa Al Taamari",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Brice Samba",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Anthony Rouault",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Charlie Cresswell",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Adrien Thomasson",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Sebastian Szymański",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Esteban Lepaul",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Issa Soumaré",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "es troyes ac": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Zacharie Boucher",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Adrien Monfray",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Paolo Gozzi Iweru",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ismaëlben Boura",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thierno Baldé",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alexandre Phliponeau",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Iron Gomis",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Antoine Mille",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Renaud Ripart",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Kandet Diawara",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ibrahim Traoré",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Hillel Konaté",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Lucas Maronnier",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Michel Diaz",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mouhamed Diop",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Hugo Picard",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Merwan Ifnaoui",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Amadou Diakite",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "troyes": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Zacharie Boucher",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Adrien Monfray",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Paolo Gozzi Iweru",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ismaëlben Boura",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thierno Baldé",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alexandre Phliponeau",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Iron Gomis",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Antoine Mille",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Renaud Ripart",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Kandet Diawara",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ibrahim Traoré",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Hillel Konaté",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Lucas Maronnier",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Michel Diaz",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mouhamed Diop",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Hugo Picard",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Merwan Ifnaoui",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Amadou Diakite",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "angers sco": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Anthony Lopes",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Carlens Arcus",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jordan Lefort",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ousman Camara",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jacques Ekomie",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Haris Belkebla",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Branco van den Boomen",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Louis Mouton",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jim Allevinah",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Amine El Ouazzani",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Mamadou Usman Simbakoli",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Melvin Zinga",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Emmanuel Biumla",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Lilian Rao-Lisoa",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Yassin Belkhdim",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Marius Courcoul",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Amine Sbaï",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Anthony Bermont",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "le havre ac": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Mory Diaw",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Vincent Sasso",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ayumu Seko",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Timothee Pembele",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Fodé Doucouré",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kaito Mizuta",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Amir Richardson",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rassoul N'Diaye",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Josh Maja",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Mbwana Samatta",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Godson Kyeremeh",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Lionel Mpasi",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Yanis Zouaoui",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Stephan Zagadou",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Junior Mwanga",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Simon Ebonog",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Felix Mambimbi",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Andy Logbo",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "le havre": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Mory Diaw",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Vincent Sasso",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ayumu Seko",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Timothee Pembele",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Fodé Doucouré",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kaito Mizuta",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Amir Richardson",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rassoul N'Diaye",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Josh Maja",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Mbwana Samatta",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Godson Kyeremeh",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Lionel Mpasi",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Yanis Zouaoui",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Stephan Zagadou",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Junior Mwanga",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Simon Ebonog",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Felix Mambimbi",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Andy Logbo",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "le mans": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Nicolas Kocik",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Lucas Buadés",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Samuel Yohou",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Djibril Sidibé",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yasser Larouci",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Edwin Quarshie",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alexandre Lauray",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jean Vercruysse",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Antoine Rabillard",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Dame Guèye",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Louis Mafouta",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Ewan Hatfout",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Raúl Torrente",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Harold Voyer",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Milan Robin",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Martin Rossignol",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Erwan Colas",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Bilal Brahimi",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "racing club de lens": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Hervé Koffi",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jonathan Gradit",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ruben Aguilar",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matthieu Udol",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Maik Nawrocki",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thorgan Hazard",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mickaël Cuisance",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Amadou Haïdara",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Florian Thauvin",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Odsonne Edouard",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Florian Sotoca",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Mathieu Gorgelin",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Saud Abdulhamid",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Jhoanner Chavez",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mamadou Sangare",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Alpha Diallo",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Michał Skóraś",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Abdallah Sima",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "rc lens": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Hervé Koffi",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jonathan Gradit",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ruben Aguilar",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matthieu Udol",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Maik Nawrocki",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thorgan Hazard",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mickaël Cuisance",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Amadou Haïdara",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Florian Thauvin",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Odsonne Edouard",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Florian Sotoca",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Mathieu Gorgelin",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Saud Abdulhamid",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Jhoanner Chavez",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mamadou Sangare",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Alpha Diallo",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Michał Skóraś",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Abdallah Sima",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "as monaco": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Lukáš Hrádecký",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Eric Dier",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thilo Kehrer",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jordan Teze",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mohammed Salisu",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Paul Pogba",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Aleksandr Golovin",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Denis Zakaria",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Takumi Minamino",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ansu Fati",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Folarin Balogun",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Philipp Köhn",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Vanderson",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Flávio Nazinho",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Edan Diop",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Lamine Camara",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Matthis Abline",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Maghnes Akliouche",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "monaco": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Lukáš Hrádecký",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Eric Dier",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thilo Kehrer",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jordan Teze",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mohammed Salisu",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Paul Pogba",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Aleksandr Golovin",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Denis Zakaria",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Takumi Minamino",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ansu Fati",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Folarin Balogun",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Philipp Köhn",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Vanderson",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Flávio Nazinho",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Edan Diop",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Lamine Camara",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Matthis Abline",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Maghnes Akliouche",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "rc strasbourg alsace": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Filip Jörgensen",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ben Chilwell",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ismaël Doukouré",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Saïdou Sow",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Andrew Omobamidele",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gio Reyna",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Julio Enciso",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Valentin Barco",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sebastian Nanasi",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Sekou Mara",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Oscar Perea",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Miłosz Piekutowski",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Soumaïla Coulibaly",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Abakar Sylla",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Junior Mwanga",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Diego Moreira",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Joaquín Panichelli",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Martial Godo",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "strasbourg": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Filip Jörgensen",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ben Chilwell",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ismaël Doukouré",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Saïdou Sow",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Andrew Omobamidele",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gio Reyna",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Julio Enciso",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Valentin Barco",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Sebastian Nanasi",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Sekou Mara",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Oscar Perea",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Miłosz Piekutowski",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Soumaïla Coulibaly",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Abakar Sylla",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Junior Mwanga",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Diego Moreira",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Joaquín Panichelli",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Martial Godo",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "paris": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Kevin Trapp",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Hamari Traoré",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thibault De Smet",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tuomas Ollila",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Samir Chergui",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Vincent Marchetti",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Maxime López",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pierre Lees Melou",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lassine Sinayoko",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Alimami Gory",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ciro Immobile",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Obed Nkambadio",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Otavio Ataide",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Mamadou Mbow",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Adama Camara",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Patrick Zabi",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Moses Simon",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Jonathan Ikoné",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "paris fc": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Kevin Trapp",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Hamari Traoré",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thibault De Smet",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tuomas Ollila",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Samir Chergui",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Vincent Marchetti",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Maxime López",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pierre Lees Melou",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lassine Sinayoko",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Alimami Gory",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ciro Immobile",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Obed Nkambadio",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Otavio Ataide",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Mamadou Mbow",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Adama Camara",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Patrick Zabi",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Moses Simon",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Jonathan Ikoné",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "fluminense": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Fábio",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Samuel Xavier",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Igor Rabello",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Renê",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Guga",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ganso",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alisson",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Otávio",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Hulk",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Germán Cano",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Agustín Canobbio",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Vitor Eudes",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Guilherme Arana",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Ignácio",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Yeferson Soteldo",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "David Terans",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Yago",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Kevin Serna",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "ca mineiro": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Everson",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Vitor Hugo",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Júnior Alonso",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ángelo Preciado",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Natanael",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Maycon",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bernard",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alan Franco",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dudu",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Mateo Cassierra",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Eric Soares",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Gabriel Delfim",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Iván Román",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Igor",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Tomás Cuello",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Gustavo Scarpa",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Ryan Felipe",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "João Castro",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "mineiro": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Everson",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Vitor Hugo",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Júnior Alonso",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ángelo Preciado",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Natanael",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Maycon",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bernard",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alan Franco",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dudu",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Mateo Cassierra",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Eric Soares",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Gabriel Delfim",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Iván Román",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Igor",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Tomás Cuello",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Gustavo Scarpa",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Ryan Felipe",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "João Castro",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "grêmio fbpa": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Weverton",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Marlon",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Walter Kannemann",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marcos Rocha",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "João Pedro",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dodi",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Arthur",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Felipe Carballo",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Cristian Pavón",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Francis Amuzu",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Andre",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Gabriel Chapeco",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Fabián Balbuena",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Erick Noriega",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mathías Villasanti",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Caio Paulista",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Smiley",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Jeferson",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "grêmio": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Weverton",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Marlon",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Walter Kannemann",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marcos Rocha",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "João Pedro",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dodi",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Arthur",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Felipe Carballo",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Cristian Pavón",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Francis Amuzu",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Andre",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Gabriel Chapeco",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Fabián Balbuena",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Erick Noriega",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mathías Villasanti",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Caio Paulista",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Smiley",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Jeferson",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "ca paranaense": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Santos",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Léo",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dudu",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Juan Aguirre",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alejandro García",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jádson",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luiz Gustavo",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bruno Zapelli",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Julimar",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Renan",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Kevin Viveros",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Mycael",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Carlos Terán",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Gastón Benavídez",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Juan Portilla",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Isaac",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Renan Peixoto",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Leozinho",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "paranaense": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Santos",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Léo",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Dudu",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Juan Aguirre",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alejandro García",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jádson",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Luiz Gustavo",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bruno Zapelli",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Julimar",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Renan",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Kevin Viveros",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Mycael",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Carlos Terán",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Gastón Benavídez",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Juan Portilla",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Isaac",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Renan Peixoto",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Leozinho",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "se palmeiras": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Marcelo Lomba",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gustavo Gómez",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Joaquín Piquerez",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alexander Barboza",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bruno Fuchs",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marlon Freitas",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jhon Arias",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Evangelista",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Paulinho",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ramón Sosa",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "José Manuel López",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Carlos Miguel",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Khellven",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Murilo Cerqueira",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mauricio",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Emiliano Martínez",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Luighi Hanri",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Riquelme Fillipi",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "palmeiras": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Marcelo Lomba",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gustavo Gómez",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Joaquín Piquerez",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alexander Barboza",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bruno Fuchs",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marlon Freitas",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jhon Arias",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Evangelista",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Paulinho",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ramón Sosa",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "José Manuel López",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Carlos Miguel",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Khellven",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Murilo Cerqueira",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Mauricio",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Emiliano Martínez",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Luighi Hanri",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Riquelme Fillipi",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "botafogo fr": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Neto",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Vitinho",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marçal",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alex Telles",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nahuel Ferraresi",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Edenilson",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Allan",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Santiago Rodríguez",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Joaquín Correa",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Júnior Santos",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Chris Ramos",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Raul",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Kaio Pantaleão",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Caio Roque",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Danilo dos Santos de Oliveira",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Cristian Medina",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Weliton Santos",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Nathan Ribeiro",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "botafogo": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Neto",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Vitinho",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marçal",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alex Telles",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Nahuel Ferraresi",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Edenilson",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Allan",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Santiago Rodríguez",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Joaquín Correa",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Júnior Santos",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Chris Ramos",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Raul",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Kaio Pantaleão",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Caio Roque",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Danilo dos Santos de Oliveira",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Cristian Medina",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Weliton Santos",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Nathan Ribeiro",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "cruzeiro": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Cássio",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Fabrício Bruno",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Fágner",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "William",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Villalba",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Romero",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Silva",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gerson",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Chico",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Matheus Pereira",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Bruno Rodrigues",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Matheus Cunha",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "João Marcelo",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Kaiki Bruno",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Wanderson",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Christian",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Neizer Villarreal",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Ruan",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "chapoense af": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Rafael Santos",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Bruno Pacheco",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rafael Thyere",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marcinho",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Neto Pessoa",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giovanni Augusto",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yannick Bolasie",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jean Carlos",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kevin Ramírez",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Maurício Garcez",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Vinicius",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Anderson",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Marcos Vinicius",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Walter Clar",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Wermeson",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Camilo",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Alberto Pagnoncelli",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Gleidson",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "chapecoense": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Rafael Santos",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Bruno Pacheco",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rafael Thyere",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marcinho",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Neto Pessoa",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giovanni Augusto",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yannick Bolasie",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jean Carlos",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kevin Ramírez",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Maurício Garcez",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Vinicius",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Anderson",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Marcos Vinicius",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Walter Clar",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Wermeson",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Camilo",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Alberto Pagnoncelli",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Gleidson",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "são paulo": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Carlos Coronel",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Robert Arboleda",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Ramon",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alan Franco",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Enzo Díaz",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Moura",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Cauly",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Danielzinho",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Artur Guimaraes",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Jonathan Calleri",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Luciano",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Rafael Monteiro",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Luan",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "José Sabino",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Marcos Antônio",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Ferreira",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "André Silva",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Gonzalo Tapia",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "bahia": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "João Paulo",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gilberto",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Kanu",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "David Duarte",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Santiago Ramos",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Jean Lucas",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Éverton Ribeiro",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Erick",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ademir Santos",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Michel Araujo",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Everaldo",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Ronaldo",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Luciano Juba",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Marcos Victor",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Nicolás Acevedo",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Rodrigo Nestor",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Joao Vitor",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Roger Gabriel",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "sc corinthians paulista": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Hugo Souza",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Matheuzinho",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "André Ramalho",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Raniele",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Hugo",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Charles",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alex Santana",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matheus Pereira",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yuri Alberto",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Memphis Depay",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Vitinho",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Matheus Donelli",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Pedro Milans",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Bidu",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jesse Lingard",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Zakaria Labyad",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Pedro Raul",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Dieguinho",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "corinthians": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Hugo Souza",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Matheuzinho",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "André Ramalho",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Raniele",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Hugo",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Charles",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alex Santana",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matheus Pereira",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yuri Alberto",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Memphis Depay",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Vitinho",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Matheus Donelli",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Pedro Milans",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Bidu",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jesse Lingard",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Zakaria Labyad",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Pedro Raul",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Dieguinho",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "cr vasco da gama": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Daniel Fuzato",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Carlos Cuesta",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "José Rodríguez",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Piton",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Freitas",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tchê Tchê",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "David",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thiago Mendes",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marino Hinestroza",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Matheus Franca",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Carlos Gómez",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Léo Jardim",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Paulo Henrique",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Robert",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jair",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Claudio Spinelli",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Lukas Zuccarello",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Riquelme Avellar",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "vasco da gama": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Daniel Fuzato",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Carlos Cuesta",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "José Rodríguez",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Piton",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Freitas",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tchê Tchê",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "David",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thiago Mendes",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marino Hinestroza",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Matheus Franca",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Carlos Gómez",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Léo Jardim",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Paulo Henrique",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Robert",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jair",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Claudio Spinelli",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Lukas Zuccarello",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Riquelme Avellar",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "vitória": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Gabriel",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Neris",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Carlos Eduardo",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Camutanga",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Cacá",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ronald",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Marinho",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Aitor Cantalapiedra",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Osvaldo",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Renato Kayzer",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Erick",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Yuri Sena",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Luan Cândido",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Jamerson",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Leandro Martínez",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Gabriel Baralhas",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Renzo López",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Fabrício",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "cr flamengo": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Agustín Rossi",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ayrton Lucas",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Leo Ortiz",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alex Sandro",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Guillermo Varela",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giorgian De Arrascaeta",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Paquetá",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Erick Pulgar",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pedro",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Éverton",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Bruno Henrique",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Andrew",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Danilo Luiz da Silva",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Léo Pereira",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jorge Carrascal",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Gonzalo Plata",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Luiz Araújo",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Guilherme",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "flamengo": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Agustín Rossi",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Ayrton Lucas",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Leo Ortiz",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alex Sandro",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Guillermo Varela",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Giorgian De Arrascaeta",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Paquetá",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Erick Pulgar",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Pedro",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Éverton",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Bruno Henrique",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Andrew",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Danilo Luiz da Silva",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Léo Pereira",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Jorge Carrascal",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Gonzalo Plata",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Luiz Araújo",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Guilherme",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "coritiba fbc": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Keiller",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Rodrigo Moledo",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Felipe Jonatan",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tinga",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bruno Melo",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thiago Santos",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Willian Oliveira",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Fernando Sobral",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Keno",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Pedro Rocha",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Rodrigo Rodrigues",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Gabriel Leite",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Maicon",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Tiago",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Sebastián Gómez",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Josué",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Fabinho",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Breno Lopes",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "coritiba": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Keiller",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Rodrigo Moledo",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Felipe Jonatan",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Tinga",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bruno Melo",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thiago Santos",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Willian Oliveira",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Fernando Sobral",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Keno",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Pedro Rocha",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Rodrigo Rodrigues",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Gabriel Leite",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Maicon",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Tiago",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Sebastián Gómez",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Josué",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Fabinho",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Breno Lopes",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "rb bragantino": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Cleiton",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Pedro Henrique",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Juninho Capixaba",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ariel Sant'Anna",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Eduardo Santos",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matheus Fernandes",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gabriel",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Eric Ramires",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Eduardo Sasha",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Fernando",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Isidro Pitta",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Tiago Volpi",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "José Hurtado",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Guzmán Rodríguez",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Bruno Praxedes",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Ignacio Sosa",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "João Neto",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Henry Mosquera",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "bragantino": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Cleiton",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Pedro Henrique",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Juninho Capixaba",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ariel Sant'Anna",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Eduardo Santos",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matheus Fernandes",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gabriel",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Eric Ramires",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Eduardo Sasha",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Fernando",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Isidro Pitta",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Tiago Volpi",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "José Hurtado",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Guzmán Rodríguez",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Bruno Praxedes",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Ignacio Sosa",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "João Neto",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Henry Mosquera",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "clube do remo": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Ivan",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Marllon",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yago Pikachu",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Léo Andrade",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mayk",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Patrick",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Víctor Cantillo",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gabriel Taliari",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Carlinhos",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "João Pedro",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gabriel Poveda",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Marcelo Rangel",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Matheus Alexandre",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "João Lucas",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Panagiotis Tachtsidis",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Zé Ricardo",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Alef Manga",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Jáderson",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "mirassol": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Walter",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Victor Luis",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Reinaldo",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Daniel Borges",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Willian Machado",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Gabriel",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Shaylon",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Yuri",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Neto Moura",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Igor Cariús",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "André Luis",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Georgemy",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Rodrigues",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "João Victor",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Everton",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Lucas Mugni",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Nathan",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Tiquinho Soares",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "sc internacional": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Sergio Rochet",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gabriel Mercado",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Félix Torres",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alexandro Bernabei",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matheus Bahia",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bruno Henrique",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ronaldo",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thiago Maia",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Richard",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Alerrandro",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Johan Carbonero",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Anthoni",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Braian Aguirre",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Victor Gabriel",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Alan Patrick",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Rodrigo Villagra",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Tabata",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Vitinho",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "internacional": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Sergio Rochet",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gabriel Mercado",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Félix Torres",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Alexandro Bernabei",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Matheus Bahia",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Bruno Henrique",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Ronaldo",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thiago Maia",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Richard",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Alerrandro",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Johan Carbonero",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Anthoni",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Braian Aguirre",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Victor Gabriel",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "Alan Patrick",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Rodrigo Villagra",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Tabata",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Vitinho",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
+      }
+    ]
+  },
+  "santos": {
+    "formation": "4-3-3",
+    "starting_xi": [
+      {
+        "name": "Gabriel Brazão",
+        "number": 1,
+        "pos": "GK",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 0.2,
+        "key_passes": 0.1,
+        "shots": 0.0,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Luan Peres",
+        "number": 2,
+        "pos": "RB",
+        "rating": 7.3,
+        "goals": 1,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Mayke",
+        "number": 3,
+        "pos": "CB",
+        "rating": 7.4,
+        "goals": 0,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Lucas Veríssimo",
+        "number": 4,
+        "pos": "CB",
+        "rating": 7.5,
+        "goals": 1,
+        "assists": 0,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Igor Vinícius",
+        "number": 5,
+        "pos": "LB",
+        "rating": 7.3,
+        "goals": 0,
+        "assists": 2,
+        "tackles": 2.6,
+        "key_passes": 1.1,
+        "shots": 0.4,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Thaciano",
+        "number": 6,
+        "pos": "DM",
+        "rating": 7.6,
+        "goals": 3,
+        "assists": 4,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Zé Rafael",
+        "number": 7,
+        "pos": "CM",
+        "rating": 7.75,
+        "goals": 4,
+        "assists": 5,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Willian Arão",
+        "number": 8,
+        "pos": "AM",
+        "rating": 7.9,
+        "goals": 5,
+        "assists": 6,
+        "tackles": 2.4,
+        "key_passes": 2.5,
+        "shots": 1.8,
+        "yellow_cards": 2
+      },
+      {
+        "name": "Rony",
+        "number": 9,
+        "pos": "RW",
+        "rating": 7.8,
+        "goals": 8,
+        "assists": 4,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Gabriel Barbosa",
+        "number": 10,
+        "pos": "ST",
+        "rating": 8.05,
+        "goals": 11,
+        "assists": 5,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      },
+      {
+        "name": "Neymar",
+        "number": 11,
+        "pos": "LW",
+        "rating": 7.8,
+        "goals": 14,
+        "assists": 6,
+        "tackles": 1.1,
+        "key_passes": 2.2,
+        "shots": 3.4,
+        "yellow_cards": 1
+      }
+    ],
+    "bench": [
+      {
+        "name": "Diogenes",
+        "number": 12,
+        "pos": "GK",
+        "rating": 7.1
+      },
+      {
+        "name": "Gonzalo Escobar",
+        "number": 13,
+        "pos": "DF",
+        "rating": 7.2
+      },
+      {
+        "name": "Zé Ivaldo",
+        "number": 14,
+        "pos": "DF",
+        "rating": 7.3
+      },
+      {
+        "name": "João Schmidt",
+        "number": 15,
+        "pos": "MF",
+        "rating": 7.4
+      },
+      {
+        "name": "Tomás Rincón",
+        "number": 16,
+        "pos": "MF",
+        "rating": 7.1
+      },
+      {
+        "name": "Alexandre Guedes",
+        "number": 17,
+        "pos": "FW",
+        "rating": 7.2
+      },
+      {
+        "name": "Moises",
+        "number": 18,
+        "pos": "FW",
+        "rating": 7.3
       }
     ]
   }
