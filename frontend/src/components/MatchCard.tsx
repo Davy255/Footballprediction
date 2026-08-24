@@ -674,6 +674,9 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
                     </div>
                     <div className="ws-1x2-market-odds">@{homeOddsFormatted}</div>
                     <div className="ws-1x2-market-sub">{probs.home_pct}% win chance</div>
+                    <div className="ws-1x2-card-bar-wrap">
+                      <div className="ws-1x2-card-bar-h" style={{ width: `${probs.home_pct}%` }} />
+                    </div>
                   </div>
                   <div className="ws-1x2-market-card">
                     <div className="ws-1x2-market-header">
@@ -682,6 +685,9 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
                     </div>
                     <div className="ws-1x2-market-odds">@{drawOddsFormatted}</div>
                     <div className="ws-1x2-market-sub">{probs.draw_pct}% draw chance</div>
+                    <div className="ws-1x2-card-bar-wrap">
+                      <div className="ws-1x2-card-bar-d" style={{ width: `${probs.draw_pct}%` }} />
+                    </div>
                   </div>
                   <div className="ws-1x2-market-card">
                     <div className="ws-1x2-market-header">
@@ -690,14 +696,10 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
                     </div>
                     <div className="ws-1x2-market-odds">@{awayOddsFormatted}</div>
                     <div className="ws-1x2-market-sub">{probs.away_pct}% win chance</div>
+                    <div className="ws-1x2-card-bar-wrap">
+                      <div className="ws-1x2-card-bar-a" style={{ width: `${probs.away_pct}%` }} />
+                    </div>
                   </div>
-                </div>
-
-                {/* 3-segment Visual Probability Bar */}
-                <div className="ws-prob-bar-wrap" style={{ margin: '2px 0 16px', height: '8px' }}>
-                  <div className="ws-prob-bar-h" style={{ width: `${probs.home_pct}%` }} title={`${HN}: ${probs.home_pct}%`} />
-                  <div className="ws-prob-bar-d" style={{ width: `${probs.draw_pct}%` }} title={`Draw: ${probs.draw_pct}%`} />
-                  <div className="ws-prob-bar-a" style={{ width: `${probs.away_pct}%` }} title={`${AN}: ${probs.away_pct}%`} />
                 </div>
 
                 <div className="ws-section-title">Projected Scoreline</div>

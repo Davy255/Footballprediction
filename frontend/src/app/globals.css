@@ -1727,6 +1727,36 @@ div[id^="google-btn-container"] iframe {
   color: var(--text-muted);
 }
 
+.ws-1x2-card-bar-wrap {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.ws-1x2-card-bar-h {
+  background: var(--accent-green);
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.ws-1x2-card-bar-d {
+  background: var(--accent-amber);
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.ws-1x2-card-bar-a {
+  background: var(--accent-blue);
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
 /* =============================================
    FOOTYSTATS AUTHENTIC FIXTURES & LEAGUE CARDS
    ============================================= */
