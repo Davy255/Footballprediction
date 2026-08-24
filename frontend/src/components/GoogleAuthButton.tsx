@@ -45,11 +45,14 @@ export default function GoogleAuthButton({
         const btnContainer = document.getElementById(`google-btn-container-${mode}`);
         if (btnContainer) {
           btnContainer.innerHTML = '';
+          const cardWidth = btnContainer.parentElement?.clientWidth || 380;
+          const targetWidth = Math.min(390, Math.max(280, cardWidth));
+
           (window as any).google.accounts.id.renderButton(btnContainer, {
             theme: 'outline',
             size: 'large',
             shape: 'rectangular',
-            width: 320,
+            width: targetWidth,
             text: mode === 'signup' ? 'signup_with' : 'signin_with',
             logo_alignment: 'center',
           });
@@ -123,9 +126,9 @@ export default function GoogleAuthButton({
   };
 
   return (
-    <div style={{ width: '100%', margin: '0.75rem 0' }}>
+    <div className="google-auth-wrapper" style={{ width: '100%', margin: '0.85rem auto', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       {/* Official Google Account Chooser Button */}
-      <div id={`google-btn-container-${mode}`} style={{ width: '100%' }} />
+      <div id={`google-btn-container-${mode}`} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }} />
 
       {/* Fallback button if Google SDK is loading or not configured */}
       {!clientId && (
@@ -135,6 +138,7 @@ export default function GoogleAuthButton({
           disabled={loading}
           style={{
             width: '100%',
+            maxWidth: '390px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -149,6 +153,7 @@ export default function GoogleAuthButton({
             cursor: 'pointer',
             transition: 'all 0.2s ease',
             boxShadow: 'var(--shadow-card)',
+            margin: '0 auto',
           }}
         >
           <svg width="20" height="20" viewBox="0 0 24 24">
