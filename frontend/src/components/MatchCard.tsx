@@ -558,7 +558,9 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
   
   const VENUES: Record<string, { stadium: string; capacity: number; league: string }> = {
     'malaga': { stadium: 'La Rosaleda', capacity: 30044, league: 'ES' },
+    'málaga': { stadium: 'La Rosaleda', capacity: 30044, league: 'ES' },
     'deportivo': { stadium: 'Abanca-Riazor', capacity: 32490, league: 'ES' },
+    'deportivo la coruna': { stadium: 'Abanca-Riazor', capacity: 32490, league: 'ES' },
     'roma': { stadium: 'Stadio Olimpico', capacity: 70634, league: 'IT' },
     'fiorentina': { stadium: 'Stadio Artemio Franchi', capacity: 43147, league: 'IT' },
     'fulham': { stadium: 'Craven Cottage', capacity: 25700, league: 'EN' },
@@ -586,26 +588,98 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
     'valencia': { stadium: 'Mestalla', capacity: 49430, league: 'ES' },
     'real sociedad': { stadium: 'Reale Arena', capacity: 39313, league: 'ES' },
     'villarreal': { stadium: 'Estadio de la Cerámica', capacity: 23500, league: 'ES' },
+    'elche': { stadium: 'Estadio Manuel Martínez Valero', capacity: 31388, league: 'ES' },
+    'racing santander': { stadium: 'El Sardinero', capacity: 22222, league: 'ES' },
+    'racing club': { stadium: 'El Sardinero', capacity: 22222, league: 'ES' },
+    'zaragoza': { stadium: 'La Romareda', capacity: 33608, league: 'ES' },
+    'sporting gijon': { stadium: 'El Molinón', capacity: 30000, league: 'ES' },
+    'levante': { stadium: 'Ciutat de València', capacity: 26354, league: 'ES' },
+    'eibar': { stadium: 'Ipurua', capacity: 8164, league: 'ES' },
+    'granada': { stadium: 'Nuevo Los Cármenes', capacity: 19336, league: 'ES' },
+    'cadiz': { stadium: 'Nuevo Mirandilla', capacity: 20724, league: 'ES' },
+    'almeria': { stadium: 'Power Horse Stadium', capacity: 15274, league: 'ES' },
+    'birmingham': { stadium: "St Andrew's", capacity: 29409, league: 'EN' },
+    'blackburn': { stadium: 'Ewood Park', capacity: 31367, league: 'EN' },
+    'derby': { stadium: 'Pride Park Stadium', capacity: 32956, league: 'EN' },
+    'millwall': { stadium: 'The Den', capacity: 20146, league: 'EN' },
+    'preston': { stadium: 'Deepdale', capacity: 23404, league: 'EN' },
+    'swansea': { stadium: 'Swansea.com Stadium', capacity: 21088, league: 'EN' },
+    'wrexham': { stadium: 'STōK Cae Ras', capacity: 12600, league: 'EN' },
+    'lincoln': { stadium: 'LNER Stadium', capacity: 10669, league: 'EN' },
+    'coventry': { stadium: 'Coventry Building Society Arena', capacity: 30120, league: 'EN' },
+    'hull': { stadium: 'MKM Stadium', capacity: 25586, league: 'EN' },
+    'middlesbrough': { stadium: 'Riverside Stadium', capacity: 34742, league: 'EN' },
+    'norwich': { stadium: 'Carrow Road', capacity: 27244, league: 'EN' },
+    'west brom': { stadium: 'The Hawthorns', capacity: 26850, league: 'EN' },
     'inter': { stadium: 'San Siro', capacity: 75817, league: 'IT' },
     'milan': { stadium: 'San Siro', capacity: 75817, league: 'IT' },
     'juventus': { stadium: 'Allianz Stadium', capacity: 41507, league: 'IT' },
     'napoli': { stadium: 'Stadio Diego Armando Maradona', capacity: 54726, league: 'IT' },
     'lazio': { stadium: 'Stadio Olimpico', capacity: 70634, league: 'IT' },
     'atalanta': { stadium: 'Gewiss Stadium', capacity: 24950, league: 'IT' },
+    'sassuolo': { stadium: 'Mapei Stadium', capacity: 21525, league: 'IT' },
+    'frosinone': { stadium: 'Stadio Benito Stirpe', capacity: 16227, league: 'IT' },
     'bayern': { stadium: 'Allianz Arena', capacity: 75024, league: 'DE' },
     'dortmund': { stadium: 'Signal Iduna Park', capacity: 81365, league: 'DE' },
     'leverkusen': { stadium: 'BayArena', capacity: 30210, league: 'DE' },
     'leipzig': { stadium: 'Red Bull Arena', capacity: 47069, league: 'DE' },
+    'koln': { stadium: 'RheinEnergieStadion', capacity: 50000, league: 'DE' },
+    'kln': { stadium: 'RheinEnergieStadion', capacity: 50000, league: 'DE' },
+    'cologne': { stadium: 'RheinEnergieStadion', capacity: 50000, league: 'DE' },
+    'schalke': { stadium: 'Veltins-Arena', capacity: 62271, league: 'DE' },
+    'hamburg': { stadium: 'Volksparkstadion', capacity: 57000, league: 'DE' },
+    'hamburger': { stadium: 'Volksparkstadion', capacity: 57000, league: 'DE' },
+    'paderborn': { stadium: 'Home Deluxe Arena', capacity: 15000, league: 'DE' },
+    'elversberg': { stadium: 'URSAPHARM-Arena', capacity: 10000, league: 'DE' },
     'psg': { stadium: 'Parc des Princes', capacity: 47929, league: 'FR' },
     'marseille': { stadium: 'Orange Vélodrome', capacity: 67394, league: 'FR' },
     'lyon': { stadium: 'Groupama Stadium', capacity: 59186, league: 'FR' },
     'monaco': { stadium: 'Stade Louis II', capacity: 18523, league: 'FR' },
+    'rennes': { stadium: 'Roazhon Park', capacity: 29778, league: 'FR' },
+    'stade rennais': { stadium: 'Roazhon Park', capacity: 29778, league: 'FR' },
+    'lorient': { stadium: 'Stade du Moustoir', capacity: 18110, league: 'FR' },
+    'troyes': { stadium: "Stade de l'Aube", capacity: 20400, league: 'FR' },
+    'le mans': { stadium: 'Stade Marie-Marvingt', capacity: 25064, league: 'FR' },
     'sporting': { stadium: 'Estádio José Alvalade', capacity: 50095, league: 'PT' },
     'benfica': { stadium: 'Estádio da Luz', capacity: 64642, league: 'PT' },
     'porto': { stadium: 'Estádio do Dragão', capacity: 50033, league: 'PT' },
+    'vitoria': { stadium: 'Estádio D. Afonso Henriques', capacity: 30029, league: 'PT' },
+    'guimaraes': { stadium: 'Estádio D. Afonso Henriques', capacity: 30029, league: 'PT' },
+    'famalicao': { stadium: 'Estádio Municipal 22 de Junho', capacity: 5186, league: 'PT' },
+    'gil vicente': { stadium: 'Estádio Cidade de Barcelos', capacity: 12046, league: 'PT' },
+    'estoril': { stadium: 'Estádio António Coimbra da Mota', capacity: 8000, league: 'PT' },
+    'casa pia': { stadium: 'Estádio Municipal de Rio Maior', capacity: 7000, league: 'PT' },
+    'rio ave': { stadium: 'Estádio dos Arcos', capacity: 5300, league: 'PT' },
+    'moreirense': { stadium: 'Parque Joaquim de Almeida Freitas', capacity: 6153, league: 'PT' },
+    'santa clara': { stadium: 'Estádio de São Miguel', capacity: 12500, league: 'PT' },
+    'nacional': { stadium: 'Estádio da Madeira', capacity: 5132, league: 'PT' },
+    'maritimo': { stadium: 'Estádio do Marítimo', capacity: 10600, league: 'PT' },
+    'arouca': { stadium: 'Estádio Municipal de Arouca', capacity: 5000, league: 'PT' },
+    'estrela': { stadium: 'Estádio José Gomes', capacity: 9288, league: 'PT' },
+    'alverca': { stadium: 'Complexo Desportivo do FC Alverca', capacity: 7705, league: 'PT' },
+    'academico de viseu': { stadium: 'Estádio do Fontelo', capacity: 6912, league: 'PT' },
     'ajax': { stadium: 'Johan Cruyff Arena', capacity: 55865, league: 'NL' },
     'psv': { stadium: 'Philips Stadion', capacity: 35000, league: 'NL' },
     'feyenoord': { stadium: 'De Kuip', capacity: 47500, league: 'NL' },
+    'utrecht': { stadium: 'Stadion Galgenwaard', capacity: 23750, league: 'NL' },
+    'groningen': { stadium: 'Euroborg', capacity: 22550, league: 'NL' },
+    'heerenveen': { stadium: 'Abe Lenstra Stadion', capacity: 26100, league: 'NL' },
+    'go ahead eagles': { stadium: 'De Adelaarshorst', capacity: 10400, league: 'NL' },
+    'sparta rotterdam': { stadium: 'Sparta Stadion Het Kasteel', capacity: 11000, league: 'NL' },
+    'nec': { stadium: 'Goffertstadion', capacity: 12500, league: 'NL' },
+    'fortuna sittard': { stadium: 'Fortuna Sittard Stadion', capacity: 12800, league: 'NL' },
+    'pec zwolle': { stadium: 'MAC³PARK stadion', capacity: 14000, league: 'NL' },
+    'zwolle': { stadium: 'MAC³PARK stadion', capacity: 14000, league: 'NL' },
+    'willem ii': { stadium: 'Koning Willem II Stadion', capacity: 14750, league: 'NL' },
+    'ado den haag': { stadium: 'Bingoal Stadion', capacity: 15000, league: 'NL' },
+    'den haag': { stadium: 'Bingoal Stadion', capacity: 15000, league: 'NL' },
+    'excelsior': { stadium: 'Van Donge & De Roo Stadion', capacity: 4500, league: 'NL' },
+    'cambuur': { stadium: 'Kooi Stadion', capacity: 15000, league: 'NL' },
+    'almere city': { stadium: 'Yanmar Stadion', capacity: 4501, league: 'NL' },
+    'heracles': { stadium: 'Asito Stadion', capacity: 12080, league: 'NL' },
+    'rkc waalwijk': { stadium: 'Mandemakers Stadion', capacity: 7500, league: 'NL' },
+    'volendam': { stadium: 'Kras Stadion', capacity: 7384, league: 'NL' },
+    'telstar': { stadium: '711 Stadion', capacity: 5200, league: 'NL' },
   };
 
   const REFS: Record<string, string[]> = {
@@ -1139,31 +1213,39 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
                   <span className="ws-pred-score-num">{score.away}</span>
                 </div>
 
-                {picks && (
-                  <>
-                    <div className="ws-section-title">Tactical Best Value Picks</div>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 8 }}>
-                      <div className="ws-pick-card">
-                        <div>
-                          <div className="ws-pick-label">🏆 Primary Pick</div>
-                          <div className="ws-pick-val">{picks.primary} <span className="ws-pick-odds">@{primaryOdds}</span></div>
+                {picks && (() => {
+                  const totalGoals = (Number(score.home) || 0) + (Number(score.away) || 0);
+                  const coherentGoalPick = totalGoals > 2 ? 'Over 2.5' : 'Under 2.5';
+                  const coherentGoalOdds = totalGoals > 2
+                    ? (markets.over25_odds ? Number(markets.over25_odds).toFixed(2) : (picks.goal_odds || '1.85'))
+                    : (markets.under25_odds ? Number(markets.under25_odds).toFixed(2) : (picks.goal_odds || '1.78'));
+
+                  return (
+                    <>
+                      <div className="ws-section-title">Tactical Best Value Picks</div>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 8 }}>
+                        <div className="ws-pick-card">
+                          <div>
+                            <div className="ws-pick-label">🏆 Primary Pick</div>
+                            <div className="ws-pick-val">{picks.primary} <span className="ws-pick-odds">@{primaryOdds}</span></div>
+                          </div>
+                        </div>
+                        <div className="ws-pick-card">
+                          <div>
+                            <div className="ws-pick-label">🛡️ Safety Pick</div>
+                            <div className="ws-pick-val">{picks.safety} <span className="ws-pick-odds">@{picks.safety_odds}</span></div>
+                          </div>
+                        </div>
+                        <div className="ws-pick-card">
+                          <div>
+                            <div className="ws-pick-label">⚽ Goal Market</div>
+                            <div className="ws-pick-val">{coherentGoalPick} <span className="ws-pick-odds">@{coherentGoalOdds}</span></div>
+                          </div>
                         </div>
                       </div>
-                      <div className="ws-pick-card">
-                        <div>
-                          <div className="ws-pick-label">🛡️ Safety Pick</div>
-                          <div className="ws-pick-val">{picks.safety} <span className="ws-pick-odds">@{picks.safety_odds}</span></div>
-                        </div>
-                      </div>
-                      <div className="ws-pick-card">
-                        <div>
-                          <div className="ws-pick-label">⚽ Goal Market</div>
-                          <div className="ws-pick-val">{picks.goal_pick} <span className="ws-pick-odds">@{picks.goal_odds}</span></div>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                )}
+                    </>
+                  );
+                })()}
 
                 <div className="ws-section-title">Real Bookmaker Market Odds &amp; Probabilities</div>
                 <div className="ws-markets-grid">

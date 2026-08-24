@@ -1452,6 +1452,8 @@ EUROPEAN_STADIUMS_DB = {
     "zaragoza": {"stadium": "La Romareda", "capacity": 33608, "league": "ES"},
     "sporting gijon": {"stadium": "El Molinón", "capacity": 30000, "league": "ES"},
     "racing santander": {"stadium": "El Sardinero", "capacity": 22222, "league": "ES"},
+    "racing club de santander": {"stadium": "El Sardinero", "capacity": 22222, "league": "ES"},
+    "elche": {"stadium": "Estadio Manuel Martínez Valero", "capacity": 31388, "league": "ES"},
     "levante": {"stadium": "Ciutat de València", "capacity": 26354, "league": "ES"},
     "eibar": {"stadium": "Ipurua", "capacity": 8164, "league": "ES"},
     "oviedo": {"stadium": "Carlos Tartiere", "capacity": 30500, "league": "ES"},
@@ -1460,7 +1462,7 @@ EUROPEAN_STADIUMS_DB = {
     "cadiz": {"stadium": "Nuevo Mirandilla", "capacity": 20724, "league": "ES"},
     "almeria": {"stadium": "Power Horse Stadium", "capacity": 15274, "league": "ES"},
 
-    # ── England (Premier League & Championship) ──
+    # ── England (Premier League, Championship, League One) ──
     "arsenal": {"stadium": "Emirates Stadium", "capacity": 60704, "league": "EN"},
     "aston villa": {"stadium": "Villa Park", "capacity": 42682, "league": "EN"},
     "bournemouth": {"stadium": "Vitality Stadium", "capacity": 11307, "league": "EN"},
@@ -1490,6 +1492,14 @@ EUROPEAN_STADIUMS_DB = {
     "burnley": {"stadium": "Turf Moor", "capacity": 21944, "league": "EN"},
     "sheffield": {"stadium": "Bramall Lane", "capacity": 32050, "league": "EN"},
     "sunderland": {"stadium": "Stadium of Light", "capacity": 49000, "league": "EN"},
+    "birmingham": {"stadium": "St Andrew's", "capacity": 29409, "league": "EN"},
+    "blackburn": {"stadium": "Ewood Park", "capacity": 31367, "league": "EN"},
+    "derby": {"stadium": "Pride Park Stadium", "capacity": 32956, "league": "EN"},
+    "millwall": {"stadium": "The Den", "capacity": 20146, "league": "EN"},
+    "preston": {"stadium": "Deepdale", "capacity": 23404, "league": "EN"},
+    "swansea": {"stadium": "Swansea.com Stadium", "capacity": 21088, "league": "EN"},
+    "wrexham": {"stadium": "STōK Cae Ras", "capacity": 12600, "league": "EN"},
+    "lincoln": {"stadium": "LNER Stadium", "capacity": 10669, "league": "EN"},
     "coventry": {"stadium": "Coventry Building Society Arena", "capacity": 30120, "league": "EN"},
     "hull": {"stadium": "MKM Stadium", "capacity": 25586, "league": "EN"},
     "middlesbrough": {"stadium": "Riverside Stadium", "capacity": 34742, "league": "EN"},
@@ -1520,8 +1530,10 @@ EUROPEAN_STADIUMS_DB = {
     "empoli": {"stadium": "Stadio Carlo Castellani", "capacity": 16284, "league": "IT"},
     "lecce": {"stadium": "Stadio Via del Mare", "capacity": 31533, "league": "IT"},
     "venezia": {"stadium": "Stadio Pier Luigi Penzo", "capacity": 11150, "league": "IT"},
+    "sassuolo": {"stadium": "Mapei Stadium", "capacity": 21525, "league": "IT"},
+    "frosinone": {"stadium": "Stadio Benito Stirpe", "capacity": 16227, "league": "IT"},
 
-    # ── Germany (Bundesliga) ──
+    # ── Germany (Bundesliga & 2. Bundesliga) ──
     "bayern": {"stadium": "Allianz Arena", "capacity": 75024, "league": "DE"},
     "bayern munich": {"stadium": "Allianz Arena", "capacity": 75024, "league": "DE"},
     "dortmund": {"stadium": "Signal Iduna Park", "capacity": 81365, "league": "DE"},
@@ -1541,8 +1553,16 @@ EUROPEAN_STADIUMS_DB = {
     "bochum": {"stadium": "Vonovia Ruhrstadion", "capacity": 26000, "league": "DE"},
     "st pauli": {"stadium": "Millerntor-Stadion", "capacity": 29546, "league": "DE"},
     "heidenheim": {"stadium": "Voith-Arena", "capacity": 15000, "league": "DE"},
+    "koln": {"stadium": "RheinEnergieStadion", "capacity": 50000, "league": "DE"},
+    "kln": {"stadium": "RheinEnergieStadion", "capacity": 50000, "league": "DE"},
+    "cologne": {"stadium": "RheinEnergieStadion", "capacity": 50000, "league": "DE"},
+    "schalke": {"stadium": "Veltins-Arena", "capacity": 62271, "league": "DE"},
+    "hamburg": {"stadium": "Volksparkstadion", "capacity": 57000, "league": "DE"},
+    "hamburger": {"stadium": "Volksparkstadion", "capacity": 57000, "league": "DE"},
+    "paderborn": {"stadium": "Home Deluxe Arena", "capacity": 15000, "league": "DE"},
+    "elversberg": {"stadium": "URSAPHARM-Arena", "capacity": 10000, "league": "DE"},
 
-    # ── France (Ligue 1) ──
+    # ── France (Ligue 1 & Ligue 2) ──
     "psg": {"stadium": "Parc des Princes", "capacity": 47929, "league": "FR"},
     "paris": {"stadium": "Parc des Princes", "capacity": 47929, "league": "FR"},
     "marseille": {"stadium": "Orange Vélodrome", "capacity": 67394, "league": "FR"},
@@ -1550,6 +1570,7 @@ EUROPEAN_STADIUMS_DB = {
     "monaco": {"stadium": "Stade Louis II", "capacity": 18523, "league": "FR"},
     "lille": {"stadium": "Decathlon Arena Stade Pierre-Mauroy", "capacity": 50186, "league": "FR"},
     "rennes": {"stadium": "Roazhon Park", "capacity": 29778, "league": "FR"},
+    "stade rennais": {"stadium": "Roazhon Park", "capacity": 29778, "league": "FR"},
     "nice": {"stadium": "Allianz Riviera", "capacity": 35624, "league": "FR"},
     "lens": {"stadium": "Stade Bollaert-Delelis", "capacity": 38223, "league": "FR"},
     "strasbourg": {"stadium": "Stade de la Meinau", "capacity": 26109, "league": "FR"},
@@ -1562,17 +1583,57 @@ EUROPEAN_STADIUMS_DB = {
     "auxerre": {"stadium": "Stade de l'Abbé-Deschamps", "capacity": 18541, "league": "FR"},
     "le havre": {"stadium": "Stade Océane", "capacity": 25178, "league": "FR"},
     "angers": {"stadium": "Stade Raymond Kopa", "capacity": 18752, "league": "FR"},
+    "lorient": {"stadium": "Stade du Moustoir", "capacity": 18110, "league": "FR"},
+    "troyes": {"stadium": "Stade de l'Aube", "capacity": 20400, "league": "FR"},
+    "le mans": {"stadium": "Stade Marie-Marvingt", "capacity": 25064, "league": "FR"},
 
-    # ── Portugal & Netherlands ──
+    # ── Portugal (Primeira Liga & Segunda) ──
     "sporting": {"stadium": "Estádio José Alvalade", "capacity": 50095, "league": "PT"},
     "benfica": {"stadium": "Estádio da Luz", "capacity": 64642, "league": "PT"},
     "porto": {"stadium": "Estádio do Dragão", "capacity": 50033, "league": "PT"},
     "braga": {"stadium": "Estádio Municipal de Braga", "capacity": 30286, "league": "PT"},
+    "vitoria": {"stadium": "Estádio D. Afonso Henriques", "capacity": 30029, "league": "PT"},
+    "guimaraes": {"stadium": "Estádio D. Afonso Henriques", "capacity": 30029, "league": "PT"},
+    "famalicao": {"stadium": "Estádio Municipal 22 de Junho", "capacity": 5186, "league": "PT"},
+    "gil vicente": {"stadium": "Estádio Cidade de Barcelos", "capacity": 12046, "league": "PT"},
+    "estoril": {"stadium": "Estádio António Coimbra da Mota", "capacity": 8000, "league": "PT"},
+    "casa pia": {"stadium": "Estádio Municipal de Rio Maior", "capacity": 7000, "league": "PT"},
+    "rio ave": {"stadium": "Estádio dos Arcos", "capacity": 5300, "league": "PT"},
+    "moreirense": {"stadium": "Parque Joaquim de Almeida Freitas", "capacity": 6153, "league": "PT"},
+    "santa clara": {"stadium": "Estádio de São Miguel", "capacity": 12500, "league": "PT"},
+    "nacional": {"stadium": "Estádio da Madeira", "capacity": 5132, "league": "PT"},
+    "maritimo": {"stadium": "Estádio do Marítimo", "capacity": 10600, "league": "PT"},
+    "arouca": {"stadium": "Estádio Municipal de Arouca", "capacity": 5000, "league": "PT"},
+    "estrela": {"stadium": "Estádio José Gomes", "capacity": 9288, "league": "PT"},
+    "amadora": {"stadium": "Estádio José Gomes", "capacity": 9288, "league": "PT"},
+    "alverca": {"stadium": "Complexo Desportivo do FC Alverca", "capacity": 7705, "league": "PT"},
+    "academico de viseu": {"stadium": "Estádio do Fontelo", "capacity": 6912, "league": "PT"},
+
+    # ── Netherlands (Eredivisie & Eerste Divisie) ──
     "ajax": {"stadium": "Johan Cruyff Arena", "capacity": 55865, "league": "NL"},
     "psv": {"stadium": "Philips Stadion", "capacity": 35000, "league": "NL"},
     "feyenoord": {"stadium": "De Kuip", "capacity": 47500, "league": "NL"},
     "az alkmaar": {"stadium": "AFAS Stadion", "capacity": 19478, "league": "NL"},
     "twente": {"stadium": "De Grolsch Veste", "capacity": 30205, "league": "NL"},
+    "utrecht": {"stadium": "Stadion Galgenwaard", "capacity": 23750, "league": "NL"},
+    "groningen": {"stadium": "Euroborg", "capacity": 22550, "league": "NL"},
+    "heerenveen": {"stadium": "Abe Lenstra Stadion", "capacity": 26100, "league": "NL"},
+    "go ahead eagles": {"stadium": "De Adelaarshorst", "capacity": 10400, "league": "NL"},
+    "sparta rotterdam": {"stadium": "Sparta Stadion Het Kasteel", "capacity": 11000, "league": "NL"},
+    "nec": {"stadium": "Goffertstadion", "capacity": 12500, "league": "NL"},
+    "fortuna sittard": {"stadium": "Fortuna Sittard Stadion", "capacity": 12800, "league": "NL"},
+    "pec zwolle": {"stadium": "MAC³PARK stadion", "capacity": 14000, "league": "NL"},
+    "zwolle": {"stadium": "MAC³PARK stadion", "capacity": 14000, "league": "NL"},
+    "willem ii": {"stadium": "Koning Willem II Stadion", "capacity": 14750, "league": "NL"},
+    "ado den haag": {"stadium": "Bingoal Stadion", "capacity": 15000, "league": "NL"},
+    "den haag": {"stadium": "Bingoal Stadion", "capacity": 15000, "league": "NL"},
+    "excelsior": {"stadium": "Van Donge & De Roo Stadion", "capacity": 4500, "league": "NL"},
+    "cambuur": {"stadium": "Kooi Stadion", "capacity": 15000, "league": "NL"},
+    "almere city": {"stadium": "Yanmar Stadion", "capacity": 4501, "league": "NL"},
+    "heracles": {"stadium": "Asito Stadion", "capacity": 12080, "league": "NL"},
+    "rkc waalwijk": {"stadium": "Mandemakers Stadion", "capacity": 7500, "league": "NL"},
+    "volendam": {"stadium": "Kras Stadion", "capacity": 7384, "league": "NL"},
+    "telstar": {"stadium": "711 Stadion", "capacity": 5200, "league": "NL"},
 }
 
 REAL_LEAGUE_REFEREES = {
@@ -1887,6 +1948,14 @@ def build_features(home_team: Team, away_team: Team, db: Session) -> tuple[np.nd
     return feat.reshape(1, -1), h_stats, a_stats
 
 
+def poisson_pmf(k: int, lam: float) -> float:
+    """Calculates Poisson probability mass function P(X = k) with mean lam."""
+    import math
+    if lam <= 0:
+        return 1.0 if k == 0 else 0.0
+    return math.exp(-lam) * (lam ** k) / math.factorial(k)
+
+
 def calculate_odds(home_prob: float, draw_prob: float, away_prob: float) -> tuple[float, float, float]:
     """Calculates decimal betting odds from outcome probabilities with a 4.2% margin."""
     margin = 1.042
@@ -1904,38 +1973,61 @@ def calculate_projected_scoreline(
     h_ga: float,
     a_gf: float,
     a_ga: float,
+    over_25_prob: float = 0.50,
 ) -> tuple[int, int]:
-    """Calculates realistic match scoreline projections from team goals and outcome probabilities."""
+    """Calculates realistic match scoreline projections mathematically aligned with Over/Under 2.5 expectations."""
     h_xg = max(0.5, (h_gf * 0.55 + a_ga * 0.45))
     a_xg = max(0.3, (a_gf * 0.55 + h_ga * 0.45))
+    is_over = over_25_prob >= 0.50
 
     if home_prob >= 0.65:
-        pred_h = max(3, round(h_xg + 0.6))
-        pred_a = max(0, min(1, round(a_xg * 0.3)))
+        if is_over:
+            pred_h = max(3, round(h_xg + 0.6))
+            pred_a = max(0, min(1, round(a_xg * 0.3)))
+        else:
+            pred_h = 2
+            pred_a = 0
     elif home_prob >= 0.52:
-        pred_h = max(2, round(h_xg))
-        pred_a = max(0, min(1, round(a_xg * 0.5)))
+        if is_over:
+            pred_h = max(2, round(h_xg))
+            pred_a = 1
+        else:
+            pred_h = 2 if h_xg >= 1.4 else 1
+            pred_a = 0
     elif away_prob >= 0.55:
-        pred_h = max(0, min(1, round(h_xg * 0.3)))
-        pred_a = max(3, round(a_xg + 0.6))
+        if is_over:
+            pred_h = max(0, min(1, round(h_xg * 0.3)))
+            pred_a = max(3, round(a_xg + 0.6))
+        else:
+            pred_h = 0
+            pred_a = 2
     elif away_prob >= 0.42:
-        pred_h = max(0, min(1, round(h_xg * 0.5)))
-        pred_a = max(2, round(a_xg))
+        if is_over:
+            pred_h = 1
+            pred_a = max(2, round(a_xg))
+        else:
+            pred_h = 0
+            pred_a = 2 if a_xg >= 1.4 else 1
     elif draw_prob >= 0.30 or abs(home_prob - away_prob) < 0.06:
-        avg_goals = (h_xg + a_xg) / 2.0
-        if avg_goals < 1.0:
-            pred_h, pred_a = 0, 0
-        elif avg_goals > 2.2:
+        if is_over or (h_xg + a_xg) >= 2.6:
             pred_h, pred_a = 2, 2
         else:
             pred_h, pred_a = 1, 1
     else:
         if home_prob > away_prob:
-            pred_h = max(1, round(h_xg))
-            pred_a = max(0, min(pred_h - 1, round(a_xg)))
+            if is_over:
+                pred_h = 2
+                pred_a = 1
+            else:
+                pred_h = 1
+                pred_a = 0
         else:
-            pred_a = max(1, round(a_xg))
-            pred_h = max(0, min(pred_a - 1, round(h_xg)))
+            if is_over:
+                pred_h = 1
+                pred_a = 2
+            else:
+                pred_h = 0
+                pred_a = 1
 
     return int(pred_h), int(pred_a)
 
@@ -2126,8 +2218,15 @@ def generate_comprehensive_analysis(
 
     safety_label = "1X (Home/Draw)" if dc_1x_prob >= dc_x2_prob else "X2 (Draw/Away)"
     safety_odds  = dc_1x_odds if dc_1x_prob >= dc_x2_prob else dc_x2_odds
-    goal_pick    = "Over 2.5" if over_25_prob >= 0.50 else "Under 2.5"
-    goal_odds    = over_25_odds if over_25_prob >= 0.50 else under_25_odds
+
+    # Mathematical consistency: Goal pick matches the projected scoreline total goals
+    total_goals = pred_home + pred_away
+    if total_goals > 2:
+        goal_pick = "Over 2.5"
+        goal_odds = over_25_odds
+    else:
+        goal_pick = "Under 2.5"
+        goal_odds = under_25_odds
 
     # WhoScored-style performance ratings (1-10 scale)
     h_elo = h_stats.get("elo", 1500)
@@ -2338,10 +2437,22 @@ def predict_match(home_team: Team, away_team: Team, db: Session) -> dict:
     tot = home_prob + draw_prob + away_prob
     home_prob, draw_prob, away_prob = home_prob / tot, draw_prob / tot, away_prob / tot
 
+    # Expected goals for Poisson PMF simulation to align Over/Under 2.5
+    h_xg = max(0.45, h_stats.get("gf5", 1.3) * 0.55 + a_stats.get("ga5", 1.2) * 0.45)
+    a_xg = max(0.35, a_stats.get("gf5", 1.2) * 0.55 + h_stats.get("ga5", 1.3) * 0.45)
+
+    over_25_prob = 0.0
+    for hg in range(7):
+        for ag in range(7):
+            p = poisson_pmf(hg, h_xg) * poisson_pmf(ag, a_xg)
+            if hg + ag > 2:
+                over_25_prob += p
+
     predicted_home, predicted_away = calculate_projected_scoreline(
         home_prob, draw_prob, away_prob,
         h_stats["gf5"], h_stats["ga5"],
         a_stats["gf5"], a_stats["ga5"],
+        over_25_prob=over_25_prob,
     )
 
     odds_h, odds_d, odds_a = calculate_odds(home_prob, draw_prob, away_prob)
@@ -2380,4 +2491,3 @@ def predict_match(home_team: Team, away_team: Team, db: Session) -> dict:
         "odds_dc_x2": mk.get("dc_x2_odds", 1.45),
         "odds_dc_12": mk.get("dc_12_odds", 1.25),
     }
-
