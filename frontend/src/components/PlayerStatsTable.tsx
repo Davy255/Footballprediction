@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Player, LineupData } from './TacticalPitch';
 
 interface PlayerStatsTableProps {
@@ -14,15 +14,29 @@ type CategoryKey = 'goals' | 'assists' | 'tackles' | 'rating';
 export default function PlayerStatsTable({ lineupData, homeName, awayName }: PlayerStatsTableProps) {
   const [category, setCategory] = useState<CategoryKey>('goals');
 
-  const leaders = lineupData?.leaders;
-  const list =
-    category === 'goals'
-      ? leaders?.top_scorers || []
-      : category === 'assists'
-      ? leaders?.top_playmakers || []
-      : category === 'tackles'
-      ? leaders?.top_defenders || []
-      : leaders?.highest_rated || [];
+  const allPlayers = useMemo(() => {
+    const list: Player[] = [];
+    if (lineupData?.home?.starting_xi) {
+      lineupData.home.starting_xi.forEach(p => list.push({ ...p, team: homeName, is_home: true }));
+    }
+    if (lineupData?.away?.starting_xi) {
+      lineupData.away.starting_xi.forEach(p => list.push({ ...p, team: awayName, is_home: false }));
+    }
+    return list;
+  }, [lineupData, homeName, awayName]);
+
+  const list = useMemo(() => {
+    const sorted = [...allPlayers];
+    if (category === 'goals') {
+      return sorted.sort((a, b) => (b.goals ?? 0) - (a.goals ?? 0) || b.rating - a.rating).slice(0, 6);
+    } else if (category === 'assists') {
+      return sorted.sort((a, b) => (b.assists ?? 0) - (a.assists ?? 0) || b.rating - a.rating).slice(0, 6);
+    } else if (category === 'tackles') {
+      return sorted.sort((a, b) => (b.tackles ?? 0) - (a.tackles ?? 0) || b.rating - a.rating).slice(0, 6);
+    } else {
+      return sorted.sort((a, b) => b.rating - a.rating).slice(0, 6);
+    }
+  }, [allPlayers, category]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

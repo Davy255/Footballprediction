@@ -1301,6 +1301,33 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
             )}
 
 
+            {/* ── TAB: LINEUPS & SQUADS & PLAYER STATS ── */}
+            {activeTab === 'lineups' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <div>
+                  <div className="ws-section-title">🏟️ Starting XI &amp; Tactical Formations</div>
+                  <TacticalPitch
+                    lineupData={ai?.lineups}
+                    homeName={HN}
+                    awayName={AN}
+                    homeFormation={ws?.home_formation || '4-2-3-1'}
+                    awayFormation={ws?.away_formation || '4-3-3'}
+                    homeManager={ws?.home_manager}
+                    awayManager={ws?.away_manager}
+                  />
+                </div>
+
+                <div style={{ marginTop: '0.5rem' }}>
+                  <div className="ws-section-title">🌟 Key Player Performance &amp; Leaderboards</div>
+                  <PlayerStatsTable
+                    lineupData={ai?.lineups}
+                    homeName={HN}
+                    awayName={AN}
+                  />
+                </div>
+              </div>
+            )}
+
             {/* ── TAB 2: WRITTEN MATCH ANALYSIS CARD ── */}
             {activeTab === 'analytics' && (
               <div>
