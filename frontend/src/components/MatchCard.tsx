@@ -517,6 +517,7 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
   ];
 
   const homePpg = getTeamFormPpg(homeStats, 1.70);
+  const awayPpg = getTeamFormPpg(awayStats, 1.50);
   const homeOddsFormatted = typeof odds.home === 'number' ? odds.home.toFixed(2) : '2.10';
   const drawOddsFormatted = typeof odds.draw === 'number' ? odds.draw.toFixed(2) : '3.30';
   const awayOddsFormatted = typeof odds.away === 'number' ? odds.away.toFixed(2) : '3.60';
