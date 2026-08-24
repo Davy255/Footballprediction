@@ -1040,7 +1040,6 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
 
   const tabs: { key: TabKey; label: string }[] = [
     { key: 'ai', label: '📊 Forecast' },
-    { key: 'lineups', label: '👕 Lineups' },
     { key: 'analytics', label: '📝 Analysis' },
     { key: 'sw', label: '⚡ Style' },
     { key: 'predict', label: status.isFinished ? '📋 Result' : '🎯 Predict' },

@@ -9,7 +9,6 @@ import HowToPlayModal from './HowToPlayModal';
 
 const navLinks = [
   { href: '/fixtures', label: 'Fixtures', public: true, icon: '⚽' },
-  { href: '/lineups', label: 'Lineups', public: true, icon: '👕' },
   { href: '/live', label: 'Live Now', public: true, icon: '🔴' },
   { href: '/leaderboard', label: 'Leaderboard', public: true, icon: '👑' },
   { href: '/leagues', label: 'Leagues', public: true, icon: '🏆' },
