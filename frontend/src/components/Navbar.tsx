@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
@@ -22,12 +22,33 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const visibleLinks = navLinks.filter(
     (link) => !link.adminOnly || (user && user.is_admin)
   );
 
   const initials = user?.username ? user.username.slice(0, 2).toUpperCase() : 'U';
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+    if (menuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuOpen]);
+
+  // Close on route change
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
   const handleOpenCoachAi = () => {
     setMenuOpen(false);
@@ -82,9 +103,9 @@ export default function Navbar() {
           </ul>
 
           {/* Top Header Right Controls */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }} ref={menuRef} className="more-options-wrapper">
             
-            {/* Desktop-only Guide Button */}
+            {/* Desktop Guide Button */}
             <button
               onClick={() => setShowGuide(true)}
               className="btn btn-secondary btn-sm nav-desktop-guide"
@@ -101,50 +122,50 @@ export default function Navbar() {
               📖 Guide
             </button>
 
-            {/* Desktop-only More Button */}
+            {/* Desktop More Options Button */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="btn btn-secondary btn-sm nav-desktop-more"
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.35rem',
-                border: '1px solid var(--border-color)',
-                background: 'var(--bg-card-hover)',
-                color: 'var(--text-primary)',
+                border: menuOpen ? '1px solid var(--accent-blue)' : '1px solid var(--border-color)',
+                background: menuOpen ? 'rgba(59,130,246,0.15)' : 'var(--bg-card-hover)',
+                color: menuOpen ? 'var(--accent-blue)' : 'var(--text-primary)',
                 fontWeight: 700,
                 fontSize: '0.8rem',
+                cursor: 'pointer',
               }}
               title="More options"
             >
               <span>More ▾</span>
             </button>
 
-            {/* User Info / Sign In buttons */}
+            {/* User Profile Trigger / Guest Auth */}
             {user ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.45rem',
-                    background: 'var(--bg-card-hover)',
-                    border: '1px solid var(--border-color)',
-                    padding: '0.25rem 0.55rem',
-                    borderRadius: '20px',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => setMenuOpen(true)}
-                >
-                  <div className="user-avatar" style={{ width: '28px', height: '28px', fontSize: '0.75rem' }}>
-                    {initials}
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
-                    <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                      {user.username}
-                    </span>
-                    <span style={{ fontSize: '0.68rem', color: 'var(--accent-green)', fontWeight: 800 }}>
-                      {user.total_points} pts
-                    </span>
-                  </div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.45rem',
+                  background: 'var(--bg-card-hover)',
+                  border: '1px solid var(--border-color)',
+                  padding: '0.22rem 0.55rem',
+                  borderRadius: '20px',
+                  cursor: 'pointer',
+                }}
+                onClick={() => setMenuOpen(!menuOpen)}
+                title="Account menu"
+              >
+                <div className="user-avatar" style={{ width: '28px', height: '28px', fontSize: '0.75rem' }}>
+                  {initials}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
+                  <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                    {user.username}
+                  </span>
+                  <span style={{ fontSize: '0.68rem', color: 'var(--accent-green)', fontWeight: 800 }}>
+                    {user.total_points} pts
+                  </span>
                 </div>
               </div>
             ) : (
@@ -178,7 +199,7 @@ export default function Navbar() {
               </div>
             )}
 
-            {/* Hamburger / More Options Menu Trigger */}
+            {/* Hamburger (Mobile trigger) */}
             <button
               className={`hamburger ${menuOpen ? 'open' : ''}`}
               onClick={() => setMenuOpen(!menuOpen)}
@@ -189,222 +210,134 @@ export default function Navbar() {
               <span />
               <span />
             </button>
+
+            {/* ── DESKTOP & MOBILE COMPACT FLOATING MENU CARD ── */}
+            {menuOpen && (
+              <div className="more-options-dropdown">
+                {/* User Header */}
+                {user ? (
+                  <div style={{ padding: '0.4rem 0.25rem 0.75rem', borderBottom: '1px solid var(--border-color)', marginBottom: '0.3rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                        <div className="user-avatar" style={{ width: '34px', height: '34px', fontSize: '0.85rem' }}>
+                          {initials}
+                        </div>
+                        <div>
+                          <div style={{ fontWeight: 800, fontSize: '0.88rem', color: 'var(--text-primary)' }}>
+                            {user.username}
+                          </div>
+                          <div style={{ fontSize: '0.72rem', color: 'var(--accent-green)', fontWeight: 700 }}>
+                            🏆 {user.total_points} total points
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => { logout(); setMenuOpen(false); }}
+                        className="btn btn-secondary btn-sm"
+                        style={{ fontSize: '0.72rem', padding: '0.2rem 0.55rem', color: '#f87171', borderColor: 'rgba(239,68,68,0.2)' }}
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div style={{ padding: '0.4rem 0.25rem 0.75rem', borderBottom: '1px solid var(--border-color)', marginBottom: '0.3rem' }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.88rem', color: 'var(--text-primary)', textAlign: 'center' }}>
+                      Welcome to FootballPredict ⚽
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.4rem', marginTop: '0.6rem' }}>
+                      <Link href="/login" onClick={() => setMenuOpen(false)} className="btn btn-primary btn-sm" style={{ textAlign: 'center', fontSize: '0.78rem', padding: '0.35rem' }}>
+                        Sign In
+                      </Link>
+                      <Link href="/register" onClick={() => setMenuOpen(false)} className="btn btn-secondary btn-sm" style={{ textAlign: 'center', fontSize: '0.78rem', padding: '0.35rem' }}>
+                        Register
+                      </Link>
+                    </div>
+                  </div>
+                )}
+
+                {/* 1. My Predictions */}
+                <Link
+                  href={user ? "/predictions" : "/login?redirect=/predictions"}
+                  onClick={() => setMenuOpen(false)}
+                  className="dropdown-item-btn"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.14) 0%, rgba(59, 130, 246, 0.14) 100%)',
+                    borderColor: 'rgba(34, 197, 94, 0.35)',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                    <span style={{ fontSize: '1.15rem' }}>🎯</span>
+                    <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>My Predictions</span>
+                  </div>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--accent-green)', fontWeight: 800 }}>Open →</span>
+                </Link>
+
+                {/* 2. Coach AI */}
+                <button
+                  type="button"
+                  onClick={handleOpenCoachAi}
+                  className="dropdown-item-btn"
+                  style={{
+                    background: 'rgba(59, 130, 246, 0.08)',
+                    borderColor: 'rgba(59, 130, 246, 0.25)',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                    <span style={{ fontSize: '1.15rem' }}>🤖</span>
+                    <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>Coach AI Assistant</span>
+                  </div>
+                  <span style={{ fontSize: '0.65rem', padding: '0.1rem 0.45rem', borderRadius: '10px', background: 'rgba(16,185,129,0.2)', color: '#10b981', fontWeight: 800 }}>Live</span>
+                </button>
+
+                {/* 3. Guide */}
+                <button
+                  type="button"
+                  onClick={() => { setShowGuide(true); setMenuOpen(false); }}
+                  className="dropdown-item-btn"
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                    <span style={{ fontSize: '1.15rem' }}>📖</span>
+                    <span style={{ fontWeight: 600 }}>Scoring Rules & Guide</span>
+                  </div>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Rules</span>
+                </button>
+
+                {/* 4. Theme Toggle */}
+                <button
+                  type="button"
+                  onClick={() => toggleTheme()}
+                  className="dropdown-item-btn"
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                    <span style={{ fontSize: '1.15rem' }}>{theme === 'dark' ? '☀️' : '🌙'}</span>
+                    <span style={{ fontWeight: 600 }}>Theme</span>
+                  </div>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--accent-blue)', fontWeight: 700 }}>
+                    {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                  </span>
+                </button>
+
+                {/* 5. Admin (if applicable) */}
+                {user?.is_admin && (
+                  <Link
+                    href="/admin"
+                    onClick={() => setMenuOpen(false)}
+                    className="dropdown-item-btn"
+                    style={{ borderColor: 'rgba(245, 158, 11, 0.3)', background: 'rgba(245, 158, 11, 0.08)' }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                      <span style={{ fontSize: '1.15rem' }}>⚙️</span>
+                      <span style={{ fontWeight: 700, color: '#f59e0b' }}>Admin Panel</span>
+                    </div>
+                    <span style={{ fontSize: '0.72rem', color: '#f59e0b', fontWeight: 800 }}>Manage</span>
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </nav>
-
-      {/* Mobile / More Options Drawer */}
-      <div className={`mobile-drawer ${menuOpen ? 'open' : ''}`}>
-        
-        {/* User Greeting & Status inside Drawer */}
-        <div style={{
-          padding: '1rem',
-          borderRadius: '12px',
-          background: 'var(--bg-card-hover)',
-          border: '1px solid var(--border-color)',
-          marginBottom: '1rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-          {user ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div className="user-avatar" style={{ width: '40px', height: '40px', fontSize: '1rem' }}>
-                {initials}
-              </div>
-              <div>
-                <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--text-primary)' }}>
-                  {user.username}
-                </div>
-                <div style={{ fontSize: '0.80rem', color: 'var(--accent-green)', fontWeight: 700 }}>
-                  🏆 {user.total_points} total points
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div>
-              <div style={{ fontWeight: 800, fontSize: '0.92rem', color: 'var(--text-primary)' }}>
-                Welcome to FootballPredict! ⚽
-              </div>
-              <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
-                Sign in to submit predictions and track points.
-              </div>
-            </div>
-          )}
-
-          {user && (
-            <button
-              onClick={() => { logout(); setMenuOpen(false); }}
-              className="btn btn-secondary btn-sm"
-              style={{ fontSize: '0.78rem', padding: '0.35rem 0.75rem' }}
-            >
-              Logout
-            </button>
-          )}
-        </div>
-
-        {/* My Predictions Tab inside More Options */}
-        <Link
-          href="/predictions"
-          onClick={() => setMenuOpen(false)}
-          className="mobile-nav-link"
-          style={{
-            background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.12) 0%, rgba(59, 130, 246, 0.12) 100%)',
-            border: '1px solid rgba(34, 197, 94, 0.3)',
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '0.85rem 1rem',
-            borderRadius: '12px',
-            textDecoration: 'none',
-            cursor: 'pointer',
-            marginBottom: '0.85rem',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-            <span style={{ fontSize: '1.35rem' }}>🎯</span>
-            <div>
-              <div style={{ fontWeight: 800, fontSize: '0.92rem', color: 'var(--text-primary)' }}>
-                My Predictions
-              </div>
-              <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)' }}>
-                View your active picks, results &amp; points
-              </div>
-            </div>
-          </div>
-          <span style={{ fontSize: '0.78rem', color: 'var(--accent-green)', fontWeight: 800 }}>
-            Open →
-          </span>
-        </Link>
-
-        {/* Guest Auth Buttons inside Drawer */}
-        {!user && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem', marginBottom: '1.25rem' }}>
-            <Link
-              href="/login"
-              onClick={() => setMenuOpen(false)}
-              className="btn btn-primary"
-              style={{ textAlign: 'center', fontSize: '0.85rem', padding: '0.55rem' }}
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/register"
-              onClick={() => setMenuOpen(false)}
-              className="btn btn-secondary"
-              style={{ textAlign: 'center', fontSize: '0.85rem', padding: '0.55rem' }}
-            >
-              Create Account
-            </Link>
-          </div>
-        )}
-
-        {/* Quick Tools: Theme Toggle & Guide & Coach AI */}
-        <div style={{ marginBottom: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          
-          {/* Theme Toggle Button in More Options */}
-          <button
-            onClick={() => toggleTheme()}
-            className="mobile-nav-link"
-            style={{
-              background: 'var(--bg-card-hover)',
-              border: '1px solid var(--border-color)',
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: '0.75rem 1rem',
-              borderRadius: '10px',
-              cursor: 'pointer',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <span style={{ fontSize: '1.2rem' }}>{theme === 'dark' ? '☀️' : '🌙'}</span>
-              <span style={{ fontWeight: 700, fontSize: '0.88rem', color: 'var(--text-primary)' }}>
-                Theme: {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
-              </span>
-            </div>
-            <span style={{ fontSize: '0.76rem', color: 'var(--accent-blue)', fontWeight: 700 }}>
-              Switch to {theme === 'dark' ? 'Light' : 'Dark'} →
-            </span>
-          </button>
-
-          {/* Guide Button in More Options */}
-          <button
-            onClick={() => { setShowGuide(true); setMenuOpen(false); }}
-            className="mobile-nav-link"
-            style={{
-              background: 'rgba(59,130,246,0.08)',
-              border: '1px solid rgba(59,130,246,0.25)',
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.6rem',
-              padding: '0.75rem 1rem',
-              borderRadius: '10px',
-              textAlign: 'left',
-              cursor: 'pointer',
-            }}
-          >
-            <span style={{ fontSize: '1.2rem' }}>📖</span>
-            <span style={{ fontWeight: 700, fontSize: '0.88rem', color: 'var(--text-primary)' }}>
-              How to Play &amp; Scoring Guide
-            </span>
-          </button>
-
-          {/* Coach AI Trigger Button in More Options */}
-          <button
-            onClick={handleOpenCoachAi}
-            className="mobile-nav-link"
-            style={{
-              background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%)',
-              border: '1px solid rgba(59, 130, 246, 0.3)',
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: '0.75rem 1rem',
-              borderRadius: '10px',
-              textAlign: 'left',
-              cursor: 'pointer',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <span style={{ fontSize: '1.2rem' }}>🤖</span>
-              <span style={{ fontWeight: 800, fontSize: '0.88rem', color: 'var(--text-primary)' }}>
-                Coach AI Match Supporter
-              </span>
-            </div>
-            <span style={{ fontSize: '0.68rem', padding: '0.15rem 0.5rem', borderRadius: '12px', background: 'rgba(16,185,129,0.2)', color: '#10b981', fontWeight: 800 }}>
-              Live
-            </span>
-          </button>
-        </div>
-
-        {/* Navigation Section */}
-        <div style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem', paddingLeft: '0.4rem' }}>
-          Navigation
-        </div>
-
-        {visibleLinks.map((link) => {
-          const isActive = pathname === link.href;
-          const isLocked = !link.public && !user;
-          return (
-            <Link
-              key={link.href}
-              href={isLocked ? '/login' : link.href}
-              className={`mobile-nav-link ${isActive ? 'active' : ''}`}
-              onClick={() => setMenuOpen(false)}
-              style={isLocked ? { opacity: 0.5 } : {}}
-            >
-              <span style={{ fontSize: '1.1rem' }}>{link.icon}</span>
-              <span>{link.label}</span>
-              {isLocked && <span style={{ marginLeft: 'auto', fontSize: '0.8rem' }}>🔒</span>}
-            </Link>
-          );
-        })}
-      </div>
 
       <HowToPlayModal isOpen={showGuide} onClose={() => setShowGuide(false)} />
     </>
