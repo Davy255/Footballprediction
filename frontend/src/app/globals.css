@@ -1518,11 +1518,10 @@ div[id^="google-btn-container"] iframe {
 .ws-tab { flex-shrink: 0; padding: 10px 16px; font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; transition: all 0.2s ease; white-space: nowrap; font-family: 'Inter', sans-serif; }
 .ws-tab:hover { color: var(--text-primary); }
 .ws-tab.active { color: var(--accent-green); border-bottom-color: var(--accent-green); }
-.ws-tab-content { background: var(--bg-card); border-radius: 0 0 12px 12px; padding: 14px 16px; animation: fadeIn 0.2s ease; border: 1px solid var(--border-color); border-top: none; }
-.ws-prob-bar-wrap { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; border-radius: 6px; overflow: hidden; height: 8px; margin: 8px 0 4px; }
-.ws-prob-bar-h { background: var(--accent-green); }
-.ws-prob-bar-d { background: var(--accent-amber); }
-.ws-prob-bar-a { background: var(--accent-blue); }
+.ws-prob-bar-wrap { display: flex; gap: 4px; border-radius: 6px; height: 8px; margin: 6px 0 14px; width: 100%; }
+.ws-prob-bar-h { background: var(--accent-green); height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+.ws-prob-bar-d { background: var(--accent-amber); height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+.ws-prob-bar-a { background: var(--accent-blue); height: 100%; border-radius: 4px; transition: width 0.6s ease; }
 .ws-prob-labels { display: grid; grid-template-columns: 1fr 1fr 1fr; font-size: 0.7rem; color: var(--text-secondary); text-align: center; margin-bottom: 10px; }
 .ws-prob-labels strong { display: block; font-size: 0.88rem; font-family: 'Outfit', sans-serif; font-weight: 800; color: var(--text-primary); }
 .ws-markets-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px; }

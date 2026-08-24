@@ -693,6 +693,13 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
                   </div>
                 </div>
 
+                {/* 3-segment Visual Probability Bar */}
+                <div className="ws-prob-bar-wrap" style={{ margin: '2px 0 16px', height: '8px' }}>
+                  <div className="ws-prob-bar-h" style={{ width: `${probs.home_pct}%` }} title={`${HN}: ${probs.home_pct}%`} />
+                  <div className="ws-prob-bar-d" style={{ width: `${probs.draw_pct}%` }} title={`Draw: ${probs.draw_pct}%`} />
+                  <div className="ws-prob-bar-a" style={{ width: `${probs.away_pct}%` }} title={`${AN}: ${probs.away_pct}%`} />
+                </div>
+
                 <div className="ws-section-title">Projected Scoreline</div>
                 <div className="ws-pred-score">
                   <span className="ws-pred-score-num">{score.home}</span>
