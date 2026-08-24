@@ -112,16 +112,22 @@ export default function PlayerStatsTable({ lineupData, homeName, awayName }: Pla
                   {idx + 1}
                 </td>
                 <td style={{ padding: '0.65rem 0.9rem', fontWeight: 800, color: 'var(--text-primary, #f8fafc)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                     <span style={{
-                      fontSize: '0.72rem',
-                      fontWeight: 900,
-                      padding: '1px 5px',
-                      borderRadius: '4px',
-                      background: p.is_home ? 'rgba(56,189,248,0.15)' : 'rgba(239,68,68,0.15)',
+                      width: '22px',
+                      height: '22px',
+                      borderRadius: '50%',
+                      background: p.is_home ? 'rgba(56,189,248,0.18)' : 'rgba(239,68,68,0.18)',
                       color: p.is_home ? '#38bdf8' : '#f87171',
+                      border: p.is_home ? '1px solid rgba(56,189,248,0.35)' : '1px solid rgba(239,68,68,0.35)',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontWeight: 900,
+                      fontSize: '0.70rem',
+                      flexShrink: 0,
                     }}>
-                      #{p.number}
+                      {p.number}
                     </span>
                     <span>{p.name}</span>
                   </div>

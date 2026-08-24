@@ -817,12 +817,28 @@ export default function TacticalPitch({
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
             {hBench.map((p, idx) => (
-              <div key={`hb-${idx}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.78rem', padding: '0.2rem 0' }}>
-                <span style={{ color: 'var(--text-primary)' }}>
-                  <strong style={{ color: '#38bdf8', marginRight: '6px' }}>#{p.number}</strong> {p.name}
-                </span>
-                <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                  {p.pos} · ⭐ {p.rating.toFixed(1)}
+              <div key={`hb-${idx}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.80rem', padding: '0.3rem 0', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <span style={{
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '50%',
+                    background: 'rgba(56,189,248,0.18)',
+                    color: '#38bdf8',
+                    border: '1px solid rgba(56,189,248,0.35)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontWeight: 900,
+                    fontSize: '0.72rem',
+                    flexShrink: 0,
+                  }}>
+                    {p.number}
+                  </span>
+                  <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{p.name}</span>
+                </div>
+                <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                  {p.pos} · <span style={{ color: '#4ade80', fontWeight: 800 }}>⭐ {p.rating.toFixed(1)}</span>
                 </span>
               </div>
             ))}
@@ -841,12 +857,28 @@ export default function TacticalPitch({
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
             {aBench.map((p, idx) => (
-              <div key={`ab-${idx}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.78rem', padding: '0.2rem 0' }}>
-                <span style={{ color: 'var(--text-primary)' }}>
-                  <strong style={{ color: '#f87171', marginRight: '6px' }}>#{p.number}</strong> {p.name}
-                </span>
-                <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                  {p.pos} · ⭐ {p.rating.toFixed(1)}
+              <div key={`ab-${idx}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.80rem', padding: '0.3rem 0', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <span style={{
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '50%',
+                    background: 'rgba(239,68,68,0.18)',
+                    color: '#f87171',
+                    border: '1px solid rgba(239,68,68,0.35)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontWeight: 900,
+                    fontSize: '0.72rem',
+                    flexShrink: 0,
+                  }}>
+                    {p.number}
+                  </span>
+                  <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{p.name}</span>
+                </div>
+                <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                  {p.pos} · <span style={{ color: '#4ade80', fontWeight: 800 }}>⭐ {p.rating.toFixed(1)}</span>
                 </span>
               </div>
             ))}
