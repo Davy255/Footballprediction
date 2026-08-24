@@ -70,7 +70,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <main style={{ flex: 1, paddingBottom: '1rem' }}>
               {children}
             </main>
-            <ChatbotWidget />
 
             {/* Professional Footer */}
             <footer className="site-footer">

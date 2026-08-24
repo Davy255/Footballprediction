@@ -177,9 +177,13 @@ export default function ChatbotWidget() {
         className="chatbot-floating-container"
         style={{
           position: 'fixed',
-          bottom: 'calc(18px + env(safe-area-inset-bottom, 0px))',
-          right: '18px',
+          bottom: 'calc(14px + env(safe-area-inset-bottom, 0px))',
+          right: '14px',
           zIndex: 99999,
+          transform: 'translateZ(0)',
+          WebkitTransform: 'translateZ(0)',
+          touchAction: 'manipulation',
+          pointerEvents: 'auto',
         }}
       >
         {!isOpen ? (

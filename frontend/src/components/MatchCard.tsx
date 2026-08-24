@@ -597,8 +597,8 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
               {/* Home Team Profile */}
               <div className="ws-team-block">
                 {match.home_team?.crest && <img src={match.home_team.crest} className="ws-team-crest" alt={HN} />}
-                <div className="ws-team-name">{HN}</div>
-                {ws?.home_manager && <div className="ws-manager-pill">👔 {ws.home_manager}</div>}
+                <div className="ws-team-name" title={HN}>{HN}</div>
+                {ws?.home_manager && <div className="ws-manager-pill" title={`Manager: ${ws.home_manager}`}>👔 {ws.home_manager}</div>}
                 {ws?.home_formation && <div className="ws-formation-pill">{ws.home_formation}</div>}
                 <span className={`ws-rating-badge ${getRatingClass(ws?.home_rating ?? 6.8)}`}>
                   {(ws?.home_rating ?? 6.8).toFixed(2)}
@@ -610,26 +610,29 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
                 {showScore ? (
                   <div className="ws-scoreline">{hs} : {as_}</div>
                 ) : (
-                  <div className="ws-scoreline" style={{ fontSize: '1.25rem', color: '#38bdf8' }}>
+                  <div className="ws-scoreline ws-kickoff-time">
                     {dateTime.time}
                   </div>
                 )}
                 <span className={`ws-status-pill ws-status-${status.isLive ? 'live' : status.isFinished ? 'ft' : status.isPostponed ? 'pst' : 'sched'}`}>
                   {status.isPostponed ? 'PST' : status.badgeText}
                 </span>
-                <span style={{ fontSize: '0.7rem', color: '#8aa3c8', marginTop: 2 }}>
-                  📅 {dateTime.full} {dateTime.relative ? `(${dateTime.relative})` : ''}
-                </span>
+                <div className="ws-datetime-wrap">
+                  <span className="ws-datetime-date">📅 {dateTime.date}</span>
+                  {dateTime.relative && (
+                    <span className="ws-datetime-rel">({dateTime.relative})</span>
+                  )}
+                </div>
                 {match.home_score_ht != null && match.away_score_ht != null && (
-                  <span style={{ fontSize: '0.68rem', color: '#4d6080' }}>HT: {match.home_score_ht}-{match.away_score_ht}</span>
+                  <span className="ws-ht-score">HT: {match.home_score_ht}-{match.away_score_ht}</span>
                 )}
               </div>
 
               {/* Away Team Profile */}
               <div className="ws-team-block">
                 {match.away_team?.crest && <img src={match.away_team.crest} className="ws-team-crest" alt={AN} />}
-                <div className="ws-team-name">{AN}</div>
-                {ws?.away_manager && <div className="ws-manager-pill">👔 {ws.away_manager}</div>}
+                <div className="ws-team-name" title={AN}>{AN}</div>
+                {ws?.away_manager && <div className="ws-manager-pill" title={`Manager: ${ws.away_manager}`}>👔 {ws.away_manager}</div>}
                 {ws?.away_formation && <div className="ws-formation-pill">{ws.away_formation}</div>}
                 <span className={`ws-rating-badge ${getRatingClass(ws?.away_rating ?? 6.5)}`}>
                   {(ws?.away_rating ?? 6.5).toFixed(2)}
