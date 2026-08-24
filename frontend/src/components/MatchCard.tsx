@@ -347,7 +347,22 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
     if (tab === 'predict') loadPred();
   };
 
+  const isKickoffPassed = match.utc_date ? new Date(match.utc_date).getTime() <= Date.now() : false;
+  const isMatchLocked = status.isLive || status.isFinished || isKickoffPassed || status.isPostponed || status.isCancelled;
+
+  const hasOutcomeOrScore = Boolean(predOutcome || (predHome !== '' && predAway !== ''));
+  const hasBtts = Boolean(predBtts);
+  const hasOver25 = Boolean(predOver25);
+  const hasDc = Boolean(predDc);
+
+  const selectedCount = (hasOutcomeOrScore ? 1 : 0) + (hasBtts ? 1 : 0) + (hasOver25 ? 1 : 0) + (hasDc ? 1 : 0);
+
   const handleHomeInput = (val: string) => {
+    if (!hasOutcomeOrScore && selectedCount >= 2 && val !== '') {
+      setSubmitMsg('⚠️ Max 2 prediction choices per match. Deselect one to change.');
+      return;
+    }
+    setSubmitMsg('');
     setPredHome(val);
     if (val !== '' && predAway !== '') {
       const h = parseInt(val);
@@ -359,6 +374,11 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
   };
 
   const handleAwayInput = (val: string) => {
+    if (!hasOutcomeOrScore && selectedCount >= 2 && val !== '') {
+      setSubmitMsg('⚠️ Max 2 prediction choices per match. Deselect one to change.');
+      return;
+    }
+    setSubmitMsg('');
     setPredAway(val);
     if (predHome !== '' && val !== '') {
       const h = parseInt(predHome);
@@ -372,7 +392,13 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
   const handleOutcomeBtn = (key: string) => {
     if (predOutcome === key) {
       setPredOutcome('');
+      setSubmitMsg('');
     } else {
+      if (!hasOutcomeOrScore && selectedCount >= 2) {
+        setSubmitMsg('⚠️ Max 2 prediction choices per match. Deselect one to change.');
+        return;
+      }
+      setSubmitMsg('');
       setPredOutcome(key);
       if (key === 'DRAW') {
         const base = predHome !== '' ? predHome : '1';
@@ -388,20 +414,65 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
     }
   };
 
+  const handleBttsBtn = (val: 'yes' | 'no') => {
+    if (predBtts === val) {
+      setPredBtts('');
+      setSubmitMsg('');
+    } else {
+      if (!hasBtts && selectedCount >= 2) {
+        setSubmitMsg('⚠️ Max 2 prediction choices per match. Deselect one to change.');
+        return;
+      }
+      setSubmitMsg('');
+      setPredBtts(val);
+    }
+  };
+
+  const handleOver25Btn = (val: 'over' | 'under') => {
+    if (predOver25 === val) {
+      setPredOver25('');
+      setSubmitMsg('');
+    } else {
+      if (!hasOver25 && selectedCount >= 2) {
+        setSubmitMsg('⚠️ Max 2 prediction choices per match. Deselect one to change.');
+        return;
+      }
+      setSubmitMsg('');
+      setPredOver25(val);
+    }
+  };
+
+  const handleDcBtn = (val: '1x' | '12' | 'x2') => {
+    if (predDc === val) {
+      setPredDc('');
+      setSubmitMsg('');
+    } else {
+      if (!hasDc && selectedCount >= 2) {
+        setSubmitMsg('⚠️ Max 2 prediction choices per match. Deselect one to change.');
+        return;
+      }
+      setSubmitMsg('');
+      setPredDc(val);
+    }
+  };
+
   const handleSubmit = async () => {
     if (!token) return;
+    if (isMatchLocked) {
+      setSubmitMsg('❌ Predictions are closed for this match.');
+      return;
+    }
     const ph = predHome !== '' ? parseInt(predHome) : undefined;
     const pa = predAway !== '' ? parseInt(predAway) : undefined;
     
-    let outcome = predOutcome;
+    let outcome = predOutcome || undefined;
     if (ph !== undefined && pa !== undefined && !isNaN(ph) && !isNaN(pa)) {
       outcome = ph > pa ? 'HOME_TEAM' : pa > ph ? 'AWAY_TEAM' : 'DRAW';
     }
-    if (!outcome) {
-      if (predDc === 'x2') outcome = 'AWAY_TEAM';
-      else if (predDc === '1x') outcome = 'HOME_TEAM';
-      else if (predDc === '12') outcome = 'HOME_TEAM';
-      else outcome = 'DRAW';
+
+    if (!outcome && ph === undefined && !predBtts && !predOver25 && !predDc) {
+      setSubmitMsg('⚠️ Please select at least 1 prediction choice (maximum 2).');
+      return;
     }
 
     setSubmitting(true);
@@ -419,12 +490,12 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
       if (data?.id) {
         setSubmitted(true);
         setExistingPred(data);
-        setSubmitMsg('✅ Multi-market prediction saved!');
+        setSubmitMsg('✅ Prediction saved (Max 2 choices)!');
       } else {
         setSubmitMsg('Failed to save prediction.');
       }
-    } catch {
-      setSubmitMsg('Network error. Please try again.');
+    } catch (err: any) {
+      setSubmitMsg(err.message || 'Network error. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -802,21 +873,29 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
                       {existingPred.dc_correct && <span style={{ background: 'rgba(34,197,94,0.15)', color: '#22c55e', padding: '3px 8px', borderRadius: 6, fontSize: '0.75rem', fontWeight: 700 }}>Double Chance Won (+1pt)</span>}
                     </div>
                   </div>
-                ) : status.isFinished ? (
-                  <div style={{ textAlign: 'center', padding: '24px 0', color: '#4d6080', fontSize: '0.85rem' }}>
-                    This match has finished ({match.home_score}-{match.away_score}). No prediction was entered before kickoff.
+                ) : isMatchLocked ? (
+                  <div className="ws-settlement-card" style={{ borderColor: 'rgba(239,68,68,0.25)', background: 'rgba(239,68,68,0.06)', textAlign: 'center', padding: '1.25rem' }}>
+                    <div style={{ fontSize: '1.6rem', marginBottom: 4 }}>🔒</div>
+                    <div style={{ fontFamily: 'Outfit', fontWeight: 800, color: '#f87171', fontSize: '1rem' }}>
+                      Predictions Closed
+                    </div>
+                    <div style={{ color: '#94a3b8', fontSize: '0.82rem', marginTop: 4 }}>
+                      {status.isLive ? 'This match is currently LIVE in play. Predictions lock at kickoff.' : status.isFinished ? `This match has finished (${match.home_score ?? 0} - ${match.away_score ?? 0}).` : 'Kickoff time has arrived. Predictions are now locked.'}
+                    </div>
                   </div>
                 ) : submitted && existingPred ? (
                   <div className="ws-settlement-card" style={{ borderColor: 'rgba(34,197,94,0.3)', background: 'rgba(34,197,94,0.06)' }}>
                     <div style={{ fontSize: '1.4rem', marginBottom: 6 }}>🎯</div>
                     <div style={{ fontFamily: 'Outfit', fontWeight: 800, color: '#f0f6ff', fontSize: '1.05rem' }}>
-                      Active Predictions Recorded
+                      Active Predictions Recorded (2 Choices Max)
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: 6, margin: '10px 0' }}>
-                      <div style={{ background: 'rgba(255,255,255,0.04)', padding: 6, borderRadius: 6, fontSize: '0.78rem' }}>
-                        <div style={{ color: '#8aa3c8' }}>1X2 Outcome</div>
-                        <strong style={{ color: '#22c55e' }}>{existingPred.predicted_outcome}</strong>
-                      </div>
+                      {existingPred.predicted_outcome && (
+                        <div style={{ background: 'rgba(255,255,255,0.04)', padding: 6, borderRadius: 6, fontSize: '0.78rem' }}>
+                          <div style={{ color: '#8aa3c8' }}>1X2 Outcome</div>
+                          <strong style={{ color: '#22c55e' }}>{existingPred.predicted_outcome}</strong>
+                        </div>
+                      )}
                       {existingPred.predicted_home_score !== null && (
                         <div style={{ background: 'rgba(255,255,255,0.04)', padding: 6, borderRadius: 6, fontSize: '0.78rem' }}>
                           <div style={{ color: '#8aa3c8' }}>Exact Score</div>
@@ -852,6 +931,26 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
                   </div>
                 ) : (
                   <>
+                    {/* 2-choice Counter Badge */}
+                    <div style={{
+                      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                      background: selectedCount === 2 ? 'rgba(34,197,94,0.1)' : 'rgba(59,130,246,0.1)',
+                      border: `1px solid ${selectedCount === 2 ? 'rgba(34,197,94,0.25)' : 'rgba(59,130,246,0.2)'}`,
+                      borderRadius: 8, padding: '6px 12px', marginBottom: 12, fontSize: '0.78rem'
+                    }}>
+                      <span style={{ color: '#cbd5e1', fontWeight: 600 }}>
+                        ⚡ Rule: Choose up to <strong>2 choices</strong> per match
+                      </span>
+                      <span style={{
+                        fontWeight: 800,
+                        color: selectedCount === 2 ? '#22c55e' : '#60a5fa',
+                        background: 'rgba(0,0,0,0.3)',
+                        padding: '2px 8px', borderRadius: 12
+                      }}>
+                        {selectedCount}/2 Selected
+                      </span>
+                    </div>
+
                     {/* Market 1: Exact Score & 1X2 */}
                     <div className="ws-section-title">Market 1: Exact Scoreline (+5 pts) & Outcome (+3 pts)</div>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6, fontSize: '0.8rem', color: '#8aa3c8' }}>
@@ -897,13 +996,13 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                       <button
                         className={`ws-outcome-btn${predBtts === 'yes' ? ' selected' : ''}`}
-                        onClick={() => setPredBtts(predBtts === 'yes' ? '' : 'yes')}
+                        onClick={() => handleBttsBtn('yes')}
                       >
                         ⚽ Yes (@{markets.btts_yes_odds.toFixed(2)})
                       </button>
                       <button
                         className={`ws-outcome-btn${predBtts === 'no' ? ' selected' : ''}`}
-                        onClick={() => setPredBtts(predBtts === 'no' ? '' : 'no')}
+                        onClick={() => handleBttsBtn('no')}
                       >
                         🚫 No (@{markets.btts_no_odds.toFixed(2)})
                       </button>
@@ -914,13 +1013,13 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                       <button
                         className={`ws-outcome-btn${predOver25 === 'over' ? ' selected' : ''}`}
-                        onClick={() => setPredOver25(predOver25 === 'over' ? '' : 'over')}
+                        onClick={() => handleOver25Btn('over')}
                       >
                         ⬆️ Over 2.5 (@{markets.over25_odds.toFixed(2)})
                       </button>
                       <button
                         className={`ws-outcome-btn${predOver25 === 'under' ? ' selected' : ''}`}
-                        onClick={() => setPredOver25(predOver25 === 'under' ? '' : 'under')}
+                        onClick={() => handleOver25Btn('under')}
                       >
                         ⬇️ Under 2.5 (@{markets.under25_odds.toFixed(2)})
                       </button>
@@ -931,32 +1030,26 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6 }}>
                       <button
                         className={`ws-outcome-btn${predDc === '1x' ? ' selected' : ''}`}
-                        onClick={() => setPredDc(predDc === '1x' ? '' : '1x')}
+                        onClick={() => handleDcBtn('1x')}
                       >
                         1X (Home/Draw) (@{markets.dc_1x_odds.toFixed(2)})
                       </button>
                       <button
                         className={`ws-outcome-btn${predDc === '12' ? ' selected' : ''}`}
-                        onClick={() => setPredDc(predDc === '12' ? '' : '12')}
+                        onClick={() => handleDcBtn('12')}
                       >
                         12 (Home/Away) (@{markets.dc_12_odds.toFixed(2)})
                       </button>
                       <button
                         className={`ws-outcome-btn${predDc === 'x2' ? ' selected' : ''}`}
-                        onClick={() => setPredDc(predDc === 'x2' ? '' : 'x2')}
+                        onClick={() => handleDcBtn('x2')}
                       >
                         X2 (Draw/Away) (@{markets.dc_x2_odds.toFixed(2)})
                       </button>
                     </div>
 
-                    <div style={{ textAlign: 'center', marginTop: 12 }}>
-                      <span className="ws-pts-preview">
-                        🏆 Max Potential: +13 Points Across All 4 Markets
-                      </span>
-                    </div>
-
                     {submitMsg && (
-                      <div style={{ fontSize: '0.82rem', textAlign: 'center', marginTop: 8, color: submitMsg.includes('saved') ? '#22c55e' : '#f87171' }}>
+                      <div style={{ fontSize: '0.82rem', textAlign: 'center', marginTop: 10, color: submitMsg.includes('✅') ? '#22c55e' : '#f87171', fontWeight: 600 }}>
                         {submitMsg}
                       </div>
                     )}
@@ -964,9 +1057,9 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
                     <button
                       className="ws-predict-btn"
                       onClick={handleSubmit}
-                      disabled={submitting || (!predHome && !predAway && !predOutcome && !predBtts && !predOver25 && !predDc)}
+                      disabled={submitting || selectedCount === 0}
                     >
-                      {submitting ? '⏳ Submitting...' : '🎯 Submit Multi-Market Predictions'}
+                      {submitting ? '⏳ Submitting...' : `🎯 Submit Prediction (${selectedCount}/2 Selected)`}
                     </button>
                   </>
                 )}

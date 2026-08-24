@@ -46,11 +46,12 @@ export default function GoogleAuthButton({
         if (btnContainer) {
           btnContainer.innerHTML = '';
           (window as any).google.accounts.id.renderButton(btnContainer, {
-            theme: 'filled_black',
+            theme: 'outline',
             size: 'large',
-            shape: 'pill',
-            width: '100%',
+            shape: 'rectangular',
+            width: 320,
             text: mode === 'signup' ? 'signup_with' : 'signin_with',
+            logo_alignment: 'center',
           });
         }
       }

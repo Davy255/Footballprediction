@@ -101,6 +101,23 @@ export default function Navbar() {
               📖 Guide
             </button>
 
+            {/* Desktop-only More Button */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="btn btn-secondary btn-sm nav-desktop-more"
+              style={{
+                display: 'flex', alignItems: 'center', gap: '0.35rem',
+                border: '1px solid var(--border-color)',
+                background: 'var(--bg-card-hover)',
+                color: 'var(--text-primary)',
+                fontWeight: 700,
+                fontSize: '0.8rem',
+              }}
+              title="More options"
+            >
+              <span>More ▾</span>
+            </button>
+
             {/* User Info / Sign In buttons */}
             {user ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -225,6 +242,41 @@ export default function Navbar() {
             </button>
           )}
         </div>
+
+        {/* My Predictions Tab inside More Options */}
+        <Link
+          href="/predictions"
+          onClick={() => setMenuOpen(false)}
+          className="mobile-nav-link"
+          style={{
+            background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.12) 0%, rgba(59, 130, 246, 0.12) 100%)',
+            border: '1px solid rgba(34, 197, 94, 0.3)',
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '0.85rem 1rem',
+            borderRadius: '12px',
+            textDecoration: 'none',
+            cursor: 'pointer',
+            marginBottom: '0.85rem',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <span style={{ fontSize: '1.35rem' }}>🎯</span>
+            <div>
+              <div style={{ fontWeight: 800, fontSize: '0.92rem', color: 'var(--text-primary)' }}>
+                My Predictions
+              </div>
+              <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)' }}>
+                View your active picks, results &amp; points
+              </div>
+            </div>
+          </div>
+          <span style={{ fontSize: '0.78rem', color: 'var(--accent-green)', fontWeight: 800 }}>
+            Open →
+          </span>
+        </Link>
 
         {/* Guest Auth Buttons inside Drawer */}
         {!user && (

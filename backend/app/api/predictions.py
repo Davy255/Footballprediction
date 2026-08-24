@@ -19,19 +19,47 @@ def create_prediction(
     match = db.query(Match).filter(Match.id == pred_in.match_id).first()
     if not match:
         raise HTTPException(status_code=404, detail="Match not found")
-    PREDICTABLE_STATUSES = ("SCHEDULED", "TIMED", "LIVE", "IN_PLAY", "PAUSED", "HALFTIME")
-    if match.status not in PREDICTABLE_STATUSES:
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc)
+    match_dt = match.utc_date.replace(tzinfo=timezone.utc) if match.utc_date.tzinfo is None else match.utc_date
+
+    # 1. Restrict predictions once the match has gone live or kickoff has arrived
+    if match.status not in ("SCHEDULED", "TIMED") or match_dt <= now:
         raise HTTPException(
             status_code=400,
-            detail="Predictions are closed — this match has already finished."
+            detail="Predictions are closed — this match has already kicked off or gone live."
         )
+
+    # 2. Allow only up to 2 prediction choices per match
+    chosen_markets = 0
+    if pred_in.predicted_outcome or (pred_in.predicted_home_score is not None and pred_in.predicted_away_score is not None):
+        chosen_markets += 1
+    if pred_in.predicted_btts:
+        chosen_markets += 1
+    if pred_in.predicted_over25:
+        chosen_markets += 1
+    if pred_in.predicted_dc:
+        chosen_markets += 1
+
+    if chosen_markets > 2:
+        raise HTTPException(
+            status_code=400,
+            detail="Maximum of 2 prediction choices allowed per match (e.g. Outcome + BTTS, or Double Chance + Over/Under)."
+        )
+    if chosen_markets == 0:
+        raise HTTPException(
+            status_code=400,
+            detail="Please select at least 1 prediction choice (maximum 2 choices)."
+        )
+
+    if pred_in.predicted_outcome and pred_in.predicted_outcome not in ("HOME_TEAM", "DRAW", "AWAY_TEAM"):
+        raise HTTPException(status_code=400, detail="Invalid outcome. Use HOME_TEAM, DRAW or AWAY_TEAM")
 
     existing = db.query(Prediction).filter(
         Prediction.user_id == current_user.id,
         Prediction.match_id == pred_in.match_id,
     ).first()
     if existing:
-        # Update existing prediction
         existing.predicted_outcome = pred_in.predicted_outcome
         existing.predicted_home_score = pred_in.predicted_home_score
         existing.predicted_away_score = pred_in.predicted_away_score
@@ -42,12 +70,6 @@ def create_prediction(
         db.commit()
         db.refresh(existing)
         return existing
-
-    if pred_in.predicted_outcome and pred_in.predicted_outcome not in ("HOME_TEAM", "DRAW", "AWAY_TEAM"):
-        raise HTTPException(status_code=400, detail="Invalid outcome. Use HOME_TEAM, DRAW or AWAY_TEAM")
-
-    if not pred_in.predicted_outcome and pred_in.predicted_home_score is None and not pred_in.predicted_btts and not pred_in.predicted_over25 and not pred_in.predicted_dc:
-        raise HTTPException(status_code=400, detail="Please select at least one market prediction (1X2, exact score, BTTS, O/U, or Double Chance).")
 
     pred = Prediction(
         user_id=current_user.id,
