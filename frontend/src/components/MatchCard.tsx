@@ -5,8 +5,10 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { submitPrediction, fetchMyPredictionForMatch } from '@/lib/api';
 import { Match } from '@/lib/types';
+import TacticalPitch, { LineupData } from './TacticalPitch';
+import PlayerStatsTable from './PlayerStatsTable';
 
-type TabKey = 'ai' | 'analytics' | 'sw' | 'predict' | 'stats' | 'h2h';
+type TabKey = 'ai' | 'lineups' | 'analytics' | 'sw' | 'predict' | 'stats' | 'h2h';
 
 function getFormBadgeColor(ppgStr: string): string {
   const ppg = parseFloat(ppgStr) || 1.5;
@@ -1038,6 +1040,7 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
 
   const tabs: { key: TabKey; label: string }[] = [
     { key: 'ai', label: '📊 Forecast & Odds' },
+    { key: 'lineups', label: '👕 Lineups & Players' },
     { key: 'analytics', label: '📝 Match Analysis' },
     { key: 'sw', label: '⚡ Strengths & Style' },
     { key: 'predict', label: status.isFinished ? '📋 Settlement' : '🎯 Multi-Predict' },

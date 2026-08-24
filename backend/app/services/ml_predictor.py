@@ -1,3 +1,4 @@
+from app.services.lineup_engine import get_match_full_lineups
 """
 FootballPredict — Match Prediction & Multi-Market Analysis Service
 Generates probabilities, scoreline projections, market odds, H2H stats,
@@ -2377,6 +2378,14 @@ def generate_comprehensive_analysis(
             "away_style": a_profile.get("style", []),
             "match_forecast": forecast,
         },
+        "lineups": get_match_full_lineups(
+            home_name,
+            away_name,
+            home_form=h_profile.get("formation", "4-2-3-1"),
+            away_form=a_profile.get("formation", "4-3-3"),
+            home_rating=h_ws_rating,
+            away_rating=a_ws_rating,
+        ),
     }
     return json.dumps(payload, ensure_ascii=False)
 
