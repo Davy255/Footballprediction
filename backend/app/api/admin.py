@@ -206,47 +206,61 @@ def test_send_email(
     """
     Sends a test email to verify email provider configuration and live delivery.
     """
-    from app.services.email_service import (
-        send_welcome_email,
-        send_password_reset_email,
-        send_daily_match_reminder_email,
-        get_last_email_error,
-    )
-    
-    target_email = payload.to_email.strip().lower()
-    if not target_email or "@" not in target_email:
-        raise HTTPException(status_code=400, detail="Invalid email address provided.")
+    try:
+        from app.services.email_service import (
+            send_welcome_email,
+            send_password_reset_email,
+            send_daily_match_reminder_email,
+            get_last_email_error,
+        )
+        
+        target_email = payload.to_email.strip().lower()
+        if not target_email or "@" not in target_email:
+            raise HTTPException(status_code=400, detail="Invalid email address provided.")
 
-    if payload.email_type == "welcome":
-        success = send_welcome_email(target_email, username="Valued Member")
-    elif payload.email_type == "reminder":
-        success = send_daily_match_reminder_email(target_email, username="Valued Member")
-    elif payload.email_type == "reset":
-        success = send_password_reset_email(target_email, reset_token="test-token-12345", username="Valued Member")
-    else:
-        raise HTTPException(status_code=400, detail=f"Unknown email type: '{payload.email_type}'. Use 'welcome', 'reminder', or 'reset'.")
+        if payload.email_type == "welcome":
+            success = send_welcome_email(target_email, username="Valued Member")
+        elif payload.email_type == "reminder":
+            success = send_daily_match_reminder_email(target_email, username="Valued Member")
+        elif payload.email_type == "reset":
+            success = send_password_reset_email(target_email, reset_token="test-token-12345", username="Valued Member")
+        else:
+            raise HTTPException(status_code=400, detail=f"Unknown email type: '{payload.email_type}'. Use 'welcome', 'reminder', or 'reset'.")
 
-    resend_env = os.environ.get("RESEND_API_KEY", "").strip() or getattr(settings, "RESEND_API_KEY", "").strip()
-    brevo_env = os.environ.get("BREVO_API_KEY", "").strip() or getattr(settings, "BREVO_API_KEY", "").strip()
-    active_mode = "Resend HTTPS API" if resend_env else "Brevo HTTPS API" if brevo_env else f"Live SMTP ({settings.SMTP_HOST})" if settings.SMTP_HOST else "Development Log Mode"
+        resend_env = os.environ.get("RESEND_API_KEY", "").strip() or getattr(settings, "RESEND_API_KEY", "").strip()
+        brevo_env = os.environ.get("BREVO_API_KEY", "").strip() or getattr(settings, "BREVO_API_KEY", "").strip()
+        active_mode = "Resend HTTPS API" if resend_env else "Brevo HTTPS API" if brevo_env else f"Live SMTP ({settings.SMTP_HOST})" if settings.SMTP_HOST else "Development Log Mode"
 
-    if not success:
-        err_detail = get_last_email_error() or "Email dispatch failed"
+        if not success:
+            err_detail = get_last_email_error() or "Email dispatch failed"
+            return {
+                "success": False,
+                "recipient": target_email,
+                "email_type": payload.email_type,
+                "mode": active_mode,
+                "message": f"❌ Email delivery failed via {active_mode}: {err_detail}",
+            }
+
         return {
-            "success": False,
+            "success": True,
             "recipient": target_email,
             "email_type": payload.email_type,
             "mode": active_mode,
-            "message": f"❌ Email delivery failed via {active_mode}: {err_detail}",
+            "message": f"✅ Email successfully delivered to {target_email} via {active_mode}!",
         }
-
-    return {
-        "success": True,
-        "recipient": target_email,
-        "email_type": payload.email_type,
-        "mode": active_mode,
-        "message": f"✅ Email successfully delivered to {target_email} via {active_mode}!",
-    }
+    except HTTPException:
+        raise
+    except Exception as exc:
+        import traceback
+        tb = traceback.format_exc()
+        logger.error(f"Error in test_send_email: {tb}")
+        return {
+            "success": False,
+            "recipient": getattr(payload, "to_email", ""),
+            "email_type": getattr(payload, "email_type", "welcome"),
+            "mode": "Exception",
+            "message": f"❌ Server exception: {str(exc)}",
+        }
 
 
 @router.post("/trigger-daily-reminders")
