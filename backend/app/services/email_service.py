@@ -88,17 +88,17 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
                     return True
                 else:
                     _LAST_EMAIL_ERROR = f"Resend API returned status {resp.status}: {resp_body}"
-                    logger.error(f"❌ Resend API non-success status {resp.status} sending to {to_email}: {resp_body}")
-                    return False
+                    logger.error(f"❌ Resend API non-success {resp.status} for {to_email}: {resp_body} — falling back to SMTP")
+                    # Fall through to SMTP below
         except urllib.error.HTTPError as he:
             err_body = he.read().decode("utf-8", errors="ignore")
             _LAST_EMAIL_ERROR = f"Resend API HTTP {he.code}: {err_body}"
-            logger.error(f"❌ Resend API HTTP error sending to {to_email}: {he.code} - {err_body}")
-            return False
+            logger.error(f"❌ Resend API HTTP {he.code} for {to_email}: {err_body} — falling back to SMTP")
+            # Fall through to SMTP below
         except Exception as e:
             _LAST_EMAIL_ERROR = f"Resend API error: {e}"
-            logger.error(f"❌ Resend API delivery failed to {to_email}: {e}")
-            return False
+            logger.error(f"❌ Resend API error for {to_email}: {e} — falling back to SMTP")
+            # Fall through to SMTP below
 
     # 2. Secondary Cloud Dispatch: Brevo REST HTTPS API (Port 443 - 100% unblocked)
     brevo_key = getattr(settings, "BREVO_API_KEY", "")
@@ -132,19 +132,39 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
             logger.error(f"❌ Brevo API delivery failed to {to_email}: {e}")
 
     # 3. Traditional SMTP Dispatch
-    if not settings.SMTP_HOST or not settings.SMTP_USER:
-        logger.info(f"📧 [DEV EMAIL MODE] Email to: {to_email} | Subject: '{subject}'")
-        logger.info(f"📧 [DEV EMAIL CONTENT Preview]:\n{text_content or html_content[:300]}...")
-        return True
+    # Read directly from os.environ to get Render env vars (settings object may be cached from startup)
+    import os as _os
+    smtp_host_env  = _os.environ.get("SMTP_HOST",       "").strip() or (settings.SMTP_HOST       or "").strip()
+    smtp_user_env  = _os.environ.get("SMTP_USER",       "").strip() or (settings.SMTP_USER       or "").strip()
+    smtp_pass_env  = _os.environ.get("SMTP_PASSWORD",   "").strip() or (settings.SMTP_PASSWORD   or "").strip()
+    smtp_port_env  = int(_os.environ.get("SMTP_PORT",   str(settings.SMTP_PORT or 587)))
+    smtp_from_env  = _os.environ.get("SMTP_FROM_EMAIL", "").strip() or (settings.SMTP_FROM_EMAIL or "").strip()
+    smtp_name_env  = _os.environ.get("SMTP_FROM_NAME",  "").strip() or (settings.SMTP_FROM_NAME  or "FootballPredict ⚽").strip()
+    smtp_tls_env   = _os.environ.get("SMTP_TLS", "true").strip().lower() not in ("false", "0", "no")
 
-    clean_host = settings.SMTP_HOST.strip()
-    clean_password = (settings.SMTP_PASSWORD or "").replace(" ", "").strip()
-    clean_port = int(settings.SMTP_PORT or 587)
+    logger.info(
+        f"📧 SMTP config check → host={smtp_host_env!r} port={smtp_port_env} "
+        f"user={smtp_user_env!r} from={smtp_from_env!r} tls={smtp_tls_env} "
+        f"password_set={'yes' if smtp_pass_env else 'NO'}"
+    )
+
+    if not smtp_host_env or not smtp_user_env:
+        logger.warning(
+            f"⚠️  SMTP not configured (SMTP_HOST={smtp_host_env!r}, SMTP_USER={smtp_user_env!r}). "
+            "No email dispatched. Add SMTP_HOST, SMTP_USER, SMTP_PASSWORD to Render env vars."
+        )
+        _LAST_EMAIL_ERROR = "SMTP not configured — SMTP_HOST or SMTP_USER missing"
+        return False
+
+    effective_from = smtp_from_env or smtp_user_env
+    from_header_smtp = f"{smtp_name_env} <{effective_from}>"
+    clean_password = smtp_pass_env.replace(" ", "")
 
     try:
+        import ssl
         msg = MIMEMultipart("alternative")
         msg["Subject"] = subject
-        msg["From"] = from_header
+        msg["From"] = from_header_smtp
         msg["To"] = to_email
 
         if text_content:
@@ -153,28 +173,29 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
 
         context = ssl.create_default_context()
 
-        if clean_port == 465:
-            with smtplib.SMTP_SSL(clean_host, clean_port, context=context, timeout=20) as server:
+        if smtp_port_env == 465:
+            with smtplib.SMTP_SSL(smtp_host_env, smtp_port_env, context=context, timeout=20) as server:
                 server.ehlo()
                 if clean_password:
-                    server.login(clean_user, clean_password)
-                server.sendmail(from_addr, [to_email], msg.as_string())
+                    server.login(smtp_user_env, clean_password)
+                server.sendmail(effective_from, [to_email], msg.as_string())
         else:
-            with smtplib.SMTP(clean_host, clean_port, timeout=20) as server:
+            with smtplib.SMTP(smtp_host_env, smtp_port_env, timeout=20) as server:
                 server.ehlo()
-                if settings.SMTP_TLS:
+                if smtp_tls_env:
                     server.starttls(context=context)
                     server.ehlo()
                 if clean_password:
-                    server.login(clean_user, clean_password)
-                server.sendmail(from_addr, [to_email], msg.as_string())
+                    server.login(smtp_user_env, clean_password)
+                server.sendmail(effective_from, [to_email], msg.as_string())
 
-        logger.info(f"✅ Email successfully delivered to {to_email} with subject: '{subject}'")
+        logger.info(f"✅ Email delivered via SMTP ({smtp_host_env}:{smtp_port_env}) to {to_email} | subject: '{subject}'")
         return True
     except Exception as e:
         _LAST_EMAIL_ERROR = str(e)
-        logger.error(f"❌ Failed to deliver email to {to_email} via {clean_host}:{clean_port}: {e}")
+        logger.error(f"❌ SMTP delivery failed to {to_email} via {smtp_host_env}:{smtp_port_env}: {e}")
         return False
+
 
 
 def send_password_reset_email(to_email: str, reset_token: str, username: str = "") -> bool:
