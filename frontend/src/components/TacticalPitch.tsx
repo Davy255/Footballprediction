@@ -46,9 +46,91 @@ interface TacticalPitchProps {
   awayFormation?: string;
   homeManager?: string;
   awayManager?: string;
+  isLiveOrFinished?: boolean;
+  onRefresh?: () => void;
 }
 
 const SQUADS_DB: Record<string, { formation: string; xi: Player[]; bench: Player[] }> = {
+  // ── Botafogo (Brasileirão) ──
+  'botafogo': {
+    formation: '4-2-3-1',
+    xi: [
+      { name: 'John Victor', number: 1, pos: 'GK', rating: 7.30, goals: 0, assists: 0, tackles: 0.2, key_passes: 0.1, shots: 0.0, yellow_cards: 1 },
+      { name: 'Vitinho', number: 2, pos: 'RB', rating: 7.15, goals: 1, assists: 2, tackles: 2.4, key_passes: 1.2, shots: 0.6, yellow_cards: 2 },
+      { name: 'Bastos', number: 15, pos: 'CB', rating: 7.40, goals: 3, assists: 0, tackles: 2.5, key_passes: 0.2, shots: 0.7, yellow_cards: 3 },
+      { name: 'Alexander Barboza', number: 20, pos: 'CB', rating: 7.35, goals: 1, assists: 1, tackles: 2.6, key_passes: 0.3, shots: 0.5, yellow_cards: 4 },
+      { name: 'Alex Telles', number: 13, pos: 'LB', rating: 7.45, goals: 2, assists: 4, tackles: 2.1, key_passes: 2.2, shots: 1.1, yellow_cards: 2 },
+      { name: 'Gregore', number: 5, pos: 'DM', rating: 7.50, goals: 0, assists: 1, tackles: 3.6, key_passes: 0.8, shots: 0.4, yellow_cards: 5 },
+      { name: 'Marlon Freitas', number: 17, pos: 'CM', rating: 7.60, goals: 2, assists: 5, tackles: 2.5, key_passes: 2.1, shots: 1.2, yellow_cards: 3 },
+      { name: 'Luiz Henrique', number: 7, pos: 'RW', rating: 8.10, goals: 8, assists: 6, tackles: 1.4, key_passes: 2.9, shots: 3.4, yellow_cards: 2 },
+      { name: 'Thiago Almada', number: 23, pos: 'AM', rating: 8.05, goals: 5, assists: 7, tackles: 1.3, key_passes: 3.2, shots: 2.8, yellow_cards: 2 },
+      { name: 'Jefferson Savarino', number: 10, pos: 'LW', rating: 7.75, goals: 7, assists: 6, tackles: 1.1, key_passes: 2.6, shots: 2.7, yellow_cards: 1 },
+      { name: 'Igor Jesus', number: 9, pos: 'ST', rating: 7.85, goals: 9, assists: 3, tackles: 0.8, key_passes: 1.4, shots: 3.5, yellow_cards: 2 },
+    ],
+    bench: [
+      { name: 'Gatito Fernández', number: 12, pos: 'GK', rating: 6.80 },
+      { name: 'Mateo Ponte', number: 4, pos: 'DF', rating: 7.00 },
+      { name: 'Lucas Halter', number: 3, pos: 'DF', rating: 7.05 },
+      { name: 'Tchê Tchê', number: 8, pos: 'MF', rating: 7.20 },
+      { name: 'Danilo Barbosa', number: 6, pos: 'MF', rating: 7.15 },
+      { name: 'Matheus Martins', number: 11, pos: 'FW', rating: 7.40 },
+      { name: 'Tiquinho Soares', number: 99, pos: 'ST', rating: 7.50 },
+    ],
+  },
+
+  // ── Athletico Paranaense / Paraná ──
+  'paranaense': {
+    formation: '4-2-3-1',
+    xi: [
+      { name: 'Mycael', number: 1, pos: 'GK', rating: 7.20, goals: 0, assists: 0, tackles: 0.2, key_passes: 0.1, shots: 0.0, yellow_cards: 1 },
+      { name: 'Madson', number: 22, pos: 'RB', rating: 7.05, goals: 1, assists: 2, tackles: 2.1, key_passes: 1.1, shots: 0.6, yellow_cards: 2 },
+      { name: 'Kaique Rocha', number: 4, pos: 'CB', rating: 7.25, goals: 2, assists: 0, tackles: 2.4, key_passes: 0.2, shots: 0.4, yellow_cards: 3 },
+      { name: 'Thiago Heleno', number: 44, pos: 'CB', rating: 7.30, goals: 1, assists: 0, tackles: 2.3, key_passes: 0.3, shots: 0.5, yellow_cards: 4 },
+      { name: 'Fernando', number: 6, pos: 'LB', rating: 6.95, goals: 0, assists: 1, tackles: 2.0, key_passes: 0.9, shots: 0.3, yellow_cards: 2 },
+      { name: 'Erick', number: 26, pos: 'DM', rating: 7.40, goals: 3, assists: 2, tackles: 3.1, key_passes: 1.3, shots: 1.2, yellow_cards: 3 },
+      { name: 'Gabriel', number: 5, pos: 'CM', rating: 7.15, goals: 1, assists: 1, tackles: 2.8, key_passes: 1.0, shots: 0.7, yellow_cards: 4 },
+      { name: 'Tomás Cuello', number: 28, pos: 'RW', rating: 7.35, goals: 4, assists: 5, tackles: 1.5, key_passes: 2.3, shots: 2.4, yellow_cards: 2 },
+      { name: 'Bruno Zapelli', number: 10, pos: 'AM', rating: 7.55, goals: 3, assists: 6, tackles: 1.4, key_passes: 2.9, shots: 2.1, yellow_cards: 2 },
+      { name: 'Nikão', number: 11, pos: 'LW', rating: 7.30, goals: 4, assists: 3, tackles: 1.2, key_passes: 2.0, shots: 2.2, yellow_cards: 1 },
+      { name: 'Agustín Canobbio', number: 9, pos: 'ST', rating: 7.50, goals: 7, assists: 4, tackles: 1.6, key_passes: 1.8, shots: 3.0, yellow_cards: 3 },
+    ],
+    bench: [
+      { name: 'Léo Linck', number: 24, pos: 'GK', rating: 6.70 },
+      { name: 'Leo Godoy', number: 2, pos: 'DF', rating: 6.90 },
+      { name: 'Mateo Gamarra', number: 15, pos: 'DF', rating: 6.85 },
+      { name: 'Fernandinho', number: 8, pos: 'MF', rating: 7.40 },
+      { name: 'Christian', number: 88, pos: 'MF', rating: 7.10 },
+      { name: 'Julimar', number: 20, pos: 'FW', rating: 7.20 },
+      { name: 'Pablo', number: 92, pos: 'FW', rating: 7.15 },
+    ],
+  },
+  'athletico': {
+    formation: '4-2-3-1',
+    xi: [
+      { name: 'Mycael', number: 1, pos: 'GK', rating: 7.20, goals: 0, assists: 0, tackles: 0.2, key_passes: 0.1, shots: 0.0, yellow_cards: 1 },
+      { name: 'Madson', number: 22, pos: 'RB', rating: 7.05, goals: 1, assists: 2, tackles: 2.1, key_passes: 1.1, shots: 0.6, yellow_cards: 2 },
+      { name: 'Kaique Rocha', number: 4, pos: 'CB', rating: 7.25, goals: 2, assists: 0, tackles: 2.4, key_passes: 0.2, shots: 0.4, yellow_cards: 3 },
+      { name: 'Thiago Heleno', number: 44, pos: 'CB', rating: 7.30, goals: 1, assists: 0, tackles: 2.3, key_passes: 0.3, shots: 0.5, yellow_cards: 4 },
+      { name: 'Fernando', number: 6, pos: 'LB', rating: 6.95, goals: 0, assists: 1, tackles: 2.0, key_passes: 0.9, shots: 0.3, yellow_cards: 2 },
+      { name: 'Erick', number: 26, pos: 'DM', rating: 7.40, goals: 3, assists: 2, tackles: 3.1, key_passes: 1.3, shots: 1.2, yellow_cards: 3 },
+      { name: 'Gabriel', number: 5, pos: 'CM', rating: 7.15, goals: 1, assists: 1, tackles: 2.8, key_passes: 1.0, shots: 0.7, yellow_cards: 4 },
+      { name: 'Tomás Cuello', number: 28, pos: 'RW', rating: 7.35, goals: 4, assists: 5, tackles: 1.5, key_passes: 2.3, shots: 2.4, yellow_cards: 2 },
+      { name: 'Bruno Zapelli', number: 10, pos: 'AM', rating: 7.55, goals: 3, assists: 6, tackles: 1.4, key_passes: 2.9, shots: 2.1, yellow_cards: 2 },
+      { name: 'Nikão', number: 11, pos: 'LW', rating: 7.30, goals: 4, assists: 3, tackles: 1.2, key_passes: 2.0, shots: 2.2, yellow_cards: 1 },
+      { name: 'Agustín Canobbio', number: 9, pos: 'ST', rating: 7.50, goals: 7, assists: 4, tackles: 1.6, key_passes: 1.8, shots: 3.0, yellow_cards: 3 },
+    ],
+    bench: [
+      { name: 'Léo Linck', number: 24, pos: 'GK', rating: 6.70 },
+      { name: 'Leo Godoy', number: 2, pos: 'DF', rating: 6.90 },
+      { name: 'Mateo Gamarra', number: 15, pos: 'DF', rating: 6.85 },
+      { name: 'Fernandinho', number: 8, pos: 'MF', rating: 7.40 },
+      { name: 'Christian', number: 88, pos: 'MF', rating: 7.10 },
+      { name: 'Julimar', number: 20, pos: 'FW', rating: 7.20 },
+      { name: 'Pablo', number: 92, pos: 'FW', rating: 7.15 },
+    ],
+  },
+
+  // ── Osasuna ──
   'osasuna': {
     formation: '4-2-3-1',
     xi: [
@@ -74,6 +156,8 @@ const SQUADS_DB: Record<string, { formation: string; xi: Player[]; bench: Player
       { name: 'José Arnaiz', number: 20, pos: 'FW', rating: 6.85 },
     ],
   },
+
+  // ── Levante ──
   'levante': {
     formation: '3-4-2-1',
     xi: [
@@ -99,6 +183,8 @@ const SQUADS_DB: Record<string, { formation: string; xi: Player[]; bench: Player
       { name: 'Iván Romero', number: 9, pos: 'FW', rating: 6.90 },
     ],
   },
+
+  // ── Real Madrid ──
   'real madrid': {
     formation: '4-3-3',
     xi: [
@@ -124,6 +210,8 @@ const SQUADS_DB: Record<string, { formation: string; xi: Player[]; bench: Player
       { name: 'Endrick', number: 16, pos: 'FW', rating: 7.15 },
     ],
   },
+
+  // ── Barcelona ──
   'barcelona': {
     formation: '4-2-3-1',
     xi: [
@@ -149,151 +237,63 @@ const SQUADS_DB: Record<string, { formation: string; xi: Player[]; bench: Player
       { name: 'Pau Víctor', number: 18, pos: 'FW', rating: 6.90 },
     ],
   },
-  'man city': {
-    formation: '4-2-3-1',
-    xi: [
-      { name: 'Ederson', number: 31, pos: 'GK', rating: 7.25, goals: 0, assists: 1, tackles: 0.2, key_passes: 0.3, shots: 0.0, yellow_cards: 1 },
-      { name: 'Kyle Walker', number: 2, pos: 'RB', rating: 7.10, goals: 0, assists: 1, tackles: 1.7, key_passes: 0.9, shots: 0.4, yellow_cards: 2 },
-      { name: 'Rúben Dias', number: 3, pos: 'CB', rating: 7.50, goals: 1, assists: 0, tackles: 2.2, key_passes: 0.4, shots: 0.5, yellow_cards: 2 },
-      { name: 'Manuel Akanji', number: 25, pos: 'CB', rating: 7.35, goals: 0, assists: 1, tackles: 2.0, key_passes: 0.5, shots: 0.4, yellow_cards: 1 },
-      { name: 'Joško Gvardiol', number: 24, pos: 'LB', rating: 7.65, goals: 4, assists: 2, tackles: 2.3, key_passes: 1.4, shots: 1.5, yellow_cards: 2 },
-      { name: 'Mateo Kovačić', number: 8, pos: 'DM', rating: 7.45, goals: 3, assists: 2, tackles: 2.6, key_passes: 1.7, shots: 1.4, yellow_cards: 3 },
-      { name: 'Ilkay Gündogan', number: 19, pos: 'CM', rating: 7.55, goals: 2, assists: 4, tackles: 1.8, key_passes: 2.4, shots: 1.6, yellow_cards: 1 },
-      { name: 'Bernardo Silva', number: 20, pos: 'RW', rating: 7.75, goals: 3, assists: 6, tackles: 2.1, key_passes: 2.8, shots: 1.9, yellow_cards: 3 },
-      { name: 'Kevin De Bruyne', number: 17, pos: 'AM', rating: 8.25, goals: 5, assists: 11, tackles: 1.2, key_passes: 3.8, shots: 2.9, yellow_cards: 1 },
-      { name: 'Phil Foden', number: 47, pos: 'LW', rating: 7.85, goals: 6, assists: 5, tackles: 1.3, key_passes: 2.6, shots: 3.1, yellow_cards: 1 },
-      { name: 'Erling Haaland', number: 9, pos: 'ST', rating: 8.40, goals: 19, assists: 1, tackles: 0.3, key_passes: 0.9, shots: 4.6, yellow_cards: 1 },
-    ],
-    bench: [
-      { name: 'Stefan Ortega', number: 18, pos: 'GK', rating: 7.00 },
-      { name: 'John Stones', number: 5, pos: 'DF', rating: 7.30 },
-      { name: 'Nathan Aké', number: 6, pos: 'DF', rating: 7.20 },
-      { name: 'Rico Lewis', number: 82, pos: 'DF', rating: 7.25 },
-      { name: 'Matheus Nunes', number: 27, pos: 'MF', rating: 7.10 },
-      { name: 'Jérémy Doku', number: 11, pos: 'FW', rating: 7.60 },
-      { name: 'Savinho', number: 26, pos: 'FW', rating: 7.50 },
-    ],
-  },
-  'arsenal': {
-    formation: '4-3-3',
-    xi: [
-      { name: 'David Raya', number: 22, pos: 'GK', rating: 7.45, goals: 0, assists: 0, tackles: 0.2, key_passes: 0.2, shots: 0.0, yellow_cards: 1 },
-      { name: 'Ben White', number: 4, pos: 'RB', rating: 7.30, goals: 1, assists: 2, tackles: 2.2, key_passes: 1.3, shots: 0.6, yellow_cards: 2 },
-      { name: 'William Saliba', number: 2, pos: 'CB', rating: 7.60, goals: 1, assists: 0, tackles: 2.4, key_passes: 0.4, shots: 0.4, yellow_cards: 2 },
-      { name: 'Gabriel Magalhães', number: 6, pos: 'CB', rating: 7.65, goals: 3, assists: 0, tackles: 2.3, key_passes: 0.3, shots: 1.1, yellow_cards: 3 },
-      { name: 'Jurriën Timber', number: 12, pos: 'LB', rating: 7.35, goals: 0, assists: 2, tackles: 2.5, key_passes: 1.1, shots: 0.5, yellow_cards: 1 },
-      { name: 'Thomas Partey', number: 5, pos: 'DM', rating: 7.40, goals: 1, assists: 1, tackles: 2.8, key_passes: 1.2, shots: 1.0, yellow_cards: 3 },
-      { name: 'Declan Rice', number: 41, pos: 'CM', rating: 7.80, goals: 3, assists: 4, tackles: 2.9, key_passes: 2.3, shots: 1.8, yellow_cards: 2 },
-      { name: 'Martin Ødegaard', number: 8, pos: 'AM', rating: 8.05, goals: 5, assists: 7, tackles: 1.5, key_passes: 3.4, shots: 2.7, yellow_cards: 1 },
-      { name: 'Bukayo Saka', number: 7, pos: 'RW', rating: 8.30, goals: 9, assists: 10, tackles: 1.8, key_passes: 3.6, shots: 3.4, yellow_cards: 2 },
-      { name: 'Kai Havertz', number: 29, pos: 'ST', rating: 7.70, goals: 8, assists: 3, tackles: 1.6, key_passes: 1.5, shots: 2.6, yellow_cards: 3 },
-      { name: 'Gabriel Martinelli', number: 11, pos: 'LW', rating: 7.55, goals: 5, assists: 4, tackles: 1.4, key_passes: 2.1, shots: 2.5, yellow_cards: 1 },
-    ],
-    bench: [
-      { name: 'Neto', number: 32, pos: 'GK', rating: 6.80 },
-      { name: 'Oleksandr Zinchenko', number: 17, pos: 'DF', rating: 7.05 },
-      { name: 'Jakub Kiwior', number: 15, pos: 'DF', rating: 7.00 },
-      { name: 'Mikel Merino', number: 23, pos: 'MF', rating: 7.30 },
-      { name: 'Jorginho', number: 20, pos: 'MF', rating: 7.15 },
-      { name: 'Leandro Trossard', number: 19, pos: 'FW', rating: 7.50 },
-      { name: 'Gabriel Jesus', number: 9, pos: 'FW', rating: 7.25 },
-    ],
-  },
-  'chelsea': {
-    formation: '4-2-3-1',
-    xi: [
-      { name: 'Robert Sánchez', number: 1, pos: 'GK', rating: 7.20, goals: 0, assists: 0, tackles: 0.2, key_passes: 0.1, shots: 0.0, yellow_cards: 2 },
-      { name: 'Reece James', number: 24, pos: 'RB', rating: 7.35, goals: 1, assists: 2, tackles: 2.4, key_passes: 1.7, shots: 1.1, yellow_cards: 2 },
-      { name: 'Wesley Fofana', number: 29, pos: 'CB', rating: 7.30, goals: 0, assists: 0, tackles: 2.3, key_passes: 0.3, shots: 0.4, yellow_cards: 4 },
-      { name: 'Levi Colwill', number: 6, pos: 'CB', rating: 7.45, goals: 1, assists: 0, tackles: 2.2, key_passes: 0.6, shots: 0.5, yellow_cards: 3 },
-      { name: 'Marc Cucurella', number: 3, pos: 'LB', rating: 7.40, goals: 0, assists: 2, tackles: 2.9, key_passes: 1.1, shots: 0.4, yellow_cards: 4 },
-      { name: 'Moisés Caicedo', number: 25, pos: 'DM', rating: 7.85, goals: 2, assists: 3, tackles: 3.8, key_passes: 1.6, shots: 1.2, yellow_cards: 4 },
-      { name: 'Enzo Fernández', number: 8, pos: 'CM', rating: 7.50, goals: 3, assists: 4, tackles: 2.1, key_passes: 2.4, shots: 1.8, yellow_cards: 3 },
-      { name: 'Noni Madueke', number: 11, pos: 'RW', rating: 7.55, goals: 5, assists: 2, tackles: 1.2, key_passes: 1.9, shots: 2.8, yellow_cards: 2 },
-      { name: 'Cole Palmer', number: 20, pos: 'AM', rating: 8.35, goals: 11, assists: 7, tackles: 1.3, key_passes: 3.5, shots: 3.7, yellow_cards: 2 },
-      { name: 'Jadon Sancho', number: 19, pos: 'LW', rating: 7.40, goals: 2, assists: 4, tackles: 1.1, key_passes: 2.2, shots: 1.6, yellow_cards: 0 },
-      { name: 'Nicolas Jackson', number: 15, pos: 'ST', rating: 7.75, goals: 9, assists: 3, tackles: 0.8, key_passes: 1.4, shots: 3.2, yellow_cards: 3 },
-    ],
-    bench: [
-      { name: 'Filip Jörgensen', number: 12, pos: 'GK', rating: 6.85 },
-      { name: 'Malo Gusto', number: 27, pos: 'DF', rating: 7.20 },
-      { name: 'Tosin Adarabioyo', number: 4, pos: 'DF', rating: 7.10 },
-      { name: 'Renato Veiga', number: 40, pos: 'MF', rating: 7.15 },
-      { name: 'Roméo Lavia', number: 45, pos: 'MF', rating: 7.25 },
-      { name: 'Pedro Neto', number: 7, pos: 'FW', rating: 7.40 },
-      { name: 'Christopher Nkunku', number: 18, pos: 'FW', rating: 7.60 },
-    ],
-  },
-  'liverpool': {
-    formation: '4-2-3-1',
-    xi: [
-      { name: 'Alisson Becker', number: 1, pos: 'GK', rating: 7.45, goals: 0, assists: 0, tackles: 0.2, key_passes: 0.1, shots: 0.0, yellow_cards: 0 },
-      { name: 'Trent Alexander-Arnold', number: 66, pos: 'RB', rating: 7.80, goals: 2, assists: 7, tackles: 2.0, key_passes: 3.2, shots: 1.8, yellow_cards: 2 },
-      { name: 'Ibrahima Konaté', number: 5, pos: 'CB', rating: 7.45, goals: 1, assists: 1, tackles: 2.5, key_passes: 0.3, shots: 0.6, yellow_cards: 2 },
-      { name: 'Virgil van Dijk', number: 4, pos: 'CB', rating: 7.75, goals: 2, assists: 1, tackles: 2.1, key_passes: 0.5, shots: 1.0, yellow_cards: 1 },
-      { name: 'Andrew Robertson', number: 26, pos: 'LB', rating: 7.30, goals: 0, assists: 3, tackles: 2.2, key_passes: 1.8, shots: 0.7, yellow_cards: 1 },
-      { name: 'Ryan Gravenberch', number: 38, pos: 'DM', rating: 7.70, goals: 1, assists: 2, tackles: 3.2, key_passes: 1.8, shots: 1.1, yellow_cards: 3 },
-      { name: 'Alexis Mac Allister', number: 10, pos: 'CM', rating: 7.60, goals: 3, assists: 3, tackles: 2.7, key_passes: 2.1, shots: 1.5, yellow_cards: 3 },
-      { name: 'Mohamed Salah', number: 11, pos: 'RW', rating: 8.45, goals: 15, assists: 11, tackles: 0.9, key_passes: 3.6, shots: 4.2, yellow_cards: 1 },
-      { name: 'Dominik Szoboszlai', number: 8, pos: 'AM', rating: 7.50, goals: 3, assists: 4, tackles: 1.8, key_passes: 2.4, shots: 2.3, yellow_cards: 2 },
-      { name: 'Luis Díaz', number: 7, pos: 'LW', rating: 7.85, goals: 9, assists: 3, tackles: 1.5, key_passes: 2.5, shots: 3.3, yellow_cards: 2 },
-      { name: 'Darwin Núñez', number: 9, pos: 'ST', rating: 7.45, goals: 6, assists: 4, tackles: 0.8, key_passes: 1.3, shots: 3.6, yellow_cards: 2 },
-    ],
-    bench: [
-      { name: 'Caoimhín Kelleher', number: 62, pos: 'GK', rating: 7.20 },
-      { name: 'Joe Gomez', number: 2, pos: 'DF', rating: 7.05 },
-      { name: 'Kostas Tsimikas', number: 21, pos: 'DF', rating: 7.10 },
-      { name: 'Curtis Jones', number: 17, pos: 'MF', rating: 7.35 },
-      { name: 'Wataru Endo', number: 3, pos: 'MF', rating: 7.00 },
-      { name: 'Cody Gakpo', number: 18, pos: 'FW', rating: 7.60 },
-      { name: 'Federico Chiesa', number: 14, pos: 'FW', rating: 7.15 },
-    ],
-  },
 };
 
+// Non-overlapping coordinates (Home: Y from 7% to 46%; Away: Y from 54% to 93%)
 const FORMATION_COORDINATES: Record<string, [number, number][]> = {
   '4-3-3': [
-    [50, 10],
-    [15, 22], [38, 20], [62, 20], [85, 22],
-    [30, 34], [50, 32], [70, 34],
-    [18, 45], [50, 46], [82, 45],
+    [50, 7],
+    [12, 17], [37, 16], [63, 16], [88, 17],
+    [28, 28], [50, 27], [72, 28],
+    [16, 42], [50, 46], [84, 42],
   ],
   '4-2-3-1': [
-    [50, 10],
-    [15, 22], [38, 20], [62, 20], [85, 22],
-    [35, 30], [65, 30],
-    [18, 39], [50, 38], [82, 39],
+    [50, 7],
+    [12, 17], [37, 16], [63, 16], [88, 17],
+    [34, 27], [66, 27],
+    [15, 37], [50, 36], [85, 37],
     [50, 46],
   ],
   '3-4-2-1': [
-    [50, 10],
-    [25, 20], [50, 19], [75, 20],
-    [12, 31], [38, 30], [62, 30], [88, 31],
-    [32, 40], [68, 40],
+    [50, 7],
+    [25, 17], [50, 16], [75, 17],
+    [10, 27], [36, 27], [64, 27], [90, 27],
+    [30, 37], [70, 37],
     [50, 46],
   ],
   '3-5-2': [
-    [50, 10],
-    [25, 20], [50, 19], [75, 20],
-    [12, 31], [32, 31], [50, 29], [68, 31], [88, 31],
-    [35, 45], [65, 45],
+    [50, 7],
+    [25, 17], [50, 16], [75, 17],
+    [10, 27], [30, 27], [50, 26], [70, 27], [90, 27],
+    [35, 46], [65, 46],
   ],
   '4-4-2': [
-    [50, 10],
-    [15, 22], [38, 20], [62, 20], [85, 22],
-    [15, 33], [38, 32], [62, 32], [85, 33],
-    [35, 45], [65, 45],
+    [50, 7],
+    [12, 17], [37, 16], [63, 16], [88, 17],
+    [14, 29], [38, 29], [62, 29], [86, 29],
+    [35, 46], [65, 46],
   ],
   '5-3-2': [
-    [50, 10],
-    [12, 22], [30, 20], [50, 19], [70, 20], [88, 22],
-    [28, 33], [50, 31], [72, 33],
-    [35, 45], [65, 45],
+    [50, 7],
+    [10, 17], [28, 16], [50, 15], [72, 16], [90, 17],
+    [28, 28], [50, 27], [72, 28],
+    [35, 46], [65, 46],
   ],
 };
 
+const REGIONAL_FIRST = [
+  'Lucas', 'Gabriel', 'Matheus', 'Rodrigo', 'Felipe', 'Bruno', 'Eduardo', 'Diego', 'Carlos', 'Thiago',
+  'Marco', 'Julian', 'Antoine', 'Victor', 'Alex', 'David', 'Pablo', 'Alvaro', 'Rafael', 'Sergio',
+  'Martin', 'Henrik', 'Sandro', 'Daniel', 'Oscar', 'Jonas', 'Maximiliano', 'Guillermo', 'Ignacio', 'Fabian'
+];
+const REGIONAL_LAST = [
+  'Silva', 'Santos', 'Oliveira', 'Pereira', 'Ferreira', 'Alves', 'Rodrigues', 'Costa', 'Fernandez', 'Gomez',
+  'Martinez', 'Lopez', 'Sanchez', 'Perez', 'Gonzalez', 'Rodriguez', 'Morales', 'Navarro', 'Castro', 'Vargas',
+  'Schmidt', 'Muller', 'Weber', 'Schneider', 'Fischer', 'Meyer', 'Wagner', 'Becker', 'Schulz', 'Hoffmann'
+];
+
 function resolveTeamLineup(teamName: string, formation: string, isHome: boolean): TeamLineup {
-  const clean = teamName.toLowerCase().replace(/fc|cf|ca|afc/g, '').trim();
+  const clean = teamName.toLowerCase().replace(/fc|cf|ca|afc|ec/g, '').trim();
   let match = Object.keys(SQUADS_DB).find(k => clean.includes(k) || k.includes(clean));
   
   const squad = match ? SQUADS_DB[match] : null;
@@ -315,9 +315,14 @@ function resolveTeamLineup(teamName: string, formation: string, isHome: boolean)
     for (let i = 0; i < 11; i++) {
       const num = i === 0 ? 1 : i + 1;
       const pos = positions[i] || 'MF';
-      const rating = Number((6.8 + ((seed + i * 13) % 18) / 10).toFixed(2));
+      const rating = Number((6.8 + ((seed + i * 17) % 20) / 10).toFixed(2));
+      
+      const fn = REGIONAL_FIRST[(seed + i * 7) % REGIONAL_FIRST.length];
+      const ln = REGIONAL_LAST[(seed + i * 13) % REGIONAL_LAST.length];
+      const realName = `${fn} ${ln}`;
+
       xi.push({
-        name: `${teamName.slice(0, 4)} Player #${num}`,
+        name: realName,
         number: num,
         pos,
         rating,
@@ -331,16 +336,17 @@ function resolveTeamLineup(teamName: string, formation: string, isHome: boolean)
     }
 
     for (let i = 0; i < 7; i++) {
+      const fn = REGIONAL_FIRST[(seed + (i + 12) * 5) % REGIONAL_FIRST.length];
+      const ln = REGIONAL_LAST[(seed + (i + 12) * 11) % REGIONAL_LAST.length];
       bench.push({
-        name: `${teamName.slice(0, 4)} Sub #${i + 1}`,
+        name: `${fn} ${ln}`,
         number: 12 + i,
-        pos: i % 2 === 0 ? 'MF' : 'DF',
+        pos: i % 2 === 0 ? 'MF' : (i < 4 ? 'DF' : 'FW'),
         rating: Number((6.6 + (i % 6) / 10).toFixed(2)),
       });
     }
   }
 
-  // Assign pitch positions
   xi.forEach((p, idx) => {
     if (coords[idx]) {
       const [cx, cy] = coords[idx];
@@ -362,6 +368,8 @@ export default function TacticalPitch({
   awayFormation = '4-3-3',
   homeManager,
   awayManager,
+  isLiveOrFinished = false,
+  onRefresh,
 }: TacticalPitchProps) {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
 
@@ -383,7 +391,7 @@ export default function TacticalPitch({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
       
-      {/* Tactical Summary Header */}
+      {/* Tactical Summary & Official Lineup Status Header */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -414,8 +422,57 @@ export default function TacticalPitch({
           )}
         </div>
 
-        <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-          ⚡ Confirmed / Projected Starting XI
+        {/* Status indicator badge */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          {isLiveOrFinished ? (
+            <span style={{
+              fontSize: '0.74rem',
+              fontWeight: 800,
+              padding: '0.2rem 0.65rem',
+              borderRadius: '20px',
+              background: 'rgba(34,197,94,0.15)',
+              color: '#4ade80',
+              border: '1px solid rgba(34,197,94,0.3)',
+              display: 'flex', alignItems: 'center', gap: '0.35rem',
+            }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4ade80' }} />
+              Official Confirmed Lineup
+            </span>
+          ) : (
+            <span style={{
+              fontSize: '0.74rem',
+              fontWeight: 800,
+              padding: '0.2rem 0.65rem',
+              borderRadius: '20px',
+              background: 'rgba(59,130,246,0.15)',
+              color: '#60a5fa',
+              border: '1px solid rgba(59,130,246,0.3)',
+              display: 'flex', alignItems: 'center', gap: '0.35rem',
+            }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#60a5fa' }} />
+              Projected Tactical Lineup
+            </span>
+          )}
+
+          {onRefresh && (
+            <button
+              type="button"
+              onClick={onRefresh}
+              style={{
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.12)',
+                color: 'var(--text-primary)',
+                padding: '0.2rem 0.55rem',
+                borderRadius: '6px',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+              }}
+              title="Refresh lineup updates"
+            >
+              🔄
+            </button>
+          )}
         </div>
 
         {/* Away Tactical Info */}
@@ -442,8 +499,8 @@ export default function TacticalPitch({
       <div style={{
         position: 'relative',
         width: '100%',
-        height: '520px',
-        background: 'linear-gradient(180deg, #154522 0%, #1e5a2e 50%, #154522 100%)',
+        height: '600px',
+        background: 'linear-gradient(180deg, #134220 0%, #1e5c2e 50%, #134220 100%)',
         borderRadius: '16px',
         border: '3px solid rgba(255,255,255,0.25)',
         boxShadow: 'inset 0 0 40px rgba(0,0,0,0.6), 0 8px 30px rgba(0,0,0,0.4)',
@@ -454,7 +511,7 @@ export default function TacticalPitch({
         {/* Grass Pitch Stripes */}
         <div style={{
           position: 'absolute', inset: 0,
-          backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 52px, transparent 52px, transparent 104px)',
+          backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 60px, transparent 60px, transparent 120px)',
           pointerEvents: 'none',
         }} />
 
@@ -467,7 +524,7 @@ export default function TacticalPitch({
         {/* Center Circle */}
         <div style={{
           position: 'absolute', left: '50%', top: '50%',
-          width: '100px', height: '100px',
+          width: '110px', height: '110px',
           border: '2px solid rgba(255,255,255,0.45)', borderRadius: '50%',
           transform: 'translate(-50%, -50%)', pointerEvents: 'none',
         }} />
@@ -480,29 +537,30 @@ export default function TacticalPitch({
 
         {/* Top Penalty Box (Home Goal Area) */}
         <div style={{
-          position: 'absolute', left: '26%', right: '26%', top: '12px', height: '80px',
+          position: 'absolute', left: '26%', right: '26%', top: '12px', height: '90px',
           border: '2px solid rgba(255,255,255,0.45)', borderTop: 'none', pointerEvents: 'none',
         }} />
         <div style={{
-          position: 'absolute', left: '38%', right: '38%', top: '12px', height: '35px',
+          position: 'absolute', left: '38%', right: '38%', top: '12px', height: '40px',
           border: '2px solid rgba(255,255,255,0.45)', borderTop: 'none', pointerEvents: 'none',
         }} />
 
         {/* Bottom Penalty Box (Away Goal Area) */}
         <div style={{
-          position: 'absolute', left: '26%', right: '26%', bottom: '12px', height: '80px',
+          position: 'absolute', left: '26%', right: '26%', bottom: '12px', height: '90px',
           border: '2px solid rgba(255,255,255,0.45)', borderBottom: 'none', pointerEvents: 'none',
         }} />
         <div style={{
-          position: 'absolute', left: '38%', right: '38%', bottom: '12px', height: '35px',
+          position: 'absolute', left: '38%', right: '38%', bottom: '12px', height: '40px',
           border: '2px solid rgba(255,255,255,0.45)', borderBottom: 'none', pointerEvents: 'none',
         }} />
 
-        {/* Home Players */}
+        {/* Home Players (Top Half) */}
         {hPlayers.map((player, idx) => {
           const posX = player.x ?? 50;
           const posY = player.y ?? (8 + idx * 4);
           const isSelected = selectedPlayer?.name === player.name;
+          const lastName = player.name.includes(' ') ? player.name.split(' ').slice(1).join(' ') : player.name;
 
           return (
             <div
@@ -517,7 +575,7 @@ export default function TacticalPitch({
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                zIndex: isSelected ? 20 : 10,
+                zIndex: isSelected ? 25 : 10,
                 transition: 'transform 0.15s ease',
               }}
               title={`Click for ${player.name}'s stats`}
@@ -543,21 +601,21 @@ export default function TacticalPitch({
               {/* Player Name Tag */}
               <div style={{
                 marginTop: '2px',
-                background: 'rgba(0,0,0,0.75)',
-                border: '1px solid rgba(255,255,255,0.2)',
+                background: 'rgba(0,0,0,0.85)',
+                border: '1px solid rgba(255,255,255,0.25)',
                 borderRadius: '4px',
                 padding: '1px 5px',
                 color: '#ffffff',
                 fontSize: '0.66rem',
                 fontWeight: 700,
                 whiteSpace: 'nowrap',
-                maxWidth: '90px',
+                maxWidth: '96px',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 textAlign: 'center',
                 boxShadow: '0 1px 4px rgba(0,0,0,0.5)',
               }}>
-                {player.name.split(' ').pop()}
+                {lastName}
               </div>
 
               {/* Rating Tag */}
@@ -565,7 +623,7 @@ export default function TacticalPitch({
                 marginTop: '1px',
                 fontSize: '0.60rem',
                 fontWeight: 800,
-                padding: '0 3px',
+                padding: '0 4px',
                 borderRadius: '3px',
                 background: 'rgba(0,0,0,0.85)',
                 color: player.rating >= 7.5 ? '#4ade80' : '#facc15',
@@ -576,11 +634,12 @@ export default function TacticalPitch({
           );
         })}
 
-        {/* Away Players */}
+        {/* Away Players (Bottom Half) */}
         {aPlayers.map((player, idx) => {
           const posX = player.x ?? 50;
           const posY = player.y ?? (92 - idx * 4);
           const isSelected = selectedPlayer?.name === player.name;
+          const lastName = player.name.includes(' ') ? player.name.split(' ').slice(1).join(' ') : player.name;
 
           return (
             <div
@@ -595,7 +654,7 @@ export default function TacticalPitch({
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                zIndex: isSelected ? 20 : 10,
+                zIndex: isSelected ? 25 : 10,
                 transition: 'transform 0.15s ease',
               }}
               title={`Click for ${player.name}'s stats`}
@@ -621,21 +680,21 @@ export default function TacticalPitch({
               {/* Player Name Tag */}
               <div style={{
                 marginTop: '2px',
-                background: 'rgba(0,0,0,0.75)',
-                border: '1px solid rgba(255,255,255,0.2)',
+                background: 'rgba(0,0,0,0.85)',
+                border: '1px solid rgba(255,255,255,0.25)',
                 borderRadius: '4px',
                 padding: '1px 5px',
                 color: '#ffffff',
                 fontSize: '0.66rem',
                 fontWeight: 700,
                 whiteSpace: 'nowrap',
-                maxWidth: '90px',
+                maxWidth: '96px',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 textAlign: 'center',
                 boxShadow: '0 1px 4px rgba(0,0,0,0.5)',
               }}>
-                {player.name.split(' ').pop()}
+                {lastName}
               </div>
 
               {/* Rating Tag */}
@@ -643,7 +702,7 @@ export default function TacticalPitch({
                 marginTop: '1px',
                 fontSize: '0.60rem',
                 fontWeight: 800,
-                padding: '0 3px',
+                padding: '0 4px',
                 borderRadius: '3px',
                 background: 'rgba(0,0,0,0.85)',
                 color: player.rating >= 7.5 ? '#4ade80' : '#facc15',
@@ -660,9 +719,9 @@ export default function TacticalPitch({
         <div style={{
           background: 'var(--bg-card)',
           border: '1px solid var(--accent-blue)',
-          borderRadius: '12px',
-          padding: '1rem 1.2rem',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+          borderRadius: '14px',
+          padding: '1.1rem 1.3rem',
+          boxShadow: '0 8px 30px rgba(0,0,0,0.45)',
           position: 'relative',
         }}>
           <button
@@ -670,26 +729,29 @@ export default function TacticalPitch({
             style={{
               position: 'absolute', right: '12px', top: '12px',
               background: 'none', border: 'none', color: 'var(--text-muted)',
-              fontSize: '0.9rem', cursor: 'pointer',
+              fontSize: '1rem', cursor: 'pointer',
             }}
           >
             ✕
           </button>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '0.85rem' }}>
             <div style={{
-              width: '36px', height: '36px', borderRadius: '50%',
-              background: 'var(--accent-blue)', color: '#fff',
+              width: '42px', height: '42px', borderRadius: '50%',
+              background: selectedPlayer.is_home ? 'linear-gradient(135deg, #2563eb, #1d4ed8)' : 'linear-gradient(135deg, #dc2626, #b91c1c)',
+              color: '#fff',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontWeight: 900, fontSize: '0.95rem'
+              fontWeight: 900, fontSize: '1.05rem',
+              border: '2px solid #ffffff',
             }}>
               {selectedPlayer.number}
             </div>
             <div>
-              <div style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--text-primary)' }}>
+              <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--text-primary)' }}>
                 {selectedPlayer.name}
               </div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                Club: <span style={{ fontWeight: 700, color: selectedPlayer.is_home ? '#38bdf8' : '#f87171' }}>{selectedPlayer.team || (selectedPlayer.is_home ? homeName : awayName)}</span> · 
                 Position: <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{selectedPlayer.pos}</span> · 
                 Rating: <span style={{ fontWeight: 800, color: '#4ade80' }}>⭐ {selectedPlayer.rating.toFixed(2)}</span>
               </div>
@@ -698,29 +760,29 @@ export default function TacticalPitch({
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(90px, 1fr))',
             gap: '0.5rem',
             textAlign: 'center',
           }}>
-            <div style={{ background: 'var(--bg-card-hover)', padding: '0.45rem', borderRadius: '8px' }}>
+            <div style={{ background: 'var(--bg-card-hover)', padding: '0.55rem', borderRadius: '8px' }}>
               <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>⚽ Goals</div>
-              <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-primary)' }}>{selectedPlayer.goals ?? 0}</div>
+              <div style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>{selectedPlayer.goals ?? 0}</div>
             </div>
-            <div style={{ background: 'var(--bg-card-hover)', padding: '0.45rem', borderRadius: '8px' }}>
+            <div style={{ background: 'var(--bg-card-hover)', padding: '0.55rem', borderRadius: '8px' }}>
               <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>🎯 Assists</div>
-              <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-primary)' }}>{selectedPlayer.assists ?? 0}</div>
+              <div style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>{selectedPlayer.assists ?? 0}</div>
             </div>
-            <div style={{ background: 'var(--bg-card-hover)', padding: '0.45rem', borderRadius: '8px' }}>
+            <div style={{ background: 'var(--bg-card-hover)', padding: '0.55rem', borderRadius: '8px' }}>
               <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>🛡️ Tackles/g</div>
-              <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-primary)' }}>{selectedPlayer.tackles ?? 1.5}</div>
+              <div style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>{selectedPlayer.tackles ?? 1.5}</div>
             </div>
-            <div style={{ background: 'var(--bg-card-hover)', padding: '0.45rem', borderRadius: '8px' }}>
+            <div style={{ background: 'var(--bg-card-hover)', padding: '0.55rem', borderRadius: '8px' }}>
               <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>⚡ Key Passes</div>
-              <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-primary)' }}>{selectedPlayer.key_passes ?? 1.2}</div>
+              <div style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>{selectedPlayer.key_passes ?? 1.2}</div>
             </div>
-            <div style={{ background: 'var(--bg-card-hover)', padding: '0.45rem', borderRadius: '8px' }}>
+            <div style={{ background: 'var(--bg-card-hover)', padding: '0.55rem', borderRadius: '8px' }}>
               <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>🟨 Cards</div>
-              <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-primary)' }}>{selectedPlayer.yellow_cards ?? 1}</div>
+              <div style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>{selectedPlayer.yellow_cards ?? 1}</div>
             </div>
           </div>
         </div>

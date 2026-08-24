@@ -1314,6 +1314,8 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
                     awayFormation={ws?.away_formation || '4-3-3'}
                     homeManager={ws?.home_manager}
                     awayManager={ws?.away_manager}
+                    isLiveOrFinished={status.isLive || status.isFinished}
+                    onRefresh={onPredictionChange}
                   />
                 </div>
 
