@@ -427,7 +427,22 @@ export default function AdminDashboardPage() {
 
             {/* Email Testing & Reminder Dispatch Card */}
             <div className="glass-panel" style={{ padding: '1.5rem' }}>
-              <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.6rem' }}>📧 Email Service &amp; Reminders</h2>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.6rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+                <h2 style={{ fontSize: '1.2rem', fontWeight: 800, margin: 0 }}>📧 Email Service &amp; Reminders</h2>
+                {stats?.smtp_host && (
+                  <span style={{
+                    fontSize: '0.72rem',
+                    padding: '0.2rem 0.6rem',
+                    borderRadius: '9999px',
+                    background: stats.smtp_host.includes('HTTPS') ? 'rgba(16, 185, 129, 0.15)' : 'rgba(234, 179, 8, 0.15)',
+                    color: stats.smtp_host.includes('HTTPS') ? '#34d399' : '#facc15',
+                    border: `1px solid ${stats.smtp_host.includes('HTTPS') ? 'rgba(16, 185, 129, 0.3)' : 'rgba(234, 179, 8, 0.3)'}`,
+                    fontWeight: 700,
+                  }}>
+                    {stats.smtp_host}
+                  </span>
+                )}
+              </div>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem', lineHeight: 1.5 }}>
                 Test live transactional email delivery (Welcome, Daily Digest, Password Reset) or trigger daily reminders.
               </p>
@@ -477,8 +492,23 @@ export default function AdminDashboardPage() {
               </div>
 
               {emailStatusMsg && (
-                <div style={{ marginTop: '0.8rem', padding: '0.75rem', borderRadius: '8px', background: 'rgba(59, 130, 246, 0.15)', fontSize: '0.82rem', border: '1px solid rgba(59, 130, 246, 0.3)' }}>
-                  {emailStatusMsg}
+                <div style={{
+                  marginTop: '0.8rem',
+                  padding: '0.75rem',
+                  borderRadius: '8px',
+                  background: emailStatusMsg.includes('✅') ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
+                  fontSize: '0.82rem',
+                  border: `1px solid ${emailStatusMsg.includes('✅') ? 'rgba(16, 185, 129, 0.3)' : 'rgba(239, 68, 68, 0.3)'}`,
+                  color: emailStatusMsg.includes('✅') ? '#34d399' : '#f87171',
+                  lineHeight: 1.45,
+                }}>
+                  <div>{emailStatusMsg}</div>
+                  {emailStatusMsg.includes('Network is unreachable') && (
+                    <div style={{ marginTop: '0.6rem', paddingTop: '0.6rem', borderTop: '1px solid rgba(239, 68, 68, 0.25)', fontSize: '0.76rem', color: '#fca5a5' }}>
+                      <strong>Why this happens:</strong> Render cloud hosts block raw SMTP (ports 25, 465, 587).<br />
+                      <strong>Fix:</strong> Add <code>RESEND_API_KEY</code> (free at <a href="https://resend.com" target="_blank" rel="noreferrer" style={{ textDecoration: 'underline', color: '#93c5fd' }}>resend.com</a>) to your <strong>Render Dashboard → Environment Variables</strong> for instant HTTPS email delivery.
+                    </div>
+                  )}
                 </div>
               )}
             </div>
