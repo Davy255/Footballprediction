@@ -25,6 +25,7 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
     _LAST_EMAIL_ERROR = ""
     import json
     import urllib.request
+    import urllib.error
     import ssl
 
     clean_user = (settings.SMTP_USER or "").strip()
