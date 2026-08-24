@@ -30,21 +30,43 @@ def create_prediction(
             detail="Predictions are closed — this match has already kicked off or gone live."
         )
 
-    # 2. Allow only up to 2 prediction choices per match
+    # 2. Normalize market inputs
+    outcome = (pred_in.predicted_outcome or "").strip().upper() or None
+    if outcome and outcome not in ("HOME_TEAM", "DRAW", "AWAY_TEAM"):
+        outcome = None
+
+    btts = (pred_in.predicted_btts or "").strip().lower() or None
+    if btts and btts not in ("yes", "no"):
+        btts = None
+
+    over25 = (pred_in.predicted_over25 or "").strip().lower() or None
+    if over25 and over25 not in ("over", "under"):
+        over25 = None
+
+    dc = (pred_in.predicted_dc or "").strip().lower() or None
+    if dc:
+        dc = dc.replace(" ", "").replace("(home/draw)", "").replace("(home/away)", "").replace("(draw/away)", "")
+        if dc not in ("1x", "x2", "12"):
+            dc = None
+
+    pred_h = pred_in.predicted_home_score if pred_in.predicted_home_score is not None and 0 <= pred_in.predicted_home_score <= 20 else None
+    pred_a = pred_in.predicted_away_score if pred_in.predicted_away_score is not None and 0 <= pred_in.predicted_away_score <= 20 else None
+
+    # Count chosen markets (allow up to 2 choices)
     chosen_markets = 0
-    if pred_in.predicted_outcome or (pred_in.predicted_home_score is not None and pred_in.predicted_away_score is not None):
+    if outcome or (pred_h is not None and pred_a is not None):
         chosen_markets += 1
-    if pred_in.predicted_btts:
+    if btts:
         chosen_markets += 1
-    if pred_in.predicted_over25:
+    if over25:
         chosen_markets += 1
-    if pred_in.predicted_dc:
+    if dc:
         chosen_markets += 1
 
     if chosen_markets > 2:
         raise HTTPException(
             status_code=400,
-            detail="Maximum of 2 prediction choices allowed per match (e.g. Outcome + BTTS, or Double Chance + Over/Under)."
+            detail="Maximum of 2 prediction choices allowed per match."
         )
     if chosen_markets == 0:
         raise HTTPException(
@@ -52,20 +74,17 @@ def create_prediction(
             detail="Please select at least 1 prediction choice (maximum 2 choices)."
         )
 
-    if pred_in.predicted_outcome and pred_in.predicted_outcome not in ("HOME_TEAM", "DRAW", "AWAY_TEAM"):
-        raise HTTPException(status_code=400, detail="Invalid outcome. Use HOME_TEAM, DRAW or AWAY_TEAM")
-
     existing = db.query(Prediction).filter(
         Prediction.user_id == current_user.id,
         Prediction.match_id == pred_in.match_id,
     ).first()
     if existing:
-        existing.predicted_outcome = pred_in.predicted_outcome
-        existing.predicted_home_score = pred_in.predicted_home_score
-        existing.predicted_away_score = pred_in.predicted_away_score
-        existing.predicted_btts = pred_in.predicted_btts
-        existing.predicted_over25 = pred_in.predicted_over25
-        existing.predicted_dc = pred_in.predicted_dc
+        existing.predicted_outcome = outcome
+        existing.predicted_home_score = pred_h
+        existing.predicted_away_score = pred_a
+        existing.predicted_btts = btts
+        existing.predicted_over25 = over25
+        existing.predicted_dc = dc
         existing.is_scored = False
         db.commit()
         db.refresh(existing)
@@ -74,12 +93,12 @@ def create_prediction(
     pred = Prediction(
         user_id=current_user.id,
         match_id=pred_in.match_id,
-        predicted_outcome=pred_in.predicted_outcome,
-        predicted_home_score=pred_in.predicted_home_score,
-        predicted_away_score=pred_in.predicted_away_score,
-        predicted_btts=pred_in.predicted_btts,
-        predicted_over25=pred_in.predicted_over25,
-        predicted_dc=pred_in.predicted_dc,
+        predicted_outcome=outcome,
+        predicted_home_score=pred_h,
+        predicted_away_score=pred_a,
+        predicted_btts=btts,
+        predicted_over25=over25,
+        predicted_dc=dc,
     )
     db.add(pred)
     db.commit()

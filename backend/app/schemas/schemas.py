@@ -147,12 +147,12 @@ class MatchOut(BaseModel):
 
 class PredictionCreate(BaseModel):
     match_id: int
-    predicted_outcome: Optional[str] = Field(None, pattern=r"^(HOME_TEAM|DRAW|AWAY_TEAM)$", description="Must be HOME_TEAM, DRAW, or AWAY_TEAM")
-    predicted_home_score: Optional[int] = Field(None, ge=0, le=20, description="Home score between 0 and 20")
-    predicted_away_score: Optional[int] = Field(None, ge=0, le=20, description="Away score between 0 and 20")
-    predicted_btts: Optional[str] = Field(None, pattern=r"^(yes|no|YES|NO)$")
-    predicted_over25: Optional[str] = Field(None, pattern=r"^(over|under|OVER|UNDER)$")
-    predicted_dc: Optional[str] = Field(None, pattern=r"^(1x|x2|12|1X|X2)$")
+    predicted_outcome: Optional[str] = None
+    predicted_home_score: Optional[int] = None
+    predicted_away_score: Optional[int] = None
+    predicted_btts: Optional[str] = None
+    predicted_over25: Optional[str] = None
+    predicted_dc: Optional[str] = None
 
 
 class PredictionOut(BaseModel):

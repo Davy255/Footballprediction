@@ -71,6 +71,7 @@ function ScoreStepper({
 
 export default function PredictionModal({ match, onClose, onSuccess }: PredictionModalProps) {
   const [outcome, setOutcome] = useState<Outcome>('HOME_TEAM');
+  const [includeScore, setIncludeScore] = useState<boolean>(false);
   const [homeScore, setHomeScore] = useState<number>(match.ai_predicted_home ?? 1);
   const [awayScore, setAwayScore] = useState<number>(match.ai_predicted_away ?? 0);
   const [loading, setLoading] = useState(false);
@@ -83,26 +84,22 @@ export default function PredictionModal({ match, onClose, onSuccess }: Predictio
     { key: 'HOME_TEAM', label: homeName, sublabel: 'Home Win', color: 'var(--accent-green)' },
     { key: 'DRAW',      label: 'Draw',   sublabel: '(X)',      color: 'var(--accent-amber)' },
     { key: 'AWAY_TEAM', label: awayName, sublabel: 'Away Win', color: 'var(--accent-blue)'  },
+  ];
+
   const handleHomeScoreChange = (newHome: number) => {
     setHomeScore(newHome);
+    setIncludeScore(true);
     setOutcome(newHome > awayScore ? 'HOME_TEAM' : awayScore > newHome ? 'AWAY_TEAM' : 'DRAW');
   };
 
   const handleAwayScoreChange = (newAway: number) => {
     setAwayScore(newAway);
+    setIncludeScore(true);
     setOutcome(homeScore > newAway ? 'HOME_TEAM' : newAway > homeScore ? 'AWAY_TEAM' : 'DRAW');
   };
 
   const handleOutcomeClick = (key: Outcome) => {
     setOutcome(key);
-    if (key === 'DRAW' && homeScore !== awayScore) {
-      setHomeScore(1);
-      setAwayScore(1);
-    } else if (key === 'HOME_TEAM' && homeScore <= awayScore) {
-      setHomeScore(Math.max(2, awayScore + 1));
-    } else if (key === 'AWAY_TEAM' && awayScore <= homeScore) {
-      setAwayScore(Math.max(2, homeScore + 1));
-    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -110,22 +107,28 @@ export default function PredictionModal({ match, onClose, onSuccess }: Predictio
     setLoading(true);
     setError(null);
 
-    // Final safety check to ensure outcome accurately reflects score
     let finalOutcome = outcome;
-    if (homeScore > awayScore) finalOutcome = 'HOME_TEAM';
-    else if (awayScore > homeScore) finalOutcome = 'AWAY_TEAM';
-    else if (homeScore === awayScore) finalOutcome = 'DRAW';
+    if (includeScore) {
+      if (homeScore > awayScore) finalOutcome = 'HOME_TEAM';
+      else if (awayScore > homeScore) finalOutcome = 'AWAY_TEAM';
+      else if (homeScore === awayScore) finalOutcome = 'DRAW';
+    }
 
     try {
       await submitPrediction({
         match_id: match.id,
         predicted_outcome: finalOutcome,
-        predicted_home_score: homeScore,
-        predicted_away_score: awayScore,
+        predicted_home_score: includeScore ? homeScore : undefined,
+        predicted_away_score: includeScore ? awayScore : undefined,
       });
       onSuccess();
     } catch (err: any) {
-      setError(err.message || 'Failed to submit. Please try again.');
+      const msg = err.message || '';
+      if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
+        setError('⚠️ Connection error. Please check your internet connection or re-login.');
+      } else {
+        setError(msg || 'Failed to submit. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -300,7 +303,8 @@ export default function PredictionModal({ match, onClose, onSuccess }: Predictio
             textAlign: 'center',
           }}>
             Your pick: {OUTCOMES.find(o => o.key === outcome)?.label}{' '}
-            {OUTCOMES.find(o => o.key === outcome)?.sublabel} &bull; Score {homeScore}–{awayScore}
+            ({OUTCOMES.find(o => o.key === outcome)?.sublabel})
+            {includeScore ? ` • Exact Score: ${homeScore}–${awayScore}` : ''}
           </div>
 
           {/* Actions */}

@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
-import { submitPrediction } from '@/lib/api';
+import { submitPrediction, fetchMyPredictionForMatch } from '@/lib/api';
 import { Match } from '@/lib/types';
 
 type TabKey = 'ai' | 'analytics' | 'sw' | 'predict' | 'stats' | 'h2h';
@@ -655,28 +655,23 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
   };
   const analyticsText = ai?.analytics || `${HN} and ${AN} meet in this encounter. Form analysis and tactical metrics project a competitive clash with ${HN} holding baseline home advantage, while ${AN} remains dangerous on transitions. Projected scoreline is ${score.home}-${score.away}.`;
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-
   const loadPred = useCallback(async () => {
     if (predLoaded || !token) return;
     setPredLoaded(true);
     try {
-      const res = await fetch(`${API_BASE}/api/predictions/match/${match.id}`, { headers: { Authorization: `Bearer ${token}` } });
-      if (res.ok) {
-        const d = await res.json();
-        if (d?.id) {
-          setExistingPred(d);
-          setPredHome(d.predicted_home_score !== null && d.predicted_home_score !== undefined ? String(d.predicted_home_score) : '');
-          setPredAway(d.predicted_away_score !== null && d.predicted_away_score !== undefined ? String(d.predicted_away_score) : '');
-          setPredOutcome(d.predicted_outcome ?? '');
-          setPredBtts(d.predicted_btts ?? '');
-          setPredOver25(d.predicted_over25 ?? '');
-          setPredDc(d.predicted_dc ?? '');
-          setSubmitted(true);
-        }
+      const d = await fetchMyPredictionForMatch(match.id);
+      if (d?.id) {
+        setExistingPred(d);
+        setPredHome(d.predicted_home_score !== null && d.predicted_home_score !== undefined ? String(d.predicted_home_score) : '');
+        setPredAway(d.predicted_away_score !== null && d.predicted_away_score !== undefined ? String(d.predicted_away_score) : '');
+        setPredOutcome(d.predicted_outcome ?? '');
+        setPredBtts(d.predicted_btts ?? '');
+        setPredOver25(d.predicted_over25 ?? '');
+        setPredDc(d.predicted_dc ?? '');
+        setSubmitted(true);
       }
     } catch {}
-  }, [predLoaded, token, match.id, API_BASE]);
+  }, [predLoaded, token, match.id]);
 
   const handleTabClick = (tab: TabKey) => {
     setActiveTab(tab);
@@ -736,17 +731,7 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
       }
       setSubmitMsg('');
       setPredOutcome(key);
-      if (key === 'DRAW') {
-        const base = predHome !== '' ? predHome : '1';
-        setPredHome(base);
-        setPredAway(base);
-      } else if (key === 'HOME_TEAM') {
-        setPredHome('2');
-        setPredAway('1');
-      } else if (key === 'AWAY_TEAM') {
-        setPredHome('1');
-        setPredAway('2');
-      }
+      // Clean: Do NOT force auto-filled scores! Only user-entered scores are sent.
     }
   };
 
@@ -831,7 +816,12 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
         setSubmitMsg('Failed to save prediction.');
       }
     } catch (err: any) {
-      setSubmitMsg(err.message || 'Network error. Please try again.');
+      const msg = err.message || '';
+      if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
+        setSubmitMsg('⚠️ Connection error. Please check your internet connection or re-login.');
+      } else {
+        setSubmitMsg(msg || 'Network error. Please try again.');
+      }
     } finally {
       setSubmitting(false);
     }

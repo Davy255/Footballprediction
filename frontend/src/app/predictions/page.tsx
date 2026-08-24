@@ -78,25 +78,12 @@ export default function MyPredictionsPage() {
 
   const renderPicksBadges = (p: Prediction) => {
     const badges = [];
-    const hasScore = p.predicted_home_score !== null && p.predicted_home_score !== undefined && p.predicted_away_score !== null && p.predicted_away_score !== undefined;
-    const hasOtherMarkets = Boolean(p.predicted_dc || p.predicted_btts || p.predicted_over25);
 
-    if (hasScore) {
-      const outcomeText = p.predicted_home_score > p.predicted_away_score 
-        ? (p.match.home_team.short_name || 'Home Win')
-        : p.predicted_away_score > p.predicted_home_score 
-        ? (p.match.away_team.short_name || 'Away Win')
-        : 'Draw (X)';
-      badges.push(
-        <span key="outcome" className="status-badge status-scheduled" style={{ fontSize: '0.75rem', fontWeight: 700 }}>
-          {outcomeText}
-        </span>
-      );
-    } else if (p.predicted_outcome && (!hasOtherMarkets || p.predicted_outcome === 'DRAW' || p.predicted_outcome === 'AWAY_TEAM')) {
+    if (p.predicted_outcome) {
       const label = p.predicted_outcome === 'HOME_TEAM' 
-        ? (p.match.home_team.short_name || 'Home Win')
+        ? (p.match.home_team.short_name || p.match.home_team.name || 'Home Win')
         : p.predicted_outcome === 'AWAY_TEAM'
-        ? (p.match.away_team.short_name || 'Away Win')
+        ? (p.match.away_team.short_name || p.match.away_team.name || 'Away Win')
         : 'Draw (X)';
       badges.push(
         <span key="outcome" className="status-badge status-scheduled" style={{ fontSize: '0.75rem', fontWeight: 700 }}>
@@ -125,6 +112,14 @@ export default function MyPredictionsPage() {
       badges.push(
         <span key="ou" style={{ background: 'rgba(245,158,11,0.15)', color: '#fbbf24', padding: '2px 6px', borderRadius: 4, fontSize: '0.7rem', fontWeight: 700 }}>
           O/U: {p.predicted_over25.toUpperCase()} 2.5
+        </span>
+      );
+    }
+
+    if (badges.length === 0) {
+      badges.push(
+        <span key="none" style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>
+          —
         </span>
       );
     }
@@ -240,7 +235,11 @@ export default function MyPredictionsPage() {
                       {renderPicksBadges(p)}
                     </td>
                     <td style={{ textAlign: 'center', fontWeight: 700, fontFamily: 'Outfit, sans-serif' }}>
-                      {p.predicted_home_score ?? '–'} : {p.predicted_away_score ?? '–'}
+                      {p.predicted_home_score !== null && p.predicted_home_score !== undefined && p.predicted_away_score !== null && p.predicted_away_score !== undefined ? (
+                        `${p.predicted_home_score} : ${p.predicted_away_score}`
+                      ) : (
+                        <span style={{ color: 'var(--text-muted)' }}>—</span>
+                      )}
                     </td>
                     <td style={{ textAlign: 'center', fontWeight: 700, fontFamily: 'Outfit, sans-serif' }}>
                       {p.match.status === 'FINISHED'
