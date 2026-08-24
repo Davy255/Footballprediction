@@ -172,44 +172,43 @@ export default function ChatbotWidget() {
 
   return (
     <>
-      {/* Floating Launcher Button */}
-      <div
-        className="chatbot-floating-container"
-        style={{
-          position: 'fixed',
-          bottom: 'calc(14px + env(safe-area-inset-bottom, 0px))',
-          right: '14px',
-          zIndex: 99999,
-          transform: 'translateZ(0)',
-          WebkitTransform: 'translateZ(0)',
-          touchAction: 'manipulation',
-          pointerEvents: 'auto',
-        }}
-      >
-        {!isOpen ? (
+      {/* Floating Launcher Button (when closed) */}
+      {!isOpen && (
+        <div
+          className="chatbot-floating-container"
+          style={{
+            position: 'fixed',
+            bottom: 'calc(16px + env(safe-area-inset-bottom, 0px))',
+            right: '16px',
+            zIndex: 99999,
+            transform: 'translateZ(0)',
+            WebkitTransform: 'translateZ(0)',
+            pointerEvents: 'auto',
+          }}
+        >
           <button
             onClick={() => setIsOpen(true)}
-            aria-label="Open AI Supporter"
+            aria-label="Open Coach AI"
             className="chatbot-launcher-pill"
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem',
-              padding: '0.65rem 1.1rem',
+              padding: '0.65rem 1.15rem',
               borderRadius: '50px',
               background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
               color: '#ffffff',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
+              border: '1px solid rgba(255, 255, 255, 0.25)',
               cursor: 'pointer',
               fontWeight: 800,
-              fontSize: '0.86rem',
-              boxShadow: '0 8px 24px rgba(37, 99, 235, 0.45), 0 0 15px rgba(124, 58, 237, 0.3)',
+              fontSize: '0.88rem',
+              boxShadow: '0 8px 24px rgba(37, 99, 235, 0.5), 0 0 15px rgba(124, 58, 237, 0.35)',
               transition: 'transform 0.2s ease, box-shadow 0.2s ease',
             }}
             onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-2px) scale(1.04)')}
             onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0) scale(1)')}
           >
-            <span style={{ fontSize: '1.2rem' }}>🤖</span>
+            <span style={{ fontSize: '1.25rem' }}>🤖</span>
             <span>Coach AI</span>
             <span
               style={{
@@ -222,34 +221,36 @@ export default function ChatbotWidget() {
               }}
             />
           </button>
-        ) : (
-          /* Chat Window Modal */
+        </div>
+      )}
+
+      {/* Chat Window Modal (when open) */}
+      {isOpen && (
+        <div className="chatbot-modal-overlay">
           <div
+            className="chatbot-window-card"
             style={{
-              width: '380px',
-              maxWidth: 'calc(100vw - 32px)',
-              height: '560px',
-              maxHeight: 'calc(100vh - 100px)',
-              borderRadius: '20px',
               background: 'var(--bg-card, #131b2e)',
               border: '1px solid var(--border-color, rgba(255, 255, 255, 0.12))',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(59, 130, 246, 0.15)',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(59, 130, 246, 0.2)',
               display: 'flex',
               flexDirection: 'column',
               overflow: 'hidden',
-              backdropFilter: 'blur(16px)',
-              animation: 'fadeIn 0.25s ease',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              animation: 'fadeIn 0.2s ease',
             }}
           >
             {/* Header */}
             <div
               style={{
                 padding: '0.9rem 1.1rem',
-                background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.15) 100%)',
+                background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.22) 0%, rgba(139, 92, 246, 0.18) 100%)',
                 borderBottom: '1px solid var(--border-color, rgba(255, 255, 255, 0.08))',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
+                flexShrink: 0,
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
@@ -262,7 +263,7 @@ export default function ChatbotWidget() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '1.15rem',
+                    fontSize: '1.2rem',
                     boxShadow: '0 0 12px rgba(59, 130, 246, 0.4)',
                   }}
                 >
@@ -276,23 +277,28 @@ export default function ChatbotWidget() {
                     </span>
                   </div>
                   <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary, #94a3b8)' }}>
-                    Tactical match insights & platform helper
+                    Tactical match insights &amp; tips
                   </div>
                 </div>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                 <button
                   onClick={clearChat}
                   title="Clear conversation"
+                  aria-label="Clear chat"
                   style={{
-                    background: 'transparent',
-                    border: 'none',
+                    background: 'rgba(255, 255, 255, 0.06)',
+                    border: '1px solid var(--border-color, rgba(255, 255, 255, 0.1))',
                     color: 'var(--text-secondary, #94a3b8)',
                     cursor: 'pointer',
-                    padding: '0.4rem',
-                    fontSize: '0.82rem',
-                    borderRadius: '6px',
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '0.85rem',
                   }}
                 >
                   🧹
@@ -300,18 +306,19 @@ export default function ChatbotWidget() {
                 <button
                   onClick={() => setIsOpen(false)}
                   title="Close chat"
+                  aria-label="Close chat"
                   style={{
-                    background: 'rgba(255, 255, 255, 0.06)',
-                    border: '1px solid var(--border-color, rgba(255, 255, 255, 0.1))',
-                    color: 'var(--text-primary, #fff)',
+                    background: 'rgba(239, 68, 68, 0.15)',
+                    border: '1px solid rgba(239, 68, 68, 0.3)',
+                    color: '#f87171',
                     cursor: 'pointer',
-                    width: '28px',
-                    height: '28px',
+                    width: '32px',
+                    height: '32px',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '0.85rem',
+                    fontSize: '0.95rem',
                     fontWeight: 700,
                   }}
                 >
@@ -329,6 +336,7 @@ export default function ChatbotWidget() {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '0.85rem',
+                WebkitOverflowScrolling: 'touch',
               }}
             >
               {messages.map((m, i) => (
@@ -382,6 +390,7 @@ export default function ChatbotWidget() {
                   overflowX: 'auto',
                   borderTop: '1px solid var(--border-color, rgba(255, 255, 255, 0.05))',
                   scrollbarWidth: 'none',
+                  flexShrink: 0,
                 }}
               >
                 {suggestions.map((s, idx) => (
@@ -389,19 +398,19 @@ export default function ChatbotWidget() {
                     key={idx}
                     onClick={() => handleSend(s)}
                     style={{
-                      padding: '0.3rem 0.65rem',
+                      padding: '0.35rem 0.75rem',
                       borderRadius: '20px',
-                      background: 'rgba(59, 130, 246, 0.1)',
-                      border: '1px solid rgba(59, 130, 246, 0.25)',
+                      background: 'rgba(59, 130, 246, 0.12)',
+                      border: '1px solid rgba(59, 130, 246, 0.28)',
                       color: 'var(--accent-blue, #60a5fa)',
-                      fontSize: '0.74rem',
+                      fontSize: '0.76rem',
                       fontWeight: 600,
                       cursor: 'pointer',
                       whiteSpace: 'nowrap',
                       transition: 'background 0.15s ease',
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(59, 130, 246, 0.2)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(59, 130, 246, 0.1)')}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(59, 130, 246, 0.22)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(59, 130, 246, 0.12)')}
                   >
                     {s}
                   </button>
@@ -421,6 +430,7 @@ export default function ChatbotWidget() {
                 display: 'flex',
                 gap: '0.5rem',
                 background: 'var(--bg-card, #131b2e)',
+                flexShrink: 0,
               }}
             >
               <input
@@ -432,12 +442,12 @@ export default function ChatbotWidget() {
                 disabled={loading}
                 style={{
                   flex: 1,
-                  padding: '0.65rem 0.95rem',
+                  padding: '0.7rem 0.95rem',
                   borderRadius: '12px',
                   border: '1px solid var(--border-color, rgba(255, 255, 255, 0.12))',
                   background: 'rgba(255, 255, 255, 0.04)',
                   color: 'var(--text-primary, #fff)',
-                  fontSize: '0.85rem',
+                  fontSize: '0.88rem',
                   outline: 'none',
                 }}
               />
@@ -445,23 +455,24 @@ export default function ChatbotWidget() {
                 type="submit"
                 disabled={!input.trim() || loading}
                 style={{
-                  padding: '0.65rem 1rem',
+                  padding: '0.7rem 1.15rem',
                   borderRadius: '12px',
                   background: input.trim() && !loading ? 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)' : 'rgba(255, 255, 255, 0.1)',
                   color: '#ffffff',
                   border: 'none',
                   cursor: input.trim() && !loading ? 'pointer' : 'not-allowed',
                   fontWeight: 700,
-                  fontSize: '0.85rem',
+                  fontSize: '0.88rem',
                   transition: 'opacity 0.2s ease',
+                  flexShrink: 0,
                 }}
               >
                 Send
               </button>
             </form>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 }

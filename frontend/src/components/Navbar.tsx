@@ -110,7 +110,7 @@ export default function Navbar() {
               onClick={() => setShowGuide(true)}
               className="btn btn-secondary btn-sm nav-desktop-guide"
               style={{
-                display: 'flex', alignItems: 'center', gap: '0.35rem',
+                alignItems: 'center', gap: '0.35rem',
                 border: '1px solid rgba(59,130,246,0.3)',
                 background: 'rgba(59,130,246,0.08)',
                 color: 'var(--text-primary)',
@@ -127,7 +127,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen(!menuOpen)}
               className="btn btn-secondary btn-sm nav-desktop-more"
               style={{
-                display: 'flex', alignItems: 'center', gap: '0.35rem',
+                alignItems: 'center', gap: '0.35rem',
                 border: menuOpen ? '1px solid var(--accent-blue)' : '1px solid var(--border-color)',
                 background: menuOpen ? 'rgba(59,130,246,0.15)' : 'var(--bg-card-hover)',
                 color: menuOpen ? 'var(--accent-blue)' : 'var(--text-primary)',

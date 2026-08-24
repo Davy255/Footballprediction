@@ -2027,6 +2027,9 @@ div[id^="google-btn-container"] iframe {
   .nav-desktop-guide {
     display: none !important;
   }
+  .nav-desktop-more {
+    display: none !important;
+  }
   .nav-desktop-register {
     display: none !important;
   }
@@ -2281,12 +2284,62 @@ div[id^="google-btn-container"] iframe {
 
   /* Coach AI Floating Widget on Mobile */
   .chatbot-floating-container {
-    bottom: calc(12px + env(safe-area-inset-bottom, 0px)) !important;
-    right: 12px !important;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important;
+    right: 14px !important;
+    z-index: 999999 !important;
   }
   .chatbot-launcher-pill {
-    padding: 0.45rem 0.85rem !important;
-    font-size: 0.76rem !important;
-    gap: 0.35rem !important;
+    padding: 0.55rem 1rem !important;
+    font-size: 0.82rem !important;
+    gap: 0.4rem !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(59, 130, 246, 0.4) !important;
   }
+
+  /* Mobile Full-Screen / Bottom Sheet Chat Modal */
+  .chatbot-modal-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    z-index: 999999 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .chatbot-window-card {
+    width: 100% !important;
+    max-width: 100vw !important;
+    height: 92dvh !important;
+    max-height: 92dvh !important;
+    border-radius: 20px 20px 0 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    margin: 0 !important;
+  }
+}
+
+/* =============================================
+   COACH AI DESKTOP MODAL RULES
+   ============================================= */
+.chatbot-modal-overlay {
+  position: fixed;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  right: 16px;
+  z-index: 999999;
+}
+
+.chatbot-window-card {
+  width: 390px;
+  max-width: calc(100vw - 32px);
+  height: 580px;
+  max-height: calc(100dvh - 60px);
+  border-radius: 20px;
 }
