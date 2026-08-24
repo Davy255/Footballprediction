@@ -1040,12 +1040,12 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
 
   const tabs: { key: TabKey; label: string }[] = [
     { key: 'ai', label: '📊 Forecast & Odds' },
-    { key: 'lineups', label: '👕 Lineups & Players' },
-    { key: 'analytics', label: '📝 Match Analysis' },
+    { key: 'lineups', label: '👕 Lineups & Pitch' },
+    { key: 'analytics', label: '📝 Tactical Report' },
     { key: 'sw', label: '⚡ Strengths & Style' },
     { key: 'predict', label: status.isFinished ? '📋 Settlement' : '🎯 Multi-Predict' },
-    { key: 'stats', label: '📊 Tactical Stats' },
-    { key: 'h2h', label: '🔄 H2H & Form' },
+    { key: 'stats', label: '📈 Stats & Form' },
+    { key: 'h2h', label: '🔄 H2H History' },
   ];
 
   const homeOddsFormatted = typeof odds.home === 'number' ? odds.home.toFixed(2) : '2.10';
