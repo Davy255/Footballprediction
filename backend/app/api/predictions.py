@@ -43,8 +43,11 @@ def create_prediction(
         db.refresh(existing)
         return existing
 
-    if pred_in.predicted_outcome not in ("HOME_TEAM", "DRAW", "AWAY_TEAM"):
+    if pred_in.predicted_outcome and pred_in.predicted_outcome not in ("HOME_TEAM", "DRAW", "AWAY_TEAM"):
         raise HTTPException(status_code=400, detail="Invalid outcome. Use HOME_TEAM, DRAW or AWAY_TEAM")
+
+    if not pred_in.predicted_outcome and pred_in.predicted_home_score is None and not pred_in.predicted_btts and not pred_in.predicted_over25 and not pred_in.predicted_dc:
+        raise HTTPException(status_code=400, detail="Please select at least one market prediction (1X2, exact score, BTTS, O/U, or Double Chance).")
 
     pred = Prediction(
         user_id=current_user.id,

@@ -12,7 +12,7 @@ class Prediction(Base):
     match_id = Column(Integer, ForeignKey("matches.id"), nullable=False)
 
     # User's prediction
-    predicted_outcome = Column(String, nullable=False)  # HOME_TEAM, DRAW, AWAY_TEAM
+    predicted_outcome = Column(String, nullable=True)  # HOME_TEAM, DRAW, AWAY_TEAM, or None
     predicted_home_score = Column(Integer, nullable=True)
     predicted_away_score = Column(Integer, nullable=True)
 

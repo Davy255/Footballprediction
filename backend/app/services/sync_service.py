@@ -331,16 +331,16 @@ def score_finished_predictions(db: Session = None):
                 else:
                     match.winner = "DRAW"
 
-            outcome_correct = pred.predicted_outcome == match.winner
+            outcome_correct = (pred.predicted_outcome == match.winner) if pred.predicted_outcome else None
             score_correct = (
                 pred.predicted_home_score == match.home_score
                 and pred.predicted_away_score == match.away_score
             ) if pred.predicted_home_score is not None and pred.predicted_away_score is not None else False
 
             points = 0
-            if outcome_correct:
+            if outcome_correct is True:
                 points += 3
-            if score_correct:
+            if score_correct is True:
                 points += 5
 
             # BTTS scoring (+2 pts)

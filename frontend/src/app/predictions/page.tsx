@@ -78,8 +78,10 @@ export default function MyPredictionsPage() {
 
   const renderPicksBadges = (p: Prediction) => {
     const badges = [];
+    const hasScore = p.predicted_home_score !== null && p.predicted_home_score !== undefined && p.predicted_away_score !== null && p.predicted_away_score !== undefined;
+    const hasOtherMarkets = Boolean(p.predicted_dc || p.predicted_btts || p.predicted_over25);
 
-    if (p.predicted_home_score !== null && p.predicted_home_score !== undefined && p.predicted_away_score !== null && p.predicted_away_score !== undefined) {
+    if (hasScore) {
       const outcomeText = p.predicted_home_score > p.predicted_away_score 
         ? (p.match.home_team.short_name || 'Home Win')
         : p.predicted_away_score > p.predicted_home_score 
@@ -90,7 +92,7 @@ export default function MyPredictionsPage() {
           {outcomeText}
         </span>
       );
-    } else if (p.predicted_outcome) {
+    } else if (p.predicted_outcome && (!hasOtherMarkets || p.predicted_outcome === 'DRAW' || p.predicted_outcome === 'AWAY_TEAM')) {
       const label = p.predicted_outcome === 'HOME_TEAM' 
         ? (p.match.home_team.short_name || 'Home Win')
         : p.predicted_outcome === 'AWAY_TEAM'
