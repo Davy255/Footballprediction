@@ -190,61 +190,105 @@ function getMatchStatusDetails(match: Match): StatusDetails {
   };
 }
 
+function cleanTeamName(name: string): string {
+  if (!name) return '';
+  return name
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // Converts ç -> c, é -> e, ü -> u, etc.
+    .replace(/\bfc\b|\bcf\b|\bcd\b|\bafc\b|\bsc\b|\brc\b|\bas\b|\bss\b/gi, ' ')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 const CLUB_INTELLIGENCE: Record<string, { elo: number; wsRating: number; formPpg: number; formPattern: ('W' | 'D' | 'L')[]; last5Scores: string[] }> = {
-  // Elite
-  'manchester city': { elo: 1840, wsRating: 7.85, formPpg: 2.60, formPattern: ['W', 'W', 'W', 'D', 'W'], last5Scores: ['3-1', '2-0', '4-1', '1-1', '2-0'] },
-  'real madrid':     { elo: 1830, wsRating: 7.80, formPpg: 2.60, formPattern: ['W', 'W', 'W', 'W', 'D'], last5Scores: ['2-0', '3-1', '2-1', '4-0', '1-1'] },
-  'arsenal':         { elo: 1790, wsRating: 7.70, formPpg: 2.40, formPattern: ['W', 'W', 'W', 'D', 'W'], last5Scores: ['2-0', '3-0', '2-1', '1-1', '1-0'] },
-  'liverpool':       { elo: 1780, wsRating: 7.65, formPpg: 2.40, formPattern: ['W', 'W', 'W', 'W', 'D'], last5Scores: ['2-0', '3-1', '2-1', '3-0', '2-2'] },
-  'bayern':          { elo: 1770, wsRating: 7.60, formPpg: 2.40, formPattern: ['W', 'W', 'D', 'W', 'W'], last5Scores: ['3-1', '2-0', '2-2', '4-1', '2-1'] },
-  'barcelona':       { elo: 1760, wsRating: 7.55, formPpg: 2.20, formPattern: ['W', 'W', 'W', 'L', 'W'], last5Scores: ['2-1', '3-0', '2-0', '1-2', '3-1'] },
-  'inter':           { elo: 1750, wsRating: 7.50, formPpg: 2.20, formPattern: ['W', 'W', 'D', 'W', 'W'], last5Scores: ['2-0', '1-0', '1-1', '2-1', '3-0'] },
-  'psg':             { elo: 1740, wsRating: 7.45, formPpg: 2.40, formPattern: ['W', 'W', 'W', 'D', 'W'], last5Scores: ['3-1', '4-1', '2-0', '1-1', '3-0'] },
-  'paris':           { elo: 1740, wsRating: 7.45, formPpg: 2.40, formPattern: ['W', 'W', 'W', 'D', 'W'], last5Scores: ['3-1', '4-1', '2-0', '1-1', '3-0'] },
+  // ── Elite European Champions (1740+) ──
+  'manchester city':   { elo: 1840, wsRating: 7.85, formPpg: 2.60, formPattern: ['W', 'W', 'W', 'D', 'W'], last5Scores: ['3-1', '2-0', '4-1', '1-1', '2-0'] },
+  'man city':          { elo: 1840, wsRating: 7.85, formPpg: 2.60, formPattern: ['W', 'W', 'W', 'D', 'W'], last5Scores: ['3-1', '2-0', '4-1', '1-1', '2-0'] },
+  'real madrid':       { elo: 1830, wsRating: 7.80, formPpg: 2.60, formPattern: ['W', 'W', 'W', 'W', 'D'], last5Scores: ['2-0', '3-1', '2-1', '4-0', '1-1'] },
+  'madrid':            { elo: 1830, wsRating: 7.80, formPpg: 2.60, formPattern: ['W', 'W', 'W', 'W', 'D'], last5Scores: ['2-0', '3-1', '2-1', '4-0', '1-1'] },
+  'arsenal':           { elo: 1790, wsRating: 7.70, formPpg: 2.40, formPattern: ['W', 'W', 'W', 'D', 'W'], last5Scores: ['2-0', '3-0', '2-1', '1-1', '1-0'] },
+  'liverpool':         { elo: 1780, wsRating: 7.65, formPpg: 2.40, formPattern: ['W', 'W', 'W', 'W', 'D'], last5Scores: ['2-0', '3-1', '2-1', '3-0', '2-2'] },
+  'bayern':            { elo: 1770, wsRating: 7.60, formPpg: 2.40, formPattern: ['W', 'W', 'D', 'W', 'W'], last5Scores: ['3-1', '2-0', '2-2', '4-1', '2-1'] },
+  'bayern munich':     { elo: 1770, wsRating: 7.60, formPpg: 2.40, formPattern: ['W', 'W', 'D', 'W', 'W'], last5Scores: ['3-1', '2-0', '2-2', '4-1', '2-1'] },
+  'bayern munchen':    { elo: 1770, wsRating: 7.60, formPpg: 2.40, formPattern: ['W', 'W', 'D', 'W', 'W'], last5Scores: ['3-1', '2-0', '2-2', '4-1', '2-1'] },
+  'barca':             { elo: 1780, wsRating: 7.65, formPpg: 2.40, formPattern: ['W', 'W', 'W', 'W', 'D'], last5Scores: ['2-1', '3-0', '2-0', '3-1', '1-1'] },
+  'barcelona':         { elo: 1780, wsRating: 7.65, formPpg: 2.40, formPattern: ['W', 'W', 'W', 'W', 'D'], last5Scores: ['2-1', '3-0', '2-0', '3-1', '1-1'] },
+  'inter':             { elo: 1750, wsRating: 7.50, formPpg: 2.20, formPattern: ['W', 'W', 'D', 'W', 'W'], last5Scores: ['2-0', '1-0', '1-1', '2-1', '3-0'] },
+  'internazionale':    { elo: 1750, wsRating: 7.50, formPpg: 2.20, formPattern: ['W', 'W', 'D', 'W', 'W'], last5Scores: ['2-0', '1-0', '1-1', '2-1', '3-0'] },
+  'psg':               { elo: 1740, wsRating: 7.45, formPpg: 2.40, formPattern: ['W', 'W', 'W', 'D', 'W'], last5Scores: ['3-1', '4-1', '2-0', '1-1', '3-0'] },
+  'paris':             { elo: 1740, wsRating: 7.45, formPpg: 2.40, formPattern: ['W', 'W', 'W', 'D', 'W'], last5Scores: ['3-1', '4-1', '2-0', '1-1', '3-0'] },
 
-  // Top Tier
-  'leverkusen':      { elo: 1690, wsRating: 7.30, formPpg: 2.20, formPattern: ['W', 'W', 'D', 'W', 'W'], last5Scores: ['2-1', '3-2', '1-1', '2-0', '3-1'] },
-  'atletico':        { elo: 1680, wsRating: 7.25, formPpg: 2.00, formPattern: ['W', 'W', 'D', 'W', 'D'], last5Scores: ['1-0', '2-0', '0-0', '2-1', '1-1'] },
-  'juventus':        { elo: 1660, wsRating: 7.15, formPpg: 2.00, formPattern: ['W', 'D', 'W', 'W', 'D'], last5Scores: ['2-0', '1-1', '1-0', '3-0', '0-0'] },
-  'dortmund':        { elo: 1650, wsRating: 7.10, formPpg: 1.80, formPattern: ['W', 'L', 'W', 'W', 'D'], last5Scores: ['2-1', '1-2', '3-0', '2-0', '1-1'] },
-  'aston villa':     { elo: 1640, wsRating: 7.05, formPpg: 1.80, formPattern: ['W', 'W', 'L', 'W', 'D'], last5Scores: ['2-1', '3-1', '0-2', '1-0', '1-1'] },
-  'newcastle':       { elo: 1630, wsRating: 7.00, formPpg: 1.80, formPattern: ['W', 'D', 'W', 'W', 'L'], last5Scores: ['2-1', '1-1', '2-0', '3-1', '0-2'] },
-  'chelsea':         { elo: 1630, wsRating: 6.95, formPpg: 1.80, formPattern: ['W', 'W', 'D', 'L', 'W'], last5Scores: ['2-0', '3-0', '1-1', '1-2', '2-1'] },
-  'tottenham':       { elo: 1630, wsRating: 6.95, formPpg: 1.80, formPattern: ['W', 'D', 'W', 'L', 'W'], last5Scores: ['3-1', '1-1', '2-0', '1-2', '2-1'] },
+  // ── Top Tier (1620 - 1730) ──
+  'leverkusen':        { elo: 1690, wsRating: 7.30, formPpg: 2.20, formPattern: ['W', 'W', 'D', 'W', 'W'], last5Scores: ['2-1', '3-2', '1-1', '2-0', '3-1'] },
+  'atletico':          { elo: 1680, wsRating: 7.25, formPpg: 2.00, formPattern: ['W', 'W', 'D', 'W', 'D'], last5Scores: ['1-0', '2-0', '0-0', '2-1', '1-1'] },
+  'atleti':            { elo: 1680, wsRating: 7.25, formPpg: 2.00, formPattern: ['W', 'W', 'D', 'W', 'D'], last5Scores: ['1-0', '2-0', '0-0', '2-1', '1-1'] },
+  'juventus':          { elo: 1660, wsRating: 7.15, formPpg: 2.00, formPattern: ['W', 'D', 'W', 'W', 'D'], last5Scores: ['2-0', '1-1', '1-0', '3-0', '0-0'] },
+  'juve':              { elo: 1660, wsRating: 7.15, formPpg: 2.00, formPattern: ['W', 'D', 'W', 'W', 'D'], last5Scores: ['2-0', '1-1', '1-0', '3-0', '0-0'] },
+  'dortmund':          { elo: 1650, wsRating: 7.10, formPpg: 1.80, formPattern: ['W', 'L', 'W', 'W', 'D'], last5Scores: ['2-1', '1-2', '3-0', '2-0', '1-1'] },
+  'aston villa':       { elo: 1640, wsRating: 7.05, formPpg: 1.80, formPattern: ['W', 'W', 'L', 'W', 'D'], last5Scores: ['2-1', '3-1', '0-2', '1-0', '1-1'] },
+  'newcastle':         { elo: 1630, wsRating: 7.00, formPpg: 1.80, formPattern: ['W', 'D', 'W', 'W', 'L'], last5Scores: ['2-1', '1-1', '2-0', '3-1', '0-2'] },
+  'chelsea':           { elo: 1630, wsRating: 6.95, formPpg: 1.80, formPattern: ['W', 'W', 'D', 'L', 'W'], last5Scores: ['2-0', '3-0', '1-1', '1-2', '2-1'] },
+  'tottenham':         { elo: 1630, wsRating: 6.95, formPpg: 1.80, formPattern: ['W', 'D', 'W', 'L', 'W'], last5Scores: ['3-1', '1-1', '2-0', '1-2', '2-1'] },
+  'spurs':             { elo: 1630, wsRating: 6.95, formPpg: 1.80, formPattern: ['W', 'D', 'W', 'L', 'W'], last5Scores: ['3-1', '1-1', '2-0', '1-2', '2-1'] },
   'manchester united': { elo: 1620, wsRating: 6.90, formPpg: 1.60, formPattern: ['W', 'L', 'W', 'D', 'W'], last5Scores: ['1-0', '1-2', '2-1', '1-1', '2-0'] },
-  'man united':      { elo: 1620, wsRating: 6.90, formPpg: 1.60, formPattern: ['W', 'L', 'W', 'D', 'W'], last5Scores: ['1-0', '1-2', '2-1', '1-1', '2-0'] },
-  'sporting':        { elo: 1640, wsRating: 7.10, formPpg: 2.20, formPattern: ['W', 'W', 'W', 'W', 'D'], last5Scores: ['3-0', '2-1', '4-0', '2-0', '1-1'] },
-  'benfica':         { elo: 1630, wsRating: 7.05, formPpg: 2.00, formPattern: ['W', 'W', 'D', 'W', 'W'], last5Scores: ['2-0', '3-1', '1-1', '2-1', '3-0'] },
-  'milan':           { elo: 1640, wsRating: 7.00, formPpg: 1.80, formPattern: ['W', 'W', 'D', 'L', 'W'], last5Scores: ['2-1', '3-0', '1-1', '0-1', '2-0'] },
-  'atalanta':        { elo: 1630, wsRating: 7.00, formPpg: 1.80, formPattern: ['W', 'L', 'W', 'W', 'D'], last5Scores: ['3-0', '1-2', '2-1', '2-0', '1-1'] },
+  'man united':        { elo: 1620, wsRating: 6.90, formPpg: 1.60, formPattern: ['W', 'L', 'W', 'D', 'W'], last5Scores: ['1-0', '1-2', '2-1', '1-1', '2-0'] },
+  'man utd':           { elo: 1620, wsRating: 6.90, formPpg: 1.60, formPattern: ['W', 'L', 'W', 'D', 'W'], last5Scores: ['1-0', '1-2', '2-1', '1-1', '2-0'] },
+  'sporting':          { elo: 1640, wsRating: 7.10, formPpg: 2.20, formPattern: ['W', 'W', 'W', 'W', 'D'], last5Scores: ['3-0', '2-1', '4-0', '2-0', '1-1'] },
+  'benfica':           { elo: 1630, wsRating: 7.05, formPpg: 2.00, formPattern: ['W', 'W', 'D', 'W', 'W'], last5Scores: ['2-0', '3-1', '1-1', '2-1', '3-0'] },
+  'porto':             { elo: 1620, wsRating: 7.00, formPpg: 2.00, formPattern: ['W', 'W', 'D', 'W', 'L'], last5Scores: ['2-1', '3-0', '1-1', '2-0', '0-1'] },
+  'milan':             { elo: 1640, wsRating: 7.00, formPpg: 1.80, formPattern: ['W', 'W', 'D', 'L', 'W'], last5Scores: ['2-1', '3-0', '1-1', '0-1', '2-0'] },
+  'atalanta':          { elo: 1630, wsRating: 7.00, formPpg: 1.80, formPattern: ['W', 'L', 'W', 'W', 'D'], last5Scores: ['3-0', '1-2', '2-1', '2-0', '1-1'] },
+  'napoli':            { elo: 1640, wsRating: 7.05, formPpg: 1.80, formPattern: ['W', 'W', 'D', 'W', 'L'], last5Scores: ['2-0', '3-1', '0-0', '2-1', '1-2'] },
+  'leipzig':           { elo: 1640, wsRating: 7.00, formPpg: 1.80, formPattern: ['W', 'W', 'L', 'W', 'D'], last5Scores: ['2-0', '3-1', '1-2', '2-1', '1-1'] },
 
-  // Mid Tier
-  'brighton':        { elo: 1560, wsRating: 6.70, formPpg: 1.60, formPattern: ['W', 'D', 'W', 'L', 'D'], last5Scores: ['2-1', '1-1', '3-1', '1-2', '0-0'] },
-  'west ham':        { elo: 1540, wsRating: 6.55, formPpg: 1.40, formPattern: ['W', 'L', 'D', 'W', 'L'], last5Scores: ['2-1', '0-2', '1-1', '2-0', '1-3'] },
-  'fulham':          { elo: 1520, wsRating: 6.50, formPpg: 1.40, formPattern: ['W', 'D', 'L', 'W', 'D'], last5Scores: ['1-0', '1-1', '0-2', '2-1', '1-1'] },
-  'brentford':       { elo: 1510, wsRating: 6.45, formPpg: 1.40, formPattern: ['W', 'L', 'W', 'D', 'L'], last5Scores: ['3-1', '1-2', '2-1', '0-0', '1-2'] },
-  'crystal palace':  { elo: 1510, wsRating: 6.45, formPpg: 1.40, formPattern: ['D', 'W', 'L', 'W', 'L'], last5Scores: ['1-1', '2-0', '0-1', '2-1', '1-2'] },
-  'bournemouth':     { elo: 1500, wsRating: 6.40, formPpg: 1.40, formPattern: ['W', 'D', 'L', 'D', 'W'], last5Scores: ['2-1', '1-1', '0-1', '2-2', '1-0'] },
-  'wolves':          { elo: 1500, wsRating: 6.35, formPpg: 1.20, formPattern: ['L', 'W', 'D', 'L', 'D'], last5Scores: ['0-2', '2-1', '1-1', '1-3', '0-0'] },
-  'everton':         { elo: 1490, wsRating: 6.30, formPpg: 1.20, formPattern: ['D', 'L', 'W', 'L', 'D'], last5Scores: ['1-1', '0-2', '1-0', '1-2', '0-0'] },
-  'nottingham':      { elo: 1490, wsRating: 6.25, formPpg: 1.20, formPattern: ['W', 'D', 'L', 'L', 'D'], last5Scores: ['1-0', '1-1', '0-2', '1-2', '0-0'] },
+  // ── Mid / Upper-Mid Tier (1500 - 1610) ──
+  'athletic':          { elo: 1580, wsRating: 6.70, formPpg: 1.60, formPattern: ['W', 'D', 'W', 'L', 'D'], last5Scores: ['2-1', '1-1', '2-0', '1-2', '0-0'] },
+  'bilbao':            { elo: 1580, wsRating: 6.70, formPpg: 1.60, formPattern: ['W', 'D', 'W', 'L', 'D'], last5Scores: ['2-1', '1-1', '2-0', '1-2', '0-0'] },
+  'girona':            { elo: 1570, wsRating: 6.65, formPpg: 1.60, formPattern: ['W', 'D', 'W', 'W', 'L'], last5Scores: ['2-1', '1-1', '3-0', '2-0', '1-2'] },
+  'sociedad':          { elo: 1560, wsRating: 6.65, formPpg: 1.60, formPattern: ['W', 'D', 'L', 'W', 'D'], last5Scores: ['1-0', '1-1', '0-1', '2-1', '0-0'] },
+  'real sociedad':     { elo: 1560, wsRating: 6.65, formPpg: 1.60, formPattern: ['W', 'D', 'L', 'W', 'D'], last5Scores: ['1-0', '1-1', '0-1', '2-1', '0-0'] },
+  'villarreal':        { elo: 1560, wsRating: 6.65, formPpg: 1.60, formPattern: ['W', 'L', 'W', 'D', 'W'], last5Scores: ['3-1', '1-2', '2-0', '1-1', '2-1'] },
+  'betis':             { elo: 1540, wsRating: 6.55, formPpg: 1.40, formPattern: ['W', 'L', 'D', 'W', 'L'], last5Scores: ['2-1', '0-2', '1-1', '2-0', '1-2'] },
+  'real betis':        { elo: 1540, wsRating: 6.55, formPpg: 1.40, formPattern: ['W', 'L', 'D', 'W', 'L'], last5Scores: ['2-1', '0-2', '1-1', '2-0', '1-2'] },
+  'sevilla':           { elo: 1530, wsRating: 6.50, formPpg: 1.40, formPattern: ['L', 'W', 'D', 'L', 'W'], last5Scores: ['1-2', '2-1', '1-1', '0-2', '1-0'] },
+  'roma':              { elo: 1600, wsRating: 6.80, formPpg: 1.60, formPattern: ['W', 'D', 'W', 'L', 'D'], last5Scores: ['2-1', '1-1', '2-0', '0-1', '0-0'] },
+  'lazio':             { elo: 1590, wsRating: 6.75, formPpg: 1.60, formPattern: ['W', 'L', 'W', 'W', 'D'], last5Scores: ['2-1', '1-2', '2-0', '3-1', '1-1'] },
+  'fiorentina':        { elo: 1550, wsRating: 6.55, formPpg: 1.40, formPattern: ['W', 'D', 'L', 'W', 'D'], last5Scores: ['2-1', '0-0', '1-2', '2-0', '1-1'] },
+  'bologna':           { elo: 1540, wsRating: 6.50, formPpg: 1.40, formPattern: ['D', 'W', 'D', 'L', 'W'], last5Scores: ['1-1', '2-0', '0-0', '1-2', '1-0'] },
+  'marseille':         { elo: 1600, wsRating: 6.80, formPpg: 1.60, formPattern: ['W', 'W', 'L', 'D', 'W'], last5Scores: ['2-0', '3-1', '1-2', '1-1', '2-1'] },
+  'monaco':            { elo: 1600, wsRating: 6.85, formPpg: 1.80, formPattern: ['W', 'W', 'D', 'W', 'L'], last5Scores: ['3-1', '2-0', '1-1', '2-1', '0-1'] },
+  'lille':             { elo: 1570, wsRating: 6.70, formPpg: 1.60, formPattern: ['W', 'D', 'W', 'L', 'D'], last5Scores: ['2-0', '1-1', '2-1', '0-2', '0-0'] },
+  'lyon':              { elo: 1550, wsRating: 6.55, formPpg: 1.40, formPattern: ['W', 'L', 'W', 'D', 'L'], last5Scores: ['2-1', '1-3', '2-0', '1-1', '0-2'] },
+  'brighton':          { elo: 1560, wsRating: 6.70, formPpg: 1.60, formPattern: ['W', 'D', 'W', 'L', 'D'], last5Scores: ['2-1', '1-1', '3-1', '1-2', '0-0'] },
+  'west ham':          { elo: 1540, wsRating: 6.55, formPpg: 1.40, formPattern: ['W', 'L', 'D', 'W', 'L'], last5Scores: ['2-1', '0-2', '1-1', '2-0', '1-3'] },
+  'fulham':            { elo: 1520, wsRating: 6.50, formPpg: 1.40, formPattern: ['W', 'D', 'L', 'W', 'D'], last5Scores: ['1-0', '1-1', '0-2', '2-1', '1-1'] },
+  'brentford':         { elo: 1510, wsRating: 6.45, formPpg: 1.40, formPattern: ['W', 'L', 'W', 'D', 'L'], last5Scores: ['3-1', '1-2', '2-1', '0-0', '1-2'] },
+  'crystal palace':    { elo: 1510, wsRating: 6.45, formPpg: 1.40, formPattern: ['D', 'W', 'L', 'W', 'L'], last5Scores: ['1-1', '2-0', '0-1', '2-1', '1-2'] },
+  'bournemouth':       { elo: 1500, wsRating: 6.40, formPpg: 1.40, formPattern: ['W', 'D', 'L', 'D', 'W'], last5Scores: ['2-1', '1-1', '0-1', '2-2', '1-0'] },
+  'wolves':            { elo: 1500, wsRating: 6.35, formPpg: 1.20, formPattern: ['L', 'W', 'D', 'L', 'D'], last5Scores: ['0-2', '2-1', '1-1', '1-3', '0-0'] },
+  'everton':           { elo: 1490, wsRating: 6.30, formPpg: 1.20, formPattern: ['D', 'L', 'W', 'L', 'D'], last5Scores: ['1-1', '0-2', '1-0', '1-2', '0-0'] },
+  'nottingham':        { elo: 1490, wsRating: 6.25, formPpg: 1.20, formPattern: ['W', 'D', 'L', 'L', 'D'], last5Scores: ['1-0', '1-1', '0-2', '1-2', '0-0'] },
+  'nottingham forest': { elo: 1490, wsRating: 6.25, formPpg: 1.20, formPattern: ['W', 'D', 'L', 'L', 'D'], last5Scores: ['1-0', '1-1', '0-2', '1-2', '0-0'] },
 
-  // Lower / Championship
-  'leeds':           { elo: 1480, wsRating: 6.20, formPpg: 1.60, formPattern: ['W', 'W', 'D', 'L', 'W'], last5Scores: ['2-0', '3-1', '1-1', '0-1', '2-1'] },
-  'burnley':         { elo: 1460, wsRating: 6.10, formPpg: 1.40, formPattern: ['W', 'D', 'W', 'L', 'D'], last5Scores: ['2-1', '0-0', '2-0', '1-2', '1-1'] },
-  'sheffield united':{ elo: 1450, wsRating: 6.05, formPpg: 1.40, formPattern: ['W', 'L', 'W', 'D', 'L'], last5Scores: ['2-0', '0-1', '1-0', '1-1', '1-2'] },
-  'norwich':         { elo: 1440, wsRating: 6.00, formPpg: 1.20, formPattern: ['D', 'W', 'L', 'D', 'L'], last5Scores: ['1-1', '2-1', '0-2', '2-2', '0-1'] },
-  'coventry':        { elo: 1430, wsRating: 5.95, formPpg: 1.20, formPattern: ['W', 'L', 'D', 'L', 'W'], last5Scores: ['2-1', '0-2', '1-1', '0-1', '1-0'] },
-  'hull city':       { elo: 1410, wsRating: 5.85, formPpg: 1.00, formPattern: ['L', 'D', 'W', 'L', 'L'], last5Scores: ['0-2', '1-1', '2-1', '1-2', '0-1'] },
-  'hull':            { elo: 1410, wsRating: 5.85, formPpg: 1.00, formPattern: ['L', 'D', 'W', 'L', 'L'], last5Scores: ['0-2', '1-1', '2-1', '1-2', '0-1'] },
-  'bristol':         { elo: 1400, wsRating: 5.80, formPpg: 1.00, formPattern: ['D', 'L', 'W', 'L', 'D'], last5Scores: ['0-0', '1-2', '1-0', '0-2', '1-1'] },
-  'millwall':        { elo: 1410, wsRating: 5.85, formPpg: 1.00, formPattern: ['W', 'L', 'D', 'L', 'L'], last5Scores: ['1-0', '0-1', '1-1', '0-2', '1-2'] },
+  // ── Lower / Championship / Promoted (1380 - 1480) ──
+  'leeds':             { elo: 1480, wsRating: 6.20, formPpg: 1.60, formPattern: ['W', 'W', 'D', 'L', 'W'], last5Scores: ['2-0', '3-1', '1-1', '0-1', '2-1'] },
+  'burnley':           { elo: 1460, wsRating: 6.10, formPpg: 1.40, formPattern: ['W', 'D', 'W', 'L', 'D'], last5Scores: ['2-1', '0-0', '2-0', '1-2', '1-1'] },
+  'sheffield united':  { elo: 1450, wsRating: 6.05, formPpg: 1.40, formPattern: ['W', 'L', 'W', 'D', 'L'], last5Scores: ['2-0', '0-1', '1-0', '1-1', '1-2'] },
+  'norwich':           { elo: 1440, wsRating: 6.00, formPpg: 1.20, formPattern: ['D', 'W', 'L', 'D', 'L'], last5Scores: ['1-1', '2-1', '0-2', '2-2', '0-1'] },
+  'coventry':          { elo: 1430, wsRating: 5.95, formPpg: 1.20, formPattern: ['W', 'L', 'D', 'L', 'W'], last5Scores: ['2-1', '0-2', '1-1', '0-1', '1-0'] },
+  'hull city':         { elo: 1410, wsRating: 5.85, formPpg: 1.00, formPattern: ['L', 'D', 'W', 'L', 'L'], last5Scores: ['0-2', '1-1', '2-1', '1-2', '0-1'] },
+  'hull':              { elo: 1410, wsRating: 5.85, formPpg: 1.00, formPattern: ['L', 'D', 'W', 'L', 'L'], last5Scores: ['0-2', '1-1', '2-1', '1-2', '0-1'] },
+  'bristol':           { elo: 1400, wsRating: 5.80, formPpg: 1.00, formPattern: ['D', 'L', 'W', 'L', 'D'], last5Scores: ['0-0', '1-2', '1-0', '0-2', '1-1'] },
+  'millwall':          { elo: 1410, wsRating: 5.85, formPpg: 1.00, formPattern: ['W', 'L', 'D', 'L', 'L'], last5Scores: ['1-0', '0-1', '1-1', '0-2', '1-2'] },
 };
 
 function getClubIntel(teamName: string) {
-  const norm = (teamName || '').toLowerCase().trim();
+  const norm = cleanTeamName(teamName);
   for (const [key, val] of Object.entries(CLUB_INTELLIGENCE)) {
-    if (norm.includes(key) || key.includes(norm)) {
+    const cleanKey = cleanTeamName(key);
+    if (norm.includes(cleanKey) || cleanKey.includes(norm)) {
       return val;
     }
   }
