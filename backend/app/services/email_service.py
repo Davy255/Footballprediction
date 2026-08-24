@@ -67,6 +67,13 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
                 "to": [to_email],
                 "subject": subject,
                 "html": html_content,
+                "headers": {
+                    "X-Entity-Ref-ID": f"fp-tx-{to_email.split('@')[0]}",
+                    "X-Priority": "3",
+                    "Importance": "normal",
+                    "Auto-Submitted": "auto-generated",
+                    "Precedence": "transactional",
+                }
             }
             if text_content:
                 resend_payload["text"] = text_content
@@ -108,6 +115,11 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
                 "to": [{"email": to_email}],
                 "subject": subject,
                 "htmlContent": html_content,
+                "headers": {
+                    "X-Mailin-Tag": "transactional",
+                    "Auto-Submitted": "auto-generated",
+                    "Precedence": "transactional",
+                }
             }
             if text_content:
                 brevo_payload["textContent"] = text_content
@@ -196,6 +208,10 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
         msg["Subject"] = subject
         msg["From"] = from_header_smtp
         msg["To"] = to_email
+        msg["Auto-Submitted"] = "auto-generated"
+        msg["X-Priority"] = "3"
+        msg["Importance"] = "normal"
+        msg["Precedence"] = "transactional" 
 
         if text_content:
             msg.attach(MIMEText(text_content, "plain", "utf-8"))
@@ -337,7 +353,7 @@ def send_welcome_email(to_email: str, username: str) -> bool:
     """
     frontend_base = get_effective_frontend_url()
 
-    subject = "⚽ Welcome to FootballPredict — Your AI Betting Edge Starts Here"
+    subject = "Welcome to FootballPredict — Account Confirmation & Kickoff Guide"
 
     html_content = f"""<!DOCTYPE html>
 <html>
@@ -364,7 +380,7 @@ def send_welcome_email(to_email: str, username: str) -> bool:
         <tr>
           <td style="padding:28px 32px 0;">
             <p style="margin:0 0 18px;font-size:15px;line-height:1.75;color:#cbd5e1;">
-              You've joined <strong style="color:#60a5fa;">FootballPredict</strong> — the platform built to give you a <strong style="color:#fff;">real analytical edge</strong> before you place a bet on Betway, Sportpesa, 1xBet, or any other bookmaker.
+              You've joined <strong style="color:#60a5fa;">FootballPredict</strong> — the platform built to give you a <strong style="color:#fff;">real analytical edge</strong> before you place a analyze upcoming fixtures and team form.
             </p>
             <p style="margin:0 0 24px;font-size:15px;line-height:1.75;color:#94a3b8;">
               We analyse hundreds of data points per match — form, head-to-head records, goal averages, home/away strength, and bookmaker odds — to deliver <strong style="color:#fff;">clear, data-backed predictions</strong> for every fixture.
@@ -437,7 +453,7 @@ def send_welcome_email(to_email: str, username: str) -> bool:
                       <td width="36" style="font-size:22px;vertical-align:middle;">🤖</td>
                       <td style="padding-left:10px;vertical-align:middle;">
                         <strong style="color:#fcd34d;font-size:14px;">Coach AI — Your Personal Analyst</strong>
-                        <p style="margin:3px 0 0;font-size:13px;color:#94a3b8;line-height:1.5;">Ask any match question and get instant AI analysis, team news, and betting advice</p>
+                        <p style="margin:3px 0 0;font-size:13px;color:#94a3b8;line-height:1.5;">Ask any match question and get instant AI analysis, team news, and tactical match intelligence</p>
                       </td>
                     </tr>
                   </table>
@@ -648,7 +664,7 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
         <tr>
           <td style="padding:28px 32px 22px;text-align:center;background:linear-gradient(135deg,#0f2347 0%,#0a1a35 100%);border-bottom:1px solid rgba(255,255,255,0.07);">
             <div style="font-size:30px;margin-bottom:8px;">⚽ 🔥</div>
-            <h1 style="margin:0 0 4px;font-size:22px;font-weight:800;color:#fff;">Today's AI Betting Tips</h1>
+            <h1 style="margin:0 0 4px;font-size:22px;font-weight:800;color:#fff;">Today's Match Intelligence & Schedule</h1>
             <p style="margin:0;font-size:13px;color:#64748b;">{today_str}</p>
           </td>
         </tr>
@@ -657,7 +673,7 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
         <tr>
           <td style="padding:24px 32px 16px;">
             <p style="margin:0;font-size:15px;line-height:1.75;color:#cbd5e1;">
-              Hey <strong style="color:#fff;">{username}</strong>! Here are today's top fixtures with AI-powered predictions to help you bet smarter. Analyse each match, check the win probabilities, and make your move before kickoff. 🎯
+              Hey <strong style="color:#fff;">{username}</strong>! Here are today's top fixtures with AI-powered predictions to help you make informed match predictions. Analyse each match, check the win probabilities, and make your move before kickoff. 🎯
             </p>
           </td>
         </tr>
@@ -673,7 +689,7 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
         <tr>
           <td style="padding:0 32px 24px;">
             <div style="background:rgba(37,99,235,0.1);border:1px solid rgba(59,130,246,0.2);border-radius:10px;padding:14px 16px;">
-              <p style="margin:0 0 6px;font-size:12px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:0.5px;">💡 Today's Betting Reminder</p>
+              <p style="margin:0 0 6px;font-size:12px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:0.5px;">💡 Today's Match Tactical Note</p>
               <p style="margin:0;font-size:13px;color:#94a3b8;line-height:1.6;">
                 Always check our <strong style="color:#fff;">Coach AI</strong> before placing bets — ask about team news, injuries, or head-to-head history for any fixture.
                 Combine our AI tips with your own research for the best results.
@@ -709,9 +725,9 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
 </body>
 </html>"""
 
-    text_content = f"""Hey {username}! Today's AI Betting Tips — {today_str}
+    text_content = f"""Hey {username}! Today's Match Intelligence & Schedule — {today_str}
 
-Here are today's top fixtures with AI predictions to help you bet smarter.
+Here are today's top fixtures with AI predictions to help you make informed match predictions.
 
 Visit FootballPredict for full match analysis, win probabilities, BTTS tips, Over/Under predictions and Coach AI:
 {frontend_base}/
