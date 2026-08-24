@@ -347,17 +347,61 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
     if (tab === 'predict') loadPred();
   };
 
+  const handleHomeInput = (val: string) => {
+    setPredHome(val);
+    if (val !== '' && predAway !== '') {
+      const h = parseInt(val);
+      const a = parseInt(predAway);
+      if (!isNaN(h) && !isNaN(a)) {
+        setPredOutcome(h > a ? 'HOME_TEAM' : a > h ? 'AWAY_TEAM' : 'DRAW');
+      }
+    }
+  };
+
+  const handleAwayInput = (val: string) => {
+    setPredAway(val);
+    if (predHome !== '' && val !== '') {
+      const h = parseInt(predHome);
+      const a = parseInt(val);
+      if (!isNaN(h) && !isNaN(a)) {
+        setPredOutcome(h > a ? 'HOME_TEAM' : a > h ? 'AWAY_TEAM' : 'DRAW');
+      }
+    }
+  };
+
+  const handleOutcomeBtn = (key: string) => {
+    if (predOutcome === key) {
+      setPredOutcome('');
+    } else {
+      setPredOutcome(key);
+      if (key === 'DRAW') {
+        const base = predHome !== '' ? predHome : '1';
+        setPredHome(base);
+        setPredAway(base);
+      } else if (key === 'HOME_TEAM') {
+        setPredHome('2');
+        setPredAway('1');
+      } else if (key === 'AWAY_TEAM') {
+        setPredHome('1');
+        setPredAway('2');
+      }
+    }
+  };
+
   const handleSubmit = async () => {
     if (!token) return;
     const ph = predHome !== '' ? parseInt(predHome) : undefined;
     const pa = predAway !== '' ? parseInt(predAway) : undefined;
     
     let outcome = predOutcome;
-    if (!outcome && ph !== undefined && pa !== undefined && !isNaN(ph) && !isNaN(pa)) {
+    if (ph !== undefined && pa !== undefined && !isNaN(ph) && !isNaN(pa)) {
       outcome = ph > pa ? 'HOME_TEAM' : pa > ph ? 'AWAY_TEAM' : 'DRAW';
     }
     if (!outcome) {
-      outcome = 'HOME_TEAM';
+      if (predDc === 'x2') outcome = 'AWAY_TEAM';
+      else if (predDc === '1x') outcome = 'HOME_TEAM';
+      else if (predDc === '12') outcome = 'HOME_TEAM';
+      else outcome = 'DRAW';
     }
 
     setSubmitting(true);
@@ -817,32 +861,32 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
                     <div className="ws-score-inputs">
                       <input
                         type="number" min={0} max={20} value={predHome}
-                        onChange={e => setPredHome(e.target.value)}
+                        onChange={e => handleHomeInput(e.target.value)}
                         className="ws-score-input" placeholder="0"
                       />
                       <span className="ws-score-sep">–</span>
                       <input
                         type="number" min={0} max={20} value={predAway}
-                        onChange={e => setPredAway(e.target.value)}
+                        onChange={e => handleAwayInput(e.target.value)}
                         className="ws-score-input" placeholder="0"
                       />
                     </div>
                     <div className="ws-outcome-btns">
                       <button
                         className={`ws-outcome-btn${predOutcome === 'HOME_TEAM' ? ' selected' : ''}`}
-                        onClick={() => setPredOutcome(predOutcome === 'HOME_TEAM' ? '' : 'HOME_TEAM')}
+                        onClick={() => handleOutcomeBtn('HOME_TEAM')}
                       >
                         {HN} Win (@{odds.home.toFixed(2)})
                       </button>
                       <button
                         className={`ws-outcome-btn${predOutcome === 'DRAW' ? ' selected' : ''}`}
-                        onClick={() => setPredOutcome(predOutcome === 'DRAW' ? '' : 'DRAW')}
+                        onClick={() => handleOutcomeBtn('DRAW')}
                       >
                         Draw (@{odds.draw.toFixed(2)})
                       </button>
                       <button
                         className={`ws-outcome-btn${predOutcome === 'AWAY_TEAM' ? ' selected' : ''}`}
-                        onClick={() => setPredOutcome(predOutcome === 'AWAY_TEAM' ? '' : 'AWAY_TEAM')}
+                        onClick={() => handleOutcomeBtn('AWAY_TEAM')}
                       >
                         {AN} Win (@{odds.away.toFixed(2)})
                       </button>

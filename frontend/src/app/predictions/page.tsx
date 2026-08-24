@@ -76,17 +76,69 @@ export default function MyPredictionsPage() {
     return true;
   });
 
-  const getOutcomeLabel = (p: Prediction) => {
-    if (p.predicted_outcome === 'HOME_TEAM') return p.match.home_team.short_name || 'Home Win';
-    if (p.predicted_outcome === 'AWAY_TEAM') return p.match.away_team.short_name || 'Away Win';
-    return 'Draw (X)';
+  const renderPicksBadges = (p: Prediction) => {
+    const badges = [];
+
+    if (p.predicted_home_score !== null && p.predicted_home_score !== undefined && p.predicted_away_score !== null && p.predicted_away_score !== undefined) {
+      const outcomeText = p.predicted_home_score > p.predicted_away_score 
+        ? (p.match.home_team.short_name || 'Home Win')
+        : p.predicted_away_score > p.predicted_home_score 
+        ? (p.match.away_team.short_name || 'Away Win')
+        : 'Draw (X)';
+      badges.push(
+        <span key="outcome" className="status-badge status-scheduled" style={{ fontSize: '0.75rem', fontWeight: 700 }}>
+          {outcomeText}
+        </span>
+      );
+    } else if (p.predicted_outcome) {
+      const label = p.predicted_outcome === 'HOME_TEAM' 
+        ? (p.match.home_team.short_name || 'Home Win')
+        : p.predicted_outcome === 'AWAY_TEAM'
+        ? (p.match.away_team.short_name || 'Away Win')
+        : 'Draw (X)';
+      badges.push(
+        <span key="outcome" className="status-badge status-scheduled" style={{ fontSize: '0.75rem', fontWeight: 700 }}>
+          {label}
+        </span>
+      );
+    }
+
+    if (p.predicted_dc) {
+      badges.push(
+        <span key="dc" style={{ background: 'rgba(59,130,246,0.15)', color: '#60a5fa', padding: '2px 6px', borderRadius: 4, fontSize: '0.7rem', fontWeight: 700 }}>
+          DC: {p.predicted_dc.toUpperCase()}
+        </span>
+      );
+    }
+
+    if (p.predicted_btts) {
+      badges.push(
+        <span key="btts" style={{ background: 'rgba(168,85,247,0.15)', color: '#c084fc', padding: '2px 6px', borderRadius: 4, fontSize: '0.7rem', fontWeight: 700 }}>
+          BTTS: {p.predicted_btts.toUpperCase()}
+        </span>
+      );
+    }
+
+    if (p.predicted_over25) {
+      badges.push(
+        <span key="ou" style={{ background: 'rgba(245,158,11,0.15)', color: '#fbbf24', padding: '2px 6px', borderRadius: 4, fontSize: '0.7rem', fontWeight: 700 }}>
+          O/U: {p.predicted_over25.toUpperCase()} 2.5
+        </span>
+      );
+    }
+
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', alignItems: 'center' }}>
+        {badges}
+      </div>
+    );
   };
 
   const getResultBadge = (p: Prediction) => {
     if (!p.is_scored) return <span className="result-pending">⏳ Pending</span>;
     if (p.score_correct) return <span className="result-exact">🎯 Exact Score</span>;
-    if (p.outcome_correct) return <span className="result-correct">✅ Correct</span>;
-    return <span className="result-wrong">❌ Wrong</span>;
+    if (p.outcome_correct || p.points_earned > 0) return <span className="result-correct">✅ Won (+{p.points_earned} pts)</span>;
+    return <span className="result-wrong">❌ Missed</span>;
   };
 
   return (
@@ -183,9 +235,7 @@ export default function MyPredictionsPage() {
                       </div>
                     </td>
                     <td style={{ textAlign: 'center' }}>
-                      <span className="status-badge status-scheduled" style={{ fontSize: '0.72rem' }}>
-                        {getOutcomeLabel(p)}
-                      </span>
+                      {renderPicksBadges(p)}
                     </td>
                     <td style={{ textAlign: 'center', fontWeight: 700, fontFamily: 'Outfit, sans-serif' }}>
                       {p.predicted_home_score ?? '–'} : {p.predicted_away_score ?? '–'}
