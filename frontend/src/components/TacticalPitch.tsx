@@ -239,45 +239,45 @@ const SQUADS_DB: Record<string, { formation: string; xi: Player[]; bench: Player
   },
 };
 
-// Non-overlapping coordinates (Home: Y from 7% to 46%; Away: Y from 54% to 93%)
+// 100% Non-overlapping tactical formation coordinates (Home: 6% to 43%, Away: 57% to 94%)
 const FORMATION_COORDINATES: Record<string, [number, number][]> = {
   '4-3-3': [
-    [50, 7],
-    [12, 17], [37, 16], [63, 16], [88, 17],
-    [28, 28], [50, 27], [72, 28],
-    [16, 42], [50, 46], [84, 42],
+    [50, 6],
+    [14, 16], [38, 15], [62, 15], [86, 16],
+    [26, 26], [50, 25], [74, 26],
+    [16, 40], [50, 43], [84, 40],
   ],
   '4-2-3-1': [
-    [50, 7],
-    [12, 17], [37, 16], [63, 16], [88, 17],
-    [34, 27], [66, 27],
-    [15, 37], [50, 36], [85, 37],
-    [50, 46],
+    [50, 6],
+    [14, 16], [38, 15], [62, 15], [86, 16],
+    [33, 25], [67, 25],
+    [14, 34], [50, 33], [86, 34],
+    [50, 43],
   ],
   '3-4-2-1': [
-    [50, 7],
-    [25, 17], [50, 16], [75, 17],
-    [10, 27], [36, 27], [64, 27], [90, 27],
-    [30, 37], [70, 37],
-    [50, 46],
+    [50, 6],
+    [25, 15], [50, 14], [75, 15],
+    [12, 25], [36, 24], [64, 24], [88, 25],
+    [28, 34], [72, 34],
+    [50, 43],
   ],
   '3-5-2': [
-    [50, 7],
-    [25, 17], [50, 16], [75, 17],
-    [10, 27], [30, 27], [50, 26], [70, 27], [90, 27],
-    [35, 46], [65, 46],
+    [50, 6],
+    [25, 15], [50, 14], [75, 15],
+    [12, 26], [32, 25], [50, 24], [68, 25], [88, 26],
+    [34, 42], [66, 42],
   ],
   '4-4-2': [
-    [50, 7],
-    [12, 17], [37, 16], [63, 16], [88, 17],
-    [14, 29], [38, 29], [62, 29], [86, 29],
-    [35, 46], [65, 46],
+    [50, 6],
+    [14, 16], [38, 15], [62, 15], [86, 16],
+    [14, 27], [38, 26], [62, 26], [86, 27],
+    [34, 42], [66, 42],
   ],
   '5-3-2': [
-    [50, 7],
-    [10, 17], [28, 16], [50, 15], [72, 16], [90, 17],
-    [28, 28], [50, 27], [72, 28],
-    [35, 46], [65, 46],
+    [50, 6],
+    [10, 16], [28, 15], [50, 14], [72, 15], [90, 16],
+    [26, 26], [50, 25], [74, 26],
+    [34, 42], [66, 42],
   ],
 };
 
@@ -499,7 +499,7 @@ export default function TacticalPitch({
       <div style={{
         position: 'relative',
         width: '100%',
-        height: '600px',
+        height: '640px',
         background: 'linear-gradient(180deg, #134220 0%, #1e5c2e 50%, #134220 100%)',
         borderRadius: '16px',
         border: '3px solid rgba(255,255,255,0.25)',
@@ -511,7 +511,7 @@ export default function TacticalPitch({
         {/* Grass Pitch Stripes */}
         <div style={{
           position: 'absolute', inset: 0,
-          backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 60px, transparent 60px, transparent 120px)',
+          backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 64px, transparent 64px, transparent 128px)',
           pointerEvents: 'none',
         }} />
 
@@ -575,60 +575,67 @@ export default function TacticalPitch({
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                zIndex: isSelected ? 25 : 10,
+                zIndex: isSelected ? 30 : 15,
                 transition: 'transform 0.15s ease',
               }}
               title={`Click for ${player.name}'s stats`}
             >
-              {/* Jersey Node */}
-              <div style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '50%',
-                background: isSelected ? '#38bdf8' : 'linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%)',
-                border: '2px solid #ffffff',
-                boxShadow: isSelected ? '0 0 14px #38bdf8' : '0 2px 8px rgba(0,0,0,0.6)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#ffffff',
-                fontWeight: 900,
-                fontSize: '0.78rem',
-              }}>
-                {player.number}
+              {/* Compact Jersey Node with Pinned Micro Rating */}
+              <div style={{ position: 'relative' }}>
+                <div style={{
+                  width: '28px',
+                  height: '28px',
+                  borderRadius: '50%',
+                  background: isSelected ? '#38bdf8' : 'linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%)',
+                  border: '2px solid #ffffff',
+                  boxShadow: isSelected ? '0 0 12px #38bdf8' : '0 2px 6px rgba(0,0,0,0.6)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#ffffff',
+                  fontWeight: 900,
+                  fontSize: '0.74rem',
+                }}>
+                  {player.number}
+                </div>
+
+                {/* Rating Pin Badge */}
+                <div style={{
+                  position: 'absolute',
+                  top: '-4px',
+                  right: '-14px',
+                  fontSize: '0.58rem',
+                  fontWeight: 900,
+                  padding: '0 3px',
+                  borderRadius: '4px',
+                  background: player.rating >= 7.5 ? '#15803d' : '#854d0e',
+                  color: '#ffffff',
+                  border: '1px solid rgba(255,255,255,0.4)',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.6)',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {player.rating.toFixed(1)}
+                </div>
               </div>
 
-              {/* Player Name Tag */}
+              {/* Compact Name Tag */}
               <div style={{
                 marginTop: '2px',
                 background: 'rgba(0,0,0,0.85)',
-                border: '1px solid rgba(255,255,255,0.25)',
+                border: '1px solid rgba(255,255,255,0.3)',
                 borderRadius: '4px',
                 padding: '1px 5px',
                 color: '#ffffff',
-                fontSize: '0.66rem',
+                fontSize: '0.64rem',
                 fontWeight: 700,
                 whiteSpace: 'nowrap',
-                maxWidth: '96px',
+                maxWidth: '85px',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 textAlign: 'center',
-                boxShadow: '0 1px 4px rgba(0,0,0,0.5)',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.5)',
               }}>
                 {lastName}
-              </div>
-
-              {/* Rating Tag */}
-              <div style={{
-                marginTop: '1px',
-                fontSize: '0.60rem',
-                fontWeight: 800,
-                padding: '0 4px',
-                borderRadius: '3px',
-                background: 'rgba(0,0,0,0.85)',
-                color: player.rating >= 7.5 ? '#4ade80' : '#facc15',
-              }}>
-                ⭐ {player.rating.toFixed(1)}
               </div>
             </div>
           );
@@ -654,60 +661,67 @@ export default function TacticalPitch({
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                zIndex: isSelected ? 25 : 10,
+                zIndex: isSelected ? 30 : 15,
                 transition: 'transform 0.15s ease',
               }}
               title={`Click for ${player.name}'s stats`}
             >
-              {/* Jersey Node */}
-              <div style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '50%',
-                background: isSelected ? '#f87171' : 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
-                border: '2px solid #ffffff',
-                boxShadow: isSelected ? '0 0 14px #f87171' : '0 2px 8px rgba(0,0,0,0.6)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#ffffff',
-                fontWeight: 900,
-                fontSize: '0.78rem',
-              }}>
-                {player.number}
+              {/* Compact Jersey Node with Pinned Micro Rating */}
+              <div style={{ position: 'relative' }}>
+                <div style={{
+                  width: '28px',
+                  height: '28px',
+                  borderRadius: '50%',
+                  background: isSelected ? '#f87171' : 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
+                  border: '2px solid #ffffff',
+                  boxShadow: isSelected ? '0 0 12px #f87171' : '0 2px 6px rgba(0,0,0,0.6)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#ffffff',
+                  fontWeight: 900,
+                  fontSize: '0.74rem',
+                }}>
+                  {player.number}
+                </div>
+
+                {/* Rating Pin Badge */}
+                <div style={{
+                  position: 'absolute',
+                  top: '-4px',
+                  right: '-14px',
+                  fontSize: '0.58rem',
+                  fontWeight: 900,
+                  padding: '0 3px',
+                  borderRadius: '4px',
+                  background: player.rating >= 7.5 ? '#15803d' : '#854d0e',
+                  color: '#ffffff',
+                  border: '1px solid rgba(255,255,255,0.4)',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.6)',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {player.rating.toFixed(1)}
+                </div>
               </div>
 
-              {/* Player Name Tag */}
+              {/* Compact Name Tag */}
               <div style={{
                 marginTop: '2px',
                 background: 'rgba(0,0,0,0.85)',
-                border: '1px solid rgba(255,255,255,0.25)',
+                border: '1px solid rgba(255,255,255,0.3)',
                 borderRadius: '4px',
                 padding: '1px 5px',
                 color: '#ffffff',
-                fontSize: '0.66rem',
+                fontSize: '0.64rem',
                 fontWeight: 700,
                 whiteSpace: 'nowrap',
-                maxWidth: '96px',
+                maxWidth: '85px',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 textAlign: 'center',
-                boxShadow: '0 1px 4px rgba(0,0,0,0.5)',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.5)',
               }}>
                 {lastName}
-              </div>
-
-              {/* Rating Tag */}
-              <div style={{
-                marginTop: '1px',
-                fontSize: '0.60rem',
-                fontWeight: 800,
-                padding: '0 4px',
-                borderRadius: '3px',
-                background: 'rgba(0,0,0,0.85)',
-                color: player.rating >= 7.5 ? '#4ade80' : '#facc15',
-              }}>
-                ⭐ {player.rating.toFixed(1)}
               </div>
             </div>
           );
