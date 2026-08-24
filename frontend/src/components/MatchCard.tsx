@@ -524,7 +524,7 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
 
   return (
     <div style={{ marginBottom: 0 }}>
-      {/* FootyStats Authentic Match Row with 1X2 Odds */}
+      {/* FootyStats Authentic Match Row */}
       <div
         className={`footystats-match-row ${isEven ? 'row-even' : 'row-odd'} ${status.isLive ? 'live-row' : ''}`}
         onClick={() => {
@@ -536,20 +536,17 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
           if (!open && activeTab === 'predict') loadPred();
         }}
       >
-        {/* Home Side: Team Name (right) + Odds badge + Form Badge */}
+        {/* Home Side: Team Name (right) + Form Badge */}
         <div className="fs-home-side">
           <span className={`fs-team-name-home ${homeWin ? 'is-winner' : ''}`} title={HN}>
             {HN}
           </span>
-          <span className="fs-odds-badge" title={`${HN} Win Odds: @${homeOddsFormatted}`}>
-            @{homeOddsFormatted}
-          </span>
-          <span className={`fs-ppg-badge ${getFormBadgeColor(homePpg)}`} title={`PPG Form: ${homePpg}`}>
+          <span className={`fs-ppg-badge ${getFormBadgeColor(homePpg)}`}>
             {homePpg}
           </span>
         </div>
 
-        {/* Center Column: Kickoff Time / Score + Draw Odds */}
+        {/* Center Column: Kickoff Time / Score + "Stats" link */}
         <div className="fs-center-side">
           {status.isLive ? (
             <>
@@ -574,20 +571,15 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
           ) : (
             <>
               <span className="fs-center-time">{dateTime.time}</span>
-              <span className="fs-center-draw-odds" title={`Draw Odds: @${drawOddsFormatted}`}>
-                X @{drawOddsFormatted}
-              </span>
+              <span className="fs-center-sub">Stats</span>
             </>
           )}
         </div>
 
-        {/* Away Side: Form Badge + Odds badge + Team Name (left) */}
+        {/* Away Side: Form Badge + Team Name (left) */}
         <div className="fs-away-side">
-          <span className={`fs-ppg-badge ${getFormBadgeColor(awayPpg)}`} title={`PPG Form: ${awayPpg}`}>
+          <span className={`fs-ppg-badge ${getFormBadgeColor(awayPpg)}`}>
             {awayPpg}
-          </span>
-          <span className="fs-odds-badge" title={`${AN} Win Odds: @${awayOddsFormatted}`}>
-            @{awayOddsFormatted}
           </span>
           <span className={`fs-team-name-away ${awayWin ? 'is-winner' : ''}`} title={AN}>
             {AN}

@@ -75,18 +75,16 @@ export default function LeagueAccordionSection({
         </div>
       </div>
 
-      {/* Column Sub-Header Bar (FootyStats layout with Odds & Form) */}
+      {/* Column Sub-Header Bar (FootyStats layout) */}
       {isExpanded && (
         <div className="footystats-sub-header">
           <div className="fs-sub-home">
             <span>Home</span>
-            <span style={{ fontSize: '0.66rem', color: 'var(--text-muted)' }}>Odds / Form</span>
+            <span>Form</span>
           </div>
-          <div className="fs-sub-center">
-            <span style={{ fontSize: '0.66rem', color: 'var(--text-muted)' }}>Time / Draw</span>
-          </div>
+          <div className="fs-sub-center"></div>
           <div className="fs-sub-away">
-            <span style={{ fontSize: '0.66rem', color: 'var(--text-muted)' }}>Form / Odds</span>
+            <span>Form</span>
             <span>Away</span>
           </div>
         </div>
