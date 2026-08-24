@@ -292,7 +292,7 @@ const REGIONAL_LAST = [
   'Schmidt', 'Muller', 'Weber', 'Schneider', 'Fischer', 'Meyer', 'Wagner', 'Becker', 'Schulz', 'Hoffmann'
 ];
 
-function resolveTeamLineup(teamName: string, formation: string, isHome: boolean): TeamLineup {
+export function resolveTeamLineup(teamName: string, formation: string, isHome: boolean): TeamLineup {
   const clean = teamName.toLowerCase().replace(/fc|cf|ca|afc|ec/g, '').trim();
   let match = Object.keys(SQUADS_DB).find(k => clean.includes(k) || k.includes(clean));
   

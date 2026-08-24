@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { Player, LineupData } from './TacticalPitch';
+import { Player, LineupData, resolveTeamLineup } from './TacticalPitch';
 
 interface PlayerStatsTableProps {
   lineupData?: LineupData;
@@ -14,23 +14,29 @@ type CategoryKey = 'goals' | 'assists' | 'tackles' | 'rating';
 export default function PlayerStatsTable({ lineupData, homeName, awayName }: PlayerStatsTableProps) {
   const [category, setCategory] = useState<CategoryKey>('goals');
 
+  const homeLineup = useMemo(() => {
+    if (lineupData?.home?.starting_xi && lineupData.home.starting_xi.length > 0) return lineupData.home;
+    return resolveTeamLineup(homeName, '4-2-3-1', true);
+  }, [lineupData, homeName]);
+
+  const awayLineup = useMemo(() => {
+    if (lineupData?.away?.starting_xi && lineupData.away.starting_xi.length > 0) return lineupData.away;
+    return resolveTeamLineup(awayName, '4-3-3', false);
+  }, [lineupData, awayName]);
+
   const allPlayers = useMemo(() => {
     const list: Player[] = [];
-    if (lineupData?.home?.starting_xi) {
-      lineupData.home.starting_xi.forEach(p => list.push({ ...p, team: homeName, is_home: true }));
-    }
-    if (lineupData?.away?.starting_xi) {
-      lineupData.away.starting_xi.forEach(p => list.push({ ...p, team: awayName, is_home: false }));
-    }
+    homeLineup.starting_xi.forEach(p => list.push({ ...p, team: homeName, is_home: true }));
+    awayLineup.starting_xi.forEach(p => list.push({ ...p, team: awayName, is_home: false }));
     return list;
-  }, [lineupData, homeName, awayName]);
+  }, [homeLineup, awayLineup, homeName, awayName]);
 
   const list = useMemo(() => {
     const sorted = [...allPlayers];
     if (category === 'goals') {
       return sorted.sort((a, b) => (b.goals ?? 0) - (a.goals ?? 0) || b.rating - a.rating).slice(0, 6);
     } else if (category === 'assists') {
-      return sorted.sort((a, b) => (b.assists ?? 0) - (a.assists ?? 0) || b.rating - a.rating).slice(0, 6);
+      return sorted.sort((a, b) => (b.assists ?? 0) - (a.assists ?? 0) || (b.key_passes ?? 0) - (a.key_passes ?? 0) || b.rating - a.rating).slice(0, 6);
     } else if (category === 'tackles') {
       return sorted.sort((a, b) => (b.tackles ?? 0) - (a.tackles ?? 0) || b.rating - a.rating).slice(0, 6);
     } else {
@@ -51,17 +57,21 @@ export default function PlayerStatsTable({ lineupData, homeName, awayName }: Pla
         ].map((cat) => (
           <button
             key={cat.key}
+            type="button"
             onClick={() => setCategory(cat.key as CategoryKey)}
             style={{
               border: 'none',
               borderRadius: '8px',
-              padding: '0.35rem 0.8rem',
-              fontSize: '0.78rem',
+              padding: '0.4rem 0.9rem',
+              fontSize: '0.80rem',
               fontWeight: 800,
               cursor: 'pointer',
-              background: category === cat.key ? 'var(--accent-blue)' : 'var(--bg-card-hover)',
-              color: category === cat.key ? '#ffffff' : 'var(--text-secondary)',
+              background: category === cat.key ? 'var(--accent-blue, #2563eb)' : 'rgba(255,255,255,0.06)',
+              color: category === cat.key ? '#ffffff' : 'var(--text-secondary, #94a3b8)',
               transition: 'all 0.2s ease',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.35rem',
             }}
           >
             {cat.label}
@@ -72,21 +82,21 @@ export default function PlayerStatsTable({ lineupData, homeName, awayName }: Pla
       {/* Stats Table */}
       <div style={{
         overflowX: 'auto',
-        borderRadius: '10px',
-        border: '1px solid var(--border-color)',
-        background: 'var(--bg-card)',
+        borderRadius: '12px',
+        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card, #111827)',
       }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem', textAlign: 'left' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.84rem', textAlign: 'left' }}>
           <thead>
-            <tr style={{ background: 'var(--bg-card-hover)', borderBottom: '1px solid var(--border-color)', color: 'var(--text-muted)' }}>
-              <th style={{ padding: '0.6rem 0.8rem', fontWeight: 700 }}>#</th>
-              <th style={{ padding: '0.6rem 0.8rem', fontWeight: 700 }}>Player</th>
-              <th style={{ padding: '0.6rem 0.8rem', fontWeight: 700 }}>Club</th>
-              <th style={{ padding: '0.6rem 0.8rem', fontWeight: 700 }}>Pos</th>
-              <th style={{ padding: '0.6rem 0.8rem', fontWeight: 700, textAlign: 'center' }}>
-                {category === 'goals' ? 'Goals' : category === 'assists' ? 'Assists' : category === 'tackles' ? 'Tackles/g' : 'WhoScored'}
+            <tr style={{ background: 'rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.08)', color: 'var(--text-muted, #64748b)' }}>
+              <th style={{ padding: '0.7rem 0.9rem', fontWeight: 700 }}>#</th>
+              <th style={{ padding: '0.7rem 0.9rem', fontWeight: 700 }}>Player</th>
+              <th style={{ padding: '0.7rem 0.9rem', fontWeight: 700 }}>Club</th>
+              <th style={{ padding: '0.7rem 0.9rem', fontWeight: 700 }}>Pos</th>
+              <th style={{ padding: '0.7rem 0.9rem', fontWeight: 700, textAlign: 'center' }}>
+                {category === 'goals' ? 'Goals' : category === 'assists' ? 'Assists' : category === 'tackles' ? 'Tackles/match' : 'Key Impact'}
               </th>
-              <th style={{ padding: '0.6rem 0.8rem', fontWeight: 700, textAlign: 'right' }}>Rating</th>
+              <th style={{ padding: '0.7rem 0.9rem', fontWeight: 700, textAlign: 'right' }}>Rating</th>
             </tr>
           </thead>
           <tbody>
@@ -98,28 +108,40 @@ export default function PlayerStatsTable({ lineupData, homeName, awayName }: Pla
                   transition: 'background 0.15s ease',
                 }}
               >
-                <td style={{ padding: '0.55rem 0.8rem', fontWeight: 800, color: 'var(--text-muted)' }}>
+                <td style={{ padding: '0.65rem 0.9rem', fontWeight: 800, color: 'var(--text-muted, #64748b)' }}>
                   {idx + 1}
                 </td>
-                <td style={{ padding: '0.55rem 0.8rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                  {p.name}
+                <td style={{ padding: '0.65rem 0.9rem', fontWeight: 800, color: 'var(--text-primary, #f8fafc)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{
+                      fontSize: '0.72rem',
+                      fontWeight: 900,
+                      padding: '1px 5px',
+                      borderRadius: '4px',
+                      background: p.is_home ? 'rgba(56,189,248,0.15)' : 'rgba(239,68,68,0.15)',
+                      color: p.is_home ? '#38bdf8' : '#f87171',
+                    }}>
+                      #{p.number}
+                    </span>
+                    <span>{p.name}</span>
+                  </div>
                 </td>
-                <td style={{ padding: '0.55rem 0.8rem', color: p.is_home ? '#38bdf8' : '#f87171', fontWeight: 700 }}>
+                <td style={{ padding: '0.65rem 0.9rem', color: p.is_home ? '#38bdf8' : '#f87171', fontWeight: 700 }}>
                   {p.team || (p.is_home ? homeName : awayName)}
                 </td>
-                <td style={{ padding: '0.55rem 0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                <td style={{ padding: '0.65rem 0.9rem', color: 'var(--text-muted, #94a3b8)', fontWeight: 600 }}>
                   {p.pos}
                 </td>
-                <td style={{ padding: '0.55rem 0.8rem', textAlign: 'center', fontWeight: 800, color: 'var(--text-primary)' }}>
+                <td style={{ padding: '0.65rem 0.9rem', textAlign: 'center', fontWeight: 800, color: 'var(--text-primary, #f8fafc)' }}>
                   {category === 'goals'
                     ? `${p.goals ?? 0} ⚽`
                     : category === 'assists'
                     ? `${p.assists ?? 0} 🎯`
                     : category === 'tackles'
                     ? `${p.tackles ?? 1.5} 🛡️`
-                    : `⭐ ${p.rating.toFixed(2)}`}
+                    : `${p.key_passes ?? 1.2} key passes/g`}
                 </td>
-                <td style={{ padding: '0.55rem 0.8rem', textAlign: 'right', fontWeight: 800, color: '#4ade80' }}>
+                <td style={{ padding: '0.65rem 0.9rem', textAlign: 'right', fontWeight: 800, color: '#4ade80' }}>
                   ⭐ {p.rating.toFixed(2)}
                 </td>
               </tr>
