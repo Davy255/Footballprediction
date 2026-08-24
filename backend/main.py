@@ -142,6 +142,7 @@ app.add_middleware(
         settings.FRONTEND_URL,
         "http://localhost:3000",
         "http://localhost:3001",
+        "https://footballprediction-lovat.vercel.app",
         "https://footballprediction.vercel.app",
         "https://footballprediction-vertex-digital3.vercel.app",
     ],

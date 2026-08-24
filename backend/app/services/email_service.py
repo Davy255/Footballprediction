@@ -227,14 +227,20 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
         return False
 
 
+def get_effective_frontend_url() -> str:
+    """Returns the production frontend URL, sanitizing any stale preview URLs or localhost."""
+    import os as _os
+    raw = _os.environ.get("FRONTEND_URL", "").strip() or settings.FRONTEND_URL.rstrip("/")
+    if not raw or "localhost" in raw or "vertex-digital3" in raw or "6c4jcm9j2" in raw:
+        return "https://footballprediction-lovat.vercel.app"
+    return raw.rstrip("/")
+
+
 def send_password_reset_email(to_email: str, reset_token: str, username: str = "") -> bool:
     """
     Sends a styled Password Reset email with a direct link and visible reset code.
     """
-    import os as _os
-    frontend_base = _os.environ.get("FRONTEND_URL", "").strip() or settings.FRONTEND_URL.rstrip("/")
-    if "localhost" in frontend_base:
-        frontend_base = "https://footballprediction-lovat.vercel.app"
+    frontend_base = get_effective_frontend_url()
 
     reset_url = f"{frontend_base}/forgot-password?token={reset_token}"
     greeting = f"Hello {username}," if username else "Hello,"
@@ -329,10 +335,7 @@ def send_welcome_email(to_email: str, username: str) -> bool:
     """
     Sends a Welcome email focused on AI betting analytics and match predictions.
     """
-    import os as _os
-    frontend_base = _os.environ.get("FRONTEND_URL", "").strip() or settings.FRONTEND_URL.rstrip("/")
-    if "localhost" in frontend_base:
-        frontend_base = "https://footballprediction-lovat.vercel.app"
+    frontend_base = get_effective_frontend_url()
 
     subject = "⚽ Welcome to FootballPredict — Your AI Betting Edge Starts Here"
 
@@ -515,11 +518,8 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
     """
     Sends a Daily Match Digest with AI tips and predictions for today's top games.
     """
-    import os as _os
     from datetime import datetime
-    frontend_base = _os.environ.get("FRONTEND_URL", "").strip() or settings.FRONTEND_URL.rstrip("/")
-    if "localhost" in frontend_base:
-        frontend_base = "https://footballprediction-lovat.vercel.app"
+    frontend_base = get_effective_frontend_url()
 
     today_str = datetime.now().strftime("%A, %d %B %Y")
     subject = f"⚽ Today's Betting Tips — {datetime.now().strftime('%d %b')} | FootballPredict AI"
