@@ -1,3 +1,4 @@
+import os
 import logging
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
@@ -209,7 +210,7 @@ def test_send_email(
         send_welcome_email,
         send_password_reset_email,
         send_daily_match_reminder_email,
-        _LAST_EMAIL_ERROR,
+        get_last_email_error,
     )
     
     target_email = payload.to_email.strip().lower()
@@ -230,7 +231,7 @@ def test_send_email(
     active_mode = "Resend HTTPS API" if resend_env else "Brevo HTTPS API" if brevo_env else f"Live SMTP ({settings.SMTP_HOST})" if settings.SMTP_HOST else "Development Log Mode"
 
     if not success:
-        err_detail = _LAST_EMAIL_ERROR or "Email dispatch failed"
+        err_detail = get_last_email_error() or "Email dispatch failed"
         return {
             "success": False,
             "recipient": target_email,

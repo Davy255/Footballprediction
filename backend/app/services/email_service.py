@@ -16,6 +16,10 @@ logger = logging.getLogger("email.service")
 _LAST_EMAIL_ERROR: str = ""
 
 
+def get_last_email_error() -> str:
+    return _LAST_EMAIL_ERROR
+
+
 def send_raw_email(to_email: str, subject: str, html_content: str, text_content: str = "") -> bool:
     """
     Sends an HTML email using configured HTTPS APIs (Resend, Brevo) or traditional SMTP.
