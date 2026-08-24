@@ -11,36 +11,50 @@ interface PlayerStatsTableProps {
 
 type CategoryKey = 'goals' | 'assists' | 'tackles' | 'rating';
 
-export default function PlayerStatsTable({ lineupData, homeName, awayName }: PlayerStatsTableProps) {
+export default function PlayerStatsTable({ lineupData, homeName = 'Home', awayName = 'Away' }: PlayerStatsTableProps) {
   const [category, setCategory] = useState<CategoryKey>('goals');
 
   const homeLineup = useMemo(() => {
-    if (lineupData?.home?.starting_xi && lineupData.home.starting_xi.length > 0) return lineupData.home;
-    return resolveTeamLineup(homeName, '4-2-3-1', true);
+    try {
+      if (lineupData?.home?.starting_xi && Array.isArray(lineupData.home.starting_xi) && lineupData.home.starting_xi.length > 0) return lineupData.home;
+      return resolveTeamLineup(homeName, '4-2-3-1', true);
+    } catch (e) {
+      return resolveTeamLineup(homeName, '4-2-3-1', true);
+    }
   }, [lineupData, homeName]);
 
   const awayLineup = useMemo(() => {
-    if (lineupData?.away?.starting_xi && lineupData.away.starting_xi.length > 0) return lineupData.away;
-    return resolveTeamLineup(awayName, '4-3-3', false);
+    try {
+      if (lineupData?.away?.starting_xi && Array.isArray(lineupData.away.starting_xi) && lineupData.away.starting_xi.length > 0) return lineupData.away;
+      return resolveTeamLineup(awayName, '4-3-3', false);
+    } catch (e) {
+      return resolveTeamLineup(awayName, '4-3-3', false);
+    }
   }, [lineupData, awayName]);
 
   const allPlayers = useMemo(() => {
     const list: Player[] = [];
-    homeLineup.starting_xi.forEach(p => list.push({ ...p, team: homeName, is_home: true }));
-    awayLineup.starting_xi.forEach(p => list.push({ ...p, team: awayName, is_home: false }));
+    (homeLineup?.starting_xi || []).forEach(p => {
+      if (p) list.push({ ...p, team: p.team || homeName, is_home: true });
+    });
+    (awayLineup?.starting_xi || []).forEach(p => {
+      if (p) list.push({ ...p, team: p.team || awayName, is_home: false });
+    });
     return list;
   }, [homeLineup, awayLineup, homeName, awayName]);
 
   const list = useMemo(() => {
     const sorted = [...allPlayers];
+    const getRating = (p: Player) => (typeof p.rating === 'number' && !isNaN(p.rating) ? p.rating : 7.0);
+    
     if (category === 'goals') {
-      return sorted.sort((a, b) => (b.goals ?? 0) - (a.goals ?? 0) || b.rating - a.rating).slice(0, 6);
+      return sorted.sort((a, b) => (b.goals ?? 0) - (a.goals ?? 0) || getRating(b) - getRating(a)).slice(0, 6);
     } else if (category === 'assists') {
-      return sorted.sort((a, b) => (b.assists ?? 0) - (a.assists ?? 0) || (b.key_passes ?? 0) - (a.key_passes ?? 0) || b.rating - a.rating).slice(0, 6);
+      return sorted.sort((a, b) => (b.assists ?? 0) - (a.assists ?? 0) || (b.key_passes ?? 0) - (a.key_passes ?? 0) || getRating(b) - getRating(a)).slice(0, 6);
     } else if (category === 'tackles') {
-      return sorted.sort((a, b) => (b.tackles ?? 0) - (a.tackles ?? 0) || b.rating - a.rating).slice(0, 6);
+      return sorted.sort((a, b) => (b.tackles ?? 0) - (a.tackles ?? 0) || getRating(b) - getRating(a)).slice(0, 6);
     } else {
-      return sorted.sort((a, b) => b.rating - a.rating).slice(0, 6);
+      return sorted.sort((a, b) => getRating(b) - getRating(a)).slice(0, 6);
     }
   }, [allPlayers, category]);
 
@@ -100,58 +114,61 @@ export default function PlayerStatsTable({ lineupData, homeName, awayName }: Pla
             </tr>
           </thead>
           <tbody>
-            {list.map((p, idx) => (
-              <tr
-                key={`${p.name}-${idx}`}
-                style={{
-                  borderBottom: '1px solid rgba(255,255,255,0.04)',
-                  transition: 'background 0.15s ease',
-                }}
-              >
-                <td style={{ padding: '0.65rem 0.9rem', fontWeight: 800, color: 'var(--text-muted, #64748b)' }}>
-                  {idx + 1}
-                </td>
-                <td style={{ padding: '0.65rem 0.9rem', fontWeight: 800, color: 'var(--text-primary, #f8fafc)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                    <span style={{
-                      width: '22px',
-                      height: '22px',
-                      borderRadius: '50%',
-                      background: p.is_home ? 'rgba(56,189,248,0.18)' : 'rgba(239,68,68,0.18)',
-                      color: p.is_home ? '#38bdf8' : '#f87171',
-                      border: p.is_home ? '1px solid rgba(56,189,248,0.35)' : '1px solid rgba(239,68,68,0.35)',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontWeight: 900,
-                      fontSize: '0.70rem',
-                      flexShrink: 0,
-                    }}>
-                      {p.number}
-                    </span>
-                    <span>{p.name}</span>
-                  </div>
-                </td>
-                <td style={{ padding: '0.65rem 0.9rem', color: p.is_home ? '#38bdf8' : '#f87171', fontWeight: 700 }}>
-                  {p.team || (p.is_home ? homeName : awayName)}
-                </td>
-                <td style={{ padding: '0.65rem 0.9rem', color: 'var(--text-muted, #94a3b8)', fontWeight: 600 }}>
-                  {p.pos}
-                </td>
-                <td style={{ padding: '0.65rem 0.9rem', textAlign: 'center', fontWeight: 800, color: 'var(--text-primary, #f8fafc)' }}>
-                  {category === 'goals'
-                    ? `${p.goals ?? 0} ⚽`
-                    : category === 'assists'
-                    ? `${p.assists ?? 0} 🎯`
-                    : category === 'tackles'
-                    ? `${p.tackles ?? 1.5} 🛡️`
-                    : `${p.key_passes ?? 1.2} key passes/g`}
-                </td>
-                <td style={{ padding: '0.65rem 0.9rem', textAlign: 'right', fontWeight: 800, color: '#4ade80' }}>
-                  ⭐ {p.rating.toFixed(2)}
-                </td>
-              </tr>
-            ))}
+            {list.map((p, idx) => {
+              const pRating = typeof p.rating === 'number' && !isNaN(p.rating) ? p.rating : 7.0;
+              return (
+                <tr
+                  key={`${p.name || 'player'}-${idx}`}
+                  style={{
+                    borderBottom: '1px solid rgba(255,255,255,0.04)',
+                    transition: 'background 0.15s ease',
+                  }}
+                >
+                  <td style={{ padding: '0.65rem 0.9rem', fontWeight: 800, color: 'var(--text-muted, #64748b)' }}>
+                    {idx + 1}
+                  </td>
+                  <td style={{ padding: '0.65rem 0.9rem', fontWeight: 800, color: 'var(--text-primary, #f8fafc)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                      <span style={{
+                        width: '22px',
+                        height: '22px',
+                        borderRadius: '50%',
+                        background: p.is_home ? 'rgba(56,189,248,0.18)' : 'rgba(239,68,68,0.18)',
+                        color: p.is_home ? '#38bdf8' : '#f87171',
+                        border: p.is_home ? '1px solid rgba(56,189,248,0.35)' : '1px solid rgba(239,68,68,0.35)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontWeight: 900,
+                        fontSize: '0.70rem',
+                        flexShrink: 0,
+                      }}>
+                        {p.number || (idx + 1)}
+                      </span>
+                      <span>{p.name || 'Player'}</span>
+                    </div>
+                  </td>
+                  <td style={{ padding: '0.65rem 0.9rem', color: p.is_home ? '#38bdf8' : '#f87171', fontWeight: 700 }}>
+                    {p.team || (p.is_home ? homeName : awayName)}
+                  </td>
+                  <td style={{ padding: '0.65rem 0.9rem', color: 'var(--text-muted, #94a3b8)', fontWeight: 600 }}>
+                    {p.pos || 'MF'}
+                  </td>
+                  <td style={{ padding: '0.65rem 0.9rem', textAlign: 'center', fontWeight: 800, color: 'var(--text-primary, #f8fafc)' }}>
+                    {category === 'goals'
+                      ? `${p.goals ?? 0} ⚽`
+                      : category === 'assists'
+                      ? `${p.assists ?? 0} 🎯`
+                      : category === 'tackles'
+                      ? `${p.tackles ?? 1.5} 🛡️`
+                      : `${p.key_passes ?? 1.2} key passes/g`}
+                  </td>
+                  <td style={{ padding: '0.65rem 0.9rem', textAlign: 'right', fontWeight: 800, color: '#4ade80' }}>
+                    ⭐ {pRating.toFixed(2)}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

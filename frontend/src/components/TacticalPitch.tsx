@@ -3082,8 +3082,8 @@ export function resolveTeamLineup(teamName: string, formation: string, isHome: b
 
 export default function TacticalPitch({
   lineupData,
-  homeName,
-  awayName,
+  homeName = 'Home Team',
+  awayName = 'Away Team',
   homeFormation = '4-2-3-1',
   awayFormation = '4-3-3',
   homeManager,
@@ -3093,20 +3093,76 @@ export default function TacticalPitch({
 }: TacticalPitchProps) {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
 
-  const homeLineup = useMemo(() => {
-    if (lineupData?.home?.starting_xi && lineupData.home.starting_xi.length > 0) return lineupData.home;
-    return resolveTeamLineup(homeName, homeFormation, true);
+  const homeLineup = useMemo<TeamLineup>(() => {
+    try {
+      if (lineupData?.home?.starting_xi && Array.isArray(lineupData.home.starting_xi) && lineupData.home.starting_xi.length > 0) {
+        const raw = lineupData.home;
+        const form = raw.formation || homeFormation || '4-2-3-1';
+        const coords = FORMATION_COORDINATES[form] || FORMATION_COORDINATES['4-2-3-1'];
+        const xi = raw.starting_xi.map((p, idx) => ({
+          ...p,
+          rating: typeof p.rating === 'number' && !isNaN(p.rating) ? p.rating : 7.0,
+          number: p.number || (idx === 0 ? 1 : idx + 1),
+          name: p.name || `Player ${idx + 1}`,
+          pos: p.pos || (idx === 0 ? 'GK' : 'MF'),
+          x: typeof p.x === 'number' ? p.x : (coords[idx] ? coords[idx][0] : 50),
+          y: typeof p.y === 'number' ? p.y : (coords[idx] ? coords[idx][1] : 20),
+          team: p.team || homeName,
+          is_home: true,
+        }));
+        const bench = (raw.bench || []).map((p, idx) => ({
+          ...p,
+          rating: typeof p.rating === 'number' && !isNaN(p.rating) ? p.rating : 6.8,
+          number: p.number || (12 + idx),
+          name: p.name || `Substitute ${idx + 1}`,
+          pos: p.pos || 'MF',
+        }));
+        return { team: raw.team || homeName, formation: form, is_home: true, starting_xi: xi, bench };
+      }
+      return resolveTeamLineup(homeName, homeFormation, true);
+    } catch (e) {
+      console.error('Error resolving home lineup:', e);
+      return resolveTeamLineup(homeName, homeFormation, true);
+    }
   }, [lineupData, homeName, homeFormation]);
 
-  const awayLineup = useMemo(() => {
-    if (lineupData?.away?.starting_xi && lineupData.away.starting_xi.length > 0) return lineupData.away;
-    return resolveTeamLineup(awayName, awayFormation, false);
+  const awayLineup = useMemo<TeamLineup>(() => {
+    try {
+      if (lineupData?.away?.starting_xi && Array.isArray(lineupData.away.starting_xi) && lineupData.away.starting_xi.length > 0) {
+        const raw = lineupData.away;
+        const form = raw.formation || awayFormation || '4-3-3';
+        const coords = FORMATION_COORDINATES[form] || FORMATION_COORDINATES['4-3-3'] || FORMATION_COORDINATES['4-2-3-1'];
+        const xi = raw.starting_xi.map((p, idx) => ({
+          ...p,
+          rating: typeof p.rating === 'number' && !isNaN(p.rating) ? p.rating : 7.0,
+          number: p.number || (idx === 0 ? 1 : idx + 1),
+          name: p.name || `Player ${idx + 1}`,
+          pos: p.pos || (idx === 0 ? 'GK' : 'MF'),
+          x: typeof p.x === 'number' ? p.x : (coords[idx] ? coords[idx][0] : 50),
+          y: typeof p.y === 'number' ? p.y : (coords[idx] ? 100 - coords[idx][1] : 80),
+          team: p.team || awayName,
+          is_home: false,
+        }));
+        const bench = (raw.bench || []).map((p, idx) => ({
+          ...p,
+          rating: typeof p.rating === 'number' && !isNaN(p.rating) ? p.rating : 6.8,
+          number: p.number || (12 + idx),
+          name: p.name || `Substitute ${idx + 1}`,
+          pos: p.pos || 'MF',
+        }));
+        return { team: raw.team || awayName, formation: form, is_home: false, starting_xi: xi, bench };
+      }
+      return resolveTeamLineup(awayName, awayFormation, false);
+    } catch (e) {
+      console.error('Error resolving away lineup:', e);
+      return resolveTeamLineup(awayName, awayFormation, false);
+    }
   }, [lineupData, awayName, awayFormation]);
 
-  const hPlayers = homeLineup.starting_xi;
-  const aPlayers = awayLineup.starting_xi;
-  const hBench = homeLineup.bench || [];
-  const aBench = awayLineup.bench || [];
+  const hPlayers = homeLineup?.starting_xi || [];
+  const aPlayers = awayLineup?.starting_xi || [];
+  const hBench = homeLineup?.bench || [];
+  const aBench = awayLineup?.bench || [];
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -3135,7 +3191,7 @@ export default function TacticalPitch({
             fontWeight: 800,
             border: '1px solid rgba(56,189,248,0.3)',
           }}>
-            {homeLineup.formation}
+            {homeLineup?.formation || homeFormation || '4-2-3-1'}
           </span>
           {homeManager && (
             <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>👔 {homeManager}</span>
@@ -3209,7 +3265,7 @@ export default function TacticalPitch({
             fontWeight: 800,
             border: '1px solid rgba(239,68,68,0.3)',
           }}>
-            {awayLineup.formation}
+            {awayLineup?.formation || awayFormation || '4-3-3'}
           </span>
           <span style={{ fontWeight: 800, color: '#f87171', fontSize: '0.88rem' }}>{awayName}</span>
         </div>
@@ -3277,14 +3333,16 @@ export default function TacticalPitch({
 
         {/* Home Players (Top Half) */}
         {hPlayers.map((player, idx) => {
-          const posX = player.x ?? 50;
-          const posY = player.y ?? (8 + idx * 4);
+          const posX = typeof player.x === 'number' ? player.x : 50;
+          const posY = typeof player.y === 'number' ? player.y : (8 + idx * 4);
           const isSelected = selectedPlayer?.name === player.name;
-          const lastName = player.name.includes(' ') ? player.name.split(' ').slice(1).join(' ') : player.name;
+          const pName = player.name || `Player ${idx + 1}`;
+          const lastName = pName.includes(' ') ? pName.split(' ').slice(1).join(' ') : pName;
+          const ratingVal = typeof player.rating === 'number' && !isNaN(player.rating) ? player.rating : 7.0;
 
           return (
             <div
-              key={`h-${player.name}-${idx}`}
+              key={`h-${pName}-${idx}`}
               onClick={() => setSelectedPlayer(player)}
               style={{
                 position: 'absolute',
@@ -3298,7 +3356,7 @@ export default function TacticalPitch({
                 zIndex: isSelected ? 30 : 15,
                 transition: 'transform 0.15s ease',
               }}
-              title={`Click for ${player.name}'s stats`}
+              title={`Click for ${pName}'s stats`}
             >
               {/* Compact Jersey Node with Pinned Micro Rating */}
               <div style={{ position: 'relative' }}>
@@ -3316,7 +3374,7 @@ export default function TacticalPitch({
                   fontWeight: 900,
                   fontSize: '0.74rem',
                 }}>
-                  {player.number}
+                  {player.number || (idx + 1)}
                 </div>
 
                 {/* Rating Pin Badge */}
@@ -3328,13 +3386,13 @@ export default function TacticalPitch({
                   fontWeight: 900,
                   padding: '0 3px',
                   borderRadius: '4px',
-                  background: player.rating >= 7.5 ? '#15803d' : '#854d0e',
+                  background: ratingVal >= 7.5 ? '#15803d' : '#854d0e',
                   color: '#ffffff',
                   border: '1px solid rgba(255,255,255,0.4)',
                   boxShadow: '0 1px 3px rgba(0,0,0,0.6)',
                   whiteSpace: 'nowrap',
                 }}>
-                  {player.rating.toFixed(1)}
+                  {ratingVal.toFixed(1)}
                 </div>
               </div>
 
@@ -3363,14 +3421,16 @@ export default function TacticalPitch({
 
         {/* Away Players (Bottom Half) */}
         {aPlayers.map((player, idx) => {
-          const posX = player.x ?? 50;
-          const posY = player.y ?? (92 - idx * 4);
+          const posX = typeof player.x === 'number' ? player.x : 50;
+          const posY = typeof player.y === 'number' ? player.y : (92 - idx * 4);
           const isSelected = selectedPlayer?.name === player.name;
-          const lastName = player.name.includes(' ') ? player.name.split(' ').slice(1).join(' ') : player.name;
+          const pName = player.name || `Player ${idx + 1}`;
+          const lastName = pName.includes(' ') ? pName.split(' ').slice(1).join(' ') : pName;
+          const ratingVal = typeof player.rating === 'number' && !isNaN(player.rating) ? player.rating : 7.0;
 
           return (
             <div
-              key={`a-${player.name}-${idx}`}
+              key={`a-${pName}-${idx}`}
               onClick={() => setSelectedPlayer(player)}
               style={{
                 position: 'absolute',
@@ -3384,7 +3444,7 @@ export default function TacticalPitch({
                 zIndex: isSelected ? 30 : 15,
                 transition: 'transform 0.15s ease',
               }}
-              title={`Click for ${player.name}'s stats`}
+              title={`Click for ${pName}'s stats`}
             >
               {/* Compact Jersey Node with Pinned Micro Rating */}
               <div style={{ position: 'relative' }}>
@@ -3402,7 +3462,7 @@ export default function TacticalPitch({
                   fontWeight: 900,
                   fontSize: '0.74rem',
                 }}>
-                  {player.number}
+                  {player.number || (idx + 1)}
                 </div>
 
                 {/* Rating Pin Badge */}
@@ -3414,13 +3474,13 @@ export default function TacticalPitch({
                   fontWeight: 900,
                   padding: '0 3px',
                   borderRadius: '4px',
-                  background: player.rating >= 7.5 ? '#15803d' : '#854d0e',
+                  background: ratingVal >= 7.5 ? '#15803d' : '#854d0e',
                   color: '#ffffff',
                   border: '1px solid rgba(255,255,255,0.4)',
                   boxShadow: '0 1px 3px rgba(0,0,0,0.6)',
                   whiteSpace: 'nowrap',
                 }}>
-                  {player.rating.toFixed(1)}
+                  {ratingVal.toFixed(1)}
                 </div>
               </div>
 
@@ -3478,16 +3538,16 @@ export default function TacticalPitch({
               fontWeight: 900, fontSize: '1.05rem',
               border: '2px solid #ffffff',
             }}>
-              {selectedPlayer.number}
+              {selectedPlayer.number || 1}
             </div>
             <div>
               <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--text-primary)' }}>
-                {selectedPlayer.name}
+                {selectedPlayer.name || 'Player'}
               </div>
               <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px' }}>
                 Club: <span style={{ fontWeight: 700, color: selectedPlayer.is_home ? '#38bdf8' : '#f87171' }}>{selectedPlayer.team || (selectedPlayer.is_home ? homeName : awayName)}</span> · 
-                Position: <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{selectedPlayer.pos}</span> · 
-                Rating: <span style={{ fontWeight: 800, color: '#4ade80' }}>⭐ {selectedPlayer.rating.toFixed(2)}</span>
+                Position: <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{selectedPlayer.pos || 'MF'}</span> · 
+                Rating: <span style={{ fontWeight: 800, color: '#4ade80' }}>⭐ {(typeof selectedPlayer.rating === 'number' && !isNaN(selectedPlayer.rating) ? selectedPlayer.rating : 7.0).toFixed(2)}</span>
               </div>
             </div>
           </div>
@@ -3536,32 +3596,35 @@ export default function TacticalPitch({
             <span>🔄</span> {homeName} Substitutes Bench
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-            {hBench.map((p, idx) => (
-              <div key={`hb-${idx}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.80rem', padding: '0.3rem 0', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                  <span style={{
-                    width: '24px',
-                    height: '24px',
-                    borderRadius: '50%',
-                    background: 'rgba(56,189,248,0.18)',
-                    color: '#38bdf8',
-                    border: '1px solid rgba(56,189,248,0.35)',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontWeight: 900,
-                    fontSize: '0.72rem',
-                    flexShrink: 0,
-                  }}>
-                    {p.number}
+            {hBench.map((p, idx) => {
+              const bRating = typeof p.rating === 'number' && !isNaN(p.rating) ? p.rating : 6.8;
+              return (
+                <div key={`hb-${idx}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.80rem', padding: '0.3rem 0', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                    <span style={{
+                      width: '24px',
+                      height: '24px',
+                      borderRadius: '50%',
+                      background: 'rgba(56,189,248,0.18)',
+                      color: '#38bdf8',
+                      border: '1px solid rgba(56,189,248,0.35)',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontWeight: 900,
+                      fontSize: '0.72rem',
+                      flexShrink: 0,
+                    }}>
+                      {p.number || (12 + idx)}
+                    </span>
+                    <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{p.name || 'Substitute'}</span>
+                  </div>
+                  <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                    {p.pos || 'MF'} · <span style={{ color: '#4ade80', fontWeight: 800 }}>⭐ {bRating.toFixed(1)}</span>
                   </span>
-                  <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{p.name}</span>
                 </div>
-                <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                  {p.pos} · <span style={{ color: '#4ade80', fontWeight: 800 }}>⭐ {p.rating.toFixed(1)}</span>
-                </span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -3576,32 +3639,35 @@ export default function TacticalPitch({
             <span>🔄</span> {awayName} Substitutes Bench
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-            {aBench.map((p, idx) => (
-              <div key={`ab-${idx}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.80rem', padding: '0.3rem 0', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                  <span style={{
-                    width: '24px',
-                    height: '24px',
-                    borderRadius: '50%',
-                    background: 'rgba(239,68,68,0.18)',
-                    color: '#f87171',
-                    border: '1px solid rgba(239,68,68,0.35)',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontWeight: 900,
-                    fontSize: '0.72rem',
-                    flexShrink: 0,
-                  }}>
-                    {p.number}
+            {aBench.map((p, idx) => {
+              const bRating = typeof p.rating === 'number' && !isNaN(p.rating) ? p.rating : 6.8;
+              return (
+                <div key={`ab-${idx}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.80rem', padding: '0.3rem 0', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                    <span style={{
+                      width: '24px',
+                      height: '24px',
+                      borderRadius: '50%',
+                      background: 'rgba(239,68,68,0.18)',
+                      color: '#f87171',
+                      border: '1px solid rgba(239,68,68,0.35)',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontWeight: 900,
+                      fontSize: '0.72rem',
+                      flexShrink: 0,
+                    }}>
+                      {p.number || (12 + idx)}
+                    </span>
+                    <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{p.name || 'Substitute'}</span>
+                  </div>
+                  <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                    {p.pos || 'MF'} · <span style={{ color: '#4ade80', fontWeight: 800 }}>⭐ {bRating.toFixed(1)}</span>
                   </span>
-                  <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{p.name}</span>
                 </div>
-                <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                  {p.pos} · <span style={{ color: '#4ade80', fontWeight: 800 }}>⭐ {p.rating.toFixed(1)}</span>
-                </span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
