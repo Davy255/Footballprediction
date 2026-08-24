@@ -1,4 +1,4 @@
-﻿"""
+"""
 Email service for transactional emails:
 - Password reset emails
 - Welcome / Account creation emails
@@ -98,14 +98,13 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
         except Exception as e:
             _LAST_EMAIL_ERROR = f"Resend API error: {e}"
             logger.error(f"âŒ Resend API error for {to_email}: {e} â€” falling back to SMTP")
-            # Fall through to SMTP below
-
-    # 2. Secondary Cloud Dispatch: Brevo REST HTTPS API (Port 443 - 100% unblocked)
-    brevo_key = getattr(settings, "BREVO_API_KEY", "")
+      # 2. Secondary Cloud Dispatch: Brevo REST HTTPS API (Port 443 - 100% unblocked)
+    brevo_key = os.environ.get("BREVO_API_KEY", "").strip() or getattr(settings, "BREVO_API_KEY", "").strip()
     if brevo_key and len(brevo_key.strip()) > 5:
         try:
+            brevo_from = (os.environ.get("SMTP_FROM_EMAIL", "") or getattr(settings, "SMTP_FROM_EMAIL", "")).strip() or from_addr
             brevo_payload = {
-                "sender": {"name": settings.SMTP_FROM_NAME, "email": from_addr if "@" in from_addr else "admin@footballpredict.com"},
+                "sender": {"name": settings.SMTP_FROM_NAME, "email": brevo_from if "@" in brevo_from else "admin@footballpredict.com"},
                 "to": [{"email": to_email}],
                 "subject": subject,
                 "htmlContent": html_content,
@@ -125,18 +124,49 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
             )
             with urllib.request.urlopen(req, timeout=10) as resp:
                 if resp.status in (200, 201):
-                    logger.info(f"âœ… Email delivered via Brevo HTTPS API to {to_email} ('{subject}')")
+                    logger.info(f"✅ Email delivered via Brevo HTTPS API to {to_email} ('{subject}')")
                     return True
         except Exception as e:
             _LAST_EMAIL_ERROR = f"Brevo API error: {e}"
-            logger.error(f"âŒ Brevo API delivery failed to {to_email}: {e}")
+            logger.error(f"❌ Brevo API delivery failed to {to_email}: {e}")
 
-    # 3. Traditional SMTP Dispatch
+    # 3. Tertiary Cloud Dispatch: SendGrid REST HTTPS API (Port 443 - 100% unblocked)
+    sendgrid_key = os.environ.get("SENDGRID_API_KEY", "").strip() or getattr(settings, "SENDGRID_API_KEY", "").strip()
+    if sendgrid_key and len(sendgrid_key) > 5:
+        try:
+            sg_from = (os.environ.get("SMTP_FROM_EMAIL", "") or getattr(settings, "SMTP_FROM_EMAIL", "")).strip() or from_addr
+            sendgrid_payload = {
+                "personalizations": [{"to": [{"email": to_email}]}],
+                "from": {"email": sg_from, "name": settings.SMTP_FROM_NAME},
+                "subject": subject,
+                "content": [{"type": "text/html", "value": html_content}],
+            }
+            if text_content:
+                sendgrid_payload["content"].insert(0, {"type": "text/plain", "value": text_content})
+
+            req = urllib.request.Request(
+                "https://api.sendgrid.com/v3/mail/send",
+                data=json.dumps(sendgrid_payload).encode("utf-8"),
+                headers={
+                    "Authorization": f"Bearer {sendgrid_key.strip()}",
+                    "Content-Type": "application/json",
+                    "User-Agent": "FootballPredict-Mailer/1.0",
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                if resp.status in (200, 202):
+                    logger.info(f"✅ Email delivered via SendGrid HTTPS API to {to_email} ('{subject}')")
+                    return True
+        except Exception as e:
+            _LAST_EMAIL_ERROR = f"SendGrid API error: {e}"
+            logger.error(f"❌ SendGrid API delivery failed to {to_email}: {e}")
+
+    # 4. Traditional SMTP Dispatch
     # Read directly from os.environ to get Render env vars (settings object may be cached from startup)
     import os as _os
     smtp_host_env  = _os.environ.get("SMTP_HOST",       "").strip() or (settings.SMTP_HOST       or "").strip()
     smtp_user_env  = _os.environ.get("SMTP_USER",       "").strip() or (settings.SMTP_USER       or "").strip()
-    smtp_pass_env  = _os.environ.get("SMTP_PASSWORD",   "").strip() or (settings.SMTP_PASSWORD   or "").strip()
     smtp_port_env  = int(_os.environ.get("SMTP_PORT",   str(settings.SMTP_PORT or 587)))
     smtp_from_env  = _os.environ.get("SMTP_FROM_EMAIL", "").strip() or (settings.SMTP_FROM_EMAIL or "").strip()
     smtp_name_env  = _os.environ.get("SMTP_FROM_NAME",  "").strip() or (settings.SMTP_FROM_NAME  or "FootballPredict âš½").strip()
