@@ -275,3 +275,60 @@ def trigger_daily_reminders(
     background_tasks.add_task(dispatch_daily_reminders_to_all_users)
     return {"detail": "Daily match reminder dispatch initiated in background."}
 
+
+@router.get("/email-config")
+def get_email_config(
+    _=Depends(get_current_admin),
+):
+    """
+    Returns current email provider configuration for debugging on Render.
+    Helps diagnose why emails may not be delivering to real users.
+    """
+    import os
+    resend_key = os.environ.get("RESEND_API_KEY", "").strip() or getattr(settings, "RESEND_API_KEY", "").strip()
+    brevo_key = os.environ.get("BREVO_API_KEY", "").strip() or getattr(settings, "BREVO_API_KEY", "").strip()
+    smtp_from = os.environ.get("SMTP_FROM_EMAIL", "").strip() or getattr(settings, "SMTP_FROM_EMAIL", "").strip()
+    smtp_from_name = os.environ.get("SMTP_FROM_NAME", "").strip() or getattr(settings, "SMTP_FROM_NAME", "").strip()
+    smtp_host = os.environ.get("SMTP_HOST", "").strip() or getattr(settings, "SMTP_HOST", "").strip()
+
+    resend_configured = bool(resend_key and len(resend_key) > 5)
+    brevo_configured = bool(brevo_key and len(brevo_key) > 5)
+
+    # Determine effective sender
+    if resend_configured:
+        if smtp_from and "@" in smtp_from and "footballpredict.com" not in smtp_from:
+            effective_sender = smtp_from
+            sender_warning = None
+        else:
+            effective_sender = "onboarding@resend.dev (SANDBOX)"
+            sender_warning = (
+                "⚠️  EMAILS ONLY REACH THE RESEND ACCOUNT OWNER. "
+                "Add SMTP_FROM_EMAIL=footballlpredict@gmail.com to Render environment variables "
+                "AND verify that email in your Resend dashboard under 'Domains → Add email address'."
+            )
+    else:
+        effective_sender = smtp_from or "none"
+        sender_warning = "❌ RESEND_API_KEY is not set in Render environment variables. Emails will NOT be sent."
+
+    return {
+        "resend_api_key_set": resend_configured,
+        "resend_key_preview": (resend_key[:8] + "...") if resend_configured else "NOT SET",
+        "brevo_api_key_set": brevo_configured,
+        "smtp_host": smtp_host or "not set",
+        "smtp_from_email": smtp_from or "not set",
+        "smtp_from_name": smtp_from_name or "not set",
+        "effective_sender": effective_sender,
+        "sender_warning": sender_warning,
+        "action_required": sender_warning is not None,
+        "fix_steps": [
+            "1. Go to Resend dashboard → Domains → click 'Add email address' → enter footballlpredict@gmail.com",
+            "2. Click the verification link Resend sends to footballlpredict@gmail.com",
+            "3. Go to Render dashboard → your backend service → Environment → add/update:",
+            "   RESEND_API_KEY = re_xxxxxxxxxxxx  (your Resend API key)",
+            "   SMTP_FROM_EMAIL = footballlpredict@gmail.com",
+            "   SMTP_FROM_NAME = FootballPredict ⚽",
+            "4. Redeploy the backend service on Render",
+            "5. Test with POST /api/admin/test-email",
+        ] if sender_warning else ["✅ Email configuration looks correct."]
+    }
+

@@ -41,7 +41,27 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
     resend_key = os.environ.get("RESEND_API_KEY", "").strip() or getattr(settings, "RESEND_API_KEY", "").strip()
     if resend_key and len(resend_key) > 5:
         try:
-            sender_email = "FootballPredict <onboarding@resend.dev>"
+            # Use the configured FROM email, or fall back to the Resend onboarding address
+            # IMPORTANT: onboarding@resend.dev only delivers to the Resend account owner's email.
+            # To deliver to ALL users you need either:
+            #   a) A Resend-verified domain (e.g. noreply@footballpredict.com), OR
+            #   b) A Resend-verified email address (e.g. footballlpredict@gmail.com).
+            # We use the SMTP_FROM_EMAIL setting so it's configurable via Render env vars.
+            configured_from = (os.environ.get("SMTP_FROM_EMAIL", "") or getattr(settings, "SMTP_FROM_EMAIL", "")).strip()
+            from_name = (os.environ.get("SMTP_FROM_NAME", "") or getattr(settings, "SMTP_FROM_NAME", "FootballPredict ⚽")).strip()
+
+            if configured_from and "@" in configured_from and "footballpredict.com" not in configured_from:
+                # Use the admin's verified email address as sender (e.g. footballlpredict@gmail.com)
+                sender_email = f"{from_name} <{configured_from}>"
+            else:
+                # Fallback: Resend sandbox — NOTE: only delivers to resend account owner!
+                sender_email = f"{from_name} <onboarding@resend.dev>"
+                logger.warning(
+                    "⚠️  Using Resend sandbox sender (onboarding@resend.dev). "
+                    "Emails will ONLY reach the Resend account owner. "
+                    "Set SMTP_FROM_EMAIL=footballlpredict@gmail.com in Render env vars and verify it in Resend dashboard."
+                )
+
             resend_payload = {
                 "from": sender_email,
                 "to": [to_email],
@@ -62,9 +82,14 @@ def send_raw_email(to_email: str, subject: str, html_content: str, text_content:
                 method="POST",
             )
             with urllib.request.urlopen(req, timeout=10) as resp:
+                resp_body = resp.read().decode("utf-8", errors="ignore")
                 if resp.status in (200, 201):
-                    logger.info(f"✅ Email delivered via Resend HTTPS API to {to_email} ('{subject}')")
+                    logger.info(f"✅ Email delivered via Resend HTTPS API to {to_email} ('{subject}') from '{sender_email}'")
                     return True
+                else:
+                    _LAST_EMAIL_ERROR = f"Resend API returned status {resp.status}: {resp_body}"
+                    logger.error(f"❌ Resend API non-success status {resp.status} sending to {to_email}: {resp_body}")
+                    return False
         except urllib.error.HTTPError as he:
             err_body = he.read().decode("utf-8", errors="ignore")
             _LAST_EMAIL_ERROR = f"Resend API HTTP {he.code}: {err_body}"
