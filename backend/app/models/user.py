@@ -14,6 +14,8 @@ class User(Base):
     avatar = Column(String, default="")
     is_active = Column(Boolean, default=True)
     is_admin = Column(Boolean, default=False)
+    is_vip = Column(Boolean, default=False)
+    vip_expires_at = Column(DateTime(timezone=True), nullable=True)
 
     # Leaderboard stats
     total_points = Column(Integer, default=0)

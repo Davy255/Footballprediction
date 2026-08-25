@@ -16,6 +16,7 @@ const navLinks = [
   { href: '/leagues', label: 'Leagues', public: true, icon: '🏆' },
   { href: '/stats', label: 'AI Stats', public: true, icon: '📊' },
   { href: '/articles', label: 'Analysis', public: true, icon: '📚' },
+  { href: '/pricing', label: 'VIP Pro', public: true, icon: '💎' },
   { href: '/admin', label: 'Admin', adminOnly: true, icon: '⚙️' },
 ];
 

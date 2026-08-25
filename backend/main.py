@@ -11,7 +11,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from app.core.config import settings
 from app.core.database import engine
 from app.models import Base
-from app.api import auth, matches, predictions, leagues, leaderboard, admin, chat, user_personalization
+from app.api import auth, matches, predictions, leagues, leaderboard, admin, chat, user_personalization, monetization
 from app.services.sync_service import (
     sync_all_competitions,
     sync_all_competitions_full_season,
@@ -161,6 +161,7 @@ app.include_router(leaderboard.router)
 app.include_router(admin.router)
 app.include_router(chat.router)
 app.include_router(user_personalization.router)
+app.include_router(monetization.router)
 
 
 @app.get("/")
