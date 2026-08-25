@@ -199,3 +199,55 @@ export async function sendChatMessage(message: string, history: ChatMessage[] = 
     body: JSON.stringify({ message, history }),
   });
 }
+
+
+// User Personalization & Dashboard APIs
+export async function fetchUserPersonalization() {
+  return fetchApi<{
+    favorite_team_ids: number[];
+    followed_league_ids: number[];
+    saved_match_ids: number[];
+    notification_preferences: {
+      match_reminders: boolean;
+      prediction_alerts: boolean;
+      live_alerts: boolean;
+      final_results: boolean;
+      favorite_team_alerts: boolean;
+    };
+  }>('/api/user/personalization');
+}
+
+export async function toggleFavoriteTeam(teamId: number) {
+  return fetchApi<{ status: string; team_id: number; is_favorite: boolean }>(`/api/user/favorite-team/${teamId}`, {
+    method: 'POST',
+  });
+}
+
+export async function toggleFollowedLeague(leagueId: number) {
+  return fetchApi<{ status: string; league_id: number; is_followed: boolean }>(`/api/user/followed-league/${leagueId}`, {
+    method: 'POST',
+  });
+}
+
+export async function toggleSavedPrediction(matchId: number) {
+  return fetchApi<{ status: string; match_id: number; is_saved: boolean }>(`/api/user/saved-prediction/${matchId}`, {
+    method: 'POST',
+  });
+}
+
+export async function updateNotificationPreferences(preferences: Record<string, boolean>) {
+  return fetchApi<{ status: string; notification_preferences: any }>('/api/user/notifications', {
+    method: 'PUT',
+    body: JSON.stringify(preferences),
+  });
+}
+
+export async function fetchUserDashboard() {
+  return fetchApi<{
+    user: User;
+    followed_teams: Array<{ id: number; name: string; short_name: string; crest: string; elo_rating: number; next_match?: Match | null }>;
+    followed_leagues: League[];
+    saved_matches: Match[];
+    recent_predictions: Prediction[];
+  }>('/api/user/dashboard');
+}
