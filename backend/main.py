@@ -3,7 +3,7 @@ FastAPI main application entry point.
 """
 import logging
 from contextlib import asynccontextmanager
-from datetime import datetime
+from datetime import datetime, timezone
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -170,5 +170,27 @@ def root():
 
 
 @app.get("/health")
-def health():
-    return {"status": "ok"}
+def health(db: Session = Depends(get_db)):
+    """
+    Production Health Check Endpoint.
+    Lightweight probe verifying API responsiveness and database connectivity.
+    """
+    try:
+        from sqlalchemy import text
+        db.execute(text("SELECT 1"))
+        db_status = "connected"
+    except Exception as e:
+        logger.error(f"Database health check failed: {e}")
+        db_status = "unavailable"
+        return Response(
+            content='{"status": "degraded", "database": "unavailable"}',
+            status_code=503,
+            media_type="application/json",
+        )
+
+    return {
+        "status": "healthy",
+        "database": db_status,
+        "version": "1.0.0",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+    }

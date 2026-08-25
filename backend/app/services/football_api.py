@@ -1,17 +1,88 @@
-import httpx
+import logging
 import asyncio
-from typing import Optional
+import httpx
+from typing import Optional, Dict, Any
 from app.core.config import settings
+
+logger = logging.getLogger("football_api")
 
 BASE_URL = settings.FOOTBALL_DATA_BASE_URL
 HEADERS = {"X-Auth-Token": settings.FOOTBALL_DATA_API_KEY}
 
+# Shared async client pool with bounded connections and realistic timeouts
+_client: Optional[httpx.AsyncClient] = None
 
-async def _get(path: str, params: dict = None) -> dict:
-    async with httpx.AsyncClient(timeout=30) as client:
-        resp = await client.get(f"{BASE_URL}{path}", headers=HEADERS, params=params)
-        resp.raise_for_status()
-        return resp.json()
+
+def _get_client() -> httpx.AsyncClient:
+    global _client
+    if _client is None or _client.is_closed:
+        _client = httpx.AsyncClient(
+            timeout=httpx.Timeout(8.0, connect=3.0),
+            limits=httpx.Limits(max_keepalive_connections=10, max_connections=20),
+            headers=HEADERS,
+        )
+    return _client
+
+
+async def _get(path: str, params: dict = None, max_retries: int = 2) -> dict:
+    """
+    Resilient HTTP GET with controlled retry and exponential backoff.
+    Protects against transient 5xx provider failures, rate limits, and network hiccups.
+    """
+    client = _get_client()
+    url = f"{BASE_URL}{path}"
+    delay = 0.5
+
+    for attempt in range(max_retries + 1):
+        try:
+            resp = await client.get(url, params=params)
+
+            # Success
+            if resp.status_code == 200:
+                return resp.json()
+
+            # Handle 429 Rate Limit
+            if resp.status_code == 429:
+                retry_after = float(resp.headers.get("Retry-After", delay))
+                logger.warning(f"Rate limited (429) by football-data.org on {path}. Backing off {retry_after}s...")
+                if attempt < max_retries:
+                    await asyncio.sleep(min(retry_after, 2.0))
+                    delay *= 2
+                    continue
+                else:
+                    logger.error(f"Rate limit retry exhausted on {path}")
+                    return {}
+
+            # Handle Transient Server Errors (500, 502, 503, 504)
+            if resp.status_code in (500, 502, 503, 504):
+                logger.warning(f"Transient {resp.status_code} error from football provider on {path} (Attempt {attempt+1}/{max_retries+1})")
+                if attempt < max_retries:
+                    await asyncio.sleep(delay)
+                    delay *= 2
+                    continue
+                else:
+                    logger.error(f"Server error retries exhausted for {path}: HTTP {resp.status_code}")
+                    return {}
+
+            # Permanent 4xx Client Errors (400, 401, 403, 404) - Do not retry
+            if 400 <= resp.status_code < 500:
+                logger.error(f"Client error from football provider on {path}: HTTP {resp.status_code} - {resp.text[:100]}")
+                return {}
+
+        except (httpx.TimeoutException, httpx.ConnectError, httpx.ReadError) as e:
+            logger.warning(f"Network exception on {path}: {type(e).__name__} (Attempt {attempt+1}/{max_retries+1})")
+            if attempt < max_retries:
+                await asyncio.sleep(delay)
+                delay *= 2
+                continue
+            else:
+                logger.error(f"Network error retries exhausted for {path}: {e}")
+                return {}
+        except Exception as e:
+            logger.error(f"Unexpected error in football_api._get for {path}: {e}")
+            return {}
+
+    return {}
 
 
 async def get_competitions() -> dict:
@@ -42,8 +113,6 @@ async def get_matches(
 
 
 async def get_season_matches(competition_code: str, season_year: int) -> dict:
-    """Fetch ALL matches for a competition in a given season year (e.g. 2026 for 2026/27).
-    football-data.org uses the start year of the season as the season identifier."""
     params = {"season": str(season_year)}
     return await _get(f"/competitions/{competition_code}/matches", params=params)
 
@@ -52,9 +121,6 @@ async def get_match(match_id: int) -> dict:
     return await _get(f"/matches/{match_id}")
 
 
-# Fix 8: Use correct v4 status values. "PAUSED" is not valid in v4.
-# Valid statuses: SCHEDULED, TIMED, CANCELLED, POSTPONED, SUSPENDED, IN_PLAY, PAUSED, FINISHED, AWARDED
-# For live polling use: LIVE,IN_PLAY,PAUSED (PAUSED IS valid in v4 for half-time)
 async def get_live_matches() -> dict:
     return await _get("/matches", params={"status": "IN_PLAY,PAUSED"})
 
