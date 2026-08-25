@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.core.database import get_db
-from app.core.security import get_current_user
+from app.core.security import get_current_user, prediction_submit_rate_limiter
 from app.models.prediction import Prediction
 from app.models.match import Match
 from app.models.user import User
@@ -10,7 +10,7 @@ from app.schemas.schemas import PredictionCreate, PredictionOut
 router = APIRouter(prefix="/api/predictions", tags=["predictions"])
 
 
-@router.post("/", response_model=PredictionOut)
+@router.post("/", response_model=PredictionOut, dependencies=[Depends(prediction_submit_rate_limiter)])
 def create_prediction(
     pred_in: PredictionCreate,
     current_user: User = Depends(get_current_user),

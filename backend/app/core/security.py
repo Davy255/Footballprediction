@@ -1,6 +1,6 @@
 import bcrypt
 import time
-from collections import defaultdict
+from collections import OrderedDict
 from datetime import datetime, timedelta, timezone
 from typing import Optional, Dict, List
 from jose import JWTError, jwt
@@ -15,18 +15,18 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
 
 class RateLimiter:
     """
-    Sliding window in-memory rate limiter per client IP address.
-    Thread-safe for FastAPI async handlers.
+    Thread-safe, memory-bounded sliding window rate limiter per client IP address.
+    Strictly purges expired records and limits tracked IPs to 2,000 to protect RAM.
     """
 
-    def __init__(self, max_requests: int = 10, window_seconds: int = 60, action_name: str = "request"):
+    def __init__(self, max_requests: int = 10, window_seconds: int = 60, action_name: str = "request", max_tracked_ips: int = 2000):
         self.max_requests = max_requests
         self.window_seconds = window_seconds
         self.action_name = action_name
-        self._requests: Dict[str, List[float]] = defaultdict(list)
+        self.max_tracked_ips = max_tracked_ips
+        self._requests: OrderedDict[str, List[float]] = OrderedDict()
 
     def __call__(self, request: Request):
-        # Extract IP address from request (supporting forwarded headers)
         forwarded = request.headers.get("X-Forwarded-For")
         if forwarded:
             ip = forwarded.split(",")[0].strip()
@@ -36,25 +36,42 @@ class RateLimiter:
         now = time.time()
         window_start = now - self.window_seconds
 
-        # Clean old timestamps for this IP
-        self._requests[ip] = [ts for ts in self._requests[ip] if ts > window_start]
+        # Clean timestamps for this IP
+        if ip in self._requests:
+            self._requests[ip] = [ts for ts in self._requests[ip] if ts > window_start]
+            if not self._requests[ip]:
+                del self._requests[ip]
+            else:
+                self._requests.move_to_end(ip)
 
-        if len(self._requests[ip]) >= self.max_requests:
-            retry_after = int(self.window_seconds - (now - self._requests[ip][0]))
+        # Periodic eviction if tracked IP count exceeds safety threshold
+        if len(self._requests) > self.max_tracked_ips:
+            # Purge oldest 20% entries
+            for _ in range(int(self.max_tracked_ips * 0.2)):
+                if self._requests:
+                    self._requests.popitem(last=False)
+
+        current_history = self._requests.get(ip, [])
+        if len(current_history) >= self.max_requests:
+            retry_after = int(self.window_seconds - (now - current_history[0]))
             raise HTTPException(
                 status_code=status.HTTP_429_TOO_MANY_REQUESTS,
                 detail=f"Too many {self.action_name} attempts. Please try again in {max(1, retry_after)} seconds.",
                 headers={"Retry-After": str(max(1, retry_after))},
             )
 
+        if ip not in self._requests:
+            self._requests[ip] = []
         self._requests[ip].append(now)
 
 
-# Pre-configured standard rate limiters
+# Standard Hardened Rate Limiters
 login_rate_limiter = RateLimiter(max_requests=5, window_seconds=60, action_name="login")
 register_rate_limiter = RateLimiter(max_requests=4, window_seconds=60, action_name="registration")
 chat_rate_limiter = RateLimiter(max_requests=25, window_seconds=60, action_name="chat")
 password_reset_rate_limiter = RateLimiter(max_requests=3, window_seconds=60, action_name="password reset")
+search_rate_limiter = RateLimiter(max_requests=40, window_seconds=60, action_name="search")
+prediction_submit_rate_limiter = RateLimiter(max_requests=20, window_seconds=60, action_name="prediction submission")
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -113,10 +130,15 @@ async def get_current_user(
     payload = decode_token(token)
     if payload is None:
         raise credentials_exception
-    user_id: int = payload.get("sub")
+    user_id = payload.get("sub")
     if user_id is None:
         raise credentials_exception
-    user = db.query(User).filter(User.id == int(user_id)).first()
+    try:
+        uid = int(user_id)
+    except (ValueError, TypeError):
+        raise credentials_exception
+
+    user = db.query(User).filter(User.id == uid).first()
     if user is None:
         raise credentials_exception
     if not user.is_active:

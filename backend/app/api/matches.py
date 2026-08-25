@@ -13,6 +13,7 @@ from app.services.ml_predictor import predict_match, get_team_manager
 router = APIRouter(prefix="/api/matches", tags=["matches"])
 
 from app.core.cache import feed_cache, prediction_mem_cache
+from app.core.security import search_rate_limiter
 
 
 def get_from_cache(key: str, ttl_seconds: float = 20.0) -> Optional[Any]:
@@ -318,7 +319,7 @@ def get_match(match_id: int, db: Session = Depends(get_db)):
     return match
 
 
-@router.get("/search")
+@router.get("/search", dependencies=[Depends(search_rate_limiter)])
 def search_football_entities(
     q: str = Query(..., min_length=2),
     limit: int = Query(15, ge=1, le=30),
