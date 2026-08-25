@@ -7,6 +7,7 @@ import LeagueAccordionSection from '@/components/LeagueAccordionSection';
 import HowToPlayModal from '@/components/HowToPlayModal';
 import AdBanner from '@/components/AdBanner';
 import Link from 'next/link';
+import { getLeagueUrl } from '@/lib/slugs';
 import { useAuth } from '@/context/AuthContext';
 
 function SkeletonCard() {
@@ -244,21 +245,94 @@ export default function HomePage() {
       <div className="container" style={{ marginTop: '0.85rem', paddingBottom: '3rem' }}>
         <div style={{ maxWidth: '980px', margin: '0 auto' }}>
 
-          {/* Hero Header Title */}
-          <div style={{ marginBottom: '1rem', padding: '0 0.2rem' }}>
-            <h1 style={{
-              fontSize: 'clamp(1.35rem, 5.5vw, 1.85rem)',
-              fontWeight: 900,
-              color: 'var(--text-primary)',
-              letterSpacing: '-0.025em',
-              lineHeight: 1.25,
-              marginBottom: '0.35rem',
+          {/* Hero Header Title & Conversion Banner */}
+          <div style={{ marginBottom: '1.25rem', padding: '0 0.2rem' }}>
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(30,58,138,0.3) 0%, rgba(17,24,39,0.95) 100%)',
+              border: '1px solid rgba(59,130,246,0.3)',
+              borderRadius: '16px',
+              padding: '1.25rem 1.4rem',
+              marginBottom: '1rem',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.75rem',
             }}>
-              Match Fixtures &amp; Predictions ⚽
-            </h1>
-            <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', lineHeight: 1.45, margin: 0 }}>
-              Browse upcoming matches, view comprehensive probability breakdowns, and place your predictions.
-            </p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.6rem' }}>
+                <div>
+                  <span style={{
+                    background: 'rgba(34,197,94,0.15)',
+                    border: '1px solid rgba(34,197,94,0.3)',
+                    color: '#86efac',
+                    padding: '0.2rem 0.6rem',
+                    borderRadius: '999px',
+                    fontSize: '0.74rem',
+                    fontWeight: 800,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.3rem',
+                    marginBottom: '0.4rem',
+                  }}>
+                    ● AI Match Predictions Active
+                  </span>
+                  <h1 style={{
+                    fontSize: 'clamp(1.4rem, 5vw, 1.85rem)',
+                    fontWeight: 900,
+                    color: '#f8fafc',
+                    letterSpacing: '-0.025em',
+                    lineHeight: 1.25,
+                    margin: 0,
+                    fontFamily: 'Outfit, sans-serif',
+                  }}>
+                    Football Match Predictions &amp; Tactical Intelligence
+                  </h1>
+                </div>
+                <Link
+                  href="/football-predictions-today"
+                  style={{
+                    background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                    color: '#ffffff',
+                    padding: '0.55rem 1.1rem',
+                    borderRadius: '10px',
+                    fontSize: '0.82rem',
+                    fontWeight: 800,
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    boxShadow: '0 4px 14px rgba(37,99,235,0.4)',
+                  }}
+                >
+                  🎯 Today&apos;s Predictions Hub →
+                </Link>
+              </div>
+              <p style={{ fontSize: '0.84rem', color: '#cbd5e1', lineHeight: 1.5, margin: 0 }}>
+                Data-driven win probabilities, projected scores, form analysis, and multi-market analytics for Premier League, Champions League, La Liga, Serie A, and Bundesliga.
+              </p>
+
+              {/* Quick Popular Leagues Navigation */}
+              <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', alignItems: 'center', paddingTop: '0.3rem' }}>
+                <span style={{ fontSize: '0.74rem', color: '#94a3b8', fontWeight: 700 }}>Popular Competitions:</span>
+                {leagues.slice(0, 5).map((lg) => (
+                  <Link
+                    key={lg.code}
+                    href={getLeagueUrl(lg.name, lg.code)}
+                    style={{
+                      background: 'rgba(255,255,255,0.06)',
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      color: '#93c5fd',
+                      padding: '0.2rem 0.55rem',
+                      borderRadius: '8px',
+                      fontSize: '0.74rem',
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                    }}
+                  >
+                    {lg.flag || '🏆'} {lg.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Sleek Mobile & Desktop Filter Card */}
