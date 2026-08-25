@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getMatchBySlug, getMatchPredictionUrl, getTeamUrl, getLeagueUrl } from '@/lib/slugs';
 import { siteConfig, getCanonicalUrl } from '@/config/site';
-import { generateMatchAnalysisText } from '@/lib/contentGenerator';
+import { generateMatchAnalysisText, generatePredictionFactors } from '@/lib/contentGenerator';
 import { getRelatedMatchesForMatch } from '@/lib/relatedMatches';
 import MatchCard from '@/components/MatchCard';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -121,6 +121,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
   // Generate deterministic content & fetch related fixtures
   const analysisContent = generateMatchAnalysisText(match);
   const confidence = getMatchConfidence(match);
+  const explanation = generatePredictionFactors(match);
   const relatedMatches = await getRelatedMatchesForMatch(match, 6);
 
   const formattedDate = match.utc_date
@@ -425,6 +426,49 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             <div style={{ width: `${homeProb}%`, background: 'linear-gradient(90deg, #3b82f6, #60a5fa)' }} title={`${HN} ${homeProb}%`} />
             <div style={{ width: `${drawProb}%`, background: 'linear-gradient(90deg, #64748b, #94a3b8)' }} title={`Draw ${drawProb}%`} />
             <div style={{ width: `${awayProb}%`, background: 'linear-gradient(90deg, #8b5cf6, #a78bfa)' }} title={`${AN} ${awayProb}%`} />
+          </div>
+        </div>
+
+        {/* Data-Driven Prediction Explanation Engine */}
+        <div style={{
+          background: 'rgba(255,255,255,0.02)',
+          border: '1px solid rgba(255,255,255,0.08)',
+          borderRadius: '14px',
+          padding: '1.25rem',
+          marginTop: '1.5rem',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
+            <span style={{ fontSize: '1.1rem' }}>💡</span>
+            <h3 style={{ fontSize: '0.98rem', fontWeight: 900, color: '#f8fafc', margin: 0 }}>
+              Why the Model Favours {explanation.favoredTeam}
+            </h3>
+          </div>
+          <p style={{ fontSize: '0.80rem', color: '#94a3b8', margin: '0 0 0.85rem 0' }}>
+            {explanation.verdictSummary}
+          </p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.75rem' }}>
+            {explanation.factors.map((f) => (
+              <div
+                key={f.id}
+                style={{
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  borderRadius: '10px',
+                  padding: '0.85rem',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.25rem' }}>
+                  <span style={{ fontSize: '0.9rem' }}>{f.icon}</span>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#f8fafc' }}>
+                    {f.title}
+                  </span>
+                </div>
+                <div style={{ fontSize: '0.75rem', color: '#cbd5e1', lineHeight: 1.45 }}>
+                  {f.description}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
