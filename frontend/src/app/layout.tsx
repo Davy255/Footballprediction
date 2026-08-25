@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
@@ -6,48 +6,17 @@ import { ThemeProvider } from '@/context/ThemeContext';
 import Navbar from '@/components/Navbar';
 import LiveScoreTicker from '@/components/LiveScoreTicker';
 import ChatbotWidget from '@/components/ChatbotWidget';
+import JsonLd from '@/components/JsonLd';
 import Link from 'next/link';
+import { siteConfig, constructMetadata } from '@/config/site';
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://footballprediction-lovat.vercel.app'),
-  title: 'FootballPredict — Expert Match Analytics & Multi-Market Predictions',
-  description:
-    'Data-driven football match analytics, statistical probabilities (1X2, BTTS, Over/Under 2.5), head-to-head form, and community predictions across all top leagues.',
-  keywords: 'football predictions, soccer odds, match analysis, head-to-head, team stats, betting tips, fixture previews',
-  icons: {
-    icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-    ],
-    apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-      { url: '/apple-icon.svg', type: 'image/svg+xml' },
-    ],
-    shortcut: ['/icon.svg'],
-  },
-  manifest: '/manifest.json',
-  openGraph: {
-    title: 'FootballPredict — Match Analytics & Statistical Predictions',
-    description: 'Data-driven football match analytics, statistical probabilities (1X2, BTTS, Over/Under 2.5), and head-to-head form.',
-    url: 'https://footballprediction-lovat.vercel.app',
-    siteName: 'FootballPredict',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'FootballPredict Match Intelligence',
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'FootballPredict — Match Analytics & Statistical Predictions',
-    description: 'Data-driven football match analytics, statistical probabilities (1X2, BTTS, Over/Under 2.5), and head-to-head form.',
-    images: ['/og-image.png'],
-  },
+export const metadata: Metadata = constructMetadata();
+
+export const viewport: Viewport = {
+  themeColor: siteConfig.themeColor,
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -64,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <JsonLd />
         <ThemeProvider>
           <AuthProvider>
             <Navbar />
