@@ -16,10 +16,10 @@ export default function NotFound() {
       }}>
         <div style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>⚽ 🔍</div>
         <h1 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: '1.8rem', color: '#f8fafc', margin: '0 0 0.6rem 0' }}>
-          Match Not Found
+          Page Not Found
         </h1>
         <p style={{ color: '#94a3b8', fontSize: '0.95rem', lineHeight: 1.6, margin: '0 0 1.8rem 0' }}>
-          The fixture or prediction page you are looking for does not exist, has ended, or may have been rescheduled.
+          The match, team profile, league, or page you are looking for does not exist or may have been moved.
         </p>
 
         <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center', flexWrap: 'wrap' }}>
