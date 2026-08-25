@@ -7,6 +7,7 @@ import Navbar from '@/components/Navbar';
 import LiveScoreTicker from '@/components/LiveScoreTicker';
 import ChatbotWidget from '@/components/ChatbotWidget';
 import JsonLd from '@/components/JsonLd';
+import AnalyticsProvider from '@/components/AnalyticsProvider';
 import Link from 'next/link';
 import { siteConfig, constructMetadata } from '@/config/site';
 
@@ -25,6 +26,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" data-theme="dark">
       <head>
+        {process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && (
+          <meta name="google-site-verification" content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION} />
+        )}
         <meta name="google-adsense-account" content="ca-pub-3089881788835574" />
         <script
           async
@@ -36,6 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JsonLd />
         <ThemeProvider>
           <AuthProvider>
+            <AnalyticsProvider />
             <Navbar />
             <main style={{ flex: 1, paddingBottom: '1rem' }}>
               {children}
@@ -97,12 +102,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
                   {/* Predict Column */}
                   <div className="footer-col">
-                    <h4>Predict</h4>
+                    <h4>Predict &amp; Analysis</h4>
                     <ul className="footer-links">
-                      <li><Link href="/fixtures">Today&apos;s Fixtures</Link></li>
-                      <li><Link href="/fixtures?status=SCHEDULED">Upcoming Matches</Link></li>
-                      <li><Link href="/predictions">My Predictions</Link></li>
-                      <li><Link href="/leaderboard">Leaderboard</Link></li>
+                      <li><Link href="/football-predictions-today">Today&apos;s AI Predictions</Link></li>
+                      <li><Link href="/fixtures">Fixtures Discovery</Link></li>
+                      <li><Link href="/articles">Football Analysis &amp; Articles</Link></li>
+                      <li><Link href="/accuracy">Historical Accuracy Audit</Link></li>
+                      <li><Link href="/leaderboard">Community Leaderboard</Link></li>
                     </ul>
                   </div>
 
