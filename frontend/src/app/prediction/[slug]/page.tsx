@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { getMatchBySlug, getMatchPredictionUrl, getTeamUrl, getLeagueUrl } from '@/lib/slugs';
 import { siteConfig, getCanonicalUrl } from '@/config/site';
 import { generateMatchAnalysisText } from '@/lib/contentGenerator';
+import { getRelatedMatchesForMatch } from '@/lib/relatedMatches';
 import MatchCard from '@/components/MatchCard';
 import { Match } from '@/lib/types';
 
@@ -115,8 +116,9 @@ export default async function MatchPredictionPage({ params }: PageProps) {
   const predictedHomeScore = match.ai_predicted_home != null ? match.ai_predicted_home : (ai?.score?.home ?? 1);
   const predictedAwayScore = match.ai_predicted_away != null ? match.ai_predicted_away : (ai?.score?.away ?? 1);
 
-  // Generate deterministic content
+  // Generate deterministic content & fetch related fixtures
   const analysisContent = generateMatchAnalysisText(match);
+  const relatedMatches = await getRelatedMatchesForMatch(match, 6);
 
   const formattedDate = match.utc_date
     ? new Date(match.utc_date).toLocaleDateString('en-US', {
@@ -450,6 +452,162 @@ export default async function MatchPredictionPage({ params }: PageProps) {
         </h2>
         <MatchCard match={match} defaultOpen={true} />
       </section>
+
+      {/* More Football Predictions & Related Matches Section */}
+      {relatedMatches.length > 0 && (
+        <section style={{
+          background: '#111827',
+          border: '1px solid rgba(255,255,255,0.08)',
+          borderRadius: '16px',
+          padding: '1.5rem',
+          marginBottom: '2.5rem',
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.2rem', flexWrap: 'wrap', gap: '0.6rem' }}>
+            <div>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 0.3rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                🎯 More Football Predictions &amp; Related Matches
+              </h2>
+              <p style={{ margin: 0, fontSize: '0.86rem', color: '#94a3b8' }}>
+                Explore more upcoming fixtures, statistical win probabilities and match forecasts across {compName}.
+              </p>
+            </div>
+            <Link
+              href="/football-predictions-today"
+              style={{
+                fontSize: '0.82rem',
+                color: '#38bdf8',
+                textDecoration: 'none',
+                fontWeight: 700,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.3rem',
+              }}
+            >
+              Today&apos;s Predictions Hub →
+            </Link>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+            {relatedMatches.map((rel) => {
+              const relHome = rel.home_team?.short_name || rel.home_team?.name || 'Home';
+              const relAway = rel.away_team?.short_name || rel.away_team?.name || 'Away';
+              const relComp = rel.league?.name || compName;
+              const relCompCode = rel.league?.code || compCode;
+              const relUrl = getMatchPredictionUrl(rel);
+
+              let relAi: any = null;
+              if (rel.prediction_description) {
+                try { relAi = JSON.parse(rel.prediction_description); } catch {}
+              }
+
+              const rhp = rel.ai_home_prob != null ? Math.round(rel.ai_home_prob * 100) : (relAi?.probs?.home_pct ?? 45);
+              const rdp = rel.ai_draw_prob != null ? Math.round(rel.ai_draw_prob * 100) : (relAi?.probs?.draw_pct ?? 27);
+              const rap = rel.ai_away_prob != null ? Math.round(rel.ai_away_prob * 100) : (relAi?.probs?.away_pct ?? 28);
+
+              const rPredHome = rel.ai_predicted_home ?? relAi?.score?.home ?? 1;
+              const rPredAway = rel.ai_predicted_away ?? relAi?.score?.away ?? 1;
+
+              const relDate = rel.utc_date
+                ? new Date(rel.utc_date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
+                : 'Upcoming';
+
+              const isRelLive = ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME'].includes((rel.status || '').toUpperCase());
+              const isRelFinished = (rel.status || '').toUpperCase() === 'FINISHED';
+
+              return (
+                <div
+                  key={rel.id}
+                  style={{
+                    background: 'rgba(255,255,255,0.02)',
+                    border: '1px solid rgba(255,255,255,0.06)',
+                    borderRadius: '12px',
+                    padding: '1.1rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    gap: '0.8rem',
+                  }}
+                >
+                  {/* Top Bar: League & Date */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.74rem' }}>
+                    <Link
+                      href={getLeagueUrl(relComp, relCompCode)}
+                      style={{ color: '#93c5fd', textDecoration: 'none', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}
+                    >
+                      🏆 {relComp}
+                    </Link>
+                    <span style={{ color: isRelLive ? '#ef4444' : '#94a3b8', fontWeight: isRelLive ? 800 : 500 }}>
+                      {isRelLive ? '● LIVE' : isRelFinished ? 'FT' : `📅 ${relDate}`}
+                    </span>
+                  </div>
+
+                  {/* Teams Row */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 800, fontSize: '0.92rem' }}>
+                    <Link
+                      href={getTeamUrl(relHome)}
+                      style={{ color: '#f8fafc', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem', flex: 1 }}
+                    >
+                      {rel.home_team?.crest && (
+                        <img src={rel.home_team.crest} alt={`${relHome} Crest`} style={{ width: '20px', height: '20px', objectFit: 'contain' }} />
+                      )}
+                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{relHome}</span>
+                    </Link>
+
+                    <span style={{ fontSize: '0.75rem', color: '#64748b', padding: '0 0.4rem' }}>VS</span>
+
+                    <Link
+                      href={getTeamUrl(relAway)}
+                      style={{ color: '#f8fafc', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.4rem', flex: 1, textAlign: 'right' }}
+                    >
+                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{relAway}</span>
+                      {rel.away_team?.crest && (
+                        <img src={rel.away_team.crest} alt={`${relAway} Crest`} style={{ width: '20px', height: '20px', objectFit: 'contain' }} />
+                      )}
+                    </Link>
+                  </div>
+
+                  {/* Probabilities & Projected Score */}
+                  <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '0.6rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', marginBottom: '0.3rem', fontWeight: 700 }}>
+                      <span style={{ color: '#60a5fa' }}>{relHome} {rhp}%</span>
+                      <span style={{ color: '#94a3b8' }}>Draw {rdp}%</span>
+                      <span style={{ color: '#a78bfa' }}>{relAway} {rap}%</span>
+                    </div>
+
+                    <div style={{ display: 'flex', height: '5px', borderRadius: '999px', overflow: 'hidden', marginBottom: '0.4rem' }}>
+                      <div style={{ width: `${rhp}%`, background: '#3b82f6' }} />
+                      <div style={{ width: `${rdp}%`, background: '#64748b' }} />
+                      <div style={{ width: `${rap}%`, background: '#8b5cf6' }} />
+                    </div>
+
+                    <div style={{ fontSize: '0.76rem', color: '#4ade80', fontWeight: 800, textAlign: 'center' }}>
+                      Projected: {relHome} {rPredHome} – {rPredAway} {relAway}
+                    </div>
+                  </div>
+
+                  {/* Prediction CTA Button */}
+                  <Link
+                    href={relUrl}
+                    style={{
+                      textAlign: 'center',
+                      background: 'rgba(59,130,246,0.1)',
+                      border: '1px solid rgba(59,130,246,0.25)',
+                      color: '#93c5fd',
+                      padding: '0.5rem',
+                      borderRadius: '8px',
+                      fontSize: '0.80rem',
+                      fontWeight: 800,
+                      textDecoration: 'none',
+                    }}
+                  >
+                    🎯 {relHome} vs {relAway} Prediction →
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* Helpful Internal Navigation Links */}
       <footer style={{
