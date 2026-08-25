@@ -8,6 +8,7 @@ import { useTheme } from '@/context/ThemeContext';
 import HowToPlayModal from './HowToPlayModal';
 
 const navLinks = [
+  { href: '/football-predictions-today', label: "Today's Tips", public: true, icon: '🎯' },
   { href: '/fixtures', label: 'Fixtures', public: true, icon: '⚽' },
   { href: '/live', label: 'Live Now', public: true, icon: '🔴' },
   { href: '/leaderboard', label: 'Leaderboard', public: true, icon: '👑' },

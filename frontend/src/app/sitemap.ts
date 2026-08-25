@@ -13,6 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
+      url: `${siteConfig.url}/football-predictions-today`,
+      lastModified: now,
+      changeFrequency: 'hourly' as const,
+      priority: 1.0,
+    },
+    {
       url: `${siteConfig.url}/fixtures`,
       lastModified: now,
       changeFrequency: 'hourly' as const,

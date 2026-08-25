@@ -5,7 +5,7 @@ export const metadata: Metadata = constructMetadata({
   title: "My Predictions & Personal Track Record",
   description: "Manage your submitted match predictions, view settled results, earned points, and personal football forecasting history.",
   path: "/predictions",
-  noIndex: false,
+  noIndex: true,
 });
 
 export default function PredictionsLayout({
