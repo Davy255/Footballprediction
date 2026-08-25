@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session, joinedload
 from app.core.database import get_db
 from app.core.security import get_current_user
-from app.models.user import User, UserFavoriteTeam, UserFollowedLeague, UserSavedPrediction, UserNotificationPreference
+from app.models.user import User, UserFavoriteTeam, UserFollowedLeague, UserSavedPrediction, UserNotificationPreference, UserNotificationLog
 from app.models.match import Team, League, Match
 from app.models.prediction import Prediction
 
@@ -242,3 +242,73 @@ def get_user_dashboard(
         "saved_matches": saved_matches,
         "recent_predictions": recent_preds,
     }
+
+
+@router.get("/notifications/list")
+def get_user_notifications(
+    skip: int = 0,
+    limit: int = 30,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    # Retrieve recent notifications with deduplication
+    logs = (
+        db.query(UserNotificationLog)
+        .filter(UserNotificationLog.user_id == current_user.id)
+        .order_by(UserNotificationLog.created_at.desc())
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
+    unread_count = (
+        db.query(UserNotificationLog)
+        .filter(UserNotificationLog.user_id == current_user.id, UserNotificationLog.is_read == False)
+        .count()
+    )
+    return {
+        "unread_count": unread_count,
+        "notifications": [
+            {
+                "id": l.id,
+                "notification_type": l.notification_type,
+                "title": l.title,
+                "message": l.message,
+                "link": l.link,
+                "is_read": l.is_read,
+                "channel": l.channel,
+                "created_at": l.created_at.isoformat() if l.created_at else None,
+            }
+            for l in logs
+        ],
+    }
+
+
+@router.post("/notifications/mark-read")
+def mark_notifications_read(
+    payload: dict = None,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    notif_id = payload.get("id") if payload else None
+    if notif_id:
+        db.query(UserNotificationLog).filter(
+            UserNotificationLog.id == notif_id,
+            UserNotificationLog.user_id == current_user.id,
+        ).update({"is_read": True})
+    else:
+        db.query(UserNotificationLog).filter(
+            UserNotificationLog.user_id == current_user.id,
+            UserNotificationLog.is_read == False,
+        ).update({"is_read": True})
+    db.commit()
+    return {"status": "ok"}
+
+
+@router.post("/notifications/clear")
+def clear_all_notifications(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    db.query(UserNotificationLog).filter(UserNotificationLog.user_id == current_user.id).delete()
+    db.commit()
+    return {"status": "cleared"}

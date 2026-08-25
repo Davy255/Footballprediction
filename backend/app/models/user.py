@@ -30,6 +30,7 @@ class User(Base):
     followed_leagues = relationship("UserFollowedLeague", back_populates="user", cascade="all, delete-orphan")
     saved_predictions = relationship("UserSavedPrediction", back_populates="user", cascade="all, delete-orphan")
     notification_preferences = relationship("UserNotificationPreference", uselist=False, back_populates="user", cascade="all, delete-orphan")
+    notification_logs = relationship("UserNotificationLog", back_populates="user", cascade="all, delete-orphan", order_by="desc(UserNotificationLog.created_at)")
 
 
 class UserFavoriteTeam(Base):
@@ -82,3 +83,21 @@ class UserNotificationPreference(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
     user = relationship("User", back_populates="notification_preferences")
+
+
+class UserNotificationLog(Base):
+    __tablename__ = "user_notification_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True, nullable=False)
+    match_id = Column(Integer, ForeignKey("matches.id"), index=True, nullable=True)
+    notification_type = Column(String, index=True, nullable=False)  # 'MATCH_REMINDER', 'PREDICTION_ALERT', 'LIVE_GOAL', 'FINAL_RESULT', 'TEAM_FIXTURE'
+    title = Column(String, nullable=False)
+    message = Column(String, nullable=False)
+    link = Column(String, nullable=True)
+    is_read = Column(Boolean, default=False)
+    channel = Column(String, default="IN_APP")  # 'IN_APP', 'EMAIL', 'BROWSER'
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    user = relationship("User", back_populates="notification_logs")
+    match = relationship("Match")

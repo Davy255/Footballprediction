@@ -251,3 +251,33 @@ export async function fetchUserDashboard() {
     recent_predictions: Prediction[];
   }>('/api/user/dashboard');
 }
+
+
+export async function fetchUserNotifications() {
+  return fetchApi<{
+    unread_count: number;
+    notifications: Array<{
+      id: number;
+      notification_type: string;
+      title: string;
+      message: string;
+      link?: string | null;
+      is_read: boolean;
+      channel: string;
+      created_at: string;
+    }>;
+  }>('/api/user/notifications/list');
+}
+
+export async function markNotificationsAsRead(id?: number) {
+  return fetchApi<{ status: string }>('/api/user/notifications/mark-read', {
+    method: 'POST',
+    body: JSON.stringify(id ? { id } : {}),
+  });
+}
+
+export async function clearUserNotifications() {
+  return fetchApi<{ status: string }>('/api/user/notifications/clear', {
+    method: 'POST',
+  });
+}

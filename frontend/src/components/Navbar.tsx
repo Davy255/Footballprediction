@@ -257,6 +257,23 @@ export default function Navbar() {
                   </div>
                 )}
 
+                {/* 0. Personal Dashboard */}
+                <Link
+                  href={user ? "/dashboard" : "/login?redirect=/dashboard"}
+                  onClick={() => setMenuOpen(false)}
+                  className="dropdown-item-btn"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(139, 92, 246, 0.18) 100%)',
+                    borderColor: 'rgba(59, 130, 246, 0.4)',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                    <span style={{ fontSize: '1.15rem' }}>📊</span>
+                    <span style={{ fontWeight: 800, color: 'var(--text-primary)' }}>My Personal Hub</span>
+                  </div>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--accent-blue)', fontWeight: 800 }}>Dashboard →</span>
+                </Link>
+
                 {/* 1. My Predictions */}
                 <Link
                   href={user ? "/predictions" : "/login?redirect=/predictions"}
