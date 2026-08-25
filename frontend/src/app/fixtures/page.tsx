@@ -4,6 +4,8 @@ import React, { useEffect, useState, Suspense } from 'react';
 import { Match, League } from '@/lib/types';
 import { fetchMatches, fetchLeagues } from '@/lib/api';
 import LeagueAccordionSection from '@/components/LeagueAccordionSection';
+import Link from 'next/link';
+import { getLeagueUrl } from '@/lib/slugs';
 import AdBanner from '@/components/AdBanner';
 import { useSearchParams } from 'next/navigation';
 
@@ -83,7 +85,7 @@ function FixturesContent() {
       const data = await fetchMatches({
         league_code: selectedLeague || undefined,
         status: selectedStatus || undefined,
-        limit: 80,
+        limit: 150,
       });
       if (Array.isArray(data)) {
         setMatches(data);
@@ -230,6 +232,59 @@ function FixturesContent() {
               ✕
             </button>
           )}
+        </div>
+
+        {/* Quick Competition Discovery Pills */}
+        <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', alignItems: 'center' }}>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 700 }}>Quick Links:</span>
+          <Link
+            href="/football-predictions-today"
+            style={{
+              background: 'rgba(34,197,94,0.1)',
+              border: '1px solid rgba(34,197,94,0.25)',
+              color: '#86efac',
+              padding: '0.25rem 0.65rem',
+              borderRadius: '999px',
+              fontSize: '0.76rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            🎯 Today&apos;s Tips
+          </Link>
+          <Link
+            href="/live"
+            style={{
+              background: 'rgba(239,68,68,0.1)',
+              border: '1px solid rgba(239,68,68,0.25)',
+              color: '#fca5a5',
+              padding: '0.25rem 0.65rem',
+              borderRadius: '999px',
+              fontSize: '0.76rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            🔴 Live Matches
+          </Link>
+          {leagues.slice(0, 6).map((lg) => (
+            <Link
+              key={lg.code}
+              href={getLeagueUrl(lg.name, lg.code)}
+              style={{
+                background: 'rgba(59,130,246,0.08)',
+                border: '1px solid rgba(59,130,246,0.2)',
+                color: '#93c5fd',
+                padding: '0.25rem 0.65rem',
+                borderRadius: '999px',
+                fontSize: '0.76rem',
+                fontWeight: 700,
+                textDecoration: 'none',
+              }}
+            >
+              {lg.flag || '🏆'} {lg.name}
+            </Link>
+          ))}
         </div>
 
         {/* Filter Controls Row */}
@@ -420,6 +475,99 @@ function FixturesContent() {
           </button>
         </div>
       )}
+
+      {/* Explore More Predictions Footer */}
+      <footer style={{
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
+        borderRadius: '14px',
+        padding: '1.25rem 1.5rem',
+        marginTop: '2rem',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.75rem',
+      }}>
+        <div style={{ fontWeight: 800, color: 'var(--text-primary)', fontSize: '0.92rem' }}>
+          Explore Match Predictions &amp; Competition Standings:
+        </div>
+        <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
+          <Link
+            href="/football-predictions-today"
+            style={{
+              background: 'rgba(34,197,94,0.1)',
+              border: '1px solid rgba(34,197,94,0.25)',
+              color: '#86efac',
+              padding: '0.4rem 0.85rem',
+              borderRadius: '8px',
+              fontSize: '0.80rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            🎯 Today&apos;s Match Predictions
+          </Link>
+          <Link
+            href="/live"
+            style={{
+              background: 'rgba(239,68,68,0.1)',
+              border: '1px solid rgba(239,68,68,0.25)',
+              color: '#fca5a5',
+              padding: '0.4rem 0.85rem',
+              borderRadius: '8px',
+              fontSize: '0.80rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            🔴 Real-Time Live Scores
+          </Link>
+          <Link
+            href="/leagues"
+            style={{
+              background: 'rgba(168,85,247,0.1)',
+              border: '1px solid rgba(168,85,247,0.25)',
+              color: '#d8b4fe',
+              padding: '0.4rem 0.85rem',
+              borderRadius: '8px',
+              fontSize: '0.80rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            🏆 Top European Leagues
+          </Link>
+          <Link
+            href="/leaderboard"
+            style={{
+              background: 'rgba(234,179,8,0.1)',
+              border: '1px solid rgba(234,179,8,0.25)',
+              color: '#fde047',
+              padding: '0.4rem 0.85rem',
+              borderRadius: '8px',
+              fontSize: '0.80rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            👑 Tipster Leaderboard
+          </Link>
+          <Link
+            href="/stats"
+            style={{
+              background: 'rgba(59,130,246,0.1)',
+              border: '1px solid rgba(59,130,246,0.25)',
+              color: '#93c5fd',
+              padding: '0.4rem 0.85rem',
+              borderRadius: '8px',
+              fontSize: '0.80rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            📊 AI Accuracy Statistics
+          </Link>
+        </div>
+      </footer>
 
       {/* Bottom Ad Placement */}
       <AdBanner slot="merch-sports" />
