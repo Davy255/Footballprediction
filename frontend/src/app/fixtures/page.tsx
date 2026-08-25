@@ -51,6 +51,58 @@ interface DateGroup {
   totalMatches: number;
 }
 
+
+function matchSatisfiesSearch(m: Match, searchQuery: string): boolean {
+  if (!searchQuery || !searchQuery.trim()) return true;
+  const normQ = searchQuery.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const hn = (m.home_team?.name || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const hsn = (m.home_team?.short_name || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const an = (m.away_team?.name || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const asn = (m.away_team?.short_name || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const ln = (m.league?.name || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const lc = (m.league?.country || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const lcode = (m.league?.code || '').toLowerCase();
+
+  const fullFixture = `${hn} ${hsn} vs ${an} ${asn} ${ln} ${lc} ${lcode}`;
+  if (fullFixture.includes(normQ)) return true;
+
+  const tokens = normQ.split(/[\s\-_/]+/).filter((t) => t.length > 0 && !['vs', 'v', 'at', 'the'].includes(t));
+  if (tokens.length > 1) {
+    const allTokensFound = tokens.every(
+      (token) =>
+        hn.includes(token) ||
+        hsn.includes(token) ||
+        an.includes(token) ||
+        asn.includes(token) ||
+        ln.includes(token) ||
+        lcode.includes(token)
+    );
+    if (allTokensFound) return true;
+  }
+
+  const ALIAS_MAP: Record<string, string[]> = {
+    'man utd': ['manchester united', 'man united'],
+    'man city': ['manchester city', 'man city'],
+    'barca': ['barcelona'],
+    'real': ['real madrid', 'real sociedad', 'real betis'],
+    'atleti': ['atletico', 'atletico madrid'],
+    'psg': ['paris'],
+    'inter': ['internazionale', 'inter'],
+    'la liga': ['la liga', 'primera division', 'pd'],
+    'champions': ['champions league', 'cl'],
+    'prem': ['premier league', 'pl'],
+    'epl': ['premier league', 'pl'],
+  };
+
+  for (const [alias, targets] of Object.entries(ALIAS_MAP)) {
+    if (normQ.includes(alias)) {
+      if (targets.some((t) => fullFixture.includes(t))) return true;
+    }
+  }
+
+  return false;
+}
+
 function FixturesContent() {
   const searchParams = useSearchParams();
   const initialLeague = searchParams.get('league') || '';
@@ -108,26 +160,8 @@ function FixturesContent() {
 
   // Filter matches based on search query
   const filteredMatches = matches.filter((m) => {
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase().trim();
-      const hn = (m.home_team?.name || '').toLowerCase();
-      const hsn = (m.home_team?.short_name || '').toLowerCase();
-      const an = (m.away_team?.name || '').toLowerCase();
-      const asn = (m.away_team?.short_name || '').toLowerCase();
-      const ln = (m.league?.name || '').toLowerCase();
-      const lc = (m.league?.country || '').toLowerCase();
-      const lcode = (m.league?.code || '').toLowerCase();
-
-      const matchFound =
-        hn.includes(q) ||
-        hsn.includes(q) ||
-        an.includes(q) ||
-        asn.includes(q) ||
-        ln.includes(q) ||
-        lc.includes(q) ||
-        lcode.includes(q);
-
-      if (!matchFound) return false;
+    if (!matchSatisfiesSearch(m, searchQuery)) {
+      return false;
     }
 
     if (selectedStatus === 'SCHEDULED') {

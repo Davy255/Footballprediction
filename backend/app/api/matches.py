@@ -1,3 +1,5 @@
+import re
+import unicodedata
 import time
 import json
 from fastapi import APIRouter, Depends, Query, Response
@@ -326,46 +328,220 @@ def search_football_entities(
     db: Session = Depends(get_db),
 ):
     """
-    Categorized Fast Search Endpoint:
-    Searches across Teams, Competitions, and Matches with strict limit bounds.
+    Categorized High-Performance Football Search Endpoint.
+    Searches Teams, Competitions, and Fixtures with multi-token parsing,
+    alias matching, diacritics tolerance, and prioritized ranking.
     """
-    clean_q = f"%{q.strip()}%"
+    import unicodedata
+    from sqlalchemy.orm import aliased
+    from sqlalchemy import and_, or_, func
 
-    # 1. Matching Teams
+    raw_query = q.strip()
+    if len(raw_query) < 2:
+        return {"query": raw_query, "teams": [], "leagues": [], "matches": []}
+
+    # Check in-memory search cache
+    normalized_cache_key = f"search_{raw_query.lower()}_{limit}"
+    cached = get_from_cache(normalized_cache_key, ttl_seconds=30.0)
+    if cached is not None:
+        return cached
+
+    # Normalize unicode accents
+    norm_q = unicodedata.normalize("NFKD", raw_query).encode("ASCII", "ignore").decode("utf-8").lower().strip()
+
+    # Dictionary of known club & league aliases in European football
+    KNOWN_ALIASES = {
+        "man utd": ["Manchester United", "Man United"],
+        "man united": ["Manchester United"],
+        "man city": ["Manchester City", "Man City"],
+        "mancity": ["Manchester City"],
+        "barca": ["Barcelona", "FC Barcelona"],
+        "real madrid": ["Real Madrid"],
+        "real": ["Real Madrid", "Real Sociedad", "Real Betis"],
+        "atleti": ["Atlético Madrid", "Atletico Madrid", "Club Atlético de Madrid"],
+        "atletico": ["Atlético Madrid", "Atletico Madrid", "Athletic Club"],
+        "bilbao": ["Athletic Club", "Athletic Bilbao"],
+        "psg": ["Paris Saint-Germain", "Paris Saint Germain"],
+        "paris": ["Paris Saint-Germain"],
+        "inter": ["FC Internazionale Milano", "Inter Milan", "Internazionale"],
+        "juve": ["Juventus FC", "Juventus"],
+        "bayern": ["FC Bayern München", "Bayern Munich"],
+        "dortmund": ["Borussia Dortmund", "BVB"],
+        "bvb": ["Borussia Dortmund"],
+        "leverkusen": ["Bayer 04 Leverkusen", "Bayer Leverkusen"],
+        "spurs": ["Tottenham Hotspur FC", "Tottenham"],
+        "tottenham": ["Tottenham Hotspur FC"],
+        "wolves": ["Wolverhampton Wanderers FC", "Wolverhampton"],
+        "newcastle": ["Newcastle United FC", "Newcastle"],
+        "villa": ["Aston Villa FC", "Aston Villa"],
+        "chelsea": ["Chelsea FC"],
+        "arsenal": ["Arsenal FC"],
+        "liverpool": ["Liverpool FC"],
+        "milan": ["AC Milan"],
+        "roma": ["AS Roma"],
+        "napoli": ["SSC Napoli"],
+        "la liga": ["Primera Division", "La Liga", "PD"],
+        "laliga": ["Primera Division", "La Liga", "PD"],
+        "premier league": ["Premier League", "PL"],
+        "prem": ["Premier League", "PL"],
+        "epl": ["Premier League", "PL"],
+        "bpl": ["Premier League", "PL"],
+        "champions league": ["UEFA Champions League", "CL"],
+        "ucl": ["UEFA Champions League", "CL"],
+        "serie a": ["Serie A", "SA"],
+        "bundesliga": ["Bundesliga", "BL1"],
+        "ligue 1": ["Ligue 1", "FL1"],
+        "eredivisie": ["Eredivisie", "DED"],
+    }
+
+    alias_targets = []
+    for alias_key, targets in KNOWN_ALIASES.items():
+        if alias_key in norm_q:
+            alias_targets.extend(targets)
+
+    # 1. Search Teams (Exact/Prefix/Partial Match)
+    team_conditions = [
+        Team.name.ilike(f"%{raw_query}%"),
+        Team.short_name.ilike(f"%{raw_query}%"),
+        Team.tla.ilike(raw_query),
+    ]
+    if norm_q != raw_query.lower():
+        team_conditions.append(Team.name.ilike(f"%{norm_q}%"))
+        team_conditions.append(Team.short_name.ilike(f"%{norm_q}%"))
+
+    for at in alias_targets:
+        team_conditions.append(Team.name.ilike(f"%{at}%"))
+        team_conditions.append(Team.short_name.ilike(f"%{at}%"))
+
     teams = (
         db.query(Team)
-        .filter(or_(Team.name.ilike(clean_q), Team.short_name.ilike(clean_q)))
-        .limit(limit)
+        .filter(or_(*team_conditions))
+        .limit(min(limit, 8))
         .all()
     )
 
-    # 2. Matching Leagues
+    # Prioritize Teams: Exact / Prefix matches first
+    def team_sort_key(t):
+        tn = (t.name or "").lower()
+        tsn = (t.short_name or "").lower()
+        if tn == norm_q or tsn == norm_q:
+            return 0
+        if tn.startswith(norm_q) or tsn.startswith(norm_q):
+            return 1
+        return 2
+
+    teams = sorted(teams, key=team_sort_key)[:6]
+
+    # 2. Search Leagues / Competitions
+    league_conditions = [
+        League.name.ilike(f"%{raw_query}%"),
+        League.code.ilike(raw_query),
+        League.country.ilike(f"%{raw_query}%"),
+    ]
+    if norm_q != raw_query.lower():
+        league_conditions.append(League.name.ilike(f"%{norm_q}%"))
+
+    for at in alias_targets:
+        league_conditions.append(League.name.ilike(f"%{at}%"))
+        league_conditions.append(League.code.ilike(at))
+
     leagues = (
         db.query(League)
-        .filter(or_(League.name.ilike(clean_q), League.code.ilike(clean_q)))
-        .limit(limit)
+        .filter(or_(*league_conditions))
+        .limit(min(limit, 6))
         .all()
     )
 
-    # 3. Matching Matches
-    HomeTeam = Team
+    def league_sort_key(l):
+        ln = (l.name or "").lower()
+        lc = (l.code or "").lower()
+        if ln == norm_q or lc == norm_q:
+            return 0
+        if ln.startswith(norm_q) or lc.startswith(norm_q):
+            return 1
+        return 2
+
+    leagues = sorted(leagues, key=league_sort_key)[:5]
+
+    # 3. Search Matches (Search across Home Team, Away Team, and Multi-Word Fixture queries)
+    HomeTeam = aliased(Team)
+    AwayTeam = aliased(Team)
+
+    # Tokenize words, removing "vs", "v", "-", "@", "at"
+    raw_tokens = [w for w in re.split(r"[\s\-_/]+", norm_q) if w and w not in ["vs", "v", "at", "the", "and"]]
+
+    match_conditions = []
+
+    # A. Direct query matches home team, away team, or league
+    match_conditions.append(
+        or_(
+            HomeTeam.name.ilike(f"%{raw_query}%"),
+            HomeTeam.short_name.ilike(f"%{raw_query}%"),
+            AwayTeam.name.ilike(f"%{raw_query}%"),
+            AwayTeam.short_name.ilike(f"%{raw_query}%"),
+            League.name.ilike(f"%{raw_query}%"),
+            League.code.ilike(raw_query),
+        )
+    )
+
+    # B. Alias matches
+    for at in alias_targets:
+        match_conditions.append(
+            or_(
+                HomeTeam.name.ilike(f"%{at}%"),
+                HomeTeam.short_name.ilike(f"%{at}%"),
+                AwayTeam.name.ilike(f"%{at}%"),
+                AwayTeam.short_name.ilike(f"%{at}%"),
+            )
+        )
+
+    # C. Multi-token fixture matching (e.g. "Arsenal Chelsea" -> Home is Arsenal and Away is Chelsea OR vice versa)
+    if len(raw_tokens) >= 2:
+        t1, t2 = raw_tokens[0], raw_tokens[1]
+        t1_targets = [t1]
+        t2_targets = [t2]
+        for ak, tv in KNOWN_ALIASES.items():
+            if ak == t1:
+                t1_targets.extend(tv)
+            if ak == t2:
+                t2_targets.extend(tv)
+
+        t1_cond_home = or_(*[or_(HomeTeam.name.ilike(f"%{x}%"), HomeTeam.short_name.ilike(f"%{x}%")) for x in t1_targets])
+        t2_cond_away = or_(*[or_(AwayTeam.name.ilike(f"%{x}%"), AwayTeam.short_name.ilike(f"%{x}%")) for x in t2_targets])
+        t2_cond_home = or_(*[or_(HomeTeam.name.ilike(f"%{x}%"), HomeTeam.short_name.ilike(f"%{x}%")) for x in t2_targets])
+        t1_cond_away = or_(*[or_(AwayTeam.name.ilike(f"%{x}%"), AwayTeam.short_name.ilike(f"%{x}%")) for x in t1_targets])
+
+        match_conditions.append(
+            or_(
+                and_(t1_cond_home, t2_cond_away),
+                and_(t2_cond_home, t1_cond_away),
+            )
+        )
+
     matches = (
         db.query(Match)
         .join(HomeTeam, Match.home_team_id == HomeTeam.id)
+        .join(AwayTeam, Match.away_team_id == AwayTeam.id)
+        .join(League, Match.league_id == League.id)
         .options(
             joinedload(Match.home_team),
             joinedload(Match.away_team),
             joinedload(Match.league),
         )
-        .filter(or_(HomeTeam.name.ilike(clean_q), HomeTeam.short_name.ilike(clean_q)))
-        .order_by(Match.utc_date.desc())
-        .limit(limit)
+        .filter(or_(*match_conditions))
+        .order_by(
+            # Put Scheduled/Timed/Live matches before finished
+            Match.status.in_(["LIVE", "IN_PLAY", "SCHEDULED", "TIMED"]).desc(),
+            Match.utc_date.asc(),
+        )
+        .limit(min(limit, 12))
         .all()
     )
+
     ensure_match_predictions(matches, db)
 
-    return {
-        "query": q,
+    result = {
+        "query": raw_query,
         "teams": [
             {
                 "id": t.id,
@@ -388,3 +564,6 @@ def search_football_entities(
         ],
         "matches": matches,
     }
+
+    set_in_cache(normalized_cache_key, result)
+    return result

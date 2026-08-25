@@ -85,9 +85,18 @@ export function getMatchSlug(match: Match): string {
 
 /**
  * Returns the full relative URL path for a match prediction page.
+ * Supports both getMatchPredictionUrl(match) and getMatchPredictionUrl(homeName, awayName, matchId).
  */
-export function getMatchPredictionUrl(match: Match): string {
-  return `/prediction/${getMatchSlug(match)}`;
+export function getMatchPredictionUrl(homeOrMatch: Match | string, awayName?: string, matchId?: number): string {
+  if (typeof homeOrMatch === 'object' && homeOrMatch !== null && 'id' in homeOrMatch) {
+    return `/prediction/${getMatchSlug(homeOrMatch as Match)}`;
+  }
+  const h = typeof homeOrMatch === 'string' ? homeOrMatch : 'home';
+  const a = awayName || 'away';
+  const id = matchId || 0;
+  const homeSlug = slugifyTeamName(h);
+  const awaySlug = slugifyTeamName(a);
+  return `/prediction/${homeSlug}-vs-${awaySlug}-${id}`;
 }
 
 /**
