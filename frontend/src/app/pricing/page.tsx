@@ -61,10 +61,10 @@ export default function PricingPage() {
         }}>
           💎 TRANSPARENT PRICING
         </span>
-        <h1 style={{ fontSize: 'clamp(1.8rem, 5vw, 2.75rem)', fontWeight: 900, color: '#f8fafc', margin: '0.75rem 0 0.5rem 0', lineHeight: 1.2 }}>
+        <h1 style={{ fontSize: 'clamp(1.8rem, 5vw, 2.75rem)', fontWeight: 900, color: 'var(--text-primary)', margin: '0.75rem 0 0.5rem 0', lineHeight: 1.2 }}>
           Upgrade to VIP Pro Match Analytics
         </h1>
-        <p style={{ color: '#94a3b8', fontSize: '1rem', lineHeight: 1.6, margin: 0 }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '1rem', lineHeight: 1.6, margin: 0 }}>
           Take your football analysis to the next level. Access full Poisson score probability heatmaps, mathematical Expected Value (EV %) models, and an ad-free experience.
         </p>
 
@@ -72,8 +72,8 @@ export default function PricingPage() {
         <div style={{
           display: 'inline-flex',
           alignItems: 'center',
-          background: 'rgba(255,255,255,0.04)',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--bg-elevated)',
+          border: '1px solid var(--border-color)',
           borderRadius: '30px',
           padding: '0.3rem',
           marginTop: '1.75rem',
@@ -146,8 +146,8 @@ export default function PricingPage() {
         
         {/* Tier 1: Free */}
         <div style={{
-          background: '#111827',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
           borderRadius: '18px',
           padding: '2rem',
           display: 'flex',
@@ -156,21 +156,21 @@ export default function PricingPage() {
         }}>
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-              <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>
+              <span style={{ fontSize: '0.82rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                 Standard Access
               </span>
-              <span style={{ background: 'rgba(255,255,255,0.06)', color: '#cbd5e1', padding: '0.15rem 0.5rem', borderRadius: '6px', fontSize: '0.72rem', fontWeight: 800 }}>
+              <span style={{ background: 'var(--bg-elevated)', color: 'var(--text-secondary)', padding: '0.15rem 0.5rem', borderRadius: '6px', fontSize: '0.72rem', fontWeight: 800 }}>
                 FREE
               </span>
             </div>
-            <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#f8fafc', marginBottom: '0.4rem' }}>
-              $0 <span style={{ fontSize: '0.90rem', color: '#94a3b8', fontWeight: 400 }}>/ forever</span>
+            <div style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
+              $0 <span style={{ fontSize: '0.90rem', color: 'var(--text-muted)', fontWeight: 400 }}>/ forever</span>
             </div>
-            <p style={{ color: '#94a3b8', fontSize: '0.86rem', lineHeight: 1.5, margin: '0 0 1.5rem 0' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', lineHeight: 1.5, margin: '0 0 1.5rem 0' }}>
               Essential match forecasts, probability metrics, and community participation for all football fans.
             </p>
 
-            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.86rem', color: '#cbd5e1' }}>
+            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.86rem', color: 'var(--text-secondary)' }}>
               <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <span style={{ color: '#4ade80', fontWeight: 900 }}>✓</span> Full 1X2 Win Probabilities
               </li>
@@ -195,9 +195,9 @@ export default function PricingPage() {
               width: '100%',
               padding: '0.75rem',
               borderRadius: '10px',
-              border: '1px solid rgba(255,255,255,0.1)',
-              background: 'rgba(255,255,255,0.03)',
-              color: '#94a3b8',
+              border: '1px solid var(--border-color)',
+              background: 'var(--bg-elevated)',
+              color: 'var(--text-muted)',
               fontWeight: 800,
               fontSize: '0.88rem',
             }}
@@ -228,18 +228,18 @@ export default function PricingPage() {
               </span>
             </div>
 
-            <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#f8fafc', marginBottom: '0.4rem' }}>
+            <div style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
               {billingCycle === 'yearly' ? '$39.99' : '$4.99'}
               <span style={{ fontSize: '0.90rem', color: '#93c5fd', fontWeight: 400 }}>
                 {billingCycle === 'yearly' ? ' / year ($3.33/mo)' : ' / month'}
               </span>
             </div>
 
-            <p style={{ color: '#cbd5e1', fontSize: '0.86rem', lineHeight: 1.5, margin: '0 0 1.5rem 0' }}>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.86rem', lineHeight: 1.5, margin: '0 0 1.5rem 0' }}>
               Designed for football analysts seeking quantitative model edge insights and in-depth matrix heatmaps.
             </p>
 
-            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.86rem', color: '#f8fafc' }}>
+            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.86rem', color: 'var(--text-primary)' }}>
               <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <span style={{ color: '#38bdf8', fontWeight: 900 }}>✓</span> Potential Model Edge &amp; Expected Value (EV %)
               </li>
@@ -284,11 +284,11 @@ export default function PricingPage() {
         maxWidth: '820px',
         margin: '0 auto',
         padding: '1.25rem',
-        background: 'rgba(255,255,255,0.02)',
-        border: '1px solid rgba(255,255,255,0.06)',
+        background: 'var(--bg-elevated)',
+        border: '1px solid var(--border-color)',
         borderRadius: '12px',
         fontSize: '0.78rem',
-        color: '#94a3b8',
+        color: 'var(--text-muted)',
         lineHeight: 1.5,
         textAlign: 'center',
       }}>

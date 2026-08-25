@@ -47,10 +47,10 @@ export default function LeaderboardPage() {
 
       {/* Header */}
       <div style={{ marginBottom: '1.75rem' }}>
-        <h1 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.2rem)', fontWeight: 900, color: '#f8fafc', margin: '0 0 0.5rem 0' }}>
+        <h1 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.2rem)', fontWeight: 900, color: 'var(--text-primary)', margin: '0 0 0.5rem 0' }}>
           Global Predictor Leaderboard 👑
         </h1>
-        <p style={{ color: '#94a3b8', fontSize: '0.92rem', margin: 0, maxWidth: '640px' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', margin: 0, maxWidth: '640px' }}>
           Real-time performance rankings based on verified, finished football results. Compare community tipsters against the official FootballPredict AI model baseline.
         </p>
       </div>
@@ -79,10 +79,10 @@ export default function LeaderboardPage() {
               Full Audit →
             </Link>
           </div>
-          <div style={{ fontSize: '1.05rem', fontWeight: 900, color: '#f8fafc', marginBottom: '0.4rem' }}>
+          <div style={{ fontSize: '1.05rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
             FootballPredict Primary Engine
           </div>
-          <p style={{ fontSize: '0.78rem', color: '#cbd5e1', margin: '0 0 0.8rem 0' }}>
+          <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', margin: '0 0 0.8rem 0' }}>
             Audited historical 1X2 outcome prediction benchmark across verified domestic &amp; continental league matches.
           </p>
           <div style={{ display: 'flex', gap: '0.75rem' }}>
@@ -108,10 +108,10 @@ export default function LeaderboardPage() {
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem' }}>
               <div>
-                <div style={{ fontSize: '1.6rem', fontWeight: 900, color: '#f8fafc' }}>
+                <div style={{ fontSize: '1.6rem', fontWeight: 900, color: 'var(--text-primary)' }}>
                   {myRank.rank ? `#${myRank.rank}` : 'Unranked'}
                 </div>
-                <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
                   out of {myRank.total_users} active tipsters
                 </div>
               </div>
@@ -133,7 +133,7 @@ export default function LeaderboardPage() {
 
       {/* Leaderboard Sorting Controls */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '1.25rem' }}>
-        <div style={{ fontSize: '0.86rem', fontWeight: 800, color: '#cbd5e1' }}>
+        <div style={{ fontSize: '0.86rem', fontWeight: 800, color: 'var(--text-secondary)' }}>
           Top Predictors ({sortedEntries.length})
         </div>
         <div style={{ display: 'flex', gap: '0.4rem' }}>
@@ -164,7 +164,7 @@ export default function LeaderboardPage() {
 
       {/* Leaderboard Table Component */}
       {loading ? (
-        <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center', color: '#94a3b8' }}>
+        <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)' }}>
           Loading predictor leaderboard rankings...
         </div>
       ) : (
@@ -175,8 +175,8 @@ export default function LeaderboardPage() {
       <div style={{
         marginTop: '2.5rem',
         padding: '1.25rem',
-        background: 'rgba(255,255,255,0.02)',
-        border: '1px solid rgba(255,255,255,0.06)',
+        background: 'var(--bg-elevated)',
+        border: '1px solid var(--border-color)',
         borderRadius: '12px',
         display: 'flex',
         justifyContent: 'space-between',
@@ -184,7 +184,7 @@ export default function LeaderboardPage() {
         flexWrap: 'wrap',
         gap: '0.75rem',
       }}>
-        <div style={{ fontSize: '0.82rem', color: '#cbd5e1' }}>
+        <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
           Want to test your football prediction skills against the community and AI?
         </div>
         <div style={{ display: 'flex', gap: '0.6rem' }}>

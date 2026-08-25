@@ -8,361 +8,576 @@ import { useTheme } from '@/context/ThemeContext';
 import HowToPlayModal from './HowToPlayModal';
 import SearchModal from './SearchModal';
 
-const navLinks = [
-  { href: '/football-predictions-today', label: "Today's Tips", public: true, icon: '🎯' },
-  { href: '/fixtures', label: 'Fixtures', public: true, icon: '⚽' },
-  { href: '/live', label: 'Live Now', public: true, icon: '🔴' },
-  { href: '/leaderboard', label: 'Leaderboard', public: true, icon: '👑' },
-  { href: '/leagues', label: 'Leagues', public: true, icon: '🏆' },
-  { href: '/stats', label: 'AI Stats', public: true, icon: '📊' },
-  { href: '/articles', label: 'Analysis', public: true, icon: '📚' },
-  { href: '/pricing', label: 'VIP Pro', public: true, icon: '💎' },
-  { href: '/admin', label: 'Admin', adminOnly: true, icon: '⚙️' },
+const primaryNavLinks = [
+  { href: '/football-predictions-today', label: "Today's Tips", icon: '🎯' },
+  { href: '/fixtures', label: 'Fixtures', icon: '⚽' },
+  { href: '/live', label: 'Live Now', icon: '🔴', isLive: true },
+  { href: '/leagues', label: 'Leagues', icon: '🏆' },
+  { href: '/articles', label: 'Analysis', icon: '📚' },
+  { href: '/stats', label: 'AI Stats', icon: '📊' },
+  { href: '/leaderboard', label: 'Leaderboard', icon: '👑' },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  const visibleLinks = navLinks.filter(
-    (link) => !link.adminOnly || (user && user.is_admin)
-  );
+  
+  const userMenuRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const initials = user?.username ? user.username.slice(0, 2).toUpperCase() : 'U';
 
-  // Close menu when clicking outside
+  // Keyboard shortcut (Ctrl+K or Cmd+K) to open Search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setShowSearch(true);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Close menus when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setMenuOpen(false);
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setUserDropdownOpen(false);
+      }
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
+        const target = event.target as HTMLElement;
+        if (!target.closest('.fp-hamburger-btn')) {
+          setMobileMenuOpen(false);
+        }
       }
     }
-    if (menuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [menuOpen]);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
-  // Close on route change
+  // Close menus on route change
   useEffect(() => {
-    setMenuOpen(false);
+    setMobileMenuOpen(false);
+    setUserDropdownOpen(false);
   }, [pathname]);
-
-  const handleOpenCoachAi = () => {
-    setMenuOpen(false);
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('open-coach-ai'));
-    }
-  };
 
   return (
     <>
-      <nav className="navbar">
-        <div className="container nav-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-          
-          {/* Logo */}
-          <Link href="/" className="logo" onClick={() => setMenuOpen(false)}>
-            <span className="logo-icon">⚽</span>
-            <span>FootballPredict</span>
+      <header
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 100,
+          background: 'var(--bg-card)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          borderBottom: '1px solid var(--border-color)',
+          transition: 'background-color 0.2s ease, border-color 0.2s ease',
+        }}
+      >
+        <div
+          className="container"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: '62px',
+            gap: '1rem',
+          }}
+        >
+          {/* Brand Logo */}
+          <Link
+            href="/"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              textDecoration: 'none',
+              flexShrink: 0,
+            }}
+          >
+            <span style={{ fontSize: '1.4rem', lineHeight: 1 }}>⚽</span>
+            <span
+              style={{
+                fontFamily: 'Outfit, sans-serif',
+                fontSize: '1.25rem',
+                fontWeight: 900,
+                letterSpacing: '-0.02em',
+                background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              FootballPredict
+            </span>
           </Link>
 
-          {/* Desktop Nav Links */}
-          <ul className="nav-links">
-            {visibleLinks.map((link) => {
+          {/* Desktop Navigation Links */}
+          <nav
+            aria-label="Main Navigation"
+            style={{
+              display: 'none',
+              alignItems: 'center',
+              gap: '0.2rem',
+              margin: '0 auto',
+            }}
+            className="hidden md:flex"
+          >
+            {primaryNavLinks.map((link) => {
               const isActive = pathname === link.href;
-              const isLocked = !link.public && !user;
-              const isLiveLink = link.href === '/live';
-
               return (
-                <li key={link.href}>
-                  <Link
-                    href={isLocked ? '/login' : link.href}
-                    className={`nav-link ${isActive ? 'active' : ''}`}
-                    style={isLocked ? { opacity: 0.5 } : {}}
-                    title={isLocked ? 'Login required' : undefined}
-                  >
-                    {isLiveLink && (
-                      <span style={{
-                        display: 'inline-block', width: '7px', height: '7px',
-                        borderRadius: '50%', background: '#ef4444',
-                        marginRight: '4px', verticalAlign: 'middle',
-                        animation: 'pulseBadge 1.8s infinite',
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  style={{
+                    padding: '0.45rem 0.75rem',
+                    borderRadius: '8px',
+                    fontSize: '0.86rem',
+                    fontWeight: isActive ? 700 : 500,
+                    color: isActive ? 'var(--accent-blue)' : 'var(--text-secondary)',
+                    background: isActive ? 'var(--accent-blue-bg)' : 'transparent',
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                    transition: 'all 0.15s ease',
+                    whiteSpace: 'nowrap',
+                  }}
+                  className="hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]"
+                >
+                  {link.isLive && (
+                    <span
+                      style={{
+                        width: '7px',
+                        height: '7px',
+                        borderRadius: '50%',
+                        background: '#ef4444',
+                        display: 'inline-block',
                         boxShadow: '0 0 6px rgba(239,68,68,0.8)',
-                      }} />
-                    )}
-                    {link.label}
-                    {isLocked && (
-                      <span style={{ marginLeft: '0.25rem', fontSize: '0.7rem' }}>🔒</span>
-                    )}
-                  </Link>
-                </li>
+                      }}
+                    />
+                  )}
+                  {link.label}
+                </Link>
               );
             })}
-          </ul>
+          </nav>
 
-          {/* Top Header Right Controls */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }} ref={menuRef} className="more-options-wrapper">
-            
-            {/* Desktop Guide Button */}
+          {/* Right Action Cluster */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+            {/* Quick Search Button */}
             <button
-              onClick={() => setShowGuide(true)}
-              className="btn btn-secondary btn-sm nav-desktop-guide"
+              onClick={() => setShowSearch(true)}
               style={{
-                alignItems: 'center', gap: '0.35rem',
-                border: '1px solid rgba(59,130,246,0.3)',
-                background: 'rgba(59,130,246,0.08)',
-                color: 'var(--text-primary)',
-                fontWeight: 700,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.45rem',
+                background: 'var(--bg-elevated)',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-secondary)',
+                padding: '0.4rem 0.75rem',
+                borderRadius: '8px',
                 fontSize: '0.8rem',
-              }}
-              title="How to play & prediction rules"
-            >
-              📖 Guide
-            </button>
-
-            {/* Desktop More Options Button */}
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="btn btn-secondary btn-sm nav-desktop-more"
-              style={{
-                alignItems: 'center', gap: '0.35rem',
-                border: menuOpen ? '1px solid var(--accent-blue)' : '1px solid var(--border-color)',
-                background: menuOpen ? 'rgba(59,130,246,0.15)' : 'var(--bg-card-hover)',
-                color: menuOpen ? 'var(--accent-blue)' : 'var(--text-primary)',
-                fontWeight: 700,
-                fontSize: '0.8rem',
+                fontWeight: 600,
                 cursor: 'pointer',
+                transition: 'all 0.15s ease',
               }}
-              title="More options"
+              title="Search clubs, leagues, matches (Ctrl+K)"
+              aria-label="Search"
             >
-              <span>More ▾</span>
+              <span>🔍</span>
+              <span className="hidden sm:inline">Search</span>
+              <kbd
+                className="hidden lg:inline"
+                style={{
+                  fontSize: '0.68rem',
+                  padding: '0.1rem 0.3rem',
+                  background: 'var(--bg-card)',
+                  borderRadius: '4px',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-muted)',
+                }}
+              >
+                Ctrl+K
+              </kbd>
             </button>
 
-            {/* User Profile Trigger / Guest Auth */}
+            {/* VIP Pro Badge */}
+            <Link
+              href="/pricing"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.3rem',
+                background: 'linear-gradient(135deg, rgba(234,179,8,0.15) 0%, rgba(245,158,11,0.15) 100%)',
+                border: '1px solid rgba(245,158,11,0.3)',
+                color: 'var(--accent-amber)',
+                padding: '0.4rem 0.7rem',
+                borderRadius: '8px',
+                fontSize: '0.8rem',
+                fontWeight: 800,
+                textDecoration: 'none',
+                transition: 'all 0.15s ease',
+              }}
+              className="hidden sm:inline-flex"
+            >
+              <span>💎</span>
+              <span>VIP Pro</span>
+            </Link>
+
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              style={{
+                background: 'var(--bg-elevated)',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-primary)',
+                width: '36px',
+                height: '36px',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1rem',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease',
+              }}
+              title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
+              aria-label="Toggle Color Theme"
+            >
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
+
+            {/* User Profile / Auth State */}
             {user ? (
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.45rem',
-                  background: 'var(--bg-card-hover)',
-                  border: '1px solid var(--border-color)',
-                  padding: '0.22rem 0.55rem',
-                  borderRadius: '20px',
-                  cursor: 'pointer',
-                }}
-                onClick={() => setMenuOpen(!menuOpen)}
-                title="Account menu"
-              >
-                <div className="user-avatar" style={{ width: '28px', height: '28px', fontSize: '0.75rem' }}>
-                  {initials}
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
-                  <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                    {user.username}
-                  </span>
-                  <span style={{ fontSize: '0.68rem', color: 'var(--accent-green)', fontWeight: 800 }}>
-                    {user.total_points} pts
-                  </span>
-                </div>
+              <div style={{ position: 'relative' }} ref={userMenuRef}>
+                <button
+                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.45rem',
+                    background: 'var(--bg-elevated)',
+                    border: '1px solid var(--border-color)',
+                    padding: '0.25rem 0.55rem',
+                    borderRadius: '20px',
+                    cursor: 'pointer',
+                  }}
+                  aria-expanded={userDropdownOpen}
+                  aria-label="User profile menu"
+                >
+                  <div
+                    style={{
+                      width: '28px',
+                      height: '28px',
+                      borderRadius: '50%',
+                      background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+                      color: '#ffffff',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontWeight: 800,
+                      fontSize: '0.75rem',
+                    }}
+                  >
+                    {initials}
+                  </div>
+                  <div style={{ textAlign: 'left', lineHeight: 1.1 }} className="hidden sm:block">
+                    <div style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                      {user.username}
+                    </div>
+                    <div style={{ fontSize: '0.68rem', color: 'var(--accent-green)', fontWeight: 700 }}>
+                      {user.total_points} pts
+                    </div>
+                  </div>
+                  <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>▾</span>
+                </button>
+
+                {/* User Dropdown Menu */}
+                {userDropdownOpen && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      right: 0,
+                      top: 'calc(100% + 8px)',
+                      width: '210px',
+                      background: 'var(--bg-card)',
+                      border: '1px solid var(--border-color)',
+                      borderRadius: '12px',
+                      boxShadow: 'var(--shadow-card-hover)',
+                      padding: '0.5rem',
+                      zIndex: 110,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0.2rem',
+                    }}
+                  >
+                    <div style={{ padding: '0.4rem 0.6rem', borderBottom: '1px solid var(--border-color)', marginBottom: '0.2rem' }}>
+                      <div style={{ fontWeight: 800, fontSize: '0.85rem', color: 'var(--text-primary)' }}>{user.username}</div>
+                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>{user.email}</div>
+                    </div>
+                    <Link
+                      href="/dashboard"
+                      style={{
+                        padding: '0.45rem 0.6rem',
+                        borderRadius: '6px',
+                        fontSize: '0.82rem',
+                        color: 'var(--text-primary)',
+                        textDecoration: 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.4rem',
+                      }}
+                      className="hover:bg-[var(--bg-elevated)]"
+                    >
+                      <span>📊</span>
+                      <span>Personal Dashboard</span>
+                    </Link>
+                    {user.is_admin && (
+                      <Link
+                        href="/admin"
+                        style={{
+                          padding: '0.45rem 0.6rem',
+                          borderRadius: '6px',
+                          fontSize: '0.82rem',
+                          color: 'var(--text-primary)',
+                          textDecoration: 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.4rem',
+                        }}
+                        className="hover:bg-[var(--bg-elevated)]"
+                      >
+                        <span>⚙️</span>
+                        <span>Admin Console</span>
+                      </Link>
+                    )}
+                    <button
+                      onClick={() => setShowGuide(true)}
+                      style={{
+                        padding: '0.45rem 0.6rem',
+                        borderRadius: '6px',
+                        fontSize: '0.82rem',
+                        color: 'var(--text-primary)',
+                        background: 'transparent',
+                        border: 'none',
+                        textAlign: 'left',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.4rem',
+                        width: '100%',
+                      }}
+                      className="hover:bg-[var(--bg-elevated)]"
+                    >
+                      <span>📖</span>
+                      <span>How to Play Guide</span>
+                    </button>
+                    <div style={{ borderTop: '1px solid var(--border-color)', marginTop: '0.2rem', paddingTop: '0.2rem' }}>
+                      <button
+                        onClick={() => { logout(); setUserDropdownOpen(false); }}
+                        style={{
+                          padding: '0.45rem 0.6rem',
+                          borderRadius: '6px',
+                          fontSize: '0.82rem',
+                          color: 'var(--accent-red)',
+                          background: 'transparent',
+                          border: 'none',
+                          textAlign: 'left',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.4rem',
+                          width: '100%',
+                          fontWeight: 600,
+                        }}
+                        className="hover:bg-[var(--accent-red-bg)]"
+                      >
+                        <span>🚪</span>
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                 <Link
                   href="/login"
-                  className="btn btn-primary btn-sm"
+                  className="fp-btn-primary"
                   style={{
-                    padding: '0.36rem 0.85rem',
-                    fontSize: '0.82rem',
-                    fontWeight: 800,
+                    padding: '0.35rem 0.8rem',
+                    fontSize: '0.8rem',
                     borderRadius: '8px',
-                    whiteSpace: 'nowrap',
                   }}
                 >
                   Sign In
                 </Link>
-                <Link
-                  href="/register"
-                  className="btn btn-secondary btn-sm nav-desktop-register"
-                  style={{
-                    padding: '0.36rem 0.75rem',
-                    fontSize: '0.80rem',
-                    fontWeight: 700,
-                    borderRadius: '8px',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  Register
-                </Link>
               </div>
             )}
 
-            {/* Hamburger (Mobile trigger) */}
+            {/* Mobile Hamburger Menu Button */}
             <button
-              className={`hamburger ${menuOpen ? 'open' : ''}`}
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle navigation menu"
-              title="More options"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="fp-hamburger-btn md:hidden"
+              style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '8px',
+                background: 'var(--bg-elevated)',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-primary)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '4px',
+                cursor: 'pointer',
+                padding: 0,
+              }}
+              aria-label="Toggle navigation drawer"
+              aria-expanded={mobileMenuOpen}
             >
-              <span />
-              <span />
-              <span />
+              <span style={{ width: '18px', height: '2px', background: 'var(--text-primary)', borderRadius: '2px', transition: '0.2s' }} />
+              <span style={{ width: '18px', height: '2px', background: 'var(--text-primary)', borderRadius: '2px', transition: '0.2s' }} />
+              <span style={{ width: '18px', height: '2px', background: 'var(--text-primary)', borderRadius: '2px', transition: '0.2s' }} />
             </button>
-
-            {/* ── DESKTOP & MOBILE COMPACT FLOATING MENU CARD ── */}
-            {menuOpen && (
-              <div className="more-options-dropdown">
-                {/* User Header */}
-                {user ? (
-                  <div style={{ padding: '0.4rem 0.25rem 0.75rem', borderBottom: '1px solid var(--border-color)', marginBottom: '0.3rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                        <div className="user-avatar" style={{ width: '34px', height: '34px', fontSize: '0.85rem' }}>
-                          {initials}
-                        </div>
-                        <div>
-                          <div style={{ fontWeight: 800, fontSize: '0.88rem', color: 'var(--text-primary)' }}>
-                            {user.username}
-                          </div>
-                          <div style={{ fontSize: '0.72rem', color: 'var(--accent-green)', fontWeight: 700 }}>
-                            🏆 {user.total_points} total points
-                          </div>
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => { logout(); setMenuOpen(false); }}
-                        className="btn btn-secondary btn-sm"
-                        style={{ fontSize: '0.72rem', padding: '0.2rem 0.55rem', color: '#f87171', borderColor: 'rgba(239,68,68,0.2)' }}
-                      >
-                        Logout
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div style={{ padding: '0.4rem 0.25rem 0.75rem', borderBottom: '1px solid var(--border-color)', marginBottom: '0.3rem' }}>
-                    <div style={{ fontWeight: 800, fontSize: '0.88rem', color: 'var(--text-primary)', textAlign: 'center' }}>
-                      Welcome to FootballPredict ⚽
-                    </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.4rem', marginTop: '0.6rem' }}>
-                      <Link href="/login" onClick={() => setMenuOpen(false)} className="btn btn-primary btn-sm" style={{ textAlign: 'center', fontSize: '0.78rem', padding: '0.35rem' }}>
-                        Sign In
-                      </Link>
-                      <Link href="/register" onClick={() => setMenuOpen(false)} className="btn btn-secondary btn-sm" style={{ textAlign: 'center', fontSize: '0.78rem', padding: '0.35rem' }}>
-                        Register
-                      </Link>
-                    </div>
-                  </div>
-                )}
-
-                {/* 0. Personal Dashboard */}
-                <Link
-                  href={user ? "/dashboard" : "/login?redirect=/dashboard"}
-                  onClick={() => setMenuOpen(false)}
-                  className="dropdown-item-btn"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(139, 92, 246, 0.18) 100%)',
-                    borderColor: 'rgba(59, 130, 246, 0.4)',
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                    <span style={{ fontSize: '1.15rem' }}>📊</span>
-                    <span style={{ fontWeight: 800, color: 'var(--text-primary)' }}>My Personal Hub</span>
-                  </div>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--accent-blue)', fontWeight: 800 }}>Dashboard →</span>
-                </Link>
-
-                {/* 1. My Predictions */}
-                <Link
-                  href={user ? "/predictions" : "/login?redirect=/predictions"}
-                  onClick={() => setMenuOpen(false)}
-                  className="dropdown-item-btn"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.14) 0%, rgba(59, 130, 246, 0.14) 100%)',
-                    borderColor: 'rgba(34, 197, 94, 0.35)',
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                    <span style={{ fontSize: '1.15rem' }}>🎯</span>
-                    <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>My Predictions</span>
-                  </div>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--accent-green)', fontWeight: 800 }}>Open →</span>
-                </Link>
-
-                {/* 2. Coach AI */}
-                <button
-                  type="button"
-                  onClick={handleOpenCoachAi}
-                  className="dropdown-item-btn"
-                  style={{
-                    background: 'rgba(59, 130, 246, 0.08)',
-                    borderColor: 'rgba(59, 130, 246, 0.25)',
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                    <span style={{ fontSize: '1.15rem' }}>🤖</span>
-                    <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>Coach AI Assistant</span>
-                  </div>
-                  <span style={{ fontSize: '0.65rem', padding: '0.1rem 0.45rem', borderRadius: '10px', background: 'rgba(16,185,129,0.2)', color: '#10b981', fontWeight: 800 }}>Live</span>
-                </button>
-
-                {/* 3. Guide */}
-                <button
-                  type="button"
-                  onClick={() => { setShowGuide(true); setMenuOpen(false); }}
-                  className="dropdown-item-btn"
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                    <span style={{ fontSize: '1.15rem' }}>📖</span>
-                    <span style={{ fontWeight: 600 }}>Scoring Rules & Guide</span>
-                  </div>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Rules</span>
-                </button>
-
-                {/* 4. Theme Toggle */}
-                <button
-                  type="button"
-                  onClick={() => toggleTheme()}
-                  className="dropdown-item-btn"
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                    <span style={{ fontSize: '1.15rem' }}>{theme === 'dark' ? '☀️' : '🌙'}</span>
-                    <span style={{ fontWeight: 600 }}>Theme</span>
-                  </div>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--accent-blue)', fontWeight: 700 }}>
-                    {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-                  </span>
-                </button>
-
-                {/* 5. Admin (if applicable) */}
-                {user?.is_admin && (
-                  <Link
-                    href="/admin"
-                    onClick={() => setMenuOpen(false)}
-                    className="dropdown-item-btn"
-                    style={{ borderColor: 'rgba(245, 158, 11, 0.3)', background: 'rgba(245, 158, 11, 0.08)' }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                      <span style={{ fontSize: '1.15rem' }}>⚙️</span>
-                      <span style={{ fontWeight: 700, color: '#f59e0b' }}>Admin Panel</span>
-                    </div>
-                    <span style={{ fontSize: '0.72rem', color: '#f59e0b', fontWeight: 800 }}>Manage</span>
-                  </Link>
-                )}
-              </div>
-            )}
           </div>
         </div>
-      </nav>
 
-      <HowToPlayModal isOpen={showGuide} onClose={() => setShowGuide(false)} />
-      <SearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} />
+        {/* Mobile Navigation Drawer Sheet */}
+        {mobileMenuOpen && (
+          <div
+            ref={mobileMenuRef}
+            className="md:hidden"
+            style={{
+              borderTop: '1px solid var(--border-color)',
+              background: 'var(--bg-card)',
+              padding: '1rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem',
+              maxHeight: 'calc(100vh - 64px)',
+              overflowY: 'auto',
+              boxShadow: 'var(--shadow-card-hover)',
+            }}
+          >
+            {/* Category 1: Matches & Tips */}
+            <div>
+              <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
+                Predictions &amp; Fixtures
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.4rem' }}>
+                {primaryNavLinks.slice(0, 4).map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    style={{
+                      padding: '0.55rem 0.75rem',
+                      borderRadius: '8px',
+                      background: pathname === link.href ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
+                      color: pathname === link.href ? 'var(--accent-blue)' : 'var(--text-primary)',
+                      fontWeight: 600,
+                      fontSize: '0.84rem',
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      minHeight: '44px',
+                    }}
+                  >
+                    <span>{link.icon}</span>
+                    <span>{link.label}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Category 2: Intelligence & Data */}
+            <div>
+              <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
+                Intelligence &amp; Data
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.4rem' }}>
+                {primaryNavLinks.slice(4).map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    style={{
+                      padding: '0.55rem 0.75rem',
+                      borderRadius: '8px',
+                      background: pathname === link.href ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
+                      color: pathname === link.href ? 'var(--accent-blue)' : 'var(--text-primary)',
+                      fontWeight: 600,
+                      fontSize: '0.84rem',
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      minHeight: '44px',
+                    }}
+                  >
+                    <span>{link.icon}</span>
+                    <span>{link.label}</span>
+                  </Link>
+                ))}
+                <Link
+                  href="/accuracy"
+                  style={{
+                    padding: '0.55rem 0.75rem',
+                    borderRadius: '8px',
+                    background: pathname === '/accuracy' ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
+                    color: pathname === '/accuracy' ? 'var(--accent-blue)' : 'var(--text-primary)',
+                    fontWeight: 600,
+                    fontSize: '0.84rem',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    minHeight: '44px',
+                  }}
+                >
+                  <span>📈</span>
+                  <span>Accuracy</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Category 3: Quick Tools */}
+            <div style={{ display: 'flex', gap: '0.5rem', paddingTop: '0.2rem' }}>
+              <button
+                onClick={() => { setMobileMenuOpen(false); setShowGuide(true); }}
+                className="fp-btn-secondary"
+                style={{ flex: 1, minHeight: '44px', fontSize: '0.84rem' }}
+              >
+                📖 Rules &amp; Guide
+              </button>
+              <Link
+                href="/pricing"
+                className="fp-btn-primary"
+                style={{
+                  flex: 1,
+                  minHeight: '44px',
+                  fontSize: '0.84rem',
+                  background: 'linear-gradient(135deg, #d97706, #f59e0b)',
+                }}
+              >
+                💎 VIP Pro
+              </Link>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* Reusable Modals */}
+      {showGuide && <HowToPlayModal isOpen={showGuide} onClose={() => setShowGuide(false)} />}
+      {showSearch && <SearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} />}
     </>
   );
 }

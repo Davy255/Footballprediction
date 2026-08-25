@@ -240,9 +240,9 @@ function FixturesContent() {
           <Link
             href="/football-predictions-today"
             style={{
-              background: 'rgba(34,197,94,0.1)',
-              border: '1px solid rgba(34,197,94,0.25)',
-              color: '#86efac',
+              background: 'var(--accent-green-bg)',
+              border: '1px solid var(--accent-green-border)',
+              color: 'var(--accent-green)',
               padding: '0.25rem 0.65rem',
               borderRadius: '999px',
               fontSize: '0.76rem',
@@ -255,9 +255,9 @@ function FixturesContent() {
           <Link
             href="/live"
             style={{
-              background: 'rgba(239,68,68,0.1)',
-              border: '1px solid rgba(239,68,68,0.25)',
-              color: '#fca5a5',
+              background: 'var(--accent-red-bg)',
+              border: '1px solid var(--accent-red-border)',
+              color: 'var(--accent-red)',
               padding: '0.25rem 0.65rem',
               borderRadius: '999px',
               fontSize: '0.76rem',
@@ -272,9 +272,9 @@ function FixturesContent() {
               key={lg.code}
               href={getLeagueUrl(lg.name, lg.code)}
               style={{
-                background: 'rgba(59,130,246,0.08)',
-                border: '1px solid rgba(59,130,246,0.2)',
-                color: '#93c5fd',
+                background: 'var(--accent-blue-bg)',
+                border: '1px solid var(--accent-blue-border)',
+                color: 'var(--accent-blue)',
                 padding: '0.25rem 0.65rem',
                 borderRadius: '999px',
                 fontSize: '0.76rem',
@@ -494,9 +494,9 @@ function FixturesContent() {
           <Link
             href="/football-predictions-today"
             style={{
-              background: 'rgba(34,197,94,0.1)',
-              border: '1px solid rgba(34,197,94,0.25)',
-              color: '#86efac',
+              background: 'var(--accent-green-bg)',
+              border: '1px solid var(--accent-green-border)',
+              color: 'var(--accent-green)',
               padding: '0.4rem 0.85rem',
               borderRadius: '8px',
               fontSize: '0.80rem',
@@ -509,9 +509,9 @@ function FixturesContent() {
           <Link
             href="/live"
             style={{
-              background: 'rgba(239,68,68,0.1)',
-              border: '1px solid rgba(239,68,68,0.25)',
-              color: '#fca5a5',
+              background: 'var(--accent-red-bg)',
+              border: '1px solid var(--accent-red-border)',
+              color: 'var(--accent-red)',
               padding: '0.4rem 0.85rem',
               borderRadius: '8px',
               fontSize: '0.80rem',
@@ -556,7 +556,7 @@ function FixturesContent() {
             style={{
               background: 'rgba(59,130,246,0.1)',
               border: '1px solid rgba(59,130,246,0.25)',
-              color: '#93c5fd',
+              color: 'var(--accent-blue)',
               padding: '0.4rem 0.85rem',
               borderRadius: '8px',
               fontSize: '0.80rem',

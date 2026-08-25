@@ -11,21 +11,11 @@ interface BreadcrumbsProps {
   items: BreadcrumbItem[];
 }
 
-/**
- * Reusable, Accessible Breadcrumb Navigation Component for FootballPredict
- *
- * Features:
- * 1. Semantic HTML5 <nav aria-label="Breadcrumb"> with structured <ol> and <li> items.
- * 2. Automatic Schema.org BreadcrumbList JSON-LD injection for enhanced SERP rich snippets.
- * 3. Mobile-first responsive styling with non-breaking ellipsis overflow.
- * 4. Strictly avoids linking the final active breadcrumb item to itself.
- */
 export default function Breadcrumbs({ items }: BreadcrumbsProps) {
   if (!items || items.length === 0) {
     return null;
   }
 
-  // Generate Schema.org BreadcrumbList structured data
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -53,25 +43,23 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
 
   return (
     <>
-      {/* Schema.org BreadcrumbList Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
-      {/* Accessible Visual Breadcrumb Navigation */}
       <nav
         aria-label="Breadcrumb"
         style={{
-          marginBottom: '1.2rem',
-          fontSize: '0.84rem',
-          color: '#94a3b8',
+          marginBottom: '1rem',
+          fontSize: '0.82rem',
+          color: 'var(--text-muted)',
         }}
       >
         <ol
           style={{
             display: 'flex',
-            gap: '0.45rem',
+            gap: '0.4rem',
             listStyle: 'none',
             padding: 0,
             margin: 0,
@@ -88,9 +76,9 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                   <li
                     aria-hidden="true"
                     style={{
-                      color: '#64748b',
+                      color: 'var(--text-muted)',
                       userSelect: 'none',
-                      fontSize: '0.78rem',
+                      fontSize: '0.75rem',
                     }}
                   >
                     ›
@@ -98,15 +86,15 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                 )}
                 {isLast || !item.url ? (
                   <li
+                    aria-current="page"
                     style={{
-                      color: '#f8fafc',
-                      fontWeight: 700,
-                      maxWidth: '100%',
+                      color: 'var(--text-primary)',
+                      fontWeight: 600,
+                      maxWidth: '240px',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                       whiteSpace: 'nowrap',
                     }}
-                    aria-current="page"
                   >
                     {item.name}
                   </li>
@@ -115,10 +103,11 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                     <Link
                       href={item.url}
                       style={{
-                        color: '#94a3b8',
+                        color: 'var(--text-secondary)',
                         textDecoration: 'none',
                         transition: 'color 0.15s ease',
                       }}
+                      className="hover:text-[var(--accent-blue)]"
                     >
                       {item.name}
                     </Link>

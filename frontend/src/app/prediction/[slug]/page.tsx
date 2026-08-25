@@ -197,12 +197,12 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
       {/* Main Match Header & Summary Hero Card */}
       <header style={{
-        background: 'linear-gradient(135deg, rgba(30,58,138,0.35) 0%, rgba(17,24,39,0.95) 100%)',
-        border: '1px solid rgba(59,130,246,0.25)',
+        background: 'var(--gradient-hero)',
+        border: '1px solid var(--gradient-hero-border)',
         borderRadius: '16px',
         padding: '1.8rem 1.5rem',
         marginBottom: '2rem',
-        boxShadow: '0 16px 36px rgba(0,0,0,0.4)',
+        boxShadow: 'var(--shadow-card)',
       }}>
         {/* Top Badges Row */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
@@ -224,7 +224,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
           >
             🏆 {compName} {match.matchday ? `· Matchday ${match.matchday}` : ''}
           </Link>
-          <span style={{ fontSize: '0.84rem', color: '#cbd5e1' }}>
+          <span style={{ fontSize: '0.84rem', color: 'var(--text-secondary)' }}>
             📅 {formattedDate} · {formattedTime} UTC
           </span>
         </div>
@@ -234,7 +234,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
           margin: '0 0 1.5rem 0',
           fontSize: '1.65rem',
           fontWeight: 900,
-          color: '#f8fafc',
+          color: 'var(--text-primary)',
           textAlign: 'center',
           fontFamily: 'Outfit, sans-serif',
           letterSpacing: '-0.02em',
@@ -265,7 +265,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                 style={{ width: '64px', height: '64px', objectFit: 'contain' }}
               />
             )}
-            <div style={{ margin: 0, fontSize: '1.25rem', fontWeight: 900, color: '#f8fafc' }}>
+            <div style={{ margin: 0, fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-primary)' }}>
               {HN}
             </div>
             <span style={{ fontSize: '0.78rem', color: '#93c5fd', fontWeight: 700 }}>Home Profile →</span>
@@ -294,12 +294,12 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                 padding: '0.4rem 1rem',
                 fontSize: '1rem',
                 fontWeight: 900,
-                color: '#f8fafc',
+                color: 'var(--text-primary)',
               }}>
                 VS
               </div>
             )}
-            <span style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>
               {isFinished ? 'Full Time' : isLive ? 'Live In-Play' : 'Upcoming Fixture'}
             </span>
           </div>
@@ -324,7 +324,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                 style={{ width: '64px', height: '64px', objectFit: 'contain' }}
               />
             )}
-            <div style={{ margin: 0, fontSize: '1.25rem', fontWeight: 900, color: '#f8fafc' }}>
+            <div style={{ margin: 0, fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-primary)' }}>
               {AN}
             </div>
             <span style={{ fontSize: '0.78rem', color: '#93c5fd', fontWeight: 700 }}>Away Profile →</span>
@@ -334,13 +334,13 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
       {/* Main Prediction & Probability Section */}
       <section style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: '16px',
         padding: '1.5rem',
         marginBottom: '2rem',
       }}>
-        <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1.2rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: 'var(--text-primary)', margin: '0 0 1.2rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           🎯 Match Prediction &amp; Probability Breakdown
         </h2>
 
@@ -361,10 +361,10 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#86efac', textTransform: 'uppercase', marginBottom: '0.3rem' }}>
               Projected Final Score
             </div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#f8fafc' }}>
+            <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--text-primary)' }}>
               {HN} {predictedHomeScore} – {predictedAwayScore} {AN}
             </div>
-            <div style={{ fontSize: '0.74rem', color: '#94a3b8', marginTop: '0.2rem' }}>
+            <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
               Statistical expectation from team attack and defence ratings
             </div>
           </div>
@@ -386,7 +386,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                 ? `${AN} Win or Draw Lean`
                 : 'Close Contest / Draw Risk'}
             </div>
-            <div style={{ fontSize: '0.74rem', color: '#94a3b8', marginTop: '0.2rem' }}>
+            <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
               Model estimate based on form, Elo differential &amp; home strength
             </div>
           </div>
@@ -404,7 +404,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             <div style={{ fontSize: '1.35rem', fontWeight: 900, color: confidence.badgeColor, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}>
               <span>🛡️</span> {confidence.badgeText}
             </div>
-            <div style={{ fontSize: '0.74rem', color: '#94a3b8', marginTop: '0.2rem' }}>
+            <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
               {confidence.explanation}
             </div>
           </div>
@@ -414,7 +414,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
         <div style={{ marginBottom: '1.5rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.6rem', fontSize: '0.88rem', fontWeight: 800 }}>
             <span style={{ color: '#60a5fa' }}>{HN} Win ({homeProb}%)</span>
-            <span style={{ color: '#94a3b8' }}>Draw ({drawProb}%)</span>
+            <span style={{ color: 'var(--text-muted)' }}>Draw ({drawProb}%)</span>
             <span style={{ color: '#a78bfa' }}>{AN} Win ({awayProb}%)</span>
           </div>
 
@@ -434,19 +434,19 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
         {/* Data-Driven Prediction Explanation Engine */}
         <div style={{
-          background: 'rgba(255,255,255,0.02)',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--bg-elevated)',
+          border: '1px solid var(--border-color)',
           borderRadius: '14px',
           padding: '1.25rem',
           marginTop: '1.5rem',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
             <span style={{ fontSize: '1.1rem' }}>💡</span>
-            <h3 style={{ fontSize: '0.98rem', fontWeight: 900, color: '#f8fafc', margin: 0 }}>
+            <h3 style={{ fontSize: '0.98rem', fontWeight: 900, color: 'var(--text-primary)', margin: 0 }}>
               Why the Model Favours {explanation.favoredTeam}
             </h3>
           </div>
-          <p style={{ fontSize: '0.80rem', color: '#94a3b8', margin: '0 0 0.85rem 0' }}>
+          <p style={{ fontSize: '0.80rem', color: 'var(--text-muted)', margin: '0 0 0.85rem 0' }}>
             {explanation.verdictSummary}
           </p>
 
@@ -455,19 +455,19 @@ export default async function MatchPredictionPage({ params }: PageProps) {
               <div
                 key={f.id}
                 style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.06)',
+                  background: 'var(--bg-elevated)',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '10px',
                   padding: '0.85rem',
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.25rem' }}>
                   <span style={{ fontSize: '0.9rem' }}>{f.icon}</span>
-                  <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#f8fafc' }}>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 800, color: 'var(--text-primary)' }}>
                     {f.title}
                   </span>
                 </div>
-                <div style={{ fontSize: '0.75rem', color: '#cbd5e1', lineHeight: 1.45 }}>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
                   {f.description}
                 </div>
               </div>
@@ -478,17 +478,17 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
       {/* Data-Driven Statistical Match Analysis Section */}
       <section style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: '16px',
         padding: '1.5rem',
         marginBottom: '2rem',
       }}>
-        <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1rem 0' }}>
+        <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: 'var(--text-primary)', margin: '0 0 1rem 0' }}>
           📝 Statistical Match Analysis &amp; Tactical Context
         </h2>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', color: '#cbd5e1', fontSize: '0.92rem', lineHeight: 1.65 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.65 }}>
           <p style={{ margin: 0 }}>
             {analysisContent.mainAnalysis}
           </p>
@@ -504,11 +504,11 @@ export default async function MatchPredictionPage({ params }: PageProps) {
         <div style={{
           marginTop: '1.2rem',
           padding: '0.8rem 1rem',
-          background: 'rgba(255,255,255,0.02)',
+          background: 'var(--bg-elevated)',
           borderLeft: '3px solid #38bdf8',
           borderRadius: '4px',
           fontSize: '0.78rem',
-          color: '#94a3b8',
+          color: 'var(--text-muted)',
         }}>
           ⚠️ {analysisContent.disclaimer}
         </div>
@@ -516,18 +516,18 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
       {/* Advanced Multi-Market Analytics Section */}
       <section style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: '16px',
         padding: '1.5rem',
         marginBottom: '2rem',
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.2rem', flexWrap: 'wrap', gap: '0.5rem' }}>
           <div>
-            <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 0.25rem 0' }}>
+            <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: 'var(--text-primary)', margin: '0 0 0.25rem 0' }}>
               📈 Advanced Multi-Market Statistical Projections
             </h2>
-            <p style={{ margin: 0, fontSize: '0.82rem', color: '#94a3b8' }}>
+            <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--text-muted)' }}>
               Data-derived fair probabilities and estimated decimal odds calculated from underlying team offensive and defensive ratings.
             </p>
           </div>
@@ -547,42 +547,42 @@ export default async function MatchPredictionPage({ params }: PageProps) {
         {/* 1X2 Market Odds vs Model Comparison Banner */}
         {oddsAnalysis.hasOdds && (
           <div style={{
-            background: 'rgba(255,255,255,0.02)',
-            border: '1px solid rgba(255,255,255,0.08)',
+            background: 'var(--bg-elevated)',
+            border: '1px solid var(--border-color)',
             borderRadius: '14px',
             padding: '1.25rem',
             marginBottom: '1.25rem',
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-              <div style={{ fontSize: '0.86rem', fontWeight: 800, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <div style={{ fontSize: '0.86rem', fontWeight: 800, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                 <span>🎯</span> 1X2 Market Decimal Odds &amp; Margin-Normalized Probabilities
               </div>
-              <span style={{ fontSize: '0.72rem', color: '#94a3b8' }}>
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
                 Market Overround: {oddsAnalysis.overroundPct}% ({oddsAnalysis.bookmakerMarginPct}% bookmaker margin)
               </span>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem', marginBottom: '1.25rem' }}>
-              <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <div style={{ fontSize: '0.74rem', color: '#94a3b8', marginBottom: '0.2rem' }}>{HN} Win</div>
+              <div style={{ background: 'var(--bg-elevated)', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>{HN} Win</div>
                 <div style={{ fontSize: '1.3rem', fontWeight: 900, color: '#60a5fa' }}>@{oddsAnalysis.rawHomeOdds}</div>
-                <div style={{ fontSize: '0.74rem', color: '#cbd5e1', marginTop: '0.25rem' }}>
+                <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
                   Normalized Implied: <strong>{oddsAnalysis.normalizedHomeImpliedPct}%</strong>
                 </div>
               </div>
 
-              <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <div style={{ fontSize: '0.74rem', color: '#94a3b8', marginBottom: '0.2rem' }}>Draw</div>
-                <div style={{ fontSize: '1.3rem', fontWeight: 900, color: '#94a3b8' }}>@{oddsAnalysis.rawDrawOdds}</div>
-                <div style={{ fontSize: '0.74rem', color: '#cbd5e1', marginTop: '0.25rem' }}>
+              <div style={{ background: 'var(--bg-elevated)', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>Draw</div>
+                <div style={{ fontSize: '1.3rem', fontWeight: 900, color: 'var(--text-muted)' }}>@{oddsAnalysis.rawDrawOdds}</div>
+                <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
                   Normalized Implied: <strong>{oddsAnalysis.normalizedDrawImpliedPct}%</strong>
                 </div>
               </div>
 
-              <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <div style={{ fontSize: '0.74rem', color: '#94a3b8', marginBottom: '0.2rem' }}>{AN} Win</div>
+              <div style={{ background: 'var(--bg-elevated)', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>{AN} Win</div>
                 <div style={{ fontSize: '1.3rem', fontWeight: 900, color: '#a78bfa' }}>@{oddsAnalysis.rawAwayOdds}</div>
-                <div style={{ fontSize: '0.74rem', color: '#cbd5e1', marginTop: '0.25rem' }}>
+                <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
                   Normalized Implied: <strong>{oddsAnalysis.normalizedAwayImpliedPct}%</strong>
                 </div>
               </div>
@@ -592,7 +592,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             {valueAnalysis.hasValidComparison && (
               <div style={{
                 background: 'rgba(0,0,0,0.25)',
-                border: '1px solid rgba(255,255,255,0.06)',
+                border: '1px solid var(--border-color)',
                 borderRadius: '10px',
                 padding: '1rem',
               }}>
@@ -618,7 +618,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                 <div style={{ overflowX: 'auto' }}>
                   <table style={{ width: '100%', fontSize: '0.78rem', borderCollapse: 'collapse', textAlign: 'left' }}>
                     <thead>
-                      <tr style={{ color: '#94a3b8', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                      <tr style={{ color: 'var(--text-muted)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
                         <th style={{ padding: '0.4rem 0.6rem' }}>Outcome</th>
                         <th style={{ padding: '0.4rem 0.6rem' }}>Model Prob</th>
                         <th style={{ padding: '0.4rem 0.6rem' }}>Market Norm %</th>
@@ -629,10 +629,10 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                     <tbody>
                       {[valueAnalysis.homeValue, valueAnalysis.drawValue, valueAnalysis.awayValue].filter(Boolean).map((val: any) => (
                         <tr key={val.outcome} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                          <td style={{ padding: '0.45rem 0.6rem', fontWeight: 700, color: '#f8fafc' }}>{val.label}</td>
+                          <td style={{ padding: '0.45rem 0.6rem', fontWeight: 700, color: 'var(--text-primary)' }}>{val.label}</td>
                           <td style={{ padding: '0.45rem 0.6rem', color: '#93c5fd', fontWeight: 700 }}>{val.modelProbPct}%</td>
-                          <td style={{ padding: '0.45rem 0.6rem', color: '#cbd5e1' }}>{val.marketNormalizedProbPct}%</td>
-                          <td style={{ padding: '0.45rem 0.6rem', color: '#cbd5e1' }}>@{val.decimalOdds}</td>
+                          <td style={{ padding: '0.45rem 0.6rem', color: 'var(--text-secondary)' }}>{val.marketNormalizedProbPct}%</td>
+                          <td style={{ padding: '0.45rem 0.6rem', color: 'var(--text-secondary)' }}>@{val.decimalOdds}</td>
                           <td style={{ padding: '0.45rem 0.6rem', textAlign: 'right', fontWeight: 800, color: val.modelEdgePp > 0 ? '#4ade80' : val.modelEdgePp < 0 ? '#f87171' : '#94a3b8' }}>
                             {val.modelEdgePp > 0 ? `+${val.modelEdgePp} pp` : `${val.modelEdgePp} pp`}
                           </td>
@@ -642,7 +642,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                   </table>
                 </div>
 
-                <div style={{ fontSize: '0.70rem', color: '#94a3b8', marginTop: '0.6rem', lineHeight: 1.4 }}>
+                <div style={{ fontSize: '0.70rem', color: 'var(--text-muted)', marginTop: '0.6rem', lineHeight: 1.4 }}>
                   ℹ️ <strong>Methodology Note:</strong> Potential Model Edge reflects mathematical variance between FootballPredict&apos;s objective statistical probability and margin-normalized bookmaker market pricing. It is an analytical reference and does not guarantee match results or betting profit.
                 </div>
               </div>
@@ -658,8 +658,8 @@ export default async function MatchPredictionPage({ params }: PageProps) {
         }}>
           {/* Over / Under Goals & BTTS */}
           <div style={{
-            background: 'rgba(255,255,255,0.02)',
-            border: '1px solid rgba(255,255,255,0.06)',
+            background: 'var(--bg-elevated)',
+            border: '1px solid var(--border-color)',
             borderRadius: '12px',
             padding: '1.1rem',
           }}>
@@ -669,48 +669,48 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.82rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#cbd5e1' }}>Over 2.5 Goals</span>
+                <span style={{ color: 'var(--text-secondary)' }}>Over 2.5 Goals</span>
                 <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
                   <span style={{ fontWeight: 800, color: predictedHomeScore + predictedAwayScore >= 3 ? '#4ade80' : '#f8fafc' }}>
                     {predictedHomeScore + predictedAwayScore >= 3 ? '58%' : '42%'}
                   </span>
-                  <span style={{ color: '#94a3b8', fontSize: '0.74rem' }}>
+                  <span style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>
                     @{oddsAnalysis.over25Odds || (predictedHomeScore + predictedAwayScore >= 3 ? '1.72' : '2.38')}
                   </span>
                 </div>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#cbd5e1' }}>Under 2.5 Goals</span>
+                <span style={{ color: 'var(--text-secondary)' }}>Under 2.5 Goals</span>
                 <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
                   <span style={{ fontWeight: 800, color: predictedHomeScore + predictedAwayScore < 3 ? '#4ade80' : '#f8fafc' }}>
                     {predictedHomeScore + predictedAwayScore < 3 ? '58%' : '42%'}
                   </span>
-                  <span style={{ color: '#94a3b8', fontSize: '0.74rem' }}>
+                  <span style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>
                     @{oddsAnalysis.under25Odds || (predictedHomeScore + predictedAwayScore < 3 ? '1.72' : '2.38')}
                   </span>
                 </div>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#cbd5e1' }}>Both Teams to Score (BTTS Yes)</span>
+                <span style={{ color: 'var(--text-secondary)' }}>Both Teams to Score (BTTS Yes)</span>
                 <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
                   <span style={{ fontWeight: 800, color: predictedHomeScore > 0 && predictedAwayScore > 0 ? '#4ade80' : '#f8fafc' }}>
                     {predictedHomeScore > 0 && predictedAwayScore > 0 ? '56%' : '44%'}
                   </span>
-                  <span style={{ color: '#94a3b8', fontSize: '0.74rem' }}>
+                  <span style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>
                     @{oddsAnalysis.bttsYesOdds || (predictedHomeScore > 0 && predictedAwayScore > 0 ? '1.78' : '2.25')}
                   </span>
                 </div>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#cbd5e1' }}>Both Teams to Score (BTTS No)</span>
+                <span style={{ color: 'var(--text-secondary)' }}>Both Teams to Score (BTTS No)</span>
                 <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
                   <span style={{ fontWeight: 800, color: predictedHomeScore === 0 || predictedAwayScore === 0 ? '#4ade80' : '#f8fafc' }}>
                     {predictedHomeScore === 0 || predictedAwayScore === 0 ? '56%' : '44%'}
                   </span>
-                  <span style={{ color: '#94a3b8', fontSize: '0.74rem' }}>
+                  <span style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>
                     @{oddsAnalysis.bttsNoOdds || (predictedHomeScore === 0 || predictedAwayScore === 0 ? '1.78' : '2.25')}
                   </span>
                 </div>
@@ -720,8 +720,8 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
           {/* Double Chance Coverage */}
           <div style={{
-            background: 'rgba(255,255,255,0.02)',
-            border: '1px solid rgba(255,255,255,0.06)',
+            background: 'var(--bg-elevated)',
+            border: '1px solid var(--border-color)',
             borderRadius: '12px',
             padding: '1.1rem',
           }}>
@@ -731,36 +731,36 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.82rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#cbd5e1' }}>1X ({HN} / Draw)</span>
+                <span style={{ color: 'var(--text-secondary)' }}>1X ({HN} / Draw)</span>
                 <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
                   <span style={{ fontWeight: 800, color: homeProb + drawProb >= 65 ? '#4ade80' : '#f8fafc' }}>
                     {Math.min(95, homeProb + drawProb)}%
                   </span>
-                  <span style={{ color: '#94a3b8', fontSize: '0.74rem' }}>
+                  <span style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>
                     @{oddsAnalysis.dc1xOdds || (homeProb + drawProb > 0 ? (100 / Math.min(95, homeProb + drawProb)).toFixed(2) : '1.35')}
                   </span>
                 </div>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#cbd5e1' }}>X2 (Draw / {AN})</span>
+                <span style={{ color: 'var(--text-secondary)' }}>X2 (Draw / {AN})</span>
                 <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
                   <span style={{ fontWeight: 800, color: awayProb + drawProb >= 65 ? '#4ade80' : '#f8fafc' }}>
                     {Math.min(95, awayProb + drawProb)}%
                   </span>
-                  <span style={{ color: '#94a3b8', fontSize: '0.74rem' }}>
+                  <span style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>
                     @{oddsAnalysis.dcx2Odds || (awayProb + drawProb > 0 ? (100 / Math.min(95, awayProb + drawProb)).toFixed(2) : '1.45')}
                   </span>
                 </div>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#cbd5e1' }}>12 ({HN} / {AN})</span>
+                <span style={{ color: 'var(--text-secondary)' }}>12 ({HN} / {AN})</span>
                 <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
                   <span style={{ fontWeight: 800, color: homeProb + awayProb >= 70 ? '#4ade80' : '#f8fafc' }}>
                     {Math.min(95, homeProb + awayProb)}%
                   </span>
-                  <span style={{ color: '#94a3b8', fontSize: '0.74rem' }}>
+                  <span style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>
                     @{oddsAnalysis.dc12Odds || (homeProb + awayProb > 0 ? (100 / Math.min(95, homeProb + awayProb)).toFixed(2) : '1.25')}
                   </span>
                 </div>
@@ -770,8 +770,8 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
           {/* Quality & Elo Comparison */}
           <div style={{
-            background: 'rgba(255,255,255,0.02)',
-            border: '1px solid rgba(255,255,255,0.06)',
+            background: 'var(--bg-elevated)',
+            border: '1px solid var(--border-color)',
             borderRadius: '12px',
             padding: '1.1rem',
           }}>
@@ -781,21 +781,21 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.82rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#cbd5e1' }}>{HN} Elo Rating</span>
+                <span style={{ color: 'var(--text-secondary)' }}>{HN} Elo Rating</span>
                 <span style={{ fontWeight: 800, color: '#60a5fa' }}>
                   {Math.round(match.home_team?.elo_rating || 1500)}
                 </span>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#cbd5e1' }}>{AN} Elo Rating</span>
+                <span style={{ color: 'var(--text-secondary)' }}>{AN} Elo Rating</span>
                 <span style={{ fontWeight: 800, color: '#a78bfa' }}>
                   {Math.round(match.away_team?.elo_rating || 1500)}
                 </span>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#cbd5e1' }}>Elo Differential</span>
+                <span style={{ color: 'var(--text-secondary)' }}>Elo Differential</span>
                 <span style={{
                   fontWeight: 800,
                   color: Math.abs((match.home_team?.elo_rating || 1500) - (match.away_team?.elo_rating || 1500)) >= 40 ? '#4ade80' : '#94a3b8',
@@ -805,8 +805,8 @@ export default async function MatchPredictionPage({ params }: PageProps) {
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#cbd5e1' }}>Expected Match Goals</span>
-                <span style={{ fontWeight: 800, color: '#f8fafc' }}>
+                <span style={{ color: 'var(--text-secondary)' }}>Expected Match Goals</span>
+                <span style={{ fontWeight: 800, color: 'var(--text-primary)' }}>
                   {predictedHomeScore + predictedAwayScore} Goals
                 </span>
               </div>
@@ -817,7 +817,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
       {/* Interactive Match Hub with Full Form, H2H & Predictions */}
       <section style={{ marginBottom: '2.5rem' }}>
-        <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: '#f8fafc', marginBottom: '1rem' }}>
+        <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '1rem' }}>
           📊 Complete Match Analytics, Form &amp; Community Tips
         </h2>
         <MatchCard match={match} defaultOpen={true} />
@@ -826,18 +826,18 @@ export default async function MatchPredictionPage({ params }: PageProps) {
       {/* More Football Predictions & Related Matches Section */}
       {relatedMatches.length > 0 && (
         <section style={{
-          background: '#111827',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
           borderRadius: '16px',
           padding: '1.5rem',
           marginBottom: '2.5rem',
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.2rem', flexWrap: 'wrap', gap: '0.6rem' }}>
             <div>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 0.3rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-primary)', margin: '0 0 0.3rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 🎯 More Football Predictions &amp; Related Matches
               </h2>
-              <p style={{ margin: 0, fontSize: '0.86rem', color: '#94a3b8' }}>
+              <p style={{ margin: 0, fontSize: '0.86rem', color: 'var(--text-muted)' }}>
                 Explore more upcoming fixtures, statistical win probabilities and match forecasts across {compName}.
               </p>
             </div>
@@ -888,8 +888,8 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                 <div
                   key={rel.id}
                   style={{
-                    background: 'rgba(255,255,255,0.02)',
-                    border: '1px solid rgba(255,255,255,0.06)',
+                    background: 'var(--bg-elevated)',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '12px',
                     padding: '1.1rem',
                     display: 'flex',
@@ -915,7 +915,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 800, fontSize: '0.92rem' }}>
                     <Link
                       href={getTeamUrl(relHome)}
-                      style={{ color: '#f8fafc', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem', flex: 1 }}
+                      style={{ color: 'var(--text-primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem', flex: 1 }}
                     >
                       {rel.home_team?.crest && (
                         <img src={rel.home_team.crest} alt={`${relHome} Crest`} style={{ width: '20px', height: '20px', objectFit: 'contain' }} />
@@ -927,7 +927,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
                     <Link
                       href={getTeamUrl(relAway)}
-                      style={{ color: '#f8fafc', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.4rem', flex: 1, textAlign: 'right' }}
+                      style={{ color: 'var(--text-primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.4rem', flex: 1, textAlign: 'right' }}
                     >
                       <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{relAway}</span>
                       {rel.away_team?.crest && (
@@ -937,10 +937,10 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                   </div>
 
                   {/* Probabilities & Projected Score */}
-                  <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '0.6rem' }}>
+                  <div style={{ background: 'var(--bg-elevated)', borderRadius: '8px', padding: '0.6rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', marginBottom: '0.3rem', fontWeight: 700 }}>
                       <span style={{ color: '#60a5fa' }}>{relHome} {rhp}%</span>
-                      <span style={{ color: '#94a3b8' }}>Draw {rdp}%</span>
+                      <span style={{ color: 'var(--text-muted)' }}>Draw {rdp}%</span>
                       <span style={{ color: '#a78bfa' }}>{relAway} {rap}%</span>
                     </div>
 
@@ -961,7 +961,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                     style={{
                       textAlign: 'center',
                       background: 'rgba(59,130,246,0.1)',
-                      border: '1px solid rgba(59,130,246,0.25)',
+                      border: '1px solid var(--gradient-hero-border)',
                       color: '#93c5fd',
                       padding: '0.5rem',
                       borderRadius: '8px',
@@ -981,15 +981,15 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
       {/* Helpful Internal Navigation Links */}
       <footer style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: '14px',
         padding: '1.5rem',
         display: 'flex',
         flexDirection: 'column',
         gap: '0.8rem',
       }}>
-        <div style={{ fontWeight: 800, color: '#f8fafc', fontSize: '0.95rem' }}>
+        <div style={{ fontWeight: 800, color: 'var(--text-primary)', fontSize: '0.95rem' }}>
           Explore More Predictions &amp; Competitions:
         </div>
         <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
@@ -997,7 +997,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             href={getLeagueUrl(compName, compCode)}
             style={{
               background: 'rgba(59,130,246,0.1)',
-              border: '1px solid rgba(59,130,246,0.25)',
+              border: '1px solid var(--gradient-hero-border)',
               color: '#93c5fd',
               padding: '0.45rem 0.9rem',
               borderRadius: '8px',
@@ -1028,7 +1028,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             style={{
               background: 'rgba(255,255,255,0.04)',
               border: '1px solid rgba(255,255,255,0.1)',
-              color: '#f8fafc',
+              color: 'var(--text-primary)',
               padding: '0.45rem 0.9rem',
               borderRadius: '8px',
               fontSize: '0.82rem',

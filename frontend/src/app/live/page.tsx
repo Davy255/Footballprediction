@@ -115,12 +115,12 @@ export default function LivePage() {
 
       {/* Page Header */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(239,68,68,0.15) 0%, rgba(17,24,39,0.95) 100%)',
-        border: '1px solid rgba(239,68,68,0.3)',
+        background: 'var(--gradient-hero)',
+        border: '1px solid var(--accent-red-border)',
         borderRadius: '16px',
         padding: '1.75rem 1.5rem',
         marginBottom: '2rem',
-        boxShadow: '0 16px 36px rgba(0,0,0,0.4)',
+        boxShadow: 'var(--shadow-card)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
@@ -144,7 +144,7 @@ export default function LivePage() {
                 fontSize: 'clamp(1.4rem, 5vw, 2rem)',
                 fontWeight: 900,
                 margin: 0,
-                color: '#f8fafc',
+                color: 'var(--text-primary)',
                 fontFamily: 'Outfit, sans-serif',
               }}>
                 Live Match Centre 🔴
@@ -163,7 +163,7 @@ export default function LivePage() {
                 </span>
               )}
             </div>
-            <p style={{ color: '#cbd5e1', fontSize: '0.88rem', margin: 0, lineHeight: 1.5 }}>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0, lineHeight: 1.5 }}>
               Real-time in-play scorelines, tactical match centers, and pre-match model baseline projections — auto-refreshes every {REFRESH_INTERVAL}s.
             </p>
           </div>
@@ -172,7 +172,7 @@ export default function LivePage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             {lastUpdated && (
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '0.74rem', color: '#94a3b8', marginBottom: '0.25rem' }}>
+                <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>
                   Updated {lastUpdated.toLocaleTimeString()}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -223,7 +223,7 @@ export default function LivePage() {
           }}>
             <div style={{
               width: '64px', height: '64px', borderRadius: '50%',
-              background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.3)',
+              background: 'rgba(239,68,68,0.12)', border: '1px solid var(--accent-red-border)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '2rem', margin: '0 auto 1rem auto'
             }}>
@@ -277,7 +277,7 @@ export default function LivePage() {
         flexDirection: 'column',
         gap: '0.8rem',
       }}>
-        <div style={{ fontWeight: 800, color: '#f8fafc', fontSize: '0.95rem' }}>
+        <div style={{ fontWeight: 800, color: 'var(--text-primary)', fontSize: '0.95rem' }}>
           Explore Full Prediction Hubs:
         </div>
         <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
@@ -316,7 +316,7 @@ export default function LivePage() {
             style={{
               background: 'rgba(255,255,255,0.04)',
               border: '1px solid rgba(255,255,255,0.1)',
-              color: '#f8fafc',
+              color: 'var(--text-primary)',
               padding: '0.45rem 0.9rem',
               borderRadius: '8px',
               fontSize: '0.82rem',
