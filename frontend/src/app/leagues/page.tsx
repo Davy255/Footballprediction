@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { League, StandingTableItem } from '@/lib/types';
 import { fetchLeagues, fetchLeagueStandings } from '@/lib/api';
+import { getLeagueUrl } from '@/lib/slugs';
 import LeagueTable from '@/components/LeagueTable';
 
 export default function LeaguesPage() {
@@ -71,6 +73,30 @@ export default function LeaguesPage() {
           {/* Standings Table */}
           {selectedLeague && (
             <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.6rem' }}>
+                <h2 style={{ fontSize: '1.2rem', margin: 0, color: 'var(--text-primary)' }}>
+                  {selectedLeague.flag} {selectedLeague.name} Table
+                </h2>
+                <Link
+                  href={getLeagueUrl(selectedLeague.name, selectedLeague.code)}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    background: 'rgba(59,130,246,0.1)',
+                    border: '1px solid rgba(59,130,246,0.25)',
+                    color: '#93c5fd',
+                    padding: '0.45rem 1rem',
+                    borderRadius: '8px',
+                    fontSize: '0.84rem',
+                    fontWeight: 700,
+                    textDecoration: 'none',
+                  }}
+                >
+                  🔗 View Full {selectedLeague.name} Page &amp; Predictions →
+                </Link>
+              </div>
+
               {loadingStandings ? (
                 <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center' }}>
                   Loading {selectedLeague.name} standings...

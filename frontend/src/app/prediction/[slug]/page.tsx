@@ -2,7 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getMatchBySlug, getMatchPredictionUrl, getTeamUrl } from '@/lib/slugs';
+import { getMatchBySlug, getMatchPredictionUrl, getTeamUrl, getLeagueUrl } from '@/lib/slugs';
 import { siteConfig, getCanonicalUrl } from '@/config/site';
 import MatchCard from '@/components/MatchCard';
 import { Match } from '@/lib/types';
@@ -186,7 +186,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
           </li>
           <li>›</li>
           <li>
-            <Link href={`/fixtures?league=${compCode}`} style={{ color: '#94a3b8', textDecoration: 'none' }}>
+            <Link href={getLeagueUrl(compName, compCode)} style={{ color: '#94a3b8', textDecoration: 'none' }}>
               {compName}
             </Link>
           </li>
@@ -207,20 +207,24 @@ export default async function MatchPredictionPage({ params }: PageProps) {
         boxShadow: '0 16px 36px rgba(0,0,0,0.4)',
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.2rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-          <span style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.4rem',
-            background: 'rgba(59,130,246,0.15)',
-            border: '1px solid rgba(59,130,246,0.3)',
-            color: '#93c5fd',
-            padding: '0.3rem 0.75rem',
-            borderRadius: '999px',
-            fontSize: '0.80rem',
-            fontWeight: 800,
-          }}>
+          <Link
+            href={getLeagueUrl(compName, compCode)}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              background: 'rgba(59,130,246,0.15)',
+              border: '1px solid rgba(59,130,246,0.3)',
+              color: '#93c5fd',
+              padding: '0.3rem 0.75rem',
+              borderRadius: '999px',
+              fontSize: '0.80rem',
+              fontWeight: 800,
+              textDecoration: 'none',
+            }}
+          >
             🏆 {compName} {match.matchday ? `· Matchday ${match.matchday}` : ''}
-          </span>
+          </Link>
           <span style={{ fontSize: '0.84rem', color: '#cbd5e1' }}>
             📅 {formattedDate} · {formattedTime} UTC
           </span>

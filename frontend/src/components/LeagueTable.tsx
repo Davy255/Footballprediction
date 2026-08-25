@@ -1,7 +1,9 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { StandingTableItem } from '@/lib/types';
+import { getTeamUrl } from '@/lib/slugs';
 
 interface LeagueTableProps {
   table: StandingTableItem[];
@@ -48,12 +50,22 @@ export default function LeagueTable({ table, leagueName }: LeagueTableProps) {
                   </span>
                 </td>
                 <td>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <Link
+                    href={getTeamUrl(item.team.name)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.6rem',
+                      textDecoration: 'none',
+                      color: 'inherit',
+                      fontWeight: 600,
+                    }}
+                  >
                     {item.team.crest && (
                       <img src={item.team.crest} alt={item.team.name} style={{ width: '20px', height: '20px', objectFit: 'contain' }} />
                     )}
                     <span style={{ fontWeight: 600 }}>{item.team.name}</span>
-                  </div>
+                  </Link>
                 </td>
                 <td style={{ textAlign: 'center' }}>{item.playedGames}</td>
                 <td style={{ textAlign: 'center' }}>{item.won}</td>

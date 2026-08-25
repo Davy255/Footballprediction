@@ -2,7 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getTeamDataBySlug, getMatchPredictionUrl, slugifyTeamName } from '@/lib/slugs';
+import { getTeamDataBySlug, getMatchPredictionUrl, slugifyTeamName, getLeagueUrl } from '@/lib/slugs';
 import { siteConfig, getCanonicalUrl } from '@/config/site';
 
 interface PageProps {
@@ -133,7 +133,7 @@ export default async function TeamPage({ params }: PageProps) {
           {league && (
             <>
               <li>
-                <Link href={`/fixtures?league=${compCode}`} style={{ color: '#94a3b8', textDecoration: 'none' }}>
+                <Link href={getLeagueUrl(compName, compCode)} style={{ color: '#94a3b8', textDecoration: 'none' }}>
                   {compName}
                 </Link>
               </li>
@@ -168,17 +168,21 @@ export default async function TeamPage({ params }: PageProps) {
         )}
         <div style={{ flex: 1, minWidth: '240px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap', marginBottom: '0.4rem' }}>
-            <span style={{
-              background: 'rgba(59,130,246,0.15)',
-              border: '1px solid rgba(59,130,246,0.3)',
-              color: '#93c5fd',
-              padding: '0.25rem 0.65rem',
-              borderRadius: '999px',
-              fontSize: '0.75rem',
-              fontWeight: 800,
-            }}>
+            <Link
+              href={getLeagueUrl(compName, compCode)}
+              style={{
+                background: 'rgba(59,130,246,0.15)',
+                border: '1px solid rgba(59,130,246,0.3)',
+                color: '#93c5fd',
+                padding: '0.25rem 0.65rem',
+                borderRadius: '999px',
+                fontSize: '0.75rem',
+                fontWeight: 800,
+                textDecoration: 'none',
+              }}
+            >
               🏆 {compName}
-            </span>
+            </Link>
             {team.elo_rating && (
               <span style={{
                 background: 'rgba(168,85,247,0.15)',
