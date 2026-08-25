@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { constructMetadata } from '@/config/site';
 
 export const metadata: Metadata = constructMetadata({
-  title: "AI Prediction Model Stats & Accuracy Performance",
-  description: "View historical prediction performance, AI model hit rates across 1X2, BTTS, and Over/Under markets, and tactical accuracy metrics.",
+  title: "Prediction Performance & Model Accuracy Dashboard",
+  description: "Transparent, real-time prediction performance tracking and model accuracy statistics across 1X2 markets, exact scorelines, and competition tiers.",
   path: "/stats",
   noIndex: false,
 });
