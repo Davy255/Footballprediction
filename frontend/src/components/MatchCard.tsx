@@ -6,6 +6,7 @@ import { useAuth } from '@/context/AuthContext';
 import { submitPrediction, fetchMyPredictionForMatch } from '@/lib/api';
 import { Match } from '@/lib/types';
 import { getMatchPredictionUrl, getTeamUrl, getLeagueUrl } from '@/lib/slugs';
+import { getMatchConfidence } from '@/lib/confidence';
 import TacticalPitch, { LineupData } from './TacticalPitch';
 import PlayerStatsTable from './PlayerStatsTable';
 
@@ -552,6 +553,7 @@ export default function MatchCard({ match, defaultOpen = false, onPredictionChan
 
   const status = getMatchStatusDetails(match);
   const dateTime = formatMatchDateTime(match.utc_date);
+  const matchConfidence = getMatchConfidence(match);
 
   let ai: any = null;
   try { if (match.prediction_description) ai = JSON.parse(match.prediction_description); } catch {}
@@ -1225,6 +1227,40 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
             {/* ── TAB 1: FORECAST & ODDS ── */}
             {activeTab === 'ai' && (
               <div>
+                {/* Confidence Level Badge */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  background: matchConfidence.bgColor,
+                  border: `1px solid ${matchConfidence.borderColor}`,
+                  borderRadius: '8px',
+                  padding: '0.5rem 0.85rem',
+                  marginBottom: '1rem',
+                  flexWrap: 'wrap',
+                  gap: '0.4rem',
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <span style={{ fontSize: '0.9rem' }}>🛡️</span>
+                    <span style={{ fontSize: '0.80rem', fontWeight: 800, color: matchConfidence.textColor }}>
+                      Model Confidence:
+                    </span>
+                    <span style={{
+                      background: matchConfidence.borderColor,
+                      color: matchConfidence.badgeColor,
+                      padding: '0.1rem 0.45rem',
+                      borderRadius: '6px',
+                      fontSize: '0.74rem',
+                      fontWeight: 900,
+                    }}>
+                      {matchConfidence.badgeText} ({matchConfidence.highestProbPct}%)
+                    </span>
+                  </div>
+                  <span style={{ fontSize: '0.72rem', color: '#94a3b8' }}>
+                    {matchConfidence.explanation}
+                  </span>
+                </div>
+
                 <div className="ws-section-title">🎯 1X2 Full-Time Match Odds (Match Winner)</div>
                 <div className="ws-1x2-market-grid">
                   <div className="ws-1x2-market-card">

@@ -8,6 +8,7 @@ import { generateMatchAnalysisText } from '@/lib/contentGenerator';
 import { getRelatedMatchesForMatch } from '@/lib/relatedMatches';
 import MatchCard from '@/components/MatchCard';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import { getMatchConfidence } from '@/lib/confidence';
 import { Match } from '@/lib/types';
 
 interface PageProps {
@@ -119,6 +120,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
   // Generate deterministic content & fetch related fixtures
   const analysisContent = generateMatchAnalysisText(match);
+  const confidence = getMatchConfidence(match);
   const relatedMatches = await getRelatedMatchesForMatch(match, 6);
 
   const formattedDate = match.utc_date
@@ -338,10 +340,10 @@ export default async function MatchPredictionPage({ params }: PageProps) {
           🎯 Match Prediction &amp; Probability Breakdown
         </h2>
 
-        {/* Score Prediction & Primary Verdict Banner */}
+        {/* Score Prediction, Primary Verdict & Confidence Level Banner */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
           gap: '1rem',
           marginBottom: '1.5rem',
         }}>
@@ -373,7 +375,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#7dd3fc', textTransform: 'uppercase', marginBottom: '0.3rem' }}>
               Primary Outcome Verdict
             </div>
-            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#38bdf8' }}>
+            <div style={{ fontSize: '1.35rem', fontWeight: 900, color: '#38bdf8' }}>
               {homeProb > awayProb && homeProb > drawProb
                 ? `${HN} Win or Draw Lean`
                 : awayProb > homeProb && awayProb > drawProb
@@ -382,6 +384,24 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             </div>
             <div style={{ fontSize: '0.74rem', color: '#94a3b8', marginTop: '0.2rem' }}>
               Model estimate based on form, Elo differential &amp; home strength
+            </div>
+          </div>
+
+          <div style={{
+            background: confidence.bgColor,
+            border: `1px solid ${confidence.borderColor}`,
+            borderRadius: '12px',
+            padding: '1rem 1.2rem',
+            textAlign: 'center',
+          }}>
+            <div style={{ fontSize: '0.78rem', fontWeight: 800, color: confidence.textColor, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
+              Model Confidence
+            </div>
+            <div style={{ fontSize: '1.35rem', fontWeight: 900, color: confidence.badgeColor, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}>
+              <span>🛡️</span> {confidence.badgeText}
+            </div>
+            <div style={{ fontSize: '0.74rem', color: '#94a3b8', marginTop: '0.2rem' }}>
+              {confidence.explanation}
             </div>
           </div>
         </div>
