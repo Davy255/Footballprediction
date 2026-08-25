@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean, ForeignKey
+from sqlalchemy import Column, Index, Integer, String, DateTime, Float, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.core.database import Base
@@ -36,3 +36,10 @@ class Prediction(Base):
 
     user = relationship("User", back_populates="predictions")
     match = relationship("Match", back_populates="predictions")
+
+    __table_args__ = (
+        Index("idx_predictions_user_scored", "user_id", "is_scored"),
+        Index("idx_predictions_match_user", "match_id", "user_id"),
+        Index("idx_predictions_created", "created_at"),
+    )
+

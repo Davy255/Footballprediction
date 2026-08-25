@@ -123,7 +123,7 @@ async def lifespan(app: FastAPI):
         id="sync_live_api",
         next_run_time=datetime.now(),
     )
-    scheduler.add_job(auto_manage_live_matches, "interval", seconds=5, id="live_poll")
+    scheduler.add_job(auto_manage_live_matches, "interval", seconds=30, id="live_poll")
     scheduler.add_job(score_finished_predictions, "interval", hours=1, id="score_preds")
     
     from app.services.email_service import dispatch_daily_reminders_to_all_users

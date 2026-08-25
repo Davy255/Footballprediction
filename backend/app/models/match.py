@@ -92,4 +92,7 @@ class Match(Base):
     __table_args__ = (
         Index("idx_matches_status_date", "status", "utc_date"),
         Index("idx_matches_league_status", "league_id", "status"),
+        Index("idx_matches_home_away", "home_team_id", "away_team_id"),
+        Index("idx_matches_season_league", "season", "league_id"),
+        Index("idx_matches_utc_date_desc", "utc_date"),
     )

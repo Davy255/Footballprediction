@@ -113,15 +113,13 @@ def get_my_predictions(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    from app.services.sync_service import score_finished_predictions
-    score_finished_predictions(db)
-
+    # Optimized indexed query without blocking synchronous table scoring
     return (
         db.query(Prediction)
         .filter(Prediction.user_id == current_user.id)
         .order_by(Prediction.created_at.desc())
         .offset(skip)
-        .limit(limit)
+        .limit(min(limit, 100))
         .all()
     )
 
