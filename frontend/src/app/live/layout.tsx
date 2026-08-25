@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { constructMetadata } from '@/config/site';
 
 export const metadata: Metadata = constructMetadata({
-  title: "Live Football Scores & In-Play Analytics",
-  description: "Follow live football scores, in-play match tracking, real-time minute progressions, and live tactical statistics.",
+  title: "Live Football Scores & Real-Time Match Analytics",
+  description: "Follow live football scores, in-play match statuses, and pre-match model forecasts across Premier League, Champions League, La Liga, and European football.",
   path: "/live",
   noIndex: false,
 });
