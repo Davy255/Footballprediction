@@ -189,16 +189,17 @@ export default async function MatchPredictionPage({ params }: PageProps) {
         ]}
       />
 
-      {/* Main Match Header & Summary Card */}
+      {/* Main Match Header & Summary Hero Card */}
       <header style={{
-        background: 'linear-gradient(135deg, rgba(30,58,138,0.3) 0%, rgba(17,24,39,0.95) 100%)',
+        background: 'linear-gradient(135deg, rgba(30,58,138,0.35) 0%, rgba(17,24,39,0.95) 100%)',
         border: '1px solid rgba(59,130,246,0.25)',
         borderRadius: '16px',
         padding: '1.8rem 1.5rem',
         marginBottom: '2rem',
         boxShadow: '0 16px 36px rgba(0,0,0,0.4)',
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.2rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+        {/* Top Badges Row */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
           <Link
             href={getLeagueUrl(compName, compCode)}
             style={{
@@ -222,6 +223,19 @@ export default async function MatchPredictionPage({ params }: PageProps) {
           </span>
         </div>
 
+        {/* Primary Page Heading H1 */}
+        <h1 style={{
+          margin: '0 0 1.5rem 0',
+          fontSize: '1.65rem',
+          fontWeight: 900,
+          color: '#f8fafc',
+          textAlign: 'center',
+          fontFamily: 'Outfit, sans-serif',
+          letterSpacing: '-0.02em',
+        }}>
+          {HN} vs {AN} Prediction &amp; Win Probability
+        </h1>
+
         {/* Teams Display Row */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: '1rem', textAlign: 'center' }}>
           
@@ -236,6 +250,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
               textDecoration: 'none',
               transition: 'transform 0.2s',
             }}
+            title={`View ${HN} Team Profile & Stats`}
           >
             {match.home_team?.crest && (
               <img
@@ -244,21 +259,21 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                 style={{ width: '64px', height: '64px', objectFit: 'contain' }}
               />
             )}
-            <h1 style={{ margin: 0, fontSize: '1.35rem', fontWeight: 900, color: '#f8fafc' }}>
+            <div style={{ margin: 0, fontSize: '1.25rem', fontWeight: 900, color: '#f8fafc' }}>
               {HN}
-            </h1>
-            <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>Home Team · View Profile →</span>
+            </div>
+            <span style={{ fontSize: '0.78rem', color: '#93c5fd', fontWeight: 700 }}>Home Profile →</span>
           </Link>
 
           {/* Center: Match Status / Score / VS */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.3rem' }}>
             {isFinished ? (
-              <div style={{ fontSize: '2rem', fontWeight: 900, color: '#38bdf8', letterSpacing: '2px' }}>
+              <div style={{ fontSize: '2.2rem', fontWeight: 900, color: '#38bdf8', letterSpacing: '2px' }}>
                 {match.home_score ?? 0} : {match.away_score ?? 0}
               </div>
             ) : isLive ? (
               <div>
-                <div style={{ fontSize: '2rem', fontWeight: 900, color: '#ef4444', letterSpacing: '2px' }}>
+                <div style={{ fontSize: '2.2rem', fontWeight: 900, color: '#ef4444', letterSpacing: '2px' }}>
                   {match.home_score ?? 0} : {match.away_score ?? 0}
                 </div>
                 <span style={{ fontSize: '0.78rem', color: '#ef4444', fontWeight: 800 }}>
@@ -278,8 +293,8 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                 VS
               </div>
             )}
-            <span style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase' }}>
-              {match.status || 'Scheduled'}
+            <span style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>
+              {isFinished ? 'Full Time' : isLive ? 'Live In-Play' : 'Upcoming Fixture'}
             </span>
           </div>
 
@@ -294,6 +309,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
               textDecoration: 'none',
               transition: 'transform 0.2s',
             }}
+            title={`View ${AN} Team Profile & Stats`}
           >
             {match.away_team?.crest && (
               <img
@@ -302,10 +318,10 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                 style={{ width: '64px', height: '64px', objectFit: 'contain' }}
               />
             )}
-            <div style={{ margin: 0, fontSize: '1.35rem', fontWeight: 900, color: '#f8fafc' }}>
+            <div style={{ margin: 0, fontSize: '1.25rem', fontWeight: 900, color: '#f8fafc' }}>
               {AN}
             </div>
-            <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>Away Team · View Profile →</span>
+            <span style={{ fontSize: '0.78rem', color: '#93c5fd', fontWeight: 700 }}>Away Profile →</span>
           </Link>
         </div>
       </header>
@@ -318,7 +334,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
         padding: '1.5rem',
         marginBottom: '2rem',
       }}>
-        <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1.2rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1.2rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           🎯 Match Prediction &amp; Probability Breakdown
         </h2>
 
@@ -401,7 +417,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
         padding: '1.5rem',
         marginBottom: '2rem',
       }}>
-        <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1rem 0' }}>
+        <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1rem 0' }}>
           📝 Statistical Match Analysis &amp; Tactical Context
         </h2>
 
@@ -433,7 +449,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
       {/* Interactive Match Hub with Full Form, H2H & Predictions */}
       <section style={{ marginBottom: '2.5rem' }}>
-        <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', marginBottom: '1rem' }}>
+        <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: '#f8fafc', marginBottom: '1rem' }}>
           📊 Complete Match Analytics, Form &amp; Community Tips
         </h2>
         <MatchCard match={match} defaultOpen={true} />
