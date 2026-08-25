@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: `${siteConfig.url}/og-image.png`,
+        url: `${siteConfig.url}/football-predictions-today/opengraph-image`,
         width: 1200,
         height: 630,
         alt: "Football Predictions Today — FootballPredict",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Football Predictions Today — Match Predictions & Win Probabilities',
     description: "Today's football predictions, match win probabilities, projected scores, team form and football statistics from FootballPredict.",
-    images: [`${siteConfig.url}/og-image.png`],
+    images: [`${siteConfig.url}/football-predictions-today/opengraph-image`],
   },
   robots: {
     index: true,

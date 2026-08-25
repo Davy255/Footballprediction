@@ -52,9 +52,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: canonicalUrl,
       siteName: siteConfig.name,
       images: [
-        data.league.emblem
-          ? { url: data.league.emblem, alt: `${LN} Emblem` }
-          : { url: `${siteConfig.url}/og-image.png`, width: 1200, height: 630, alt: `${LN} — FootballPredict` },
+        {
+          url: `${siteConfig.url}/leagues/${slug}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: `${LN} — FootballPredict`,
+        },
       ],
       locale: siteConfig.locale,
       type: 'website',
@@ -63,7 +66,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: 'summary_large_image',
       title,
       description,
-      images: [data.league.emblem || `${siteConfig.url}/og-image.png`],
+      images: [`${siteConfig.url}/leagues/${slug}/opengraph-image`],
     },
     robots: {
       index: true,

@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: siteConfig.name,
       images: [
         {
-          url: `${siteConfig.url}/og-image.png`,
+          url: `${siteConfig.url}/prediction/${slug}/opengraph-image`,
           width: 1200,
           height: 630,
           alt: `${HN} vs ${AN} Match Prediction — FootballPredict`,
@@ -71,7 +71,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: 'summary_large_image',
       title,
       description,
-      images: [`${siteConfig.url}/og-image.png`],
+      images: [`${siteConfig.url}/prediction/${slug}/opengraph-image`],
     },
     robots: {
       index: true,
