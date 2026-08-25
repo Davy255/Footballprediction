@@ -281,3 +281,16 @@ export async function clearUserNotifications() {
     method: 'POST',
   });
 }
+
+
+export async function searchFootballEntities(query: string) {
+  if (!query || query.trim().length < 2) {
+    return { query, teams: [], leagues: [], matches: [] };
+  }
+  return fetchApi<{
+    query: string;
+    teams: Array<{ id: number; name: string; short_name: string; crest: string; elo_rating: number }>;
+    leagues: Array<{ id: number; name: string; code: string; country: string; flag: string }>;
+    matches: Match[];
+  }>(`/api/matches/search?q=${encodeURIComponent(query.trim())}`);
+}

@@ -323,3 +323,74 @@ def get_match(match_id: int, db: Session = Depends(get_db)):
     ensure_match_predictions([match], db)
     set_in_cache(cache_key, match)
     return match
+
+
+@router.get("/search")
+def search_football_entities(
+    q: str = Query(..., min_length=2),
+    limit: int = Query(15, ge=1, le=30),
+    db: Session = Depends(get_db),
+):
+    """
+    Categorized Fast Search Endpoint:
+    Searches across Teams, Competitions, and Matches with strict limit bounds.
+    """
+    clean_q = f"%{q.strip()}%"
+
+    # 1. Matching Teams
+    teams = (
+        db.query(Team)
+        .filter(or_(Team.name.ilike(clean_q), Team.short_name.ilike(clean_q)))
+        .limit(limit)
+        .all()
+    )
+
+    # 2. Matching Leagues
+    leagues = (
+        db.query(League)
+        .filter(or_(League.name.ilike(clean_q), League.code.ilike(clean_q)))
+        .limit(limit)
+        .all()
+    )
+
+    # 3. Matching Matches
+    HomeTeam = Team
+    matches = (
+        db.query(Match)
+        .join(HomeTeam, Match.home_team_id == HomeTeam.id)
+        .options(
+            joinedload(Match.home_team),
+            joinedload(Match.away_team),
+            joinedload(Match.league),
+        )
+        .filter(or_(HomeTeam.name.ilike(clean_q), HomeTeam.short_name.ilike(clean_q)))
+        .order_by(Match.utc_date.desc())
+        .limit(limit)
+        .all()
+    )
+    ensure_match_predictions(matches, db)
+
+    return {
+        "query": q,
+        "teams": [
+            {
+                "id": t.id,
+                "name": t.name,
+                "short_name": t.short_name,
+                "crest": t.crest,
+                "elo_rating": t.elo_rating,
+            }
+            for t in teams
+        ],
+        "leagues": [
+            {
+                "id": l.id,
+                "name": l.name,
+                "code": l.code,
+                "country": l.country,
+                "flag": l.flag,
+            }
+            for l in leagues
+        ],
+        "matches": matches,
+    }

@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { useTheme } from '@/context/ThemeContext';
 import HowToPlayModal from './HowToPlayModal';
+import SearchModal from './SearchModal';
 
 const navLinks = [
   { href: '/football-predictions-today', label: "Today's Tips", public: true, icon: '🎯' },
@@ -23,6 +24,7 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   const visibleLinks = navLinks.filter(
@@ -358,6 +360,7 @@ export default function Navbar() {
       </nav>
 
       <HowToPlayModal isOpen={showGuide} onClose={() => setShowGuide(false)} />
+      <SearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} />
     </>
   );
 }
