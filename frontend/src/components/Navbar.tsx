@@ -15,6 +15,7 @@ const navLinks = [
   { href: '/leaderboard', label: 'Leaderboard', public: true, icon: '👑' },
   { href: '/leagues', label: 'Leagues', public: true, icon: '🏆' },
   { href: '/stats', label: 'AI Stats', public: true, icon: '📊' },
+  { href: '/articles', label: 'Analysis', public: true, icon: '📚' },
   { href: '/admin', label: 'Admin', adminOnly: true, icon: '⚙️' },
 ];
 
