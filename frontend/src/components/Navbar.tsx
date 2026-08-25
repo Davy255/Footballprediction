@@ -22,13 +22,13 @@ export default function Navbar() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [moreMenuOpen, setMoreMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   
   const userMenuRef = useRef<HTMLDivElement>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const moreMenuRef = useRef<HTMLDivElement>(null);
 
   const initials = user?.username ? user.username.slice(0, 2).toUpperCase() : 'U';
 
@@ -50,10 +50,10 @@ export default function Navbar() {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
         setUserDropdownOpen(false);
       }
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
+      if (moreMenuRef.current && !moreMenuRef.current.contains(event.target as Node)) {
         const target = event.target as HTMLElement;
-        if (!target.closest('.fp-hamburger-btn')) {
-          setMobileMenuOpen(false);
+        if (!target.closest('.fp-more-options-btn')) {
+          setMoreMenuOpen(false);
         }
       }
     }
@@ -63,9 +63,16 @@ export default function Navbar() {
 
   // Close menus on route change
   useEffect(() => {
-    setMobileMenuOpen(false);
+    setMoreMenuOpen(false);
     setUserDropdownOpen(false);
   }, [pathname]);
+
+  const openCoachAi = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('open-coach-ai'));
+    }
+    setMoreMenuOpen(false);
+  };
 
   return (
     <>
@@ -88,30 +95,30 @@ export default function Navbar() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            height: '58px',
-            gap: '0.4rem',
-            padding: '0 0.75rem',
+            height: '60px',
+            gap: '0.75rem',
+            padding: '0 1rem',
             width: '100%',
             maxWidth: '1320px',
             margin: '0 auto',
           }}
         >
-          {/* Brand Logo (Responsive font & spacing) */}
+          {/* Brand Logo */}
           <Link
             href="/"
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.35rem',
+              gap: '0.45rem',
               textDecoration: 'none',
               flexShrink: 0,
             }}
           >
-            <span style={{ fontSize: '1.25rem', lineHeight: 1 }}>⚽</span>
+            <span style={{ fontSize: '1.35rem', lineHeight: 1 }}>⚽</span>
             <span
               style={{
                 fontFamily: 'Outfit, sans-serif',
-                fontSize: '1.12rem',
+                fontSize: '1.2rem',
                 fontWeight: 900,
                 letterSpacing: '-0.02em',
                 background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
@@ -124,7 +131,7 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links (Middle) */}
           <nav
             aria-label="Main Navigation"
             style={{
@@ -133,7 +140,7 @@ export default function Navbar() {
               gap: '0.2rem',
               margin: '0 auto',
             }}
-            className="hidden md:flex"
+            className="hidden lg:flex"
           >
             {primaryNavLinks.map((link) => {
               const isActive = pathname === link.href;
@@ -142,16 +149,16 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   style={{
-                    padding: '0.42rem 0.65rem',
+                    padding: '0.45rem 0.7rem',
                     borderRadius: '8px',
-                    fontSize: '0.84rem',
+                    fontSize: '0.86rem',
                     fontWeight: isActive ? 700 : 500,
                     color: isActive ? 'var(--accent-blue)' : 'var(--text-secondary)',
                     background: isActive ? 'var(--accent-blue-bg)' : 'transparent',
                     textDecoration: 'none',
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '0.3rem',
+                    gap: '0.35rem',
                     transition: 'all 0.15s ease',
                     whiteSpace: 'nowrap',
                   }}
@@ -175,97 +182,8 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Right Action Cluster - Compact on mobile, ensuring full visibility */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexShrink: 0 }}>
-            {/* Quick Search Button */}
-            <button
-              onClick={() => setShowSearch(true)}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.35rem',
-                background: 'var(--bg-elevated)',
-                border: '1px solid var(--border-color)',
-                color: 'var(--text-secondary)',
-                padding: '0 0.55rem',
-                height: '34px',
-                minWidth: '34px',
-                borderRadius: '8px',
-                fontSize: '0.8rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'all 0.15s ease',
-              }}
-              title="Search clubs, leagues, matches (Ctrl+K)"
-              aria-label="Search"
-            >
-              <span>🔍</span>
-              <span className="hidden sm:inline">Search</span>
-              <kbd
-                className="hidden lg:inline"
-                style={{
-                  fontSize: '0.65rem',
-                  padding: '0.1rem 0.25rem',
-                  background: 'var(--bg-card)',
-                  borderRadius: '4px',
-                  border: '1px solid var(--border-color)',
-                  color: 'var(--text-muted)',
-                }}
-              >
-                Ctrl+K
-              </kbd>
-            </button>
-
-            {/* VIP Pro Badge (Tablet / Desktop) */}
-            <Link
-              href="/pricing"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.25rem',
-                background: 'linear-gradient(135deg, rgba(234,179,8,0.15) 0%, rgba(245,158,11,0.15) 100%)',
-                border: '1px solid rgba(245,158,11,0.3)',
-                color: 'var(--accent-amber)',
-                padding: '0 0.55rem',
-                height: '34px',
-                borderRadius: '8px',
-                fontSize: '0.78rem',
-                fontWeight: 800,
-                textDecoration: 'none',
-                transition: 'all 0.15s ease',
-              }}
-              className="hidden sm:inline-flex"
-            >
-              <span>💎</span>
-              <span>VIP Pro</span>
-            </Link>
-
-            {/* Theme Toggle Button */}
-            <button
-              onClick={toggleTheme}
-              style={{
-                background: 'var(--bg-elevated)',
-                border: '1px solid var(--border-color)',
-                color: 'var(--text-primary)',
-                width: '34px',
-                height: '34px',
-                borderRadius: '8px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '0.9rem',
-                cursor: 'pointer',
-                transition: 'all 0.15s ease',
-                padding: 0,
-                flexShrink: 0,
-              }}
-              title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
-              aria-label="Toggle Color Theme"
-            >
-              {theme === 'dark' ? '☀️' : '🌙'}
-            </button>
-
+          {/* Clean Right Cluster: User Profile + More Options Menu Button */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
             {/* User Profile / Auth State */}
             {user ? (
               <div style={{ position: 'relative' }} ref={userMenuRef}>
@@ -274,21 +192,21 @@ export default function Navbar() {
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.35rem',
+                    gap: '0.4rem',
                     background: 'var(--bg-elevated)',
                     border: '1px solid var(--border-color)',
-                    padding: '0 0.45rem',
-                    height: '34px',
+                    padding: '0.25rem 0.6rem',
                     borderRadius: '20px',
                     cursor: 'pointer',
+                    height: '36px',
                   }}
                   aria-expanded={userDropdownOpen}
                   aria-label="User profile menu"
                 >
                   <div
                     style={{
-                      width: '24px',
-                      height: '24px',
+                      width: '26px',
+                      height: '26px',
                       borderRadius: '50%',
                       background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
                       color: '#ffffff',
@@ -302,11 +220,11 @@ export default function Navbar() {
                     {initials}
                   </div>
                   <div style={{ textAlign: 'left', lineHeight: 1.1 }} className="hidden sm:block">
-                    <div style={{ fontSize: '0.76rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                    <div style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--text-primary)' }}>
                       {user.username}
                     </div>
                   </div>
-                  <span style={{ fontSize: '0.62rem', color: 'var(--text-muted)' }}>▾</span>
+                  <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>▾</span>
                 </button>
 
                 {/* User Dropdown Menu */}
@@ -369,12 +287,12 @@ export default function Navbar() {
                       </Link>
                     )}
                     <button
-                      onClick={() => setShowGuide(true)}
+                      onClick={() => { logout(); setUserDropdownOpen(false); }}
                       style={{
                         padding: '0.45rem 0.6rem',
                         borderRadius: '6px',
                         fontSize: '0.82rem',
-                        color: 'var(--text-primary)',
+                        color: 'var(--accent-red)',
                         background: 'transparent',
                         border: 'none',
                         textAlign: 'left',
@@ -383,36 +301,16 @@ export default function Navbar() {
                         alignItems: 'center',
                         gap: '0.4rem',
                         width: '100%',
+                        fontWeight: 600,
+                        borderTop: '1px solid var(--border-color)',
+                        marginTop: '0.2rem',
+                        paddingTop: '0.4rem',
                       }}
-                      className="hover:bg-[var(--bg-elevated)]"
+                      className="hover:bg-[var(--accent-red-bg)]"
                     >
-                      <span>📖</span>
-                      <span>How to Play Guide</span>
+                      <span>🚪</span>
+                      <span>Sign Out</span>
                     </button>
-                    <div style={{ borderTop: '1px solid var(--border-color)', marginTop: '0.2rem', paddingTop: '0.2rem' }}>
-                      <button
-                        onClick={() => { logout(); setUserDropdownOpen(false); }}
-                        style={{
-                          padding: '0.45rem 0.6rem',
-                          borderRadius: '6px',
-                          fontSize: '0.82rem',
-                          color: 'var(--accent-red)',
-                          background: 'transparent',
-                          border: 'none',
-                          textAlign: 'left',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.4rem',
-                          width: '100%',
-                          fontWeight: 600,
-                        }}
-                        className="hover:bg-[var(--accent-red-bg)]"
-                      >
-                        <span>🚪</span>
-                        <span>Sign Out</span>
-                      </button>
-                    </div>
                   </div>
                 )}
               </div>
@@ -422,9 +320,9 @@ export default function Navbar() {
                   href="/login"
                   className="fp-btn-primary"
                   style={{
-                    padding: '0 0.6rem',
-                    height: '34px',
-                    fontSize: '0.78rem',
+                    padding: '0 0.85rem',
+                    height: '36px',
+                    fontSize: '0.82rem',
                     borderRadius: '8px',
                     whiteSpace: 'nowrap',
                   }}
@@ -434,66 +332,134 @@ export default function Navbar() {
               </div>
             )}
 
-            {/* Mobile Hamburger Menu Button */}
+            {/* "More Options" Menu Button (Always fully visible, comfortable and responsive) */}
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="fp-hamburger-btn md:hidden"
+              onClick={() => setMoreMenuOpen(!moreMenuOpen)}
+              className="fp-more-options-btn"
               style={{
-                width: '34px',
-                height: '34px',
-                borderRadius: '8px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.4rem',
                 background: 'var(--bg-elevated)',
                 border: '1px solid var(--border-color)',
                 color: 'var(--text-primary)',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '4px',
+                padding: '0 0.75rem',
+                height: '36px',
+                borderRadius: '8px',
+                fontSize: '0.84rem',
+                fontWeight: 700,
                 cursor: 'pointer',
-                padding: 0,
+                transition: 'all 0.15s ease',
                 flexShrink: 0,
               }}
-              aria-label="Toggle navigation drawer"
-              aria-expanded={mobileMenuOpen}
+              aria-label="Open More Options Menu"
+              aria-expanded={moreMenuOpen}
             >
-              <span style={{ width: '16px', height: '2px', background: 'var(--text-primary)', borderRadius: '2px', transition: '0.2s' }} />
-              <span style={{ width: '16px', height: '2px', background: 'var(--text-primary)', borderRadius: '2px', transition: '0.2s' }} />
-              <span style={{ width: '16px', height: '2px', background: 'var(--text-primary)', borderRadius: '2px', transition: '0.2s' }} />
+              <span style={{ fontSize: '1.1rem' }}>☰</span>
+              <span className="hidden sm:inline">Options</span>
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer Sheet */}
-        {mobileMenuOpen && (
+        {/* "More Options" Full Dropdown & Mobile Drawer */}
+        {moreMenuOpen && (
           <div
-            ref={mobileMenuRef}
-            className="md:hidden"
+            ref={moreMenuRef}
             style={{
               borderTop: '1px solid var(--border-color)',
               background: 'var(--bg-card)',
-              padding: '1rem',
+              padding: '1.25rem 1rem',
               display: 'flex',
               flexDirection: 'column',
-              gap: '1rem',
-              maxHeight: 'calc(100vh - 58px)',
+              gap: '1.2rem',
+              maxHeight: 'calc(100vh - 60px)',
               overflowY: 'auto',
               boxShadow: 'var(--shadow-card-hover)',
             }}
           >
-            {/* Category 1: Matches & Tips */}
+            {/* Top Quick Actions Row: Search + Theme Toggle + Coach AI */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.5rem' }}>
+              {/* 1. Quick Search Trigger */}
+              <button
+                onClick={() => { setMoreMenuOpen(false); setShowSearch(true); }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.65rem 0.85rem',
+                  borderRadius: '10px',
+                  background: 'var(--bg-elevated)',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-primary)',
+                  fontWeight: 700,
+                  fontSize: '0.84rem',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                }}
+              >
+                <span style={{ fontSize: '1.1rem' }}>🔍</span>
+                <span>Search</span>
+              </button>
+
+              {/* 2. Theme Toggle (Light / Dark Switcher) */}
+              <button
+                onClick={toggleTheme}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.65rem 0.85rem',
+                  borderRadius: '10px',
+                  background: 'var(--bg-elevated)',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-primary)',
+                  fontWeight: 700,
+                  fontSize: '0.84rem',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                }}
+              >
+                <span style={{ fontSize: '1.1rem' }}>{theme === 'dark' ? '☀️' : '🌙'}</span>
+                <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+              </button>
+
+              {/* 3. Coach AI Trigger */}
+              <button
+                onClick={openCoachAi}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.65rem 0.85rem',
+                  borderRadius: '10px',
+                  background: 'linear-gradient(135deg, rgba(37,99,235,0.15) 0%, rgba(124,58,237,0.15) 100%)',
+                  border: '1px solid rgba(59,130,246,0.3)',
+                  color: 'var(--accent-blue)',
+                  fontWeight: 800,
+                  fontSize: '0.84rem',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                }}
+              >
+                <span style={{ fontSize: '1.1rem' }}>🤖</span>
+                <span>Coach AI</span>
+              </button>
+            </div>
+
+            {/* Category 1: Predictions & Matches */}
             <div>
-              <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
+              <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
                 Predictions &amp; Fixtures
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.4rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.45rem' }}>
                 {primaryNavLinks.slice(0, 4).map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
                     style={{
-                      padding: '0.55rem 0.75rem',
-                      borderRadius: '8px',
+                      padding: '0.6rem 0.8rem',
+                      borderRadius: '10px',
                       background: pathname === link.href ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
                       color: pathname === link.href ? 'var(--accent-blue)' : 'var(--text-primary)',
                       fontWeight: 600,
@@ -501,7 +467,7 @@ export default function Navbar() {
                       textDecoration: 'none',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.4rem',
+                      gap: '0.45rem',
                       minHeight: '44px',
                     }}
                   >
@@ -512,19 +478,19 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Category 2: Intelligence & Data */}
+            {/* Category 2: Intelligence & Analytics */}
             <div>
-              <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
+              <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
                 Intelligence &amp; Data
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.4rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.45rem' }}>
                 {primaryNavLinks.slice(4).map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
                     style={{
-                      padding: '0.55rem 0.75rem',
-                      borderRadius: '8px',
+                      padding: '0.6rem 0.8rem',
+                      borderRadius: '10px',
                       background: pathname === link.href ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
                       color: pathname === link.href ? 'var(--accent-blue)' : 'var(--text-primary)',
                       fontWeight: 600,
@@ -532,7 +498,7 @@ export default function Navbar() {
                       textDecoration: 'none',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.4rem',
+                      gap: '0.45rem',
                       minHeight: '44px',
                     }}
                   >
@@ -543,8 +509,8 @@ export default function Navbar() {
                 <Link
                   href="/accuracy"
                   style={{
-                    padding: '0.55rem 0.75rem',
-                    borderRadius: '8px',
+                    padding: '0.6rem 0.8rem',
+                    borderRadius: '10px',
                     background: pathname === '/accuracy' ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
                     color: pathname === '/accuracy' ? 'var(--accent-blue)' : 'var(--text-primary)',
                     fontWeight: 600,
@@ -552,22 +518,22 @@ export default function Navbar() {
                     textDecoration: 'none',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.4rem',
+                    gap: '0.45rem',
                     minHeight: '44px',
                   }}
                 >
                   <span>📈</span>
-                  <span>Accuracy</span>
+                  <span>Accuracy Audit</span>
                 </Link>
               </div>
             </div>
 
-            {/* Category 3: Quick Tools */}
-            <div style={{ display: 'flex', gap: '0.5rem', paddingTop: '0.2rem' }}>
+            {/* Category 3: VIP Pro & Platform Tools */}
+            <div style={{ display: 'flex', gap: '0.5rem', paddingTop: '0.3rem', flexWrap: 'wrap' }}>
               <button
-                onClick={() => { setMobileMenuOpen(false); setShowGuide(true); }}
+                onClick={() => { setMoreMenuOpen(false); setShowGuide(true); }}
                 className="fp-btn-secondary"
-                style={{ flex: 1, minHeight: '44px', fontSize: '0.84rem' }}
+                style={{ flex: '1 1 140px', minHeight: '44px', fontSize: '0.84rem' }}
               >
                 📖 Rules &amp; Guide
               </button>
@@ -575,13 +541,13 @@ export default function Navbar() {
                 href="/pricing"
                 className="fp-btn-primary"
                 style={{
-                  flex: 1,
+                  flex: '1 1 140px',
                   minHeight: '44px',
                   fontSize: '0.84rem',
                   background: 'linear-gradient(135deg, #d97706, #f59e0b)',
                 }}
               >
-                💎 VIP Pro
+                💎 VIP Pro Analytics
               </Link>
             </div>
           </div>

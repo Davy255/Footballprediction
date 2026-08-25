@@ -59,7 +59,6 @@ function renderFormattedContent(content: string) {
 }
 
 function parseInlineMarkdown(text: string): React.ReactNode[] {
-  // Regex to split by bold (**bold**), italics (*italic*), or markdown links [text](url)
   const parts: React.ReactNode[] = [];
   const regex = /(\*\*.*?\*\*|\*.*?\*|\[.*?\]\(.*?\))/g;
   let lastIndex = 0;
@@ -172,36 +171,33 @@ export default function ChatbotWidget() {
 
   return (
     <>
-      {/* Floating Launcher Button (Always prominently visible on mobile & desktop) */}
+      {/* Floating Launcher Button (Fixed at bottom-right on all pages) */}
       {!isOpen && (
         <div
           className="chatbot-floating-container"
           style={{
             position: 'fixed',
-            bottom: 'calc(18px + env(safe-area-inset-bottom, 0px))',
-            right: '18px',
+            bottom: '22px',
+            right: '20px',
             zIndex: 999999,
-            display: 'block !important',
-            visibility: 'visible !important',
-            pointerEvents: 'auto',
           }}
         >
           <button
             onClick={() => setIsOpen(true)}
-            aria-label="Open Coach AI Match Supporter"
+            aria-label="Open Coach AI Football Supporter"
             className="chatbot-launcher-pill"
             style={{
-              display: 'inline-flex',
+              display: 'flex',
               alignItems: 'center',
-              gap: '0.45rem',
-              padding: '0.6rem 1.1rem',
+              gap: '0.5rem',
+              padding: '0.65rem 1.15rem',
               borderRadius: '50px',
               background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
               color: '#ffffff',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
+              border: '1px solid rgba(255, 255, 255, 0.35)',
               cursor: 'pointer',
               fontWeight: 800,
-              fontSize: '0.86rem',
+              fontSize: '0.88rem',
               boxShadow: '0 8px 24px rgba(37, 99, 235, 0.6), 0 0 20px rgba(124, 58, 237, 0.4)',
               transition: 'transform 0.2s ease, box-shadow 0.2s ease',
             }}
@@ -226,27 +222,45 @@ export default function ChatbotWidget() {
 
       {/* Chat Window Modal (when open) */}
       {isOpen && (
-        <div className="chatbot-modal-overlay">
+        <div
+          className="chatbot-modal-overlay"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.65)',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+            zIndex: 999999,
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
+            padding: '1rem',
+          }}
+          onClick={() => setIsOpen(false)}
+        >
           <div
             className="chatbot-window-card"
             style={{
-              background: 'var(--bg-card, #131b2e)',
-              border: '1px solid var(--border-color, rgba(255, 255, 255, 0.12))',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(59, 130, 246, 0.2)',
+              width: '100%',
+              maxWidth: '390px',
+              height: '580px',
+              maxHeight: '88vh',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border-color)',
+              borderRadius: '20px',
+              boxShadow: 'var(--shadow-card-hover)',
               display: 'flex',
               flexDirection: 'column',
               overflow: 'hidden',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              animation: 'fadeIn 0.2s ease',
             }}
+            onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
             <div
               style={{
                 padding: '0.9rem 1.1rem',
-                background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.22) 0%, rgba(139, 92, 246, 0.18) 100%)',
-                borderBottom: '1px solid var(--border-color, rgba(255, 255, 255, 0.08))',
+                background: 'var(--bg-elevated)',
+                borderBottom: '1px solid var(--border-color)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
@@ -264,19 +278,19 @@ export default function ChatbotWidget() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     fontSize: '1.2rem',
-                    boxShadow: '0 0 12px rgba(59, 130, 246, 0.4)',
+                    color: '#ffffff',
                   }}
                 >
                   🤖
                 </div>
                 <div>
-                  <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--text-primary, #fff)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                     Coach AI Supporter
-                    <span style={{ fontSize: '0.68rem', padding: '0.1rem 0.45rem', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.2)', color: '#10b981', fontWeight: 700 }}>
+                    <span style={{ fontSize: '0.68rem', padding: '0.1rem 0.45rem', borderRadius: '10px', background: 'var(--accent-green-bg)', color: 'var(--accent-green)', fontWeight: 700 }}>
                       Live
                     </span>
                   </div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary, #94a3b8)' }}>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
                     Tactical match insights &amp; tips
                   </div>
                 </div>
@@ -288,9 +302,9 @@ export default function ChatbotWidget() {
                   title="Clear conversation"
                   aria-label="Clear chat"
                   style={{
-                    background: 'rgba(255, 255, 255, 0.06)',
-                    border: '1px solid var(--border-color, rgba(255, 255, 255, 0.1))',
-                    color: 'var(--text-secondary, #94a3b8)',
+                    background: 'var(--bg-card)',
+                    border: '1px solid var(--border-color)',
+                    color: 'var(--text-secondary)',
                     cursor: 'pointer',
                     width: '32px',
                     height: '32px',
@@ -308,9 +322,9 @@ export default function ChatbotWidget() {
                   title="Close chat"
                   aria-label="Close chat"
                   style={{
-                    background: 'rgba(239, 68, 68, 0.15)',
-                    border: '1px solid rgba(239, 68, 68, 0.3)',
-                    color: '#f87171',
+                    background: 'var(--accent-red-bg)',
+                    border: '1px solid var(--accent-red-border)',
+                    color: 'var(--accent-red)',
                     cursor: 'pointer',
                     width: '32px',
                     height: '32px',
@@ -356,9 +370,9 @@ export default function ChatbotWidget() {
                       background:
                         m.role === 'user'
                           ? 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)'
-                          : 'var(--bg-card-hover, rgba(255, 255, 255, 0.05))',
-                      color: m.role === 'user' ? '#ffffff' : 'var(--text-primary, #e2e8f0)',
-                      border: m.role === 'user' ? 'none' : '1px solid var(--border-color, rgba(255, 255, 255, 0.08))',
+                          : 'var(--bg-elevated)',
+                      color: m.role === 'user' ? '#ffffff' : 'var(--text-primary)',
+                      border: m.role === 'user' ? 'none' : '1px solid var(--border-color)',
                       boxShadow: m.role === 'user' ? '0 4px 12px rgba(37, 99, 235, 0.25)' : 'none',
                     }}
                   >
@@ -368,12 +382,12 @@ export default function ChatbotWidget() {
               ))}
 
               {loading && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.6rem 0.9rem', borderRadius: '16px', background: 'var(--bg-card-hover, rgba(255, 255, 255, 0.05))', width: 'fit-content' }}>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary, #94a3b8)' }}>Coach AI is typing</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.6rem 0.9rem', borderRadius: '16px', background: 'var(--bg-elevated)', width: 'fit-content' }}>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Coach AI is typing</span>
                   <span style={{ display: 'inline-flex', gap: '3px' }}>
-                    <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#3b82f6', animation: 'pulse 1s infinite' }} />
-                    <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#8b5cf6', animation: 'pulse 1s infinite 0.2s' }} />
-                    <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#10b981', animation: 'pulse 1s infinite 0.4s' }} />
+                    <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#3b82f6' }} />
+                    <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#8b5cf6' }} />
+                    <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#10b981' }} />
                   </span>
                 </div>
               )}
@@ -388,7 +402,7 @@ export default function ChatbotWidget() {
                   display: 'flex',
                   gap: '0.4rem',
                   overflowX: 'auto',
-                  borderTop: '1px solid var(--border-color, rgba(255, 255, 255, 0.05))',
+                  borderTop: '1px solid var(--border-color)',
                   scrollbarWidth: 'none',
                   flexShrink: 0,
                 }}
@@ -400,17 +414,14 @@ export default function ChatbotWidget() {
                     style={{
                       padding: '0.35rem 0.75rem',
                       borderRadius: '20px',
-                      background: 'rgba(59, 130, 246, 0.12)',
-                      border: '1px solid rgba(59, 130, 246, 0.28)',
-                      color: 'var(--accent-blue, #60a5fa)',
+                      background: 'var(--accent-blue-bg)',
+                      border: '1px solid var(--accent-blue-border)',
+                      color: 'var(--accent-blue)',
                       fontSize: '0.76rem',
                       fontWeight: 600,
                       cursor: 'pointer',
                       whiteSpace: 'nowrap',
-                      transition: 'background 0.15s ease',
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(59, 130, 246, 0.22)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(59, 130, 246, 0.12)')}
                   >
                     {s}
                   </button>
@@ -426,10 +437,10 @@ export default function ChatbotWidget() {
               }}
               style={{
                 padding: '0.75rem',
-                borderTop: '1px solid var(--border-color, rgba(255, 255, 255, 0.08))',
+                borderTop: '1px solid var(--border-color)',
                 display: 'flex',
                 gap: '0.5rem',
-                background: 'var(--bg-card, #131b2e)',
+                background: 'var(--bg-card)',
                 flexShrink: 0,
               }}
             >
@@ -444,9 +455,9 @@ export default function ChatbotWidget() {
                   flex: 1,
                   padding: '0.7rem 0.95rem',
                   borderRadius: '12px',
-                  border: '1px solid var(--border-color, rgba(255, 255, 255, 0.12))',
-                  background: 'rgba(255, 255, 255, 0.04)',
-                  color: 'var(--text-primary, #fff)',
+                  border: '1px solid var(--border-color)',
+                  background: 'var(--bg-elevated)',
+                  color: 'var(--text-primary)',
                   fontSize: '0.88rem',
                   outline: 'none',
                 }}
@@ -457,13 +468,12 @@ export default function ChatbotWidget() {
                 style={{
                   padding: '0.7rem 1.15rem',
                   borderRadius: '12px',
-                  background: input.trim() && !loading ? 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)' : 'rgba(255, 255, 255, 0.1)',
+                  background: input.trim() && !loading ? 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)' : 'var(--bg-elevated)',
                   color: '#ffffff',
                   border: 'none',
                   cursor: input.trim() && !loading ? 'pointer' : 'not-allowed',
                   fontWeight: 700,
                   fontSize: '0.88rem',
-                  transition: 'opacity 0.2s ease',
                   flexShrink: 0,
                 }}
               >
