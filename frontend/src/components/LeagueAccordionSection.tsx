@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
+import { getLeagueUrl } from '@/lib/slugs';
 import { Match, League } from '@/lib/types';
 import MatchCard from './MatchCard';
 
@@ -39,10 +41,16 @@ export default function LeagueAccordionSection({
             {league.flag || '⚽'}
           </span>
 
-          {/* League Title */}
-          <span className="footystats-league-title">
+          {/* League Title Link */}
+          <Link
+            href={getLeagueUrl(league.name, league.code)}
+            onClick={(e) => e.stopPropagation()}
+            className="footystats-league-title"
+            style={{ textDecoration: 'none', color: 'inherit' }}
+            title={`View ${league.name} Standings & Predictions`}
+          >
             {league.country ? `${league.country} - ` : ''}{league.name}
-          </span>
+          </Link>
 
           {/* Favorite star */}
           <button

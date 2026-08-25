@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { submitPrediction, fetchMyPredictionForMatch } from '@/lib/api';
 import { Match } from '@/lib/types';
-import { getMatchPredictionUrl } from '@/lib/slugs';
+import { getMatchPredictionUrl, getTeamUrl, getLeagueUrl } from '@/lib/slugs';
 import TacticalPitch, { LineupData } from './TacticalPitch';
 import PlayerStatsTable from './PlayerStatsTable';
 
@@ -1068,9 +1068,15 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
       >
         {/* Home Side: Team Name (right) + Form Badge */}
         <div className="fs-home-side">
-          <span className={`fs-team-name-home ${homeWin ? 'is-winner' : ''}`} title={HN}>
+          <Link
+            href={getTeamUrl(HN)}
+            onClick={(e) => e.stopPropagation()}
+            className={`fs-team-name-home ${homeWin ? 'is-winner' : ''}`}
+            title={`${HN} Team Profile`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
             {HN}
-          </span>
+          </Link>
           <span className={`fs-ppg-badge ${getFormBadgeColor(homePpg)}`}>
             {homePpg}
           </span>
@@ -1091,7 +1097,15 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
           ) : (
             <>
               <span className="fs-center-time">{dateTime.time}</span>
-              <span className="fs-center-sub">Stats</span>
+              <Link
+                href={getMatchPredictionUrl(match)}
+                onClick={(e) => e.stopPropagation()}
+                className="fs-center-sub"
+                title={`${HN} vs ${AN} Prediction`}
+                style={{ textDecoration: 'none' }}
+              >
+                Stats 🎯
+              </Link>
             </>
           )}
         </div>
@@ -1101,9 +1115,15 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
           <span className={`fs-ppg-badge ${getFormBadgeColor(awayPpg)}`}>
             {awayPpg}
           </span>
-          <span className={`fs-team-name-away ${awayWin ? 'is-winner' : ''}`} title={AN}>
+          <Link
+            href={getTeamUrl(AN)}
+            onClick={(e) => e.stopPropagation()}
+            className={`fs-team-name-away ${awayWin ? 'is-winner' : ''}`}
+            title={`${AN} Team Profile`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
             {AN}
-          </span>
+          </Link>
         </div>
       </div>
 
@@ -1179,8 +1199,9 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
                   borderRadius: '6px',
                   border: '1px solid rgba(56,189,248,0.25)',
                 }}
+                title={`${HN} vs ${AN} Full Prediction & Odds`}
               >
-                🔗 Match Preview &amp; Odds →
+                🎯 {HN} vs {AN} Prediction &amp; Odds →
               </Link>
             </div>
           </div>
