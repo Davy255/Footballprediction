@@ -9,7 +9,7 @@ import { getRelatedMatchesForMatch } from '@/lib/relatedMatches';
 import MatchCard from '@/components/MatchCard';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getMatchConfidence } from '@/lib/confidence';
-import { calculateMarketOddsAnalysis } from '@/lib/odds';
+import { calculateMarketOddsAnalysis, calculateValueEdgeAnalysis } from '@/lib/odds';
 import { Match } from '@/lib/types';
 
 interface PageProps {
@@ -124,6 +124,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
   const confidence = getMatchConfidence(match);
   const explanation = generatePredictionFactors(match);
   const oddsAnalysis = calculateMarketOddsAnalysis(match);
+  const valueAnalysis = calculateValueEdgeAnalysis({ homePct: homeProb, drawPct: drawProb, awayPct: awayProb }, oddsAnalysis, { home: HN, away: AN });
   const relatedMatches = await getRelatedMatchesForMatch(match, 6);
 
   const formattedDate = match.utc_date
@@ -561,7 +562,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
               </span>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem', marginBottom: '1.25rem' }}>
               <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
                 <div style={{ fontSize: '0.74rem', color: '#94a3b8', marginBottom: '0.2rem' }}>{HN} Win</div>
                 <div style={{ fontSize: '1.3rem', fontWeight: 900, color: '#60a5fa' }}>@{oddsAnalysis.rawHomeOdds}</div>
@@ -586,6 +587,66 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                 </div>
               </div>
             </div>
+
+            {/* Model-vs-Market Potential Value Edge Table */}
+            {valueAnalysis.hasValidComparison && (
+              <div style={{
+                background: 'rgba(0,0,0,0.25)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                borderRadius: '10px',
+                padding: '1rem',
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem', flexWrap: 'wrap', gap: '0.4rem' }}>
+                  <div style={{ fontSize: '0.80rem', fontWeight: 800, color: '#38bdf8', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                    <span>⚖️</span> Potential Model Edge Analysis (Model % vs Market %)
+                  </div>
+                  {valueAnalysis.bestEdgeOutcome && (
+                    <span style={{
+                      background: 'rgba(34,197,94,0.15)',
+                      border: '1px solid rgba(34,197,94,0.3)',
+                      color: '#86efac',
+                      fontSize: '0.72rem',
+                      fontWeight: 800,
+                      padding: '0.15rem 0.5rem',
+                      borderRadius: '6px',
+                    }}>
+                      Primary Edge: {valueAnalysis.bestEdgeOutcome.label} (+{valueAnalysis.bestEdgeOutcome.modelEdgePp} pp)
+                    </span>
+                  )}
+                </div>
+
+                <div style={{ overflowX: 'auto' }}>
+                  <table style={{ width: '100%', fontSize: '0.78rem', borderCollapse: 'collapse', textAlign: 'left' }}>
+                    <thead>
+                      <tr style={{ color: '#94a3b8', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                        <th style={{ padding: '0.4rem 0.6rem' }}>Outcome</th>
+                        <th style={{ padding: '0.4rem 0.6rem' }}>Model Prob</th>
+                        <th style={{ padding: '0.4rem 0.6rem' }}>Market Norm %</th>
+                        <th style={{ padding: '0.4rem 0.6rem' }}>Market Odds</th>
+                        <th style={{ padding: '0.4rem 0.6rem', textAlign: 'right' }}>Potential Model Edge</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[valueAnalysis.homeValue, valueAnalysis.drawValue, valueAnalysis.awayValue].filter(Boolean).map((val: any) => (
+                        <tr key={val.outcome} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                          <td style={{ padding: '0.45rem 0.6rem', fontWeight: 700, color: '#f8fafc' }}>{val.label}</td>
+                          <td style={{ padding: '0.45rem 0.6rem', color: '#93c5fd', fontWeight: 700 }}>{val.modelProbPct}%</td>
+                          <td style={{ padding: '0.45rem 0.6rem', color: '#cbd5e1' }}>{val.marketNormalizedProbPct}%</td>
+                          <td style={{ padding: '0.45rem 0.6rem', color: '#cbd5e1' }}>@{val.decimalOdds}</td>
+                          <td style={{ padding: '0.45rem 0.6rem', textAlign: 'right', fontWeight: 800, color: val.modelEdgePp > 0 ? '#4ade80' : val.modelEdgePp < 0 ? '#f87171' : '#94a3b8' }}>
+                            {val.modelEdgePp > 0 ? `+${val.modelEdgePp} pp` : `${val.modelEdgePp} pp`}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div style={{ fontSize: '0.70rem', color: '#94a3b8', marginTop: '0.6rem', lineHeight: 1.4 }}>
+                  ℹ️ <strong>Methodology Note:</strong> Potential Model Edge reflects mathematical variance between FootballPredict&apos;s objective statistical probability and margin-normalized bookmaker market pricing. It is an analytical reference and does not guarantee match results or betting profit.
+                </div>
+              </div>
+            )}
           </div>
         )}
 

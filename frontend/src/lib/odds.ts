@@ -98,3 +98,89 @@ export function calculateMarketOddsAnalysis(match: {
     dc12Odds: match.odds_dc_12 && Number(match.odds_dc_12) > 1.0 ? Number(Number(match.odds_dc_12).toFixed(2)) : undefined,
   };
 }
+
+
+export interface ValueOutcomeAnalysis {
+  outcome: 'HOME_TEAM' | 'DRAW' | 'AWAY_TEAM';
+  label: string;
+  modelProbPct: number;
+  marketNormalizedProbPct: number;
+  decimalOdds: number;
+  modelEdgePp: number; // e.g. +8.5 percentage points
+  expectedValuePct: number; // e.g. +14.2% EV
+  isPositiveEdge: boolean;
+}
+
+export interface ValueEdgeAnalysis {
+  hasValidComparison: boolean;
+  homeValue?: ValueOutcomeAnalysis;
+  drawValue?: ValueOutcomeAnalysis;
+  awayValue?: ValueOutcomeAnalysis;
+  bestEdgeOutcome?: ValueOutcomeAnalysis;
+}
+
+/**
+ * Calculates deterministic model-vs-market edge and mathematical Expected Value (EV).
+ *
+ * Formulae:
+ * - Model Edge (pp) = Model Probability (%) - Normalized Market Implied Probability (%)
+ * - Expected Value (EV %) = ((Model Probability Decimal * Decimal Odds) - 1) * 100
+ *
+ * NOTE: Model Edge is a statistical discrepancy indicator and NEVER guarantees betting profit.
+ */
+export function calculateValueEdgeAnalysis(
+  modelProbs: { homePct: number; drawPct: number; awayPct: number },
+  oddsAnalysis: MarketOddsAnalysis,
+  teamNames: { home: string; away: string }
+): ValueEdgeAnalysis {
+  if (
+    !oddsAnalysis.hasOdds ||
+    oddsAnalysis.normalizedHomeImpliedPct == null ||
+    oddsAnalysis.normalizedDrawImpliedPct == null ||
+    oddsAnalysis.normalizedAwayImpliedPct == null ||
+    !oddsAnalysis.rawHomeOdds ||
+    !oddsAnalysis.rawDrawOdds ||
+    !oddsAnalysis.rawAwayOdds
+  ) {
+    return { hasValidComparison: false };
+  }
+
+  const createOutcome = (
+    outcome: 'HOME_TEAM' | 'DRAW' | 'AWAY_TEAM',
+    label: string,
+    modelPct: number,
+    marketNormPct: number,
+    odds: number
+  ): ValueOutcomeAnalysis => {
+    const edgePp = Number((modelPct - marketNormPct).toFixed(1));
+    const modelProbDecimal = modelPct / 100;
+    const evPct = Number((((modelProbDecimal * odds) - 1) * 100).toFixed(1));
+
+    return {
+      outcome,
+      label,
+      modelProbPct: modelPct,
+      marketNormalizedProbPct: marketNormPct,
+      decimalOdds: odds,
+      modelEdgePp: edgePp,
+      expectedValuePct: evPct,
+      isPositiveEdge: edgePp > 0 && evPct > 0,
+    };
+  };
+
+  const homeVal = createOutcome('HOME_TEAM', `${teamNames.home} Win`, modelProbs.homePct, oddsAnalysis.normalizedHomeImpliedPct, oddsAnalysis.rawHomeOdds);
+  const drawVal = createOutcome('DRAW', 'Draw', modelProbs.drawPct, oddsAnalysis.normalizedDrawImpliedPct, oddsAnalysis.rawDrawOdds);
+  const awayVal = createOutcome('AWAY_TEAM', `${teamNames.away} Win`, modelProbs.awayPct, oddsAnalysis.normalizedAwayImpliedPct, oddsAnalysis.rawAwayOdds);
+
+  const all = [homeVal, drawVal, awayVal];
+  all.sort((a, b) => b.modelEdgePp - a.modelEdgePp);
+  const bestEdge = all[0].modelEdgePp > 0 ? all[0] : undefined;
+
+  return {
+    hasValidComparison: true,
+    homeValue: homeVal,
+    drawValue: drawVal,
+    awayValue: awayVal,
+    bestEdgeOutcome: bestEdge,
+  };
+}
