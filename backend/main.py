@@ -109,25 +109,57 @@ async def lifespan(app: FastAPI):
     logger.info("Database ready")
 
     # Schedule background jobs
+    # Bounded Background Jobs with concurrency lock (max_instances=1)
     scheduler.add_job(
         sync_all_competitions_full_season,
         "interval",
         hours=6,
         id="sync_full_season",
+        max_instances=1,
+        coalesce=True,
+        misfire_grace_time=120,
         next_run_time=datetime.now(),
     )
     scheduler.add_job(
         sync_live_matches_from_api,
         "interval",
-        seconds=30,
+        seconds=60,
         id="sync_live_api",
+        max_instances=1,
+        coalesce=True,
+        misfire_grace_time=30,
         next_run_time=datetime.now(),
     )
-    scheduler.add_job(auto_manage_live_matches, "interval", seconds=30, id="live_poll")
-    scheduler.add_job(score_finished_predictions, "interval", hours=1, id="score_preds")
+    scheduler.add_job(
+        auto_manage_live_matches,
+        "interval",
+        seconds=30,
+        id="live_poll",
+        max_instances=1,
+        coalesce=True,
+        misfire_grace_time=15,
+    )
+    scheduler.add_job(
+        score_finished_predictions,
+        "interval",
+        hours=1,
+        id="score_preds",
+        max_instances=1,
+        coalesce=True,
+        misfire_grace_time=300,
+    )
     
     from app.services.email_service import dispatch_daily_reminders_to_all_users
-    scheduler.add_job(dispatch_daily_reminders_to_all_users, "cron", hour=8, minute=0, id="daily_match_reminders")
+    scheduler.add_job(
+        dispatch_daily_reminders_to_all_users,
+        "cron",
+        hour=8,
+        minute=0,
+        id="daily_match_reminders",
+        max_instances=1,
+        coalesce=True,
+        misfire_grace_time=600,
+    )
     scheduler.start()
     logger.info("Scheduler started with daily match reminders job")
 
