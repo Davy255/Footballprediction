@@ -145,6 +145,19 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+
+# Request Performance & Diagnostic Logging Middleware
+@app.middleware("http")
+async def log_requests_performance(request: Request, call_next):
+    import time
+    start_time = time.time()
+    response = await call_next(request)
+    duration_ms = round((time.time() - start_time) * 1000, 2)
+    # Log slow requests (>500ms) or any server/client errors (status >= 400)
+    if request.url.path not in ("/health", "/") and (duration_ms > 500 or response.status_code >= 400):
+        logger.info(f"⚡ [{request.method}] {request.url.path} -> {response.status_code} ({duration_ms}ms)")
+    return response
+
 # OWASP Security Headers Middleware
 @app.middleware("http")
 async def add_security_headers(request: Request, call_next):

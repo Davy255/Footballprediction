@@ -332,3 +332,66 @@ def get_email_config(
         ] if sender_warning else ["✅ Email configuration looks correct."]
     }
 
+
+
+@router.get("/system-metrics")
+def get_system_metrics(
+    db: Session = Depends(get_db),
+    _=Depends(get_current_admin),
+):
+    """
+    Production System Observability Probe:
+    Reports memory RSS consumption, cache capacities, and database connection metrics.
+    """
+    import sys
+    from datetime import datetime, timezone
+    from app.core.cache import feed_cache, league_cache, standings_cache, prediction_mem_cache
+    from sqlalchemy import text
+
+    # Process Memory
+    rss_mb = None
+    vms_mb = None
+    num_threads = None
+    try:
+        import psutil
+        process = psutil.Process(os.getpid())
+        mem_info = process.memory_info()
+        rss_mb = round(mem_info.rss / (1024 * 1024), 2)
+        vms_mb = round(mem_info.vms / (1024 * 1024), 2)
+        num_threads = process.num_threads()
+    except Exception:
+        pass
+
+    # Database Probe
+    try:
+        db.execute(text("SELECT 1"))
+        db_connected = True
+    except Exception:
+        db_connected = False
+
+    total_users = db.query(User).count()
+    total_matches = db.query(Match).count()
+    total_predictions = db.query(Prediction).count()
+
+    return {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "process": {
+            "pid": os.getpid(),
+            "python_version": sys.version.split()[0],
+            "memory_rss_mb": rss_mb,
+            "memory_vms_mb": vms_mb,
+            "num_threads": num_threads,
+        },
+        "bounded_cache": {
+            "feed_cache_entries": feed_cache.size(),
+            "league_cache_entries": league_cache.size(),
+            "standings_cache_entries": standings_cache.size(),
+            "prediction_mem_cache_entries": prediction_mem_cache.size(),
+        },
+        "database": {
+            "connected": db_connected,
+            "total_users": total_users,
+            "total_matches": total_matches,
+            "total_predictions": total_predictions,
+        },
+    }
