@@ -9,6 +9,7 @@ import { getRelatedMatchesForMatch } from '@/lib/relatedMatches';
 import MatchCard from '@/components/MatchCard';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getMatchConfidence } from '@/lib/confidence';
+import { calculateMarketOddsAnalysis } from '@/lib/odds';
 import { Match } from '@/lib/types';
 
 interface PageProps {
@@ -122,6 +123,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
   const analysisContent = generateMatchAnalysisText(match);
   const confidence = getMatchConfidence(match);
   const explanation = generatePredictionFactors(match);
+  const oddsAnalysis = calculateMarketOddsAnalysis(match);
   const relatedMatches = await getRelatedMatchesForMatch(match, 6);
 
   const formattedDate = match.utc_date
@@ -541,6 +543,52 @@ export default async function MatchPredictionPage({ params }: PageProps) {
           </span>
         </div>
 
+        {/* 1X2 Market Odds vs Model Comparison Banner */}
+        {oddsAnalysis.hasOdds && (
+          <div style={{
+            background: 'rgba(255,255,255,0.02)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: '14px',
+            padding: '1.25rem',
+            marginBottom: '1.25rem',
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+              <div style={{ fontSize: '0.86rem', fontWeight: 800, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <span>🎯</span> 1X2 Market Decimal Odds &amp; Margin-Normalized Probabilities
+              </div>
+              <span style={{ fontSize: '0.72rem', color: '#94a3b8' }}>
+                Market Overround: {oddsAnalysis.overroundPct}% ({oddsAnalysis.bookmakerMarginPct}% bookmaker margin)
+              </span>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem' }}>
+              <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <div style={{ fontSize: '0.74rem', color: '#94a3b8', marginBottom: '0.2rem' }}>{HN} Win</div>
+                <div style={{ fontSize: '1.3rem', fontWeight: 900, color: '#60a5fa' }}>@{oddsAnalysis.rawHomeOdds}</div>
+                <div style={{ fontSize: '0.74rem', color: '#cbd5e1', marginTop: '0.25rem' }}>
+                  Normalized Implied: <strong>{oddsAnalysis.normalizedHomeImpliedPct}%</strong>
+                </div>
+              </div>
+
+              <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <div style={{ fontSize: '0.74rem', color: '#94a3b8', marginBottom: '0.2rem' }}>Draw</div>
+                <div style={{ fontSize: '1.3rem', fontWeight: 900, color: '#94a3b8' }}>@{oddsAnalysis.rawDrawOdds}</div>
+                <div style={{ fontSize: '0.74rem', color: '#cbd5e1', marginTop: '0.25rem' }}>
+                  Normalized Implied: <strong>{oddsAnalysis.normalizedDrawImpliedPct}%</strong>
+                </div>
+              </div>
+
+              <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <div style={{ fontSize: '0.74rem', color: '#94a3b8', marginBottom: '0.2rem' }}>{AN} Win</div>
+                <div style={{ fontSize: '1.3rem', fontWeight: 900, color: '#a78bfa' }}>@{oddsAnalysis.rawAwayOdds}</div>
+                <div style={{ fontSize: '0.74rem', color: '#cbd5e1', marginTop: '0.25rem' }}>
+                  Normalized Implied: <strong>{oddsAnalysis.normalizedAwayImpliedPct}%</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* 3-Column Grid for Goal Markets, Double Chance, and Form Metrics */}
         <div style={{
           display: 'grid',
@@ -566,7 +614,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                     {predictedHomeScore + predictedAwayScore >= 3 ? '58%' : '42%'}
                   </span>
                   <span style={{ color: '#94a3b8', fontSize: '0.74rem' }}>
-                    @{match.odds_over25 ? match.odds_over25.toFixed(2) : (predictedHomeScore + predictedAwayScore >= 3 ? '1.72' : '2.38')}
+                    @{oddsAnalysis.over25Odds || (predictedHomeScore + predictedAwayScore >= 3 ? '1.72' : '2.38')}
                   </span>
                 </div>
               </div>
@@ -578,7 +626,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                     {predictedHomeScore + predictedAwayScore < 3 ? '58%' : '42%'}
                   </span>
                   <span style={{ color: '#94a3b8', fontSize: '0.74rem' }}>
-                    @{match.odds_under25 ? match.odds_under25.toFixed(2) : (predictedHomeScore + predictedAwayScore < 3 ? '1.72' : '2.38')}
+                    @{oddsAnalysis.under25Odds || (predictedHomeScore + predictedAwayScore < 3 ? '1.72' : '2.38')}
                   </span>
                 </div>
               </div>
@@ -590,7 +638,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                     {predictedHomeScore > 0 && predictedAwayScore > 0 ? '56%' : '44%'}
                   </span>
                   <span style={{ color: '#94a3b8', fontSize: '0.74rem' }}>
-                    @{match.odds_btts_yes ? match.odds_btts_yes.toFixed(2) : (predictedHomeScore > 0 && predictedAwayScore > 0 ? '1.78' : '2.25')}
+                    @{oddsAnalysis.bttsYesOdds || (predictedHomeScore > 0 && predictedAwayScore > 0 ? '1.78' : '2.25')}
                   </span>
                 </div>
               </div>
@@ -602,7 +650,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                     {predictedHomeScore === 0 || predictedAwayScore === 0 ? '56%' : '44%'}
                   </span>
                   <span style={{ color: '#94a3b8', fontSize: '0.74rem' }}>
-                    @{match.odds_btts_no ? match.odds_btts_no.toFixed(2) : (predictedHomeScore === 0 || predictedAwayScore === 0 ? '1.78' : '2.25')}
+                    @{oddsAnalysis.bttsNoOdds || (predictedHomeScore === 0 || predictedAwayScore === 0 ? '1.78' : '2.25')}
                   </span>
                 </div>
               </div>
@@ -628,7 +676,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                     {Math.min(95, homeProb + drawProb)}%
                   </span>
                   <span style={{ color: '#94a3b8', fontSize: '0.74rem' }}>
-                    @{match.odds_dc_1x ? match.odds_dc_1x.toFixed(2) : (homeProb + drawProb > 0 ? (100 / Math.min(95, homeProb + drawProb)).toFixed(2) : '1.35')}
+                    @{oddsAnalysis.dc1xOdds || (homeProb + drawProb > 0 ? (100 / Math.min(95, homeProb + drawProb)).toFixed(2) : '1.35')}
                   </span>
                 </div>
               </div>
@@ -640,7 +688,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                     {Math.min(95, awayProb + drawProb)}%
                   </span>
                   <span style={{ color: '#94a3b8', fontSize: '0.74rem' }}>
-                    @{match.odds_dc_x2 ? match.odds_dc_x2.toFixed(2) : (awayProb + drawProb > 0 ? (100 / Math.min(95, awayProb + drawProb)).toFixed(2) : '1.45')}
+                    @{oddsAnalysis.dcx2Odds || (awayProb + drawProb > 0 ? (100 / Math.min(95, awayProb + drawProb)).toFixed(2) : '1.45')}
                   </span>
                 </div>
               </div>
@@ -652,7 +700,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                     {Math.min(95, homeProb + awayProb)}%
                   </span>
                   <span style={{ color: '#94a3b8', fontSize: '0.74rem' }}>
-                    @{match.odds_dc_12 ? match.odds_dc_12.toFixed(2) : (homeProb + awayProb > 0 ? (100 / Math.min(95, homeProb + awayProb)).toFixed(2) : '1.25')}
+                    @{oddsAnalysis.dc12Odds || (homeProb + awayProb > 0 ? (100 / Math.min(95, homeProb + awayProb)).toFixed(2) : '1.25')}
                   </span>
                 </div>
               </div>
