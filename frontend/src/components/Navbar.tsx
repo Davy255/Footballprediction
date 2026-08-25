@@ -30,7 +30,7 @@ export default function Navbar() {
   const userMenuRef = useRef<HTMLDivElement>(null);
   const moreMenuRef = useRef<HTMLDivElement>(null);
 
-  const initials = user?.username ? user.username.slice(0, 2).toUpperCase() : 'U';
+  const initials = user?.username ? user.username.slice(0, 2).toUpperCase() : '';
 
   // Keyboard shortcut (Ctrl+K or Cmd+K) to open Search
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function Navbar() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            height: '60px',
+            height: '58px',
             gap: '0.75rem',
             padding: '0 1rem',
             width: '100%',
@@ -109,7 +109,7 @@ export default function Navbar() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.45rem',
+              gap: '0.4rem',
               textDecoration: 'none',
               flexShrink: 0,
             }}
@@ -182,49 +182,49 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Clean Right Cluster: User Profile + More Options Menu Button */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
-            {/* User Profile / Auth State */}
+          {/* Right Action Cluster: Pure Icon Buttons (Emoji User + Menu) */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexShrink: 0 }}>
+            {/* User Profile / Auth State Emoji Button */}
             {user ? (
               <div style={{ position: 'relative' }} ref={userMenuRef}>
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.4rem',
+                    width: '36px',
+                    height: '36px',
+                    borderRadius: '50%',
                     background: 'var(--bg-elevated)',
                     border: '1px solid var(--border-color)',
-                    padding: '0.25rem 0.6rem',
-                    borderRadius: '20px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     cursor: 'pointer',
-                    height: '36px',
+                    padding: 0,
                   }}
                   aria-expanded={userDropdownOpen}
-                  aria-label="User profile menu"
+                  aria-label="User account menu"
+                  title={user.username}
                 >
-                  <div
-                    style={{
-                      width: '26px',
-                      height: '26px',
-                      borderRadius: '50%',
-                      background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
-                      color: '#ffffff',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontWeight: 800,
-                      fontSize: '0.72rem',
-                    }}
-                  >
-                    {initials}
-                  </div>
-                  <div style={{ textAlign: 'left', lineHeight: 1.1 }} className="hidden sm:block">
-                    <div style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                      {user.username}
+                  {initials ? (
+                    <div
+                      style={{
+                        width: '28px',
+                        height: '28px',
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+                        color: '#ffffff',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontWeight: 800,
+                        fontSize: '0.74rem',
+                      }}
+                    >
+                      {initials}
                     </div>
-                  </div>
-                  <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>▾</span>
+                  ) : (
+                    <span style={{ fontSize: '1.15rem' }}>👤</span>
+                  )}
                 </button>
 
                 {/* User Dropdown Menu */}
@@ -315,49 +315,51 @@ export default function Navbar() {
                 )}
               </div>
             ) : (
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Link
-                  href="/login"
-                  className="fp-btn-primary"
-                  style={{
-                    padding: '0 0.85rem',
-                    height: '36px',
-                    fontSize: '0.82rem',
-                    borderRadius: '8px',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  Sign In
-                </Link>
-              </div>
+              <Link
+                href="/login"
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '50%',
+                  background: 'var(--bg-elevated)',
+                  border: '1px solid var(--border-color)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.15rem',
+                  textDecoration: 'none',
+                  color: 'var(--text-primary)',
+                }}
+                title="Sign In / Register"
+                aria-label="Sign In"
+              >
+                👤
+              </Link>
             )}
 
-            {/* "More Options" Menu Button (Always fully visible, comfortable and responsive) */}
+            {/* Icon-Only "☰" Menu Button */}
             <button
               onClick={() => setMoreMenuOpen(!moreMenuOpen)}
               className="fp-more-options-btn"
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.4rem',
+                width: '36px',
+                height: '36px',
+                borderRadius: '8px',
                 background: 'var(--bg-elevated)',
                 border: '1px solid var(--border-color)',
                 color: 'var(--text-primary)',
-                padding: '0 0.75rem',
-                height: '36px',
-                borderRadius: '8px',
-                fontSize: '0.84rem',
-                fontWeight: 700,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1.25rem',
                 cursor: 'pointer',
-                transition: 'all 0.15s ease',
+                padding: 0,
                 flexShrink: 0,
               }}
-              aria-label="Open More Options Menu"
+              aria-label="Toggle Options Menu"
               aria-expanded={moreMenuOpen}
             >
-              <span style={{ fontSize: '1.1rem' }}>☰</span>
-              <span className="hidden sm:inline">Options</span>
+              ☰
             </button>
           </div>
         </div>
@@ -373,13 +375,13 @@ export default function Navbar() {
               display: 'flex',
               flexDirection: 'column',
               gap: '1.2rem',
-              maxHeight: 'calc(100vh - 60px)',
+              maxHeight: 'calc(100vh - 58px)',
               overflowY: 'auto',
               boxShadow: 'var(--shadow-card-hover)',
             }}
           >
             {/* Top Quick Actions Row: Search + Theme Toggle + Coach AI */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.5rem' }}>
               {/* 1. Quick Search Trigger */}
               <button
                 onClick={() => { setMoreMenuOpen(false); setShowSearch(true); }}
@@ -452,7 +454,7 @@ export default function Navbar() {
               <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
                 Predictions &amp; Fixtures
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.45rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.45rem' }}>
                 {primaryNavLinks.slice(0, 4).map((link) => (
                   <Link
                     key={link.href}
@@ -483,7 +485,7 @@ export default function Navbar() {
               <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
                 Intelligence &amp; Data
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.45rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.45rem' }}>
                 {primaryNavLinks.slice(4).map((link) => (
                   <Link
                     key={link.href}
@@ -533,7 +535,7 @@ export default function Navbar() {
               <button
                 onClick={() => { setMoreMenuOpen(false); setShowGuide(true); }}
                 className="fp-btn-secondary"
-                style={{ flex: '1 1 140px', minHeight: '44px', fontSize: '0.84rem' }}
+                style={{ flex: '1 1 130px', minHeight: '44px', fontSize: '0.84rem' }}
               >
                 📖 Rules &amp; Guide
               </button>
@@ -541,7 +543,7 @@ export default function Navbar() {
                 href="/pricing"
                 className="fp-btn-primary"
                 style={{
-                  flex: '1 1 140px',
+                  flex: '1 1 130px',
                   minHeight: '44px',
                   fontSize: '0.84rem',
                   background: 'linear-gradient(135deg, #d97706, #f59e0b)',

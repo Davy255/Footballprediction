@@ -2620,3 +2620,29 @@ div[id^="google-btn-container"] iframe {
   cursor: pointer !important;
   visibility: visible !important;
 }
+
+
+/* Guaranteed Fixed Positioning for Coach AI Widget */
+.chatbot-floating-container {
+  position: fixed !important;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important;
+  right: 16px !important;
+  z-index: 999999 !important;
+  display: block !important;
+  visibility: visible !important;
+  transform: translateZ(0) !important;
+  -webkit-transform: translateZ(0) !important;
+  contain: layout !important;
+}
+
+.chatbot-launcher-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+  padding: 0.6rem 1rem !important;
+  border-radius: 50px !important;
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.6), 0 0 16px rgba(124, 58, 237, 0.4) !important;
+  cursor: pointer !important;
+}

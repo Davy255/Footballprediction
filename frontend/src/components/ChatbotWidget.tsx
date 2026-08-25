@@ -171,41 +171,40 @@ export default function ChatbotWidget() {
 
   return (
     <>
-      {/* Floating Launcher Button (Fixed at bottom-right on all pages) */}
+      {/* Floating Launcher Button (Permanently fixed in frame on all viewports) */}
       {!isOpen && (
         <div
           className="chatbot-floating-container"
           style={{
             position: 'fixed',
-            bottom: '22px',
-            right: '20px',
+            bottom: '20px',
+            right: '16px',
             zIndex: 999999,
+            pointerEvents: 'auto',
           }}
         >
           <button
             onClick={() => setIsOpen(true)}
-            aria-label="Open Coach AI Football Supporter"
+            aria-label="Open Coach AI Match Supporter"
             className="chatbot-launcher-pill"
             style={{
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.65rem 1.15rem',
+              gap: '0.45rem',
+              padding: '0.6rem 1rem',
               borderRadius: '50px',
               background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
               color: '#ffffff',
               border: '1px solid rgba(255, 255, 255, 0.35)',
               cursor: 'pointer',
               fontWeight: 800,
-              fontSize: '0.88rem',
-              boxShadow: '0 8px 24px rgba(37, 99, 235, 0.6), 0 0 20px rgba(124, 58, 237, 0.4)',
-              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+              fontSize: '0.86rem',
+              boxShadow: '0 8px 24px rgba(37, 99, 235, 0.6), 0 0 16px rgba(124, 58, 237, 0.4)',
+              whiteSpace: 'nowrap',
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-2px) scale(1.04)')}
-            onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0) scale(1)')}
           >
             <span style={{ fontSize: '1.25rem', lineHeight: 1 }}>🤖</span>
-            <span style={{ fontWeight: 800 }}>Coach AI</span>
+            <span>Coach AI</span>
             <span
               style={{
                 width: '8px',
