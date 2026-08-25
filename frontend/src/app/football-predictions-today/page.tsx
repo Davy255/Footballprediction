@@ -262,6 +262,79 @@ export default async function FootballPredictionsTodayPage() {
         </div>
       )}
 
+            {/* Popular Competitions & Leagues Quick Navigation */}
+      <section style={{
+        background: '#111827',
+        border: '1px solid rgba(255,255,255,0.08)',
+        borderRadius: '16px',
+        padding: '1.5rem',
+        marginBottom: '2rem',
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <div>
+            <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 0.2rem 0', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              🏆 Explore Top Football Leagues &amp; Competitions
+            </h2>
+            <p style={{ margin: 0, fontSize: '0.84rem', color: '#94a3b8' }}>
+              Browse competition standings, team statistics, and upcoming fixture forecasts.
+            </p>
+          </div>
+          <Link
+            href="/leagues"
+            style={{ fontSize: '0.82rem', color: '#38bdf8', textDecoration: 'none', fontWeight: 700 }}
+          >
+            All Leagues Directory →
+          </Link>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.8rem' }}>
+          {Object.entries(leagueGroups).map(([code, group]) => {
+            const lg = group.league;
+            const lUrl = getLeagueUrl(lg.name, lg.code);
+            return (
+              <Link
+                key={code}
+                href={lUrl}
+                style={{
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  borderRadius: '10px',
+                  padding: '0.8rem 1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  textDecoration: 'none',
+                  color: '#f8fafc',
+                  transition: 'background 0.2s',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', overflow: 'hidden' }}>
+                  {lg.emblem ? (
+                    <img src={lg.emblem} alt={`${lg.name} Emblem`} style={{ width: '22px', height: '22px', objectFit: 'contain' }} />
+                  ) : (
+                    <span style={{ fontSize: '1.2rem' }}>{lg.flag || '🏆'}</span>
+                  )}
+                  <span style={{ fontSize: '0.86rem', fontWeight: 800, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {lg.name}
+                  </span>
+                </div>
+                <span style={{
+                  fontSize: '0.72rem',
+                  background: 'rgba(59,130,246,0.15)',
+                  color: '#93c5fd',
+                  padding: '0.2rem 0.5rem',
+                  borderRadius: '999px',
+                  fontWeight: 700,
+                  whiteSpace: 'nowrap',
+                }}>
+                  {group.matches.length} {group.matches.length === 1 ? 'Match' : 'Matches'}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
       {/* Main Grouped Matches Section */}
       {totalCount > 0 ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>

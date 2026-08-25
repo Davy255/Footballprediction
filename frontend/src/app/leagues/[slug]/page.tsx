@@ -526,6 +526,81 @@ export default async function LeaguePage({ params }: PageProps) {
             🎯 Today&apos;s Predictions
           </Link>
           <Link
+            href="/leagues/premier-league"
+            style={{
+              background: 'rgba(59,130,246,0.1)',
+              border: '1px solid rgba(59,130,246,0.25)',
+              color: '#93c5fd',
+              padding: '0.45rem 0.9rem',
+              borderRadius: '8px',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League
+          </Link>
+          <Link
+            href="/leagues/champions-league"
+            style={{
+              background: 'rgba(59,130,246,0.1)',
+              border: '1px solid rgba(59,130,246,0.25)',
+              color: '#93c5fd',
+              padding: '0.45rem 0.9rem',
+              borderRadius: '8px',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            ⭐ Champions League
+          </Link>
+          <Link
+            href="/leagues/la-liga"
+            style={{
+              background: 'rgba(59,130,246,0.1)',
+              border: '1px solid rgba(59,130,246,0.25)',
+              color: '#93c5fd',
+              padding: '0.45rem 0.9rem',
+              borderRadius: '8px',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            🇪🇸 La Liga
+          </Link>
+          <Link
+            href="/leagues/serie-a"
+            style={{
+              background: 'rgba(59,130,246,0.1)',
+              border: '1px solid rgba(59,130,246,0.25)',
+              color: '#93c5fd',
+              padding: '0.45rem 0.9rem',
+              borderRadius: '8px',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            🇮🇹 Serie A
+          </Link>
+          <Link
+            href="/leagues/bundesliga"
+            style={{
+              background: 'rgba(59,130,246,0.1)',
+              border: '1px solid rgba(59,130,246,0.25)',
+              color: '#93c5fd',
+              padding: '0.45rem 0.9rem',
+              borderRadius: '8px',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            🇩🇪 Bundesliga
+          </Link>
+          <Link
             href="/fixtures"
             style={{
               background: 'rgba(59,130,246,0.1)',
