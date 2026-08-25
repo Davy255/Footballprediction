@@ -12,21 +12,15 @@ from app.services.ml_predictor import predict_match, get_team_manager
 
 router = APIRouter(prefix="/api/matches", tags=["matches"])
 
-# High-Performance In-Memory Cache with TTL
-_cache_store: Dict[str, Tuple[float, Any]] = {}
-_PREDICTION_MEM_CACHE: Dict[Tuple[int, int], dict] = {}
+from app.core.cache import feed_cache, prediction_mem_cache
 
 
 def get_from_cache(key: str, ttl_seconds: float = 20.0) -> Optional[Any]:
-    if key in _cache_store:
-        timestamp, data = _cache_store[key]
-        if time.time() - timestamp < ttl_seconds:
-            return data
-    return None
+    return feed_cache.get(key)
 
 
 def set_in_cache(key: str, data: Any):
-    _cache_store[key] = (time.time(), data)
+    feed_cache.set(key, data, ttl=20.0)
 
 
 def ensure_match_predictions(matches: list[Match], db: Session):
@@ -36,12 +30,11 @@ def ensure_match_predictions(matches: list[Match], db: Session):
             continue
         try:
             if not m.prediction_description or '"analytics"' not in m.prediction_description:
-                pair_key = (m.home_team.id, m.away_team.id)
-                if pair_key in _PREDICTION_MEM_CACHE:
-                    pred = _PREDICTION_MEM_CACHE[pair_key]
-                else:
+                pair_key = f"{m.home_team.id}_{m.away_team.id}"
+                pred = prediction_mem_cache.get(pair_key)
+                if not pred:
                     pred = predict_match(m.home_team, m.away_team, db)
-                    _PREDICTION_MEM_CACHE[pair_key] = pred
+                    prediction_mem_cache.set(pair_key, pred, ttl=600.0)
 
                 m.ai_home_prob = pred["ai_home_prob"]
                 m.ai_draw_prob = pred["ai_draw_prob"]

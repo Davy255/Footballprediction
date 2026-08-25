@@ -1,46 +1,56 @@
 import time
 from typing import Optional, Dict, Any, Tuple
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 from app.core.database import get_db
+from app.core.cache import league_cache, standings_cache
 from app.models.match import League, Match, Team
 from app.schemas.schemas import LeagueOut, StandingsOut, StandingEntry, TeamOut
 from app.services import football_api
-import asyncio
 
 router = APIRouter(prefix="/api/leagues", tags=["leagues"])
 
-_leagues_cache: Dict[str, Tuple[float, Any]] = {}
-
 
 @router.get("/", response_model=list[LeagueOut])
-def get_leagues(db: Session = Depends(get_db)):
-    if "all_leagues" in _leagues_cache:
-        ts, data = _leagues_cache["all_leagues"]
-        if time.time() - ts < 60.0:  # Cache for 60 seconds
-            return data
+def get_leagues(response: Response, db: Session = Depends(get_db)):
+    cached = league_cache.get("all_leagues")
+    if cached is not None:
+        response.headers["Cache-Control"] = "public, max-age=60, s-maxage=120, stale-while-revalidate=300"
+        return cached
 
     res = db.query(League).filter(League.is_active == True).all()
-    _leagues_cache["all_leagues"] = (time.time(), res)
+    league_cache.set("all_leagues", res, ttl=180.0)
+    response.headers["Cache-Control"] = "public, max-age=60, s-maxage=120, stale-while-revalidate=300"
     return res
 
 
 @router.get("/{code}", response_model=LeagueOut)
 def get_league(code: str, db: Session = Depends(get_db)):
+    cached = league_cache.get(f"league_{code.upper()}")
+    if cached is not None:
+        return cached
+
     league = db.query(League).filter(League.code == code.upper()).first()
     if not league:
         raise HTTPException(status_code=404, detail="League not found")
+    league_cache.set(f"league_{code.upper()}", league, ttl=300.0)
     return league
 
 
 @router.get("/{code}/standings")
-def get_standings(code: str):
-    """Proxy standings from football-data.org."""
+async def get_standings(code: str, response: Response):
+    """Proxy standings with bounded in-memory caching."""
+    cache_key = f"standings_{code.upper()}"
+    cached = standings_cache.get(cache_key)
+    if cached is not None:
+        response.headers["Cache-Control"] = "public, max-age=120, s-maxage=300, stale-while-revalidate=600"
+        return cached
+
     try:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        data = loop.run_until_complete(football_api.get_standings(code.upper()))
-        loop.close()
+        data = await football_api.get_standings(code.upper())
+        if data and not data.get("error"):
+            standings_cache.set(cache_key, data, ttl=300.0)
+            response.headers["Cache-Control"] = "public, max-age=120, s-maxage=300, stale-while-revalidate=600"
         return data
     except Exception as e:
         raise HTTPException(status_code=502, detail=f"Could not fetch standings: {e}")
@@ -60,6 +70,6 @@ def get_league_matches(
 
     q = db.query(Match).filter(Match.league_id == league.id)
     if status:
-        q = q.filter(Match.status.in_(status.split(",")))
-
-    return q.order_by(Match.utc_date.desc()).offset(skip).limit(limit).all()
+        q = q.filter(Match.status == status)
+    q = q.order_by(Match.utc_date.asc())
+    return q.offset(skip).limit(min(limit, 50)).all()
