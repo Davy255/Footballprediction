@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { submitPrediction, fetchMyPredictionForMatch } from '@/lib/api';
 import { Match } from '@/lib/types';
+import { getMatchPredictionUrl } from '@/lib/slugs';
 import TacticalPitch, { LineupData } from './TacticalPitch';
 import PlayerStatsTable from './PlayerStatsTable';
 
@@ -1164,7 +1165,23 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
               <span>🏟️ {ws?.stadium || `${HN} Arena`}</span>
               <span>👥 {ws?.attendance || '42,000'}</span>
               <span>🟨 {ws?.referee || 'Match Official'}</span>
-              <span style={{ color: '#38bdf8', fontWeight: 600 }}>⚡ Real-time Updates</span>
+              <Link
+                href={getMatchPredictionUrl(match)}
+                style={{
+                  color: '#38bdf8',
+                  fontWeight: 800,
+                  textDecoration: 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  background: 'rgba(56,189,248,0.1)',
+                  padding: '2px 8px',
+                  borderRadius: '6px',
+                  border: '1px solid rgba(56,189,248,0.25)',
+                }}
+              >
+                🔗 Match Preview &amp; Odds →
+              </Link>
             </div>
           </div>
 
