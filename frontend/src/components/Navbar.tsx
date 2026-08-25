@@ -79,6 +79,7 @@ export default function Navbar() {
           WebkitBackdropFilter: 'blur(16px)',
           borderBottom: '1px solid var(--border-color)',
           transition: 'background-color 0.2s ease, border-color 0.2s ease',
+          width: '100%',
         }}
       >
         <div
@@ -87,31 +88,36 @@ export default function Navbar() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            height: '62px',
-            gap: '1rem',
+            height: '58px',
+            gap: '0.4rem',
+            padding: '0 0.75rem',
+            width: '100%',
+            maxWidth: '1320px',
+            margin: '0 auto',
           }}
         >
-          {/* Brand Logo */}
+          {/* Brand Logo (Responsive font & spacing) */}
           <Link
             href="/"
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.5rem',
+              gap: '0.35rem',
               textDecoration: 'none',
               flexShrink: 0,
             }}
           >
-            <span style={{ fontSize: '1.4rem', lineHeight: 1 }}>⚽</span>
+            <span style={{ fontSize: '1.25rem', lineHeight: 1 }}>⚽</span>
             <span
               style={{
                 fontFamily: 'Outfit, sans-serif',
-                fontSize: '1.25rem',
+                fontSize: '1.12rem',
                 fontWeight: 900,
                 letterSpacing: '-0.02em',
                 background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
+                whiteSpace: 'nowrap',
               }}
             >
               FootballPredict
@@ -136,16 +142,16 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   style={{
-                    padding: '0.45rem 0.75rem',
+                    padding: '0.42rem 0.65rem',
                     borderRadius: '8px',
-                    fontSize: '0.86rem',
+                    fontSize: '0.84rem',
                     fontWeight: isActive ? 700 : 500,
                     color: isActive ? 'var(--accent-blue)' : 'var(--text-secondary)',
                     background: isActive ? 'var(--accent-blue-bg)' : 'transparent',
                     textDecoration: 'none',
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '0.35rem',
+                    gap: '0.3rem',
                     transition: 'all 0.15s ease',
                     whiteSpace: 'nowrap',
                   }}
@@ -154,8 +160,8 @@ export default function Navbar() {
                   {link.isLive && (
                     <span
                       style={{
-                        width: '7px',
-                        height: '7px',
+                        width: '6px',
+                        height: '6px',
                         borderRadius: '50%',
                         background: '#ef4444',
                         display: 'inline-block',
@@ -169,19 +175,22 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Right Action Cluster */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+          {/* Right Action Cluster - Compact on mobile, ensuring full visibility */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexShrink: 0 }}>
             {/* Quick Search Button */}
             <button
               onClick={() => setShowSearch(true)}
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.45rem',
+                justifyContent: 'center',
+                gap: '0.35rem',
                 background: 'var(--bg-elevated)',
                 border: '1px solid var(--border-color)',
                 color: 'var(--text-secondary)',
-                padding: '0.4rem 0.75rem',
+                padding: '0 0.55rem',
+                height: '34px',
+                minWidth: '34px',
                 borderRadius: '8px',
                 fontSize: '0.8rem',
                 fontWeight: 600,
@@ -196,8 +205,8 @@ export default function Navbar() {
               <kbd
                 className="hidden lg:inline"
                 style={{
-                  fontSize: '0.68rem',
-                  padding: '0.1rem 0.3rem',
+                  fontSize: '0.65rem',
+                  padding: '0.1rem 0.25rem',
                   background: 'var(--bg-card)',
                   borderRadius: '4px',
                   border: '1px solid var(--border-color)',
@@ -208,19 +217,20 @@ export default function Navbar() {
               </kbd>
             </button>
 
-            {/* VIP Pro Badge */}
+            {/* VIP Pro Badge (Tablet / Desktop) */}
             <Link
               href="/pricing"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.3rem',
+                gap: '0.25rem',
                 background: 'linear-gradient(135deg, rgba(234,179,8,0.15) 0%, rgba(245,158,11,0.15) 100%)',
                 border: '1px solid rgba(245,158,11,0.3)',
                 color: 'var(--accent-amber)',
-                padding: '0.4rem 0.7rem',
+                padding: '0 0.55rem',
+                height: '34px',
                 borderRadius: '8px',
-                fontSize: '0.8rem',
+                fontSize: '0.78rem',
                 fontWeight: 800,
                 textDecoration: 'none',
                 transition: 'all 0.15s ease',
@@ -238,15 +248,17 @@ export default function Navbar() {
                 background: 'var(--bg-elevated)',
                 border: '1px solid var(--border-color)',
                 color: 'var(--text-primary)',
-                width: '36px',
-                height: '36px',
+                width: '34px',
+                height: '34px',
                 borderRadius: '8px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1rem',
+                fontSize: '0.9rem',
                 cursor: 'pointer',
                 transition: 'all 0.15s ease',
+                padding: 0,
+                flexShrink: 0,
               }}
               title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
               aria-label="Toggle Color Theme"
@@ -262,10 +274,11 @@ export default function Navbar() {
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.45rem',
+                    gap: '0.35rem',
                     background: 'var(--bg-elevated)',
                     border: '1px solid var(--border-color)',
-                    padding: '0.25rem 0.55rem',
+                    padding: '0 0.45rem',
+                    height: '34px',
                     borderRadius: '20px',
                     cursor: 'pointer',
                   }}
@@ -274,8 +287,8 @@ export default function Navbar() {
                 >
                   <div
                     style={{
-                      width: '28px',
-                      height: '28px',
+                      width: '24px',
+                      height: '24px',
                       borderRadius: '50%',
                       background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
                       color: '#ffffff',
@@ -283,20 +296,17 @@ export default function Navbar() {
                       alignItems: 'center',
                       justifyContent: 'center',
                       fontWeight: 800,
-                      fontSize: '0.75rem',
+                      fontSize: '0.72rem',
                     }}
                   >
                     {initials}
                   </div>
                   <div style={{ textAlign: 'left', lineHeight: 1.1 }} className="hidden sm:block">
-                    <div style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                    <div style={{ fontSize: '0.76rem', fontWeight: 800, color: 'var(--text-primary)' }}>
                       {user.username}
                     </div>
-                    <div style={{ fontSize: '0.68rem', color: 'var(--accent-green)', fontWeight: 700 }}>
-                      {user.total_points} pts
-                    </div>
                   </div>
-                  <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>▾</span>
+                  <span style={{ fontSize: '0.62rem', color: 'var(--text-muted)' }}>▾</span>
                 </button>
 
                 {/* User Dropdown Menu */}
@@ -407,14 +417,16 @@ export default function Navbar() {
                 )}
               </div>
             ) : (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Link
                   href="/login"
                   className="fp-btn-primary"
                   style={{
-                    padding: '0.35rem 0.8rem',
-                    fontSize: '0.8rem',
+                    padding: '0 0.6rem',
+                    height: '34px',
+                    fontSize: '0.78rem',
                     borderRadius: '8px',
+                    whiteSpace: 'nowrap',
                   }}
                 >
                   Sign In
@@ -427,8 +439,8 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="fp-hamburger-btn md:hidden"
               style={{
-                width: '36px',
-                height: '36px',
+                width: '34px',
+                height: '34px',
                 borderRadius: '8px',
                 background: 'var(--bg-elevated)',
                 border: '1px solid var(--border-color)',
@@ -440,13 +452,14 @@ export default function Navbar() {
                 gap: '4px',
                 cursor: 'pointer',
                 padding: 0,
+                flexShrink: 0,
               }}
               aria-label="Toggle navigation drawer"
               aria-expanded={mobileMenuOpen}
             >
-              <span style={{ width: '18px', height: '2px', background: 'var(--text-primary)', borderRadius: '2px', transition: '0.2s' }} />
-              <span style={{ width: '18px', height: '2px', background: 'var(--text-primary)', borderRadius: '2px', transition: '0.2s' }} />
-              <span style={{ width: '18px', height: '2px', background: 'var(--text-primary)', borderRadius: '2px', transition: '0.2s' }} />
+              <span style={{ width: '16px', height: '2px', background: 'var(--text-primary)', borderRadius: '2px', transition: '0.2s' }} />
+              <span style={{ width: '16px', height: '2px', background: 'var(--text-primary)', borderRadius: '2px', transition: '0.2s' }} />
+              <span style={{ width: '16px', height: '2px', background: 'var(--text-primary)', borderRadius: '2px', transition: '0.2s' }} />
             </button>
           </div>
         </div>
@@ -463,7 +476,7 @@ export default function Navbar() {
               display: 'flex',
               flexDirection: 'column',
               gap: '1rem',
-              maxHeight: 'calc(100vh - 64px)',
+              maxHeight: 'calc(100vh - 58px)',
               overflowY: 'auto',
               boxShadow: 'var(--shadow-card-hover)',
             }}

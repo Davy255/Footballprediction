@@ -172,44 +172,44 @@ export default function ChatbotWidget() {
 
   return (
     <>
-      {/* Floating Launcher Button (when closed) */}
+      {/* Floating Launcher Button (Always prominently visible on mobile & desktop) */}
       {!isOpen && (
         <div
           className="chatbot-floating-container"
           style={{
             position: 'fixed',
-            bottom: 'calc(16px + env(safe-area-inset-bottom, 0px))',
-            right: '16px',
-            zIndex: 99999,
-            transform: 'translateZ(0)',
-            WebkitTransform: 'translateZ(0)',
+            bottom: 'calc(18px + env(safe-area-inset-bottom, 0px))',
+            right: '18px',
+            zIndex: 999999,
+            display: 'block !important',
+            visibility: 'visible !important',
             pointerEvents: 'auto',
           }}
         >
           <button
             onClick={() => setIsOpen(true)}
-            aria-label="Open Coach AI"
+            aria-label="Open Coach AI Match Supporter"
             className="chatbot-launcher-pill"
             style={{
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.65rem 1.15rem',
+              gap: '0.45rem',
+              padding: '0.6rem 1.1rem',
               borderRadius: '50px',
               background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
               color: '#ffffff',
-              border: '1px solid rgba(255, 255, 255, 0.25)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
               cursor: 'pointer',
               fontWeight: 800,
-              fontSize: '0.88rem',
-              boxShadow: '0 8px 24px rgba(37, 99, 235, 0.5), 0 0 15px rgba(124, 58, 237, 0.35)',
+              fontSize: '0.86rem',
+              boxShadow: '0 8px 24px rgba(37, 99, 235, 0.6), 0 0 20px rgba(124, 58, 237, 0.4)',
               transition: 'transform 0.2s ease, box-shadow 0.2s ease',
             }}
             onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-2px) scale(1.04)')}
             onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0) scale(1)')}
           >
-            <span style={{ fontSize: '1.25rem' }}>🤖</span>
-            <span>Coach AI</span>
+            <span style={{ fontSize: '1.25rem', lineHeight: 1 }}>🤖</span>
+            <span style={{ fontWeight: 800 }}>Coach AI</span>
             <span
               style={{
                 width: '8px',
