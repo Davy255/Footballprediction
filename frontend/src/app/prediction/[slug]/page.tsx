@@ -2,7 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getMatchBySlug, getMatchPredictionUrl } from '@/lib/slugs';
+import { getMatchBySlug, getMatchPredictionUrl, getTeamUrl } from '@/lib/slugs';
 import { siteConfig, getCanonicalUrl } from '@/config/site';
 import MatchCard from '@/components/MatchCard';
 import { Match } from '@/lib/types';
@@ -230,7 +230,17 @@ export default async function MatchPredictionPage({ params }: PageProps) {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: '1rem', textAlign: 'center' }}>
           
           {/* Home Team */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+          <Link
+            href={getTeamUrl(HN)}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '0.5rem',
+              textDecoration: 'none',
+              transition: 'transform 0.2s',
+            }}
+          >
             {match.home_team?.crest && (
               <img
                 src={match.home_team.crest}
@@ -241,8 +251,8 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             <h1 style={{ margin: 0, fontSize: '1.35rem', fontWeight: 900, color: '#f8fafc' }}>
               {HN}
             </h1>
-            <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>Home Team</span>
-          </div>
+            <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>Home Team · View Profile →</span>
+          </Link>
 
           {/* Center: Match Status / Score / VS */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.3rem' }}>
@@ -278,7 +288,17 @@ export default async function MatchPredictionPage({ params }: PageProps) {
           </div>
 
           {/* Away Team */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+          <Link
+            href={getTeamUrl(AN)}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '0.5rem',
+              textDecoration: 'none',
+              transition: 'transform 0.2s',
+            }}
+          >
             {match.away_team?.crest && (
               <img
                 src={match.away_team.crest}
@@ -289,8 +309,8 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             <h2 style={{ margin: 0, fontSize: '1.35rem', fontWeight: 900, color: '#f8fafc' }}>
               {AN}
             </h2>
-            <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>Away Team</span>
-          </div>
+            <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>Away Team · View Profile →</span>
+          </Link>
         </div>
       </header>
 
