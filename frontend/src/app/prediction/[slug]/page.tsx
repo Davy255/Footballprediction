@@ -7,6 +7,7 @@ import { siteConfig, getCanonicalUrl } from '@/config/site';
 import { generateMatchAnalysisText } from '@/lib/contentGenerator';
 import { getRelatedMatchesForMatch } from '@/lib/relatedMatches';
 import MatchCard from '@/components/MatchCard';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import { Match } from '@/lib/types';
 
 interface PageProps {
@@ -176,32 +177,17 @@ export default async function MatchPredictionPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      {/* Breadcrumb Navigation */}
-      <nav aria-label="Breadcrumb" style={{ marginBottom: '1.2rem', fontSize: '0.85rem', color: '#94a3b8' }}>
-        <ol style={{ display: 'flex', gap: '0.5rem', listStyle: 'none', padding: 0, margin: 0, alignItems: 'center', flexWrap: 'wrap' }}>
-          <li>
-            <Link href="/" style={{ color: '#94a3b8', textDecoration: 'none' }}>
-              Home
-            </Link>
-          </li>
-          <li>›</li>
-          <li>
-            <Link href="/football-predictions-today" style={{ color: '#94a3b8', textDecoration: 'none' }}>
-              Predictions
-            </Link>
-          </li>
-          <li>›</li>
-          <li>
-            <Link href={getLeagueUrl(compName, compCode)} style={{ color: '#94a3b8', textDecoration: 'none' }}>
-              {compName}
-            </Link>
-          </li>
-          <li>›</li>
-          <li style={{ color: '#f8fafc', fontWeight: 700 }} aria-current="page">
-            {HN} vs {AN}
-          </li>
-        </ol>
-      </nav>
+      {/* Breadcrumb Navigation & Schema.org BreadcrumbList */}
+      <Breadcrumbs
+        items={[
+          { name: 'Home', url: '/' },
+          { name: 'Football Predictions', url: '/football-predictions-today' },
+          ...(compName && compName !== 'Football'
+            ? [{ name: compName, url: getLeagueUrl(compName, compCode) }]
+            : []),
+          { name: `${HN} vs ${AN} Prediction` },
+        ]}
+      />
 
       {/* Main Match Header & Summary Card */}
       <header style={{

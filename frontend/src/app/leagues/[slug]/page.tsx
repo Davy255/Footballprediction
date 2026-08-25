@@ -1,4 +1,5 @@
 import React from 'react';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -119,26 +120,14 @@ export default async function LeaguePage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      {/* Breadcrumb Navigation */}
-      <nav aria-label="Breadcrumb" style={{ marginBottom: '1.2rem', fontSize: '0.85rem', color: '#94a3b8' }}>
-        <ol style={{ display: 'flex', gap: '0.5rem', listStyle: 'none', padding: 0, margin: 0, alignItems: 'center', flexWrap: 'wrap' }}>
-          <li>
-            <Link href="/" style={{ color: '#94a3b8', textDecoration: 'none' }}>
-              Home
-            </Link>
-          </li>
-          <li>›</li>
-          <li>
-            <Link href="/leagues" style={{ color: '#94a3b8', textDecoration: 'none' }}>
-              Leagues
-            </Link>
-          </li>
-          <li>›</li>
-          <li style={{ color: '#f8fafc', fontWeight: 700 }} aria-current="page">
-            {LN}
-          </li>
-        </ol>
-      </nav>
+      {/* Breadcrumb Navigation & Schema.org BreadcrumbList */}
+      <Breadcrumbs
+        items={[
+          { name: 'Home', url: '/' },
+          { name: 'Leagues', url: '/leagues' },
+          { name: LN },
+        ]}
+      />
 
       {/* League Header Hero Banner */}
       <header style={{
