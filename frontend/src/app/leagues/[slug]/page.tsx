@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getLeagueDataBySlug, getMatchPredictionUrl, getTeamUrl } from '@/lib/slugs';
 import { siteConfig, getCanonicalUrl } from '@/config/site';
+import { generateLeagueOverviewText } from '@/lib/contentGenerator';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -86,9 +87,11 @@ export default async function LeaguePage({ params }: PageProps) {
     notFound();
   }
 
-  const { league, standings, teams, upcomingMatches, recentMatches } = data;
+  const { league, standings, upcomingMatches, recentMatches, teams } = data;
   const LN = league.name;
-  const country = league.country || 'Global';
+
+  // Generate deterministic content
+  const leagueText = generateLeagueOverviewText(league, standings, upcomingMatches.length, teams.length);
 
   // Schema.org Structured Data
   const structuredData = {
@@ -124,7 +127,7 @@ export default async function LeaguePage({ params }: PageProps) {
           <li>›</li>
           <li>
             <Link href="/leagues" style={{ color: '#94a3b8', textDecoration: 'none' }}>
-              Competitions
+              Leagues
             </Link>
           </li>
           <li>›</li>
@@ -151,12 +154,11 @@ export default async function LeaguePage({ params }: PageProps) {
           <img
             src={league.emblem}
             alt={`${LN} Emblem`}
-            style={{ width: '80px', height: '80px', objectFit: 'contain', filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.5))' }}
+            style={{ width: '84px', height: '84px', objectFit: 'contain', filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.5))' }}
           />
         ) : (
-          <div style={{ fontSize: '3.5rem' }}>{league.flag || '🏆'}</div>
+          <div style={{ fontSize: '3.5rem', lineHeight: 1 }}>{league.flag || '🏆'}</div>
         )}
-
         <div style={{ flex: 1, minWidth: '240px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap', marginBottom: '0.4rem' }}>
             <span style={{
@@ -168,13 +170,13 @@ export default async function LeaguePage({ params }: PageProps) {
               fontSize: '0.75rem',
               fontWeight: 800,
             }}>
-              🌍 {country}
+              {league.country || 'Global'}
             </span>
             {league.current_season && (
               <span style={{
-                background: 'rgba(168,85,247,0.15)',
-                border: '1px solid rgba(168,85,247,0.3)',
-                color: '#d8b4fe',
+                background: 'rgba(34,197,94,0.15)',
+                border: '1px solid rgba(34,197,94,0.3)',
+                color: '#86efac',
                 padding: '0.25rem 0.65rem',
                 borderRadius: '999px',
                 fontSize: '0.75rem',
@@ -192,6 +194,25 @@ export default async function LeaguePage({ params }: PageProps) {
           </p>
         </div>
       </header>
+
+      {/* Data-Driven League Overview & Context Section */}
+      <section style={{
+        background: '#111827',
+        border: '1px solid rgba(255,255,255,0.08)',
+        borderRadius: '16px',
+        padding: '1.5rem',
+        marginBottom: '2rem',
+      }}>
+        <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1rem 0' }}>
+          📖 {LN} Competition Overview &amp; Analysis
+        </h2>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', color: '#cbd5e1', fontSize: '0.92rem', lineHeight: 1.65 }}>
+          <p style={{ margin: 0 }}>{leagueText.overviewText}</p>
+          <p style={{ margin: 0 }}>{leagueText.standingsSummary}</p>
+          <p style={{ margin: 0 }}>{leagueText.fixturesSummary}</p>
+        </div>
+      </section>
 
       {/* Upcoming League Predictions Section */}
       <section style={{
@@ -249,112 +270,114 @@ export default async function LeaguePage({ params }: PageProps) {
                     gap: '0.8rem',
                   }}
                 >
-                  <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.74rem', color: '#94a3b8', marginBottom: '0.5rem' }}>
-                      <span>📅 {mDate}</span>
-                      {m.matchday && <span>Matchday {m.matchday}</span>}
-                    </div>
-
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 800, fontSize: '0.95rem', color: '#f8fafc' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                        {m.home_team?.crest && (
-                          <img src={m.home_team.crest} alt={HN} style={{ width: '20px', height: '20px', objectFit: 'contain' }} />
-                        )}
-                        <span>{HN}</span>
-                      </div>
-                      <span style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 900 }}>VS</span>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                        <span>{AN}</span>
-                        {m.away_team?.crest && (
-                          <img src={m.away_team.crest} alt={AN} style={{ width: '20px', height: '20px', objectFit: 'contain' }} />
-                        )}
-                      </div>
-                    </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#94a3b8' }}>
+                    <span>📅 {mDate}</span>
+                    {m.matchday && <span>MD {m.matchday}</span>}
                   </div>
 
-                  {/* Prediction Pill & Win Probs */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 800, fontSize: '0.92rem' }}>
+                    <Link href={getTeamUrl(HN)} style={{ color: '#f8fafc', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      {m.home_team?.crest && (
+                        <img src={m.home_team.crest} alt={HN} style={{ width: '20px', height: '20px', objectFit: 'contain' }} />
+                      )}
+                      <span>{HN}</span>
+                    </Link>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b' }}>VS</span>
+                    <Link href={getTeamUrl(AN)} style={{ color: '#f8fafc', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      <span>{AN}</span>
+                      {m.away_team?.crest && (
+                        <img src={m.away_team.crest} alt={AN} style={{ width: '20px', height: '20px', objectFit: 'contain' }} />
+                      )}
+                    </Link>
+                  </div>
+
+                  {/* Probabilities bar */}
                   <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '0.6rem' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.74rem', marginBottom: '0.3rem', fontWeight: 700 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', marginBottom: '0.3rem' }}>
                       <span style={{ color: '#60a5fa' }}>{HN} {hp}%</span>
                       <span style={{ color: '#94a3b8' }}>Draw {dp}%</span>
                       <span style={{ color: '#a78bfa' }}>{AN} {ap}%</span>
                     </div>
                     <div style={{ fontSize: '0.76rem', color: '#4ade80', fontWeight: 800, textAlign: 'center' }}>
-                      Projected Score: {HN} {predHome} – {predAway} {AN}
+                      Projected: {HN} {predHome} – {predAway} {AN}
                     </div>
                   </div>
 
                   <Link
                     href={getMatchPredictionUrl(m)}
                     style={{
-                      display: 'block',
                       textAlign: 'center',
-                      background: 'rgba(56,189,248,0.1)',
-                      border: '1px solid rgba(56,189,248,0.25)',
-                      color: '#38bdf8',
-                      padding: '0.45rem 0.8rem',
+                      background: 'rgba(59,130,246,0.1)',
+                      border: '1px solid rgba(59,130,246,0.25)',
+                      color: '#93c5fd',
+                      padding: '0.45rem',
                       borderRadius: '8px',
-                      fontSize: '0.80rem',
+                      fontSize: '0.78rem',
                       fontWeight: 800,
                       textDecoration: 'none',
                     }}
                   >
-                    View Match Analysis →
+                    Match Analysis &amp; Tips →
                   </Link>
                 </div>
               );
             })}
           </div>
         ) : (
-          <div style={{ color: '#94a3b8', fontSize: '0.90rem' }}>
-            No upcoming fixtures scheduled in the current matchday window for {LN}.
+          <div style={{ color: '#94a3b8', fontSize: '0.88rem' }}>
+            No upcoming fixtures currently scheduled for {LN}.
           </div>
         )}
       </section>
 
-      {/* Official Standings Table */}
-      <section style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
-        borderRadius: '16px',
-        padding: '1.5rem',
-        marginBottom: '2rem',
-      }}>
-        <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1rem 0' }}>
-          🏆 {LN} Standings Table
-        </h2>
+      {/* Standings Table Section */}
+      {standings.length > 0 && (
+        <section style={{
+          background: '#111827',
+          border: '1px solid rgba(255,255,255,0.08)',
+          borderRadius: '16px',
+          padding: '1.5rem',
+          marginBottom: '2rem',
+        }}>
+          <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1.2rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            🏆 {LN} Standings Table
+          </h2>
 
-        {standings.length > 0 ? (
           <div style={{ overflowX: 'auto' }}>
-            <table className="custom-table" style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <table className="custom-table" style={{ width: '100%' }}>
               <thead>
-                <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8', fontSize: '0.78rem' }}>
-                  <th style={{ padding: '0.6rem 0.4rem', width: '36px' }}>#</th>
-                  <th style={{ padding: '0.6rem 0.6rem' }}>Team</th>
-                  <th style={{ padding: '0.6rem 0.4rem', textAlign: 'center' }}>P</th>
-                  <th style={{ padding: '0.6rem 0.4rem', textAlign: 'center' }}>W</th>
-                  <th style={{ padding: '0.6rem 0.4rem', textAlign: 'center' }}>D</th>
-                  <th style={{ padding: '0.6rem 0.4rem', textAlign: 'center' }}>L</th>
-                  <th style={{ padding: '0.6rem 0.4rem', textAlign: 'center' }}>GD</th>
-                  <th style={{ padding: '0.6rem 0.6rem', textAlign: 'center', fontWeight: 800, color: '#38bdf8' }}>Pts</th>
+                <tr>
+                  <th style={{ width: '40px' }}>#</th>
+                  <th>Team</th>
+                  <th style={{ textAlign: 'center' }}>P</th>
+                  <th style={{ textAlign: 'center' }}>W</th>
+                  <th style={{ textAlign: 'center' }}>D</th>
+                  <th style={{ textAlign: 'center' }}>L</th>
+                  <th style={{ textAlign: 'center' }}>GD</th>
+                  <th style={{ textAlign: 'center', fontWeight: 700 }}>Pts</th>
                 </tr>
               </thead>
               <tbody>
-                {standings.map(item => (
-                  <tr key={item.team.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', fontSize: '0.84rem' }}>
-                    <td style={{ padding: '0.6rem 0.4rem', fontWeight: 800, color: item.position <= 4 ? '#4ade80' : item.position >= standings.length - 3 ? '#ef4444' : '#94a3b8' }}>
-                      {item.position}
+                {standings.map((item) => (
+                  <tr key={item.team.id}>
+                    <td>
+                      <span style={{
+                        fontWeight: 700,
+                        color: item.position <= 4 ? '#4ade80' : item.position >= standings.length - 3 ? '#ef4444' : '#94a3b8'
+                      }}>
+                        {item.position}
+                      </span>
                     </td>
-                    <td style={{ padding: '0.6rem 0.6rem' }}>
+                    <td>
                       <Link
                         href={getTeamUrl(item.team.name)}
                         style={{
-                          display: 'inline-flex',
+                          display: 'flex',
                           alignItems: 'center',
-                          gap: '0.5rem',
-                          color: '#f8fafc',
+                          gap: '0.6rem',
                           textDecoration: 'none',
-                          fontWeight: 700,
+                          color: '#f8fafc',
+                          fontWeight: 600,
                         }}
                       >
                         {item.team.crest && (
@@ -363,25 +386,19 @@ export default async function LeaguePage({ params }: PageProps) {
                         <span>{item.team.name}</span>
                       </Link>
                     </td>
-                    <td style={{ padding: '0.6rem 0.4rem', textAlign: 'center', color: '#cbd5e1' }}>{item.playedGames}</td>
-                    <td style={{ padding: '0.6rem 0.4rem', textAlign: 'center', color: '#cbd5e1' }}>{item.won}</td>
-                    <td style={{ padding: '0.6rem 0.4rem', textAlign: 'center', color: '#cbd5e1' }}>{item.draw}</td>
-                    <td style={{ padding: '0.6rem 0.4rem', textAlign: 'center', color: '#cbd5e1' }}>{item.lost}</td>
-                    <td style={{ padding: '0.6rem 0.4rem', textAlign: 'center', color: item.goalDifference > 0 ? '#4ade80' : item.goalDifference < 0 ? '#ef4444' : '#cbd5e1' }}>
-                      {item.goalDifference > 0 ? `+${item.goalDifference}` : item.goalDifference}
-                    </td>
-                    <td style={{ padding: '0.6rem 0.6rem', textAlign: 'center', fontWeight: 900, color: '#38bdf8' }}>{item.points}</td>
+                    <td style={{ textAlign: 'center' }}>{item.playedGames}</td>
+                    <td style={{ textAlign: 'center' }}>{item.won}</td>
+                    <td style={{ textAlign: 'center' }}>{item.draw}</td>
+                    <td style={{ textAlign: 'center' }}>{item.lost}</td>
+                    <td style={{ textAlign: 'center' }}>{item.goalDifference > 0 ? `+${item.goalDifference}` : item.goalDifference}</td>
+                    <td style={{ textAlign: 'center', fontWeight: 800, color: '#38bdf8' }}>{item.points}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        ) : (
-          <div style={{ color: '#94a3b8', fontSize: '0.88rem' }}>
-            Standings table is not active or available for this competition format.
-          </div>
-        )}
-      </section>
+        </section>
+      )}
 
       {/* Participating Teams Directory */}
       {teams.length > 0 && (
@@ -393,39 +410,40 @@ export default async function LeaguePage({ params }: PageProps) {
           marginBottom: '2rem',
         }}>
           <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1rem 0' }}>
-            👥 Teams in {LN}
+            🛡️ Teams in {LN} ({teams.length})
           </h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.8rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '0.8rem' }}>
             {teams.map(t => (
               <Link
                 key={t.id}
-                href={getTeamUrl(t)}
+                href={getTeamUrl(t.name)}
                 style={{
                   background: 'rgba(255,255,255,0.02)',
-                  border: '1px solid rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.05)',
                   borderRadius: '10px',
-                  padding: '0.75rem 1rem',
+                  padding: '0.8rem',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.6rem',
                   textDecoration: 'none',
                   color: '#f8fafc',
-                  fontWeight: 700,
                   fontSize: '0.85rem',
+                  fontWeight: 700,
+                  transition: 'background 0.2s',
                 }}
               >
                 {t.crest && (
-                  <img src={t.crest} alt={t.name} style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
+                  <img src={t.crest} alt={t.name} style={{ width: '22px', height: '22px', objectFit: 'contain' }} />
                 )}
-                <span>{t.short_name || t.name}</span>
+                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{t.name}</span>
               </Link>
             ))}
           </div>
         </section>
       )}
 
-      {/* Recent League Results */}
+      {/* Recent Results */}
       {recentMatches.length > 0 && (
         <section style={{
           background: '#111827',
@@ -435,11 +453,11 @@ export default async function LeaguePage({ params }: PageProps) {
           marginBottom: '2rem',
         }}>
           <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1rem 0' }}>
-            📊 Recent {LN} Results
+            📜 Recent {LN} Results
           </h2>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.7rem' }}>
-            {recentMatches.slice(0, 6).map(m => {
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+            {recentMatches.slice(0, 5).map(m => {
               const HN = m.home_team?.short_name || m.home_team?.name || 'Home';
               const AN = m.away_team?.short_name || m.away_team?.name || 'Away';
               const mDate = m.utc_date
@@ -461,9 +479,9 @@ export default async function LeaguePage({ params }: PageProps) {
                     gap: '0.6rem',
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-                    <span style={{ fontSize: '0.80rem', color: '#94a3b8' }}>📅 {mDate}</span>
-                    <span style={{ fontWeight: 800, fontSize: '0.90rem', color: '#f8fafc' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                    <span style={{ fontSize: '0.78rem', color: '#64748b' }}>{mDate}</span>
+                    <span style={{ fontWeight: 800, fontSize: '0.88rem', color: '#f8fafc' }}>
                       {HN} {m.home_score ?? 0} – {m.away_score ?? 0} {AN}
                     </span>
                   </div>
@@ -477,7 +495,7 @@ export default async function LeaguePage({ params }: PageProps) {
                       fontWeight: 700,
                     }}
                   >
-                    Match Preview &amp; Stats →
+                    View Result Analysis →
                   </Link>
                 </div>
               );
@@ -497,11 +515,26 @@ export default async function LeaguePage({ params }: PageProps) {
         gap: '0.8rem',
       }}>
         <div style={{ fontWeight: 800, color: '#f8fafc', fontSize: '0.95rem' }}>
-          Explore More Competitions &amp; Forecasts:
+          Explore More Competitions &amp; Match Predictions:
         </div>
         <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
           <Link
-            href="/leagues"
+            href="/football-predictions-today"
+            style={{
+              background: 'rgba(34,197,94,0.1)',
+              border: '1px solid rgba(34,197,94,0.25)',
+              color: '#86efac',
+              padding: '0.45rem 0.9rem',
+              borderRadius: '8px',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            🎯 Today&apos;s Predictions
+          </Link>
+          <Link
+            href="/fixtures"
             style={{
               background: 'rgba(59,130,246,0.1)',
               border: '1px solid rgba(59,130,246,0.25)',
@@ -513,22 +546,7 @@ export default async function LeaguePage({ params }: PageProps) {
               textDecoration: 'none',
             }}
           >
-            🌍 All Competitions
-          </Link>
-          <Link
-            href="/fixtures"
-            style={{
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              color: '#f8fafc',
-              padding: '0.45rem 0.9rem',
-              borderRadius: '8px',
-              fontSize: '0.82rem',
-              fontWeight: 700,
-              textDecoration: 'none',
-            }}
-          >
-            📅 All Today&apos;s Fixtures
+            📅 All Fixtures
           </Link>
           <Link
             href="/live"

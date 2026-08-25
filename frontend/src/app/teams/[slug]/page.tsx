@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getTeamDataBySlug, getMatchPredictionUrl, slugifyTeamName, getLeagueUrl } from '@/lib/slugs';
 import { siteConfig, getCanonicalUrl } from '@/config/site';
+import { generateTeamOverviewText } from '@/lib/contentGenerator';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -91,6 +92,9 @@ export default async function TeamPage({ params }: PageProps) {
   const shortName = team.short_name || team.name;
   const compName = league?.name || 'Football League';
   const compCode = league?.code || 'PL';
+
+  // Generate deterministic team text content
+  const teamText = generateTeamOverviewText(team, stats, compName);
 
   // Schema.org Structured Data
   const structuredData = {
@@ -229,7 +233,7 @@ export default async function TeamPage({ params }: PageProps) {
 
         const predHomeScore = nextMatch.ai_predicted_home ?? ai?.score?.home ?? 1;
         const predAwayScore = nextMatch.ai_predicted_away ?? ai?.score?.away ?? 1;
-        const predScoreText = isHome ? `${predHomeScore} – ${predAwayScore}` : `${predAwayScore} – ${predHomeScore}`;
+        const predScoreText = isHome ? `${predHomeScore} - ${predAwayScore}` : `${predAwayScore} - ${predHomeScore}`;
 
         const matchDate = nextMatch.utc_date
           ? new Date(nextMatch.utc_date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
@@ -246,7 +250,7 @@ export default async function TeamPage({ params }: PageProps) {
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
               <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                ⚡ Next Match Prediction
+                ⚡ Next Match Prediction &amp; Probability
               </h2>
               <span style={{ fontSize: '0.80rem', color: '#94a3b8' }}>
                 📅 {matchDate} · {isHome ? 'Home Fixture' : 'Away Fixture'}
@@ -338,7 +342,7 @@ export default async function TeamPage({ params }: PageProps) {
         </div>
       )}
 
-      {/* Team Performance Stats Grid */}
+      {/* Team Performance Stats & Data-Driven Overview Section */}
       <section style={{
         background: '#111827',
         border: '1px solid rgba(255,255,255,0.08)',
@@ -346,9 +350,16 @@ export default async function TeamPage({ params }: PageProps) {
         padding: '1.5rem',
         marginBottom: '2rem',
       }}>
-        <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1.2rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          📊 Team Statistics &amp; Performance Overview
+        <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          📊 {shortName} Performance Overview &amp; Statistical Insights
         </h2>
+
+        {/* Narrative Summary Paragraphs */}
+        <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '1.2rem', marginBottom: '1.5rem', color: '#cbd5e1', fontSize: '0.92rem', lineHeight: 1.65, display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+          <p style={{ margin: 0 }}>{teamText.overviewText}</p>
+          <p style={{ margin: 0 }}>{teamText.venueText}</p>
+          <p style={{ margin: 0 }}>{teamText.formSummaryText}</p>
+        </div>
 
         <div style={{
           display: 'grid',
@@ -437,7 +448,7 @@ export default async function TeamPage({ params }: PageProps) {
         marginBottom: '2rem',
       }}>
         <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1rem 0' }}>
-          📈 Recent Matches &amp; Results Form
+          📈 Recent Match Form &amp; Results
         </h2>
 
         {recentMatches.length > 0 ? (
@@ -534,7 +545,7 @@ export default async function TeamPage({ params }: PageProps) {
           marginBottom: '2rem',
         }}>
           <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1rem 0' }}>
-            📅 Upcoming {shortName} Fixtures
+            📅 Upcoming {shortName} Fixtures Schedule
           </h2>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.7rem' }}>
@@ -608,7 +619,7 @@ export default async function TeamPage({ params }: PageProps) {
         <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
           {league && (
             <Link
-              href={`/fixtures?league=${compCode}`}
+              href={getLeagueUrl(compName, compCode)}
               style={{
                 background: 'rgba(59,130,246,0.1)',
                 border: '1px solid rgba(59,130,246,0.25)',
@@ -624,6 +635,21 @@ export default async function TeamPage({ params }: PageProps) {
             </Link>
           )}
           <Link
+            href="/football-predictions-today"
+            style={{
+              background: 'rgba(34,197,94,0.1)',
+              border: '1px solid rgba(34,197,94,0.25)',
+              color: '#86efac',
+              padding: '0.45rem 0.9rem',
+              borderRadius: '8px',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            🎯 Today&apos;s Tips
+          </Link>
+          <Link
             href="/fixtures"
             style={{
               background: 'rgba(255,255,255,0.04)',
@@ -636,7 +662,7 @@ export default async function TeamPage({ params }: PageProps) {
               textDecoration: 'none',
             }}
           >
-            📅 All Today&apos;s Fixtures
+            📅 All Fixtures
           </Link>
           <Link
             href="/live"

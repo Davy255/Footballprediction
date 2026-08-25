@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { fetchMatchesFeed } from '@/lib/api';
 import { getMatchSlug, getMatchPredictionUrl, getTeamUrl, getLeagueUrl } from '@/lib/slugs';
 import { siteConfig, getCanonicalUrl } from '@/config/site';
+import { generateTodayPredictionsSummary } from '@/lib/contentGenerator';
 import { Match, League } from '@/lib/types';
 
 export const revalidate = 60; // Fresh match data cached for 60 seconds
@@ -82,12 +83,7 @@ export default async function FootballPredictionsTodayPage() {
   }
 
   // Filter matches for TODAY:
-  // Matches where date matches today's date string, OR active live matches, OR scheduled within the 24h window
   const todayMatches: Match[] = [];
-  const startOfDay = new Date(now);
-  startOfDay.setHours(0, 0, 0, 0);
-  const endOfDay = new Date(now);
-  endOfDay.setHours(23, 59, 59, 999);
 
   for (const m of matches) {
     if (!m.utc_date) continue;
@@ -95,15 +91,16 @@ export default async function FootballPredictionsTodayPage() {
     const isSameDate = mDate.toDateString() === now.toDateString();
     const isLive = ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME'].includes((m.status || '').toUpperCase());
     
-    // Also include live matches or matches strictly scheduled for today's calendar date
     if (isSameDate || isLive || m.utc_date.startsWith(todayIsoDate)) {
       todayMatches.push(m);
     }
   }
 
-  // If today's calendar window has few or zero matches (e.g. midweek lull), also get the closest upcoming round fixtures
   const displayMatches = todayMatches.length > 0 ? todayMatches : matches.slice(0, 10);
   const isFallbackUpcoming = todayMatches.length === 0 && displayMatches.length > 0;
+
+  // Generate deterministic today text content
+  const todayText = generateTodayPredictionsSummary(displayMatches, todayFormatted);
 
   // Group matches by Competition/League
   const leagueGroups: Record<string, { league: League; matches: Match[] }> = {};
@@ -229,6 +226,39 @@ export default async function FootballPredictionsTodayPage() {
         </div>
       </header>
 
+      {/* Data-Driven Daily Summary Insights Section */}
+      <section style={{
+        background: '#111827',
+        border: '1px solid rgba(255,255,255,0.08)',
+        borderRadius: '16px',
+        padding: '1.5rem',
+        marginBottom: '2rem',
+      }}>
+        <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 0.8rem 0' }}>
+          💡 Today&apos;s Prediction Highlights &amp; Statistical Insights
+        </h2>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', color: '#cbd5e1', fontSize: '0.92rem', lineHeight: 1.65 }}>
+          <p style={{ margin: 0 }}>{todayText.summaryText}</p>
+          {todayText.highestProbabilityHighlight && (
+            <p style={{
+              margin: 0,
+              background: 'rgba(56,189,248,0.08)',
+              borderLeft: '3px solid #38bdf8',
+              padding: '0.6rem 0.9rem',
+              borderRadius: '4px',
+              color: '#7dd3fc',
+              fontWeight: 700,
+            }}>
+              📊 {todayText.highestProbabilityHighlight}
+            </p>
+          )}
+          <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '0.4rem' }}>
+            ⚡ Data refreshed regularly for live match updates and odds changes.
+          </div>
+        </div>
+      </section>
+
       {/* Notice if fallback upcoming matches are shown during quiet schedule */}
       {isFallbackUpcoming && (
         <div style={{
@@ -279,7 +309,7 @@ export default async function FootballPredictionsTodayPage() {
                       <span style={{ fontSize: '1.4rem' }}>{league.flag || '🏆'}</span>
                     )}
                     <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 900 }}>
-                      {league.name}
+                      {league.name} Predictions
                     </h2>
                   </Link>
 

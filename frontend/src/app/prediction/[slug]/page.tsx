@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getMatchBySlug, getMatchPredictionUrl, getTeamUrl, getLeagueUrl } from '@/lib/slugs';
 import { siteConfig, getCanonicalUrl } from '@/config/site';
+import { generateMatchAnalysisText } from '@/lib/contentGenerator';
 import MatchCard from '@/components/MatchCard';
 import { Match } from '@/lib/types';
 
@@ -114,6 +115,9 @@ export default async function MatchPredictionPage({ params }: PageProps) {
   const predictedHomeScore = match.ai_predicted_home != null ? match.ai_predicted_home : (ai?.score?.home ?? 1);
   const predictedAwayScore = match.ai_predicted_away != null ? match.ai_predicted_away : (ai?.score?.away ?? 1);
 
+  // Generate deterministic content
+  const analysisContent = generateMatchAnalysisText(match);
+
   const formattedDate = match.utc_date
     ? new Date(match.utc_date).toLocaleDateString('en-US', {
         weekday: 'long',
@@ -180,7 +184,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
           </li>
           <li>›</li>
           <li>
-            <Link href="/fixtures" style={{ color: '#94a3b8', textDecoration: 'none' }}>
+            <Link href="/football-predictions-today" style={{ color: '#94a3b8', textDecoration: 'none' }}>
               Predictions
             </Link>
           </li>
@@ -248,7 +252,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             {match.home_team?.crest && (
               <img
                 src={match.home_team.crest}
-                alt={HN}
+                alt={`${HN} Crest`}
                 style={{ width: '64px', height: '64px', objectFit: 'contain' }}
               />
             )}
@@ -306,13 +310,13 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             {match.away_team?.crest && (
               <img
                 src={match.away_team.crest}
-                alt={AN}
+                alt={`${AN} Crest`}
                 style={{ width: '64px', height: '64px', objectFit: 'contain' }}
               />
             )}
-            <h2 style={{ margin: 0, fontSize: '1.35rem', fontWeight: 900, color: '#f8fafc' }}>
+            <div style={{ margin: 0, fontSize: '1.35rem', fontWeight: 900, color: '#f8fafc' }}>
               {AN}
-            </h2>
+            </div>
             <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>Away Team · View Profile →</span>
           </Link>
         </div>
@@ -327,7 +331,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
         marginBottom: '2rem',
       }}>
         <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1.2rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          🎯 FootballPredict AI Match Forecast
+          🎯 Match Prediction &amp; Probability Breakdown
         </h2>
 
         {/* Score Prediction & Primary Verdict Banner */}
@@ -367,9 +371,9 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             </div>
             <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#38bdf8' }}>
               {homeProb > awayProb && homeProb > drawProb
-                ? `${HN} Win or Draw`
+                ? `${HN} Win or Draw Lean`
                 : awayProb > homeProb && awayProb > drawProb
-                ? `${AN} Win or Draw`
+                ? `${AN} Win or Draw Lean`
                 : 'Close Contest / Draw Risk'}
             </div>
             <div style={{ fontSize: '0.74rem', color: '#94a3b8', marginTop: '0.2rem' }}>
@@ -399,31 +403,51 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             <div style={{ width: `${awayProb}%`, background: 'linear-gradient(90deg, #8b5cf6, #a78bfa)' }} title={`${AN} ${awayProb}%`} />
           </div>
         </div>
+      </section>
 
-        {/* Tactical Narrative Preview */}
-        {ai?.analytics && (
-          <div style={{
-            background: 'rgba(255,255,255,0.02)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: '12px',
-            padding: '1.2rem',
-            color: '#cbd5e1',
-            fontSize: '0.90rem',
-            lineHeight: 1.65,
-          }}>
-            <div style={{ fontWeight: 800, color: '#f8fafc', marginBottom: '0.4rem' }}>
-              📝 Tactical Preview &amp; Match Context
-            </div>
-            {ai.analytics}
-          </div>
-        )}
+      {/* Data-Driven Statistical Match Analysis Section */}
+      <section style={{
+        background: '#111827',
+        border: '1px solid rgba(255,255,255,0.08)',
+        borderRadius: '16px',
+        padding: '1.5rem',
+        marginBottom: '2rem',
+      }}>
+        <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 1rem 0' }}>
+          📝 Statistical Match Analysis &amp; Tactical Context
+        </h2>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', color: '#cbd5e1', fontSize: '0.92rem', lineHeight: 1.65 }}>
+          <p style={{ margin: 0 }}>
+            {analysisContent.mainAnalysis}
+          </p>
+          <p style={{ margin: 0 }}>
+            {analysisContent.formAnalysis}
+          </p>
+          <p style={{ margin: 0 }}>
+            {analysisContent.marketsAnalysis}
+          </p>
+        </div>
+
+        {/* Prediction Disclaimer */}
+        <div style={{
+          marginTop: '1.2rem',
+          padding: '0.8rem 1rem',
+          background: 'rgba(255,255,255,0.02)',
+          borderLeft: '3px solid #38bdf8',
+          borderRadius: '4px',
+          fontSize: '0.78rem',
+          color: '#94a3b8',
+        }}>
+          ⚠️ {analysisContent.disclaimer}
+        </div>
       </section>
 
       {/* Interactive Match Hub with Full Form, H2H & Predictions */}
       <section style={{ marginBottom: '2.5rem' }}>
-        <h3 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', marginBottom: '1rem' }}>
+        <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', marginBottom: '1rem' }}>
           📊 Complete Match Analytics, Form &amp; Community Tips
-        </h3>
+        </h2>
         <MatchCard match={match} defaultOpen={true} />
       </section>
 
@@ -442,7 +466,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
         </div>
         <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
           <Link
-            href={`/fixtures?league=${compCode}`}
+            href={getLeagueUrl(compName, compCode)}
             style={{
               background: 'rgba(59,130,246,0.1)',
               border: '1px solid rgba(59,130,246,0.25)',
@@ -457,6 +481,21 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             ⚽ {compName} Predictions
           </Link>
           <Link
+            href="/football-predictions-today"
+            style={{
+              background: 'rgba(34,197,94,0.1)',
+              border: '1px solid rgba(34,197,94,0.25)',
+              color: '#86efac',
+              padding: '0.45rem 0.9rem',
+              borderRadius: '8px',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            🎯 Today&apos;s Tips
+          </Link>
+          <Link
             href="/fixtures"
             style={{
               background: 'rgba(255,255,255,0.04)',
@@ -469,7 +508,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
               textDecoration: 'none',
             }}
           >
-            📅 All Today&apos;s Fixtures
+            📅 All Fixtures
           </Link>
           <Link
             href="/live"
