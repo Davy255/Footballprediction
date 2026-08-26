@@ -21,17 +21,19 @@ function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!username.trim() || !password) {
+      setError('Please enter both username/email and password.');
+      return;
+    }
     setLoading(true);
     setError(null);
     try {
-      const formData = new FormData();
-      formData.append('username', username);
-      formData.append('password', password);
-      const res = await loginUser(formData);
+      const res = await loginUser({ username: username.trim(), password });
       login(res.access_token, res.user);
       router.push(redirect);
     } catch (err: any) {
-      setError(err.message || 'Invalid credentials. Please try again.');
+      const msg = err?.message || 'Invalid credentials. Please try again.';
+      setError(msg);
     } finally {
       setLoading(false);
     }

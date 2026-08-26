@@ -54,14 +54,45 @@ def register(user_in: UserCreate, background_tasks: BackgroundTasks, db: Session
 
 
 @router.post("/login", response_model=Token, dependencies=[Depends(login_rate_limiter)])
-def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    # Accept email or username in the "username" field (case-insensitive for email)
-    identifier = form_data.username.strip()
+async def login(request: Request, db: Session = Depends(get_db)):
+    """
+    High-Compatibility Login Endpoint.
+    Accepts application/x-www-form-urlencoded, multipart/form-data, and application/json.
+    Supports login via either username or email with case-insensitive matching.
+    """
+    content_type = request.headers.get("content-type", "").lower()
+    identifier = ""
+    password = ""
+
+    if "application/json" in content_type:
+        try:
+            body = await request.json()
+            identifier = str(body.get("username") or body.get("email") or "").strip()
+            password = str(body.get("password") or "")
+        except Exception:
+            raise HTTPException(status_code=400, detail="Invalid JSON authentication payload")
+    else:
+        try:
+            form = await request.form()
+            identifier = str(form.get("username") or form.get("email") or "").strip()
+            password = str(form.get("password") or "")
+        except Exception:
+            raise HTTPException(status_code=400, detail="Invalid form authentication payload")
+
+    if not identifier or not password:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email/username or password",
+        )
+
+    # Lookup user by email (case-insensitive) or username (case-insensitive)
     user = db.query(User).filter(
-        (User.email == identifier.lower()) | (User.username == identifier)
+        (func.lower(User.email) == identifier.lower()) | 
+        (User.username == identifier) | 
+        (func.lower(User.username) == identifier.lower())
     ).first()
 
-    if not user or not verify_password(form_data.password, user.hashed_password):
+    if not user or not verify_password(password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email/username or password",

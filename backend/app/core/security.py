@@ -66,7 +66,7 @@ class RateLimiter:
 
 
 # Standard Hardened Rate Limiters
-login_rate_limiter = RateLimiter(max_requests=5, window_seconds=60, action_name="login")
+login_rate_limiter = RateLimiter(max_requests=20, window_seconds=60, action_name="login")
 register_rate_limiter = RateLimiter(max_requests=4, window_seconds=60, action_name="registration")
 chat_rate_limiter = RateLimiter(max_requests=25, window_seconds=60, action_name="chat")
 password_reset_rate_limiter = RateLimiter(max_requests=3, window_seconds=60, action_name="password reset")

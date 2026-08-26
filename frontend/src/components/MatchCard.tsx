@@ -1189,6 +1189,9 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
               <span>🟨 {ws?.referee || 'Match Official'}</span>
               <Link
                 href={getMatchPredictionUrl(match)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
                 style={{
                   color: '#38bdf8',
                   fontWeight: 800,
@@ -1196,10 +1199,12 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '4px',
-                  background: 'rgba(56,189,248,0.1)',
-                  padding: '2px 8px',
+                  background: 'rgba(56,189,248,0.12)',
+                  padding: '4px 10px',
                   borderRadius: '6px',
-                  border: '1px solid rgba(56,189,248,0.25)',
+                  border: '1px solid rgba(56,189,248,0.35)',
+                  cursor: 'pointer',
+                  pointerEvents: 'auto',
                 }}
                 title={`${HN} vs ${AN} Full Prediction & Odds`}
               >

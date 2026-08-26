@@ -294,33 +294,6 @@ def get_upcoming(
     return results
 
 
-@router.get("/{match_id}", response_model=MatchOut)
-def get_match(match_id: int, db: Session = Depends(get_db)):
-    from fastapi import HTTPException
-
-    cache_key = f"match_detail_{match_id}"
-    cached = get_from_cache(cache_key, ttl_seconds=30.0)
-    if cached is not None:
-        return cached
-
-    match = (
-        db.query(Match)
-        .options(
-            joinedload(Match.league),
-            joinedload(Match.home_team),
-            joinedload(Match.away_team),
-        )
-        .filter(Match.id == match_id)
-        .first()
-    )
-    if not match:
-        raise HTTPException(status_code=404, detail="Match not found")
-
-    ensure_match_predictions([match], db)
-    set_in_cache(cache_key, match)
-    return match
-
-
 @router.get("/search", dependencies=[Depends(search_rate_limiter)])
 def search_football_entities(
     q: str = Query(..., min_length=2),
@@ -567,3 +540,30 @@ def search_football_entities(
 
     set_in_cache(normalized_cache_key, result)
     return result
+
+
+@router.get("/{match_id}", response_model=MatchOut)
+def get_match(match_id: int, db: Session = Depends(get_db)):
+    from fastapi import HTTPException
+
+    cache_key = f"match_detail_{match_id}"
+    cached = get_from_cache(cache_key, ttl_seconds=30.0)
+    if cached is not None:
+        return cached
+
+    match = (
+        db.query(Match)
+        .options(
+            joinedload(Match.league),
+            joinedload(Match.home_team),
+            joinedload(Match.away_team),
+        )
+        .filter(Match.id == match_id)
+        .first()
+    )
+    if not match:
+        raise HTTPException(status_code=404, detail="Match not found")
+
+    ensure_match_predictions([match], db)
+    set_in_cache(cache_key, match)
+    return match

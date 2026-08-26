@@ -14,44 +14,96 @@ function getHeaders(token?: string | null) {
   return headers;
 }
 
-export async function fetchApi<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-  const res = await fetch(`${API_BASE}${endpoint}`, {
-    ...options,
-    headers: {
-      ...getHeaders(),
-      ...options.headers,
-    },
-  });
+/**
+ * Resilient API fetcher with automatic cold-start retry and normalized errors.
+ */
+export async function fetchApi<T>(endpoint: string, options: RequestInit = {}, retries = 2): Promise<T> {
+  const url = `${API_BASE}${endpoint}`;
+  let lastError: any = null;
 
-  if (!res.ok) {
-    const errorData = await res.json().catch(() => ({ detail: 'An error occurred' }));
-    let message = 'An error occurred';
-    if (typeof errorData.detail === 'string') {
-      message = errorData.detail;
-    } else if (Array.isArray(errorData.detail)) {
-      message = errorData.detail.map((e: any) => e.msg || e.message || JSON.stringify(e)).join(', ');
-    } else if (errorData.message) {
-      message = typeof errorData.message === 'string' ? errorData.message : JSON.stringify(errorData.message);
-    } else {
-      message = `HTTP Error ${res.status}`;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 20000); // 20s timeout per attempt
+
+      const res = await fetch(url, {
+        ...options,
+        signal: options.signal || controller.signal,
+        headers: {
+          ...getHeaders(),
+          ...options.headers,
+        },
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ detail: 'An error occurred' }));
+        let message = 'An error occurred';
+        if (typeof errorData.detail === 'string') {
+          message = errorData.detail;
+        } else if (Array.isArray(errorData.detail)) {
+          message = errorData.detail.map((e: any) => e.msg || e.message || JSON.stringify(e)).join(', ');
+        } else if (errorData.message) {
+          message = typeof errorData.message === 'string' ? errorData.message : JSON.stringify(errorData.message);
+        } else if (res.status === 401) {
+          message = 'Incorrect email/username or password';
+        } else if (res.status === 404) {
+          message = 'Resource not found';
+        } else {
+          message = `HTTP Error ${res.status}`;
+        }
+        throw new Error(message);
+      }
+
+      return await res.json();
+    } catch (err: any) {
+      lastError = err;
+      // Do not retry on client auth errors (401, 403, 400, 422)
+      if (err.message && (err.message.includes('Incorrect') || err.message.includes('HTTP Error 4') || err.message.includes('taken') || err.message.includes('registered'))) {
+        throw err;
+      }
+      if (attempt < retries) {
+        // Wait 1.5s before retrying (gives backend time to wake up)
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+      }
     }
-    throw new Error(message);
   }
 
-  return res.json();
+  // If all attempts failed
+  const friendlyMsg =
+    lastError?.name === 'AbortError' || lastError?.message?.includes('fetch')
+      ? 'Unable to reach the football server. Please check your connection and try again.'
+      : lastError?.message || 'Server is temporarily unavailable. Please try again.';
+  throw new Error(friendlyMsg);
 }
 
 // Auth API
-export async function loginUser(credentials: FormData) {
-  const res = await fetch(`${API_BASE}/api/auth/login`, {
-    method: 'POST',
-    body: credentials,
-  });
-  if (!res.ok) {
-    const error = await res.json().catch(() => ({ detail: 'Login failed' }));
-    throw new Error(error.detail || 'Login failed');
+export async function loginUser(credentials: FormData | Record<string, string> | URLSearchParams, retries = 1) {
+  let body: any;
+  let headers: Record<string, string> = {};
+
+  if (credentials instanceof FormData) {
+    // Convert FormData to JSON for universal mobile compatibility
+    const obj: Record<string, string> = {};
+    credentials.forEach((value, key) => {
+      obj[key] = value.toString();
+    });
+    body = JSON.stringify(obj);
+    headers['Content-Type'] = 'application/json';
+  } else if (credentials instanceof URLSearchParams) {
+    body = credentials.toString();
+    headers['Content-Type'] = 'application/x-www-form-urlencoded';
+  } else if (typeof credentials === 'object') {
+    body = JSON.stringify(credentials);
+    headers['Content-Type'] = 'application/json';
   }
-  return res.json();
+
+  return fetchApi<{ access_token: string; token_type: string; user: User }>('/api/auth/login', {
+    method: 'POST',
+    body,
+    headers,
+  }, retries);
 }
 
 export async function registerUser(userData: { username: string; email: string; password: string }) {
@@ -119,12 +171,8 @@ export async function fetchMatch(id: number) {
 // Predictions API
 export async function submitPrediction(data: {
   match_id: number;
-  predicted_outcome: string;
-  predicted_home_score?: number;
-  predicted_away_score?: number;
-  predicted_btts?: string;
-  predicted_over25?: string;
-  predicted_dc?: string;
+  predicted_home_score: number;
+  predicted_away_score: number;
 }) {
   return fetchApi<Prediction>('/api/predictions/', {
     method: 'POST',
@@ -132,18 +180,38 @@ export async function submitPrediction(data: {
   });
 }
 
-export async function fetchMyPredictions() {
-  return fetchApi<Prediction[]>('/api/predictions/my');
+export async function fetchMyPredictions(statusFilter?: string) {
+  const endpoint = statusFilter ? `/api/predictions/me?status_filter=${statusFilter}` : '/api/predictions/me';
+  return fetchApi<Prediction[]>(endpoint);
 }
 
-export async function fetchMyPredictionForMatch(matchId: number) {
-  return fetchApi<Prediction>(`/api/predictions/match/${matchId}`).catch(() => null);
+export async function fetchMatchPredictions(matchId: number) {
+  return fetchApi<Prediction[]>(`/api/predictions/match/${matchId}`);
 }
+
 
 export async function deletePrediction(id: number) {
   return fetchApi<{ detail: string }>(`/api/predictions/${id}`, {
     method: 'DELETE',
   });
+}
+
+export async function fetchMyPredictionForMatch(matchId: number) {
+  return fetchApi<Prediction | null>(`/api/predictions/my/${matchId}`).catch(() => null);
+}
+
+export async function fetchPredictionStats() {
+  return fetchApi<{
+    total: number;
+    pending: number;
+    scored: number;
+    accuracy_percentage: number;
+    exact_score_accuracy: number;
+    current_streak: number;
+    best_streak: number;
+    distribution: { home_win: number; draw: number; away_win: number };
+    recent_trend: Array<{ date: string; accuracy: number; total: number }>;
+  }>('/api/predictions/accuracy');
 }
 
 // Leagues API
@@ -200,7 +268,6 @@ export async function sendChatMessage(message: string, history: ChatMessage[] = 
   });
 }
 
-
 // User Personalization & Dashboard APIs
 export async function fetchUserPersonalization() {
   return fetchApi<{
@@ -252,7 +319,6 @@ export async function fetchUserDashboard() {
   }>('/api/user/dashboard');
 }
 
-
 export async function fetchUserNotifications() {
   return fetchApi<{
     unread_count: number;
@@ -281,7 +347,6 @@ export async function clearUserNotifications() {
     method: 'POST',
   });
 }
-
 
 export async function searchFootballEntities(query: string) {
   if (!query || query.trim().length < 2) {

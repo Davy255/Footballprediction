@@ -87,7 +87,7 @@ export default function AdminDashboardPage() {
       formData.append('username', username.trim());
       formData.append('password', password);
       
-      const res = await loginUser(formData);
+      const res = await loginUser({ username, password });
       
       if (!res.user || !res.user.is_admin) {
         setLoginError('This account does not have administrator privileges.');
