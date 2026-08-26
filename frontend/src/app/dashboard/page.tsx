@@ -69,11 +69,11 @@ export default function DashboardPage() {
     }
   };
 
-  if (authLoading || (loading && user)) {
+  if (authLoading && !user) {
     return (
       <div className="container" style={{ padding: '4rem 1rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
         <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>⏳</div>
-        <p style={{ fontWeight: 700 }}>Loading your personalized match hub...</p>
+        <p style={{ fontWeight: 700 }}>Loading account...</p>
       </div>
     );
   }
@@ -245,7 +245,11 @@ export default function DashboardPage() {
       {/* TAB 1: Followed Teams */}
       {activeTab === 'teams' && (
         <div>
-          {(!data?.followed_teams || data.followed_teams.length === 0) ? (
+          {loading && !data ? (
+            <div style={{ padding: '3rem 1.5rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+              <span className="spinner" /> Loading followed teams...
+            </div>
+          ) : (!data?.followed_teams || data.followed_teams.length === 0) ? (
             <div className="glass-panel" style={{ padding: '3.5rem 1.5rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
               <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>⚽</div>
               <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
@@ -345,7 +349,11 @@ export default function DashboardPage() {
       {/* TAB 2: Bookmarked Predictions */}
       {activeTab === 'saved' && (
         <div>
-          {(!data?.saved_matches || data.saved_matches.length === 0) ? (
+          {loading && !data ? (
+            <div style={{ padding: '3rem 1.5rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+              <span className="spinner" /> Loading saved predictions...
+            </div>
+          ) : (!data?.saved_matches || data.saved_matches.length === 0) ? (
             <div className="glass-panel" style={{ padding: '3.5rem 1.5rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
               <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>🔖</div>
               <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
@@ -441,7 +449,11 @@ export default function DashboardPage() {
       {/* TAB 3: Followed Competitions */}
       {activeTab === 'leagues' && (
         <div>
-          {(!data?.followed_leagues || data.followed_leagues.length === 0) ? (
+          {loading && !data ? (
+            <div style={{ padding: '3rem 1.5rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+              <span className="spinner" /> Loading followed leagues...
+            </div>
+          ) : (!data?.followed_leagues || data.followed_leagues.length === 0) ? (
             <div className="glass-panel" style={{ padding: '3.5rem 1.5rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
               <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>🏆</div>
               <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>

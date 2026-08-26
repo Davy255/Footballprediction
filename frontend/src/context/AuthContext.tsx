@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { User } from '@/lib/types';
 import {
   fetchMe,
@@ -32,11 +32,17 @@ interface AuthContextType {
   isSavedPrediction: (matchId: number) => boolean;
 }
 
+const EMPTY_PERSONALIZATION: PersonalizationState = {
+  favoriteTeamIds: [],
+  followedLeagueIds: [],
+  savedMatchIds: [],
+};
+
 const AuthContext = createContext<AuthContextType>({
   user: null,
   token: null,
   loading: true,
-  personalization: { favoriteTeamIds: [], followedLeagueIds: [], savedMatchIds: [] },
+  personalization: EMPTY_PERSONALIZATION,
   login: () => {},
   logout: () => {},
   refreshUser: async () => {},
@@ -48,15 +54,45 @@ const AuthContext = createContext<AuthContextType>({
   isSavedPrediction: () => false,
 });
 
+/**
+ * Try to read cached user from localStorage synchronously.
+ * This lets us render the UI immediately without waiting for fetchMe().
+ */
+function readCachedUser(): User | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem('cached_user');
+    if (raw) return JSON.parse(raw) as User;
+  } catch {
+    // ignore parse errors
+  }
+  return null;
+}
+
+function writeCachedUser(user: User | null) {
+  if (typeof window === 'undefined') return;
+  try {
+    if (user) localStorage.setItem('cached_user', JSON.stringify(user));
+    else localStorage.removeItem('cached_user');
+  } catch {}
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [personalization, setPersonalization] = useState<PersonalizationState>({
-    favoriteTeamIds: [],
-    followedLeagueIds: [],
-    savedMatchIds: [],
-  });
+  // ── Optimistic init: read cached user + token from localStorage SYNCHRONOUSLY
+  // so the app renders instantly without waiting for an API call.
+  const [token, setToken] = useState<string | null>(
+    typeof window !== 'undefined' ? localStorage.getItem('token') : null
+  );
+  const [user, setUser] = useState<User | null>(
+    typeof window !== 'undefined' ? readCachedUser() : null
+  );
+  // loading=true only while we're still verifying the token in the background.
+  // If there's no token at all, we skip verification → loading=false immediately.
+  const [loading, setLoading] = useState<boolean>(
+    typeof window !== 'undefined' ? !!localStorage.getItem('token') : false
+  );
+  const [personalization, setPersonalization] = useState<PersonalizationState>(EMPTY_PERSONALIZATION);
+  const verifyingRef = useRef(false);
 
   const loadPersonalization = useCallback(async () => {
     try {
@@ -67,56 +103,74 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         savedMatchIds: data.saved_match_ids || [],
       });
     } catch {
-      // ignore
+      // ignore — personalization is optional UI enhancement
     }
   }, []);
 
   useEffect(() => {
-    const savedToken = localStorage.getItem('token');
-    if (savedToken) {
-      setToken(savedToken);
-      fetchMe()
-        .then((userData) => {
-          setUser(userData);
-          loadPersonalization();
-        })
-        .catch(() => {
-          localStorage.removeItem('token');
-          setToken(null);
-        })
-        .finally(() => setLoading(false));
-    } else {
+    const savedToken = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    if (!savedToken) {
       setLoading(false);
+      return;
     }
-  }, [loadPersonalization]);
 
-  const login = (newToken: string, newUser: User) => {
+    // Prevent double verification (React 18 StrictMode runs effects twice in dev)
+    if (verifyingRef.current) return;
+    verifyingRef.current = true;
+
+    // Background verification — does NOT block initial render.
+    // The cached user is already shown optimistically above.
+    fetchMe()
+      .then((freshUser) => {
+        setUser(freshUser);
+        writeCachedUser(freshUser);   // keep cache fresh for next visit
+        // Load personalization in parallel, don't await it
+        loadPersonalization();
+      })
+      .catch(() => {
+        // Token is invalid or expired — clear everything
+        localStorage.removeItem('token');
+        writeCachedUser(null);
+        setToken(null);
+        setUser(null);
+      })
+      .finally(() => {
+        setLoading(false);
+        verifyingRef.current = false;
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const login = useCallback((newToken: string, newUser: User) => {
     localStorage.setItem('token', newToken);
+    writeCachedUser(newUser);   // cache immediately for next visit
     setToken(newToken);
     setUser(newUser);
+    // Load personalization in background — don't block navigation
     loadPersonalization();
-  };
+  }, [loadPersonalization]);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem('token');
+    writeCachedUser(null);
     setToken(null);
     setUser(null);
-    setPersonalization({ favoriteTeamIds: [], followedLeagueIds: [], savedMatchIds: [] });
-  };
+    setPersonalization(EMPTY_PERSONALIZATION);
+  }, []);
 
-  const refreshUser = async () => {
-    if (token) {
-      try {
-        const userData = await fetchMe();
-        setUser(userData);
-        await loadPersonalization();
-      } catch (err) {
-        console.error('Failed to refresh user', err);
-      }
+  const refreshUser = useCallback(async () => {
+    if (!token) return;
+    try {
+      const userData = await fetchMe();
+      setUser(userData);
+      writeCachedUser(userData);
+      await loadPersonalization();
+    } catch (err) {
+      console.error('Failed to refresh user', err);
     }
-  };
+  }, [token, loadPersonalization]);
 
-  const toggleFavoriteTeam = async (teamId: number) => {
+  const toggleFavoriteTeam = useCallback(async (teamId: number) => {
     if (!token) return false;
     try {
       const res = await apiToggleFavoriteTeam(teamId);
@@ -130,9 +184,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } catch {
       return false;
     }
-  };
+  }, [token]);
 
-  const toggleFollowedLeague = async (leagueId: number) => {
+  const toggleFollowedLeague = useCallback(async (leagueId: number) => {
     if (!token) return false;
     try {
       const res = await apiToggleFollowedLeague(leagueId);
@@ -146,9 +200,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } catch {
       return false;
     }
-  };
+  }, [token]);
 
-  const toggleSavedPrediction = async (matchId: number) => {
+  const toggleSavedPrediction = useCallback(async (matchId: number) => {
     if (!token) return false;
     try {
       const res = await apiToggleSavedPrediction(matchId);
@@ -162,11 +216,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } catch {
       return false;
     }
-  };
+  }, [token]);
 
-  const isFavoriteTeam = (teamId: number) => personalization.favoriteTeamIds.includes(teamId);
-  const isFollowedLeague = (leagueId: number) => personalization.followedLeagueIds.includes(leagueId);
-  const isSavedPrediction = (matchId: number) => personalization.savedMatchIds.includes(matchId);
+  const isFavoriteTeam = useCallback((teamId: number) => personalization.favoriteTeamIds.includes(teamId), [personalization.favoriteTeamIds]);
+  const isFollowedLeague = useCallback((leagueId: number) => personalization.followedLeagueIds.includes(leagueId), [personalization.followedLeagueIds]);
+  const isSavedPrediction = useCallback((matchId: number) => personalization.savedMatchIds.includes(matchId), [personalization.savedMatchIds]);
 
   return (
     <AuthContext.Provider

@@ -9,7 +9,7 @@ from typing import Any, Optional, Tuple
 
 
 class BoundedTTLCache:
-    def __init__(self, max_size: int = 500, default_ttl: float = 60.0):
+    def __init__(self, max_size: int = 500, default_ttl: float = 180.0):
         self.max_size = max_size
         self.default_ttl = default_ttl
         self._store: OrderedDict[str, Tuple[float, float, Any]] = OrderedDict()  # key -> (created_at, ttl, value)
@@ -44,8 +44,8 @@ class BoundedTTLCache:
             return len(self._store)
 
 
-# Global Bounded Cache Instances
-feed_cache = BoundedTTLCache(max_size=50, default_ttl=20.0)
-league_cache = BoundedTTLCache(max_size=50, default_ttl=300.0)
-standings_cache = BoundedTTLCache(max_size=50, default_ttl=300.0)
-prediction_mem_cache = BoundedTTLCache(max_size=500, default_ttl=600.0)
+# Global Bounded Cache Instances with high-performance production TTLs
+feed_cache = BoundedTTLCache(max_size=100, default_ttl=180.0)        # 3 minutes for unified feed
+league_cache = BoundedTTLCache(max_size=50, default_ttl=600.0)       # 10 minutes for leagues
+standings_cache = BoundedTTLCache(max_size=50, default_ttl=600.0)    # 10 minutes for standings
+prediction_mem_cache = BoundedTTLCache(max_size=1000, default_ttl=3600.0) # 1 hour for predictions

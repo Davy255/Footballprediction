@@ -29,7 +29,9 @@ function LoginForm() {
     setError(null);
     try {
       const res = await loginUser({ username: username.trim(), password });
+      // Store user data + token immediately — navigation happens before personalization loads
       login(res.access_token, res.user);
+      // Navigate immediately — don't wait for any secondary API call
       router.push(redirect);
     } catch (err: any) {
       const msg = err?.message || 'Invalid credentials. Please try again.';

@@ -16,6 +16,8 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+export const revalidate = 60; // Cache match statistics page for 60 seconds
+
 /**
  * Dynamic SEO Metadata Generation for individual match prediction pages.
  */

@@ -11,6 +11,8 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+export const revalidate = 60; // 60s cache for high performance
+
 /**
  * Dynamic SEO Metadata Generation for Individual League Pages.
  */

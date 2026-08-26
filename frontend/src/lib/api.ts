@@ -14,77 +14,156 @@ function getHeaders(token?: string | null) {
   return headers;
 }
 
+// ──────────────────────────────────────────────────────────────
+// High-Speed In-Memory Cache & Request Deduplication
+// ──────────────────────────────────────────────────────────────
+interface CacheEntry {
+  timestamp: number;
+  ttl: number;
+  data: any;
+}
+
+const _memoryCache = new Map<string, CacheEntry>();
+const _inFlightRequests = new Map<string, Promise<any>>();
+
+function getCached<T>(key: string): T | null {
+  const entry = _memoryCache.get(key);
+  if (!entry) return null;
+  if (Date.now() - entry.timestamp > entry.ttl) {
+    _memoryCache.delete(key);
+    return null;
+  }
+  return entry.data as T;
+}
+
+function setCache<T>(key: string, data: T, ttlMs = 45000): void {
+  _memoryCache.set(key, {
+    timestamp: Date.now(),
+    ttl: ttlMs,
+    data,
+  });
+}
+
 /**
- * Resilient API fetcher with automatic cold-start retry and normalized errors.
+ * Resilient API fetcher with automatic cold-start tolerance,
+ * request deduplication, and normalized errors.
  */
-export async function fetchApi<T>(endpoint: string, options: RequestInit = {}, retries = 2): Promise<T> {
+export async function fetchApi<T>(
+  endpoint: string,
+  options: RequestInit & { cacheTtlMs?: number; nextOptions?: { revalidate?: number; tags?: string[] } } = {},
+  retries = 1
+): Promise<T> {
   const url = `${API_BASE}${endpoint}`;
-  let lastError: any = null;
+  const isGet = !options.method || options.method.toUpperCase() === 'GET';
+  const cacheKey = `${endpoint}_${typeof window !== 'undefined' ? localStorage.getItem('token') || 'anon' : 'server'}`;
 
-  for (let attempt = 0; attempt <= retries; attempt++) {
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 20000); // 20s timeout per attempt
-
-      const res = await fetch(url, {
-        ...options,
-        signal: options.signal || controller.signal,
-        headers: {
-          ...getHeaders(),
-          ...options.headers,
-        },
-      });
-
-      clearTimeout(timeoutId);
-
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({ detail: 'An error occurred' }));
-        let message = 'An error occurred';
-        if (typeof errorData.detail === 'string') {
-          message = errorData.detail;
-        } else if (Array.isArray(errorData.detail)) {
-          message = errorData.detail.map((e: any) => e.msg || e.message || JSON.stringify(e)).join(', ');
-        } else if (errorData.message) {
-          message = typeof errorData.message === 'string' ? errorData.message : JSON.stringify(errorData.message);
-        } else if (res.status === 401) {
-          message = 'Incorrect email/username or password';
-        } else if (res.status === 404) {
-          message = 'Resource not found';
-        } else {
-          message = `HTTP Error ${res.status}`;
-        }
-        throw new Error(message);
-      }
-
-      return await res.json();
-    } catch (err: any) {
-      lastError = err;
-      // Do not retry on client auth errors (401, 403, 400, 422)
-      if (err.message && (err.message.includes('Incorrect') || err.message.includes('HTTP Error 4') || err.message.includes('taken') || err.message.includes('registered'))) {
-        throw err;
-      }
-      if (attempt < retries) {
-        // Wait 1.5s before retrying (gives backend time to wake up)
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-      }
+  // 1. Check memory cache for GET requests
+  if (isGet && options.cacheTtlMs && options.cacheTtlMs > 0) {
+    const cached = getCached<T>(cacheKey);
+    if (cached !== null) {
+      return cached;
     }
   }
 
-  // If all attempts failed
-  const friendlyMsg =
-    lastError?.name === 'AbortError' || lastError?.message?.includes('fetch')
-      ? 'Unable to reach the football server. Please check your connection and try again.'
-      : lastError?.message || 'Server is temporarily unavailable. Please try again.';
-  throw new Error(friendlyMsg);
+  // 2. Request deduplication: if the exact same GET is already in flight, share the promise
+  if (isGet && _inFlightRequests.has(cacheKey)) {
+    return _inFlightRequests.get(cacheKey)!;
+  }
+
+  const doFetch = async (): Promise<T> => {
+    let lastError: any = null;
+    const { cacheTtlMs, nextOptions, ...fetchOptions } = options as any;
+
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      try {
+        const controller = new AbortController();
+        // 25s timeout per attempt: comfortably accommodates Render free tier cold-starts
+        const timeoutId = setTimeout(() => controller.abort(), 25000);
+
+        const res = await fetch(url, {
+          ...fetchOptions,
+          signal: fetchOptions.signal || controller.signal,
+          headers: {
+            ...getHeaders(),
+            ...fetchOptions.headers,
+          },
+          ...(nextOptions ? { next: nextOptions } : (isGet ? { next: { revalidate: 60 } } : {})),
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({ detail: 'An error occurred' }));
+          let message = 'An error occurred';
+          if (typeof errorData.detail === 'string') {
+            message = errorData.detail;
+          } else if (Array.isArray(errorData.detail)) {
+            message = errorData.detail.map((e: any) => e.msg || e.message || JSON.stringify(e)).join(', ');
+          } else if (errorData.message) {
+            message = typeof errorData.message === 'string' ? errorData.message : JSON.stringify(errorData.message);
+          } else if (res.status === 401) {
+            message = 'Incorrect email/username or password';
+          } else if (res.status === 404) {
+            message = 'Resource not found';
+          } else {
+            message = `HTTP Error ${res.status}`;
+          }
+          throw new Error(message);
+        }
+
+        const data = await res.json();
+
+        // Save to memory cache if TTL provided
+        if (isGet && cacheTtlMs && cacheTtlMs > 0) {
+          setCache(cacheKey, data, cacheTtlMs);
+        }
+
+        return data;
+      } catch (err: any) {
+        lastError = err;
+        // Do not retry on client auth errors (401, 403, 400, 422)
+        if (
+          err.message &&
+          (err.message.includes('Incorrect') ||
+            err.message.includes('HTTP Error 4') ||
+            err.message.includes('taken') ||
+            err.message.includes('registered'))
+        ) {
+          throw err;
+        }
+        if (attempt < retries) {
+          // 1s backoff for backend wakeup
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+      }
+    }
+
+    const friendlyMsg =
+      lastError?.name === 'AbortError' || lastError?.message?.includes('fetch')
+        ? 'Unable to reach the football server. Please check your connection and try again.'
+        : lastError?.message || 'Server is temporarily unavailable. Please try again.';
+    throw new Error(friendlyMsg);
+  };
+
+  if (isGet) {
+    const promise = doFetch().finally(() => {
+      _inFlightRequests.delete(cacheKey);
+    });
+    _inFlightRequests.set(cacheKey, promise);
+    return promise;
+  }
+
+  return doFetch();
 }
 
+// ──────────────────────────────────────────────────────────────
 // Auth API
-export async function loginUser(credentials: FormData | Record<string, string> | URLSearchParams, retries = 1) {
+// ──────────────────────────────────────────────────────────────
+export async function loginUser(credentials: FormData | Record<string, string> | URLSearchParams) {
   let body: any;
   let headers: Record<string, string> = {};
 
   if (credentials instanceof FormData) {
-    // Convert FormData to JSON for universal mobile compatibility
     const obj: Record<string, string> = {};
     credentials.forEach((value, key) => {
       obj[key] = value.toString();
@@ -99,18 +178,19 @@ export async function loginUser(credentials: FormData | Record<string, string> |
     headers['Content-Type'] = 'application/json';
   }
 
+  // 1 retry with 25s timeout ensures reliable login even during server cold start
   return fetchApi<{ access_token: string; token_type: string; user: User }>('/api/auth/login', {
     method: 'POST',
     body,
     headers,
-  }, retries);
+  }, 1);
 }
 
 export async function registerUser(userData: { username: string; email: string; password: string }) {
   return fetchApi<{ access_token: string; token_type: string; user: User }>('/api/auth/register', {
     method: 'POST',
     body: JSON.stringify(userData),
-  });
+  }, 1);
 }
 
 export async function loginWithGoogle(payload: { token: string; email?: string; name?: string; picture?: string }) {
@@ -138,9 +218,19 @@ export async function fetchMe() {
   return fetchApi<User>('/api/auth/me');
 }
 
-// Matches API
+// ──────────────────────────────────────────────────────────────
+// Matches API (High-Speed Cached)
+// ──────────────────────────────────────────────────────────────
+
+/**
+ * Unified high-speed matches feed with 60s memory cache and request deduplication.
+ */
 export async function fetchMatchesFeed() {
-  return fetchApi<{ matches: Match[]; leagues: League[]; total: number }>('/api/matches/feed');
+  return fetchApi<{ matches: Match[]; leagues: League[]; total: number }>(
+    '/api/matches/feed',
+    { cacheTtlMs: 60000, nextOptions: { revalidate: 60 } },
+    1
+  );
 }
 
 export async function fetchMatches(params?: { league_code?: string; status?: string; date?: string; limit?: number }) {
@@ -149,26 +239,31 @@ export async function fetchMatches(params?: { league_code?: string; status?: str
   if (params?.status) query.append('status', params.status);
   if (params?.date) query.append('date', params.date);
   if (params?.limit) query.append('limit', params.limit.toString());
-  return fetchApi<Match[]>(`/api/matches/?${query.toString()}`);
+  return fetchApi<Match[]>(`/api/matches/?${query.toString()}`, { cacheTtlMs: 45000 });
 }
 
 export async function fetchTodayMatches() {
-  return fetchApi<Match[]>('/api/matches/today');
+  return fetchApi<Match[]>('/api/matches/today', { cacheTtlMs: 45000 });
 }
 
 export async function fetchLiveMatches() {
-  return fetchApi<Match[]>('/api/matches/live');
+  return fetchApi<Match[]>('/api/matches/live', { cacheTtlMs: 15000 });
 }
 
 export async function fetchUpcomingMatches(days = 7) {
-  return fetchApi<Match[]>(`/api/matches/upcoming?days=${days}`);
+  return fetchApi<Match[]>(`/api/matches/upcoming?days=${days}`, { cacheTtlMs: 60000 });
 }
 
+/**
+ * Fetch a single match by ID with 60s memory cache.
+ */
 export async function fetchMatch(id: number) {
-  return fetchApi<Match>(`/api/matches/${id}`);
+  return fetchApi<Match>(`/api/matches/${id}`, { cacheTtlMs: 60000, nextOptions: { revalidate: 60 } });
 }
 
+// ──────────────────────────────────────────────────────────────
 // Predictions API
+// ──────────────────────────────────────────────────────────────
 export async function submitPrediction(data: {
   match_id: number;
   predicted_home_score: number;
@@ -188,7 +283,6 @@ export async function fetchMyPredictions(statusFilter?: string) {
 export async function fetchMatchPredictions(matchId: number) {
   return fetchApi<Prediction[]>(`/api/predictions/match/${matchId}`);
 }
-
 
 export async function deletePrediction(id: number) {
   return fetchApi<{ detail: string }>(`/api/predictions/${id}`, {
@@ -211,107 +305,136 @@ export async function fetchPredictionStats() {
     best_streak: number;
     distribution: { home_win: number; draw: number; away_win: number };
     recent_trend: Array<{ date: string; accuracy: number; total: number }>;
-  }>('/api/predictions/accuracy');
+  }>('/api/predictions/accuracy', { cacheTtlMs: 30000 });
 }
 
+// ──────────────────────────────────────────────────────────────
 // Leagues API
+// ──────────────────────────────────────────────────────────────
 export async function fetchLeagues() {
-  return fetchApi<League[]>('/api/leagues/');
+  return fetchApi<League[]>('/api/leagues/', { cacheTtlMs: 300000, nextOptions: { revalidate: 300 } });
 }
 
 export async function fetchLeagueStandings(code: string) {
-  return fetchApi<any>(`/api/leagues/${code}/standings`);
+  return fetchApi<any>(`/api/leagues/${code}/standings`, { cacheTtlMs: 300000, nextOptions: { revalidate: 300 } });
 }
 
+// ──────────────────────────────────────────────────────────────
 // Leaderboard API
+// ──────────────────────────────────────────────────────────────
 export async function fetchLeaderboard(limit = 50) {
-  return fetchApi<LeaderboardEntry[]>(`/api/leaderboard/?limit=${limit}`);
+  return fetchApi<LeaderboardEntry[]>(`/api/leaderboard/?limit=${limit}`, { cacheTtlMs: 60000 });
 }
 
 export async function fetchMyRank() {
   return fetchApi<{ rank: number | null; total_users: number; total_points: number; accuracy: number }>('/api/leaderboard/me');
 }
 
+// ──────────────────────────────────────────────────────────────
 // Admin API
+// ──────────────────────────────────────────────────────────────
 export async function fetchAdminStats() {
   return fetchApi<AdminStats>('/api/admin/stats');
 }
 
+export async function triggerManualSync(endpoint: string) {
+  return fetchApi<{ status: string; message?: string }>(`/api/admin/sync/${endpoint}`, {
+    method: 'POST',
+  });
+}
+
 export async function triggerAdminSync() {
-  return fetchApi<{ detail: string }>('/api/admin/sync', { method: 'POST' });
+  return triggerManualSync('all');
 }
 
 export async function triggerAdminOddsSync() {
-  return fetchApi<{ detail: string }>('/api/admin/sync-odds', { method: 'POST' });
+  return triggerManualSync('odds');
 }
 
 export async function triggerAdminScoring() {
-  return fetchApi<{ detail: string }>('/api/admin/score-predictions', { method: 'POST' });
+  return triggerManualSync('score');
 }
 
-export async function testSendAdminEmail(to_email: string, email_type: string = 'welcome') {
-  return fetchApi<{ success: boolean; recipient: string; email_type: string; mode: string; message: string }>('/api/admin/test-email', {
+export async function testSendAdminEmail(recipient: string) {
+  return fetchApi<{ status: string; message: string }>('/api/admin/test-email', {
     method: 'POST',
-    body: JSON.stringify({ to_email, email_type }),
+    body: JSON.stringify({ recipient }),
   });
 }
 
 export async function triggerAdminDailyReminders() {
-  return fetchApi<{ detail: string }>('/api/admin/trigger-daily-reminders', { method: 'POST' });
-}
-
-// Chatbot API
-export async function sendChatMessage(message: string, history: ChatMessage[] = []): Promise<ChatResponse> {
-  return fetchApi<ChatResponse>('/api/chat/', {
+  return fetchApi<{ status: string; message: string }>('/api/admin/trigger-daily-reminders', {
     method: 'POST',
-    body: JSON.stringify({ message, history }),
   });
 }
 
-// User Personalization & Dashboard APIs
+export async function fetchAdminUsers(page = 1, perPage = 50) {
+  return fetchApi<{ users: User[]; total: number; page: number; per_page: number }>(
+    `/api/admin/users?page=${page}&per_page=${perPage}`
+  );
+}
+
+export async function updateAdminUserStatus(userId: number, updates: { is_active?: boolean; is_admin?: boolean; is_vip?: boolean }) {
+  return fetchApi<User>(`/api/admin/users/${userId}`, {
+    method: 'PATCH',
+    body: JSON.stringify(updates),
+  });
+}
+
+// ──────────────────────────────────────────────────────────────
+// Chat API (Coach AI)
+// ──────────────────────────────────────────────────────────────
+export async function sendChatMessage(messages: ChatMessage[], matchContext?: Match): Promise<ChatResponse> {
+  return fetchApi<ChatResponse>('/api/chat/message', {
+    method: 'POST',
+    body: JSON.stringify({
+      messages,
+      match_context: matchContext || null,
+    }),
+  });
+}
+
+export async function fetchChatSuggestions(matchContext?: Match): Promise<{ suggestions: string[] }> {
+  return fetchApi<{ suggestions: string[] }>('/api/chat/suggestions', {
+    method: 'POST',
+    body: JSON.stringify({
+      match_context: matchContext || null,
+    }),
+  });
+}
+
+// ──────────────────────────────────────────────────────────────
+// Personalization API
+// ──────────────────────────────────────────────────────────────
 export async function fetchUserPersonalization() {
   return fetchApi<{
     favorite_team_ids: number[];
     followed_league_ids: number[];
     saved_match_ids: number[];
-    notification_preferences: {
-      match_reminders: boolean;
-      prediction_alerts: boolean;
-      live_alerts: boolean;
-      final_results: boolean;
-      favorite_team_alerts: boolean;
-    };
-  }>('/api/user/personalization');
+  }>('/api/user/personalization', { cacheTtlMs: 30000 });
 }
 
 export async function toggleFavoriteTeam(teamId: number) {
-  return fetchApi<{ status: string; team_id: number; is_favorite: boolean }>(`/api/user/favorite-team/${teamId}`, {
+  return fetchApi<{ status: string; is_favorite: boolean }>(`/api/user/favorite-teams/${teamId}`, {
     method: 'POST',
   });
 }
 
 export async function toggleFollowedLeague(leagueId: number) {
-  return fetchApi<{ status: string; league_id: number; is_followed: boolean }>(`/api/user/followed-league/${leagueId}`, {
+  return fetchApi<{ status: string; is_followed: boolean }>(`/api/user/followed-leagues/${leagueId}`, {
     method: 'POST',
   });
 }
 
 export async function toggleSavedPrediction(matchId: number) {
-  return fetchApi<{ status: string; match_id: number; is_saved: boolean }>(`/api/user/saved-prediction/${matchId}`, {
+  return fetchApi<{ status: string; is_saved: boolean }>(`/api/user/saved-predictions/${matchId}`, {
     method: 'POST',
-  });
-}
-
-export async function updateNotificationPreferences(preferences: Record<string, boolean>) {
-  return fetchApi<{ status: string; notification_preferences: any }>('/api/user/notifications', {
-    method: 'PUT',
-    body: JSON.stringify(preferences),
   });
 }
 
 export async function fetchUserDashboard() {
   return fetchApi<{
-    user: User;
+    user: any;
     followed_teams: Array<{ id: number; name: string; short_name: string; crest: string; elo_rating: number; next_match?: Match | null }>;
     followed_leagues: League[];
     saved_matches: Match[];
@@ -319,24 +442,45 @@ export async function fetchUserDashboard() {
   }>('/api/user/dashboard');
 }
 
-export async function fetchUserNotifications() {
+export async function fetchNotificationPreferences() {
   return fetchApi<{
-    unread_count: number;
-    notifications: Array<{
-      id: number;
-      notification_type: string;
-      title: string;
-      message: string;
-      link?: string | null;
-      is_read: boolean;
-      channel: string;
-      created_at: string;
-    }>;
-  }>('/api/user/notifications/list');
+    match_reminders: boolean;
+    prediction_alerts: boolean;
+    live_alerts: boolean;
+    final_results: boolean;
+    favorite_team_alerts: boolean;
+  }>('/api/user/notification-preferences');
 }
 
-export async function markNotificationsAsRead(id?: number) {
-  return fetchApi<{ status: string }>('/api/user/notifications/mark-read', {
+export async function updateNotificationPreferences(prefs: {
+  match_reminders?: boolean;
+  prediction_alerts?: boolean;
+  live_alerts?: boolean;
+  final_results?: boolean;
+  favorite_team_alerts?: boolean;
+}) {
+  return fetchApi('/api/user/notification-preferences', {
+    method: 'PUT',
+    body: JSON.stringify(prefs),
+  });
+}
+
+export async function fetchUserNotifications(unreadOnly = false) {
+  return fetchApi<Array<{
+    id: number;
+    notification_type: string;
+    title: string;
+    message: string;
+    link?: string;
+    is_read: boolean;
+    channel: string;
+    created_at: string;
+    match?: Match;
+  }>>(`/api/user/notifications?unread_only=${unreadOnly}`);
+}
+
+export async function markNotificationAsRead(id?: number) {
+  return fetchApi<{ status: string }>('/api/user/notifications/read', {
     method: 'POST',
     body: JSON.stringify(id ? { id } : {}),
   });
@@ -357,12 +501,12 @@ export async function searchFootballEntities(query: string) {
     teams: Array<{ id: number; name: string; short_name: string; crest: string; elo_rating: number }>;
     leagues: Array<{ id: number; name: string; code: string; country: string; flag: string }>;
     matches: Match[];
-  }>(`/api/matches/search?q=${encodeURIComponent(query.trim())}`);
+  }>(`/api/matches/search?q=${encodeURIComponent(query.trim())}`, { cacheTtlMs: 30000 });
 }
 
-// ══════════════════════════════════════════════
+// ──────────────────────────────────────────────────────────────
 // Phase 1 Monetization — Subscription APIs
-// ══════════════════════════════════════════════
+// ──────────────────────────────────────────────────────────────
 
 export interface SubscriptionStatus {
   plan: string;
@@ -406,25 +550,14 @@ export interface PaymentHistory {
   transactions: PaymentTransaction[];
 }
 
-/**
- * Fetch the current user's subscription status.
- * Returns is_premium=false for unauthenticated users (throws 401 which caller should handle).
- */
 export async function fetchSubscription(): Promise<SubscriptionStatus> {
   return fetchApi<SubscriptionStatus>('/api/subscription');
 }
 
-/**
- * Fetch all available plans from the server.
- * Plan prices come from server config — never trusted from client.
- */
 export async function fetchPlans(): Promise<{ plans: PlanApiResponse[] }> {
-  return fetchApi<{ plans: PlanApiResponse[] }>('/api/plans', {}, 1);
+  return fetchApi<{ plans: PlanApiResponse[] }>('/api/plans', { cacheTtlMs: 300000, nextOptions: { revalidate: 300 } }, 1);
 }
 
-/**
- * Fetch the current user's payment transaction history (paginated).
- */
 export async function fetchPaymentHistory(page = 1, perPage = 20): Promise<PaymentHistory> {
   return fetchApi<PaymentHistory>(`/api/payment/history?page=${page}&per_page=${perPage}`);
 }

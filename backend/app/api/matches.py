@@ -18,12 +18,12 @@ from app.core.cache import feed_cache, prediction_mem_cache
 from app.core.security import search_rate_limiter
 
 
-def get_from_cache(key: str, ttl_seconds: float = 20.0) -> Optional[Any]:
+def get_from_cache(key: str, ttl_seconds: float = 180.0) -> Optional[Any]:
     return feed_cache.get(key)
 
 
-def set_in_cache(key: str, data: Any):
-    feed_cache.set(key, data, ttl=20.0)
+def set_in_cache(key: str, data: Any, ttl: float = 180.0):
+    feed_cache.set(key, data, ttl=ttl)
 
 
 def ensure_match_predictions(matches: list[Match], db: Session):
@@ -31,31 +31,34 @@ def ensure_match_predictions(matches: list[Match], db: Session):
     for m in matches:
         if not m.home_team or not m.away_team or m.status == "FINISHED":
             continue
-        try:
-            if not m.prediction_description or '"analytics"' not in m.prediction_description:
-                pair_key = f"{m.home_team.id}_{m.away_team.id}"
-                pred = prediction_mem_cache.get(pair_key)
-                if not pred:
-                    pred = predict_match(m.home_team, m.away_team, db)
-                    prediction_mem_cache.set(pair_key, pred, ttl=600.0)
+        # Fast-path: If match already has AI probabilities and predictions in DB, skip heavy ML calculation
+        if m.ai_home_prob is not None and m.ai_predicted_home is not None and m.prediction_description:
+            continue
 
-                m.ai_home_prob = pred["ai_home_prob"]
-                m.ai_draw_prob = pred["ai_draw_prob"]
-                m.ai_away_prob = pred["ai_away_prob"]
-                m.ai_predicted_home = pred["ai_predicted_home"]
-                m.ai_predicted_away = pred["ai_predicted_away"]
-                m.ai_confidence = pred["ai_confidence"]
-                m.prediction_description = pred["prediction_description"]
-                m.odds_home = pred["odds_home"]
-                m.odds_draw = pred["odds_draw"]
-                m.odds_away = pred["odds_away"]
-                m.odds_over25 = pred.get("odds_over25", 1.85)
-                m.odds_under25 = pred.get("odds_under25", 1.95)
-                m.odds_btts_yes = pred.get("odds_btts_yes", 1.80)
-                m.odds_btts_no = pred.get("odds_btts_no", 2.00)
-                m.odds_dc_1x = pred.get("odds_dc_1x", 1.30)
-                m.odds_dc_x2 = pred.get("odds_dc_x2", 1.45)
-                m.odds_dc_12 = pred.get("odds_dc_12", 1.25)
+        try:
+            pair_key = f"{m.home_team.id}_{m.away_team.id}"
+            pred = prediction_mem_cache.get(pair_key)
+            if not pred:
+                pred = predict_match(m.home_team, m.away_team, db)
+                prediction_mem_cache.set(pair_key, pred, ttl=3600.0)
+
+            m.ai_home_prob = pred["ai_home_prob"]
+            m.ai_draw_prob = pred["ai_draw_prob"]
+            m.ai_away_prob = pred["ai_away_prob"]
+            m.ai_predicted_home = pred["ai_predicted_home"]
+            m.ai_predicted_away = pred["ai_predicted_away"]
+            m.ai_confidence = pred["ai_confidence"]
+            m.prediction_description = pred["prediction_description"]
+            m.odds_home = pred["odds_home"]
+            m.odds_draw = pred["odds_draw"]
+            m.odds_away = pred["odds_away"]
+            m.odds_over25 = pred.get("odds_over25", 1.85)
+            m.odds_under25 = pred.get("odds_under25", 1.95)
+            m.odds_btts_yes = pred.get("odds_btts_yes", 1.80)
+            m.odds_btts_no = pred.get("odds_btts_no", 2.00)
+            m.odds_dc_1x = pred.get("odds_dc_1x", 1.30)
+            m.odds_dc_x2 = pred.get("odds_dc_x2", 1.45)
+            m.odds_dc_12 = pred.get("odds_dc_12", 1.25)
         except Exception:
             pass
 
@@ -66,10 +69,10 @@ def get_unified_matches_feed(response: Response, db: Session = Depends(get_db)):
     High-Speed Unified Feed Endpoint.
     Returns all active fixtures (Upcoming, Live, Finished) + Leagues in a single, ultra-fast response.
     """
-    # Cache for 20 seconds in server memory
-    cached = get_from_cache("unified_matches_feed", ttl_seconds=20.0)
+    # Cache for 180 seconds (3 minutes) in server memory
+    cached = get_from_cache("unified_matches_feed", ttl_seconds=180.0)
     if cached is not None:
-        response.headers["Cache-Control"] = "public, max-age=15, s-maxage=30, stale-while-revalidate=60"
+        response.headers["Cache-Control"] = "public, max-age=60, s-maxage=180, stale-while-revalidate=300"
         return cached
 
     now = datetime.now(timezone.utc)
@@ -104,13 +107,13 @@ def get_unified_matches_feed(response: Response, db: Session = Depends(get_db)):
         .all()
     )
 
-    # 3. Recently Finished Matches (most recent first)
+    # 3. Recently Finished Matches (most recent first, capped at 40 for optimal payload performance)
     finished_matches = (
         db.query(Match)
         .options(*opts)
         .filter(Match.status.in_(["FINISHED", "AWARDED"]))
         .order_by(Match.utc_date.desc())
-        .limit(120)
+        .limit(40)
         .all()
     )
 
@@ -134,8 +137,8 @@ def get_unified_matches_feed(response: Response, db: Session = Depends(get_db)):
         "total": len(matches),
     }
 
-    set_in_cache("unified_matches_feed", result)
-    response.headers["Cache-Control"] = "public, max-age=15, s-maxage=30, stale-while-revalidate=60"
+    set_in_cache("unified_matches_feed", result, ttl=180.0)
+    response.headers["Cache-Control"] = "public, max-age=60, s-maxage=180, stale-while-revalidate=300"
     return result
 
 
