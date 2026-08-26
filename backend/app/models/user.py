@@ -34,6 +34,10 @@ class User(Base):
     notification_preferences = relationship("UserNotificationPreference", uselist=False, back_populates="user", cascade="all, delete-orphan")
     notification_logs = relationship("UserNotificationLog", back_populates="user", cascade="all, delete-orphan", order_by="desc(UserNotificationLog.created_at)")
 
+    # Monetization relationships
+    subscriptions = relationship("Subscription", back_populates="user", cascade="all, delete-orphan", order_by="desc(Subscription.created_at)")
+    payment_transactions = relationship("PaymentTransaction", back_populates="user", cascade="all, delete-orphan", order_by="desc(PaymentTransaction.created_at)")
+
 
 class UserFavoriteTeam(Base):
     __tablename__ = "user_favorite_teams"

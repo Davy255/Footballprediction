@@ -42,6 +42,7 @@ def bootstrap_db():
     try:
         # Safe schema column migrations for PostgreSQL / SQLite
         migrations = [
+            # Existing user column migrations
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS is_vip BOOLEAN DEFAULT FALSE;",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS vip_expires_at TIMESTAMP WITH TIME ZONE;",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar VARCHAR DEFAULT '';",
@@ -52,6 +53,10 @@ def bootstrap_db():
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS correct_results INTEGER DEFAULT 0;",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS correct_scores INTEGER DEFAULT 0;",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS accuracy FLOAT DEFAULT 0.0;",
+            # Phase 1 Monetization — subscription columns (tables created by create_all above)
+            "ALTER TABLE subscriptions ADD COLUMN IF NOT EXISTS cancelled_at TIMESTAMP WITH TIME ZONE;",
+            "ALTER TABLE payment_transactions ADD COLUMN IF NOT EXISTS failure_reason VARCHAR(256);",
+            "ALTER TABLE payment_transactions ADD COLUMN IF NOT EXISTS metadata_json TEXT;",
         ]
         for mig in migrations:
             try:

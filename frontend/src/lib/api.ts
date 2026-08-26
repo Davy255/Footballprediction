@@ -359,3 +359,72 @@ export async function searchFootballEntities(query: string) {
     matches: Match[];
   }>(`/api/matches/search?q=${encodeURIComponent(query.trim())}`);
 }
+
+// ══════════════════════════════════════════════
+// Phase 1 Monetization — Subscription APIs
+// ══════════════════════════════════════════════
+
+export interface SubscriptionStatus {
+  plan: string;
+  plan_name: string;
+  status: string;
+  is_premium: boolean;
+  start_date: string | null;
+  end_date: string | null;
+  source: string;
+}
+
+export interface PlanApiResponse {
+  id: string;
+  name: string;
+  badge: string;
+  price_kes: number;
+  currency: string;
+  duration_days: number | null;
+  is_premium: boolean;
+  is_popular: boolean;
+  savings_label: string | null;
+  description: string;
+  features: string[];
+}
+
+export interface PaymentTransaction {
+  id: number;
+  plan_id: string;
+  amount_kes: number;
+  currency: string;
+  status: string;
+  provider: string;
+  provider_reference: string | null;
+  created_at: string | null;
+}
+
+export interface PaymentHistory {
+  page: number;
+  per_page: number;
+  total: number;
+  transactions: PaymentTransaction[];
+}
+
+/**
+ * Fetch the current user's subscription status.
+ * Returns is_premium=false for unauthenticated users (throws 401 which caller should handle).
+ */
+export async function fetchSubscription(): Promise<SubscriptionStatus> {
+  return fetchApi<SubscriptionStatus>('/api/subscription');
+}
+
+/**
+ * Fetch all available plans from the server.
+ * Plan prices come from server config — never trusted from client.
+ */
+export async function fetchPlans(): Promise<{ plans: PlanApiResponse[] }> {
+  return fetchApi<{ plans: PlanApiResponse[] }>('/api/plans', {}, 1);
+}
+
+/**
+ * Fetch the current user's payment transaction history (paginated).
+ */
+export async function fetchPaymentHistory(page = 1, perPage = 20): Promise<PaymentHistory> {
+  return fetchApi<PaymentHistory>(`/api/payment/history?page=${page}&per_page=${perPage}`);
+}

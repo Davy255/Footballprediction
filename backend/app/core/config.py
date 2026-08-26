@@ -37,6 +37,15 @@ class Settings(BaseSettings):
     SMTP_FROM_NAME: str = "FootballPredict ⚽"
     SMTP_TLS: bool = True
 
+    # ── Flutterwave Payment Gateway (Phase 2) ──────────────────────────────
+    # SECURITY: Secret key MUST remain server-side only.
+    # NEVER use NEXT_PUBLIC_FLUTTERWAVE_SECRET_KEY — that would expose it to browsers.
+    # Only FLUTTERWAVE_PUBLIC_KEY may be used client-side where strictly required.
+    FLUTTERWAVE_PUBLIC_KEY: str = ""         # Safe to expose to browser (public key only)
+    FLUTTERWAVE_SECRET_KEY: str = ""         # SERVER-SIDE ONLY — NEVER expose to frontend
+    FLUTTERWAVE_WEBHOOK_SECRET: str = ""     # For verifying Flutterwave webhook signatures
+    FLUTTERWAVE_REDIRECT_URL: str = ""       # Where to redirect after payment (your success page)
+
     class Config:
         env_file = ".env"
         extra = "allow"

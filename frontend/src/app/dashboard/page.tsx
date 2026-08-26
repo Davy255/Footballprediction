@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { fetchUserDashboard, updateNotificationPreferences } from '@/lib/api';
+import { fetchUserDashboard, updateNotificationPreferences, fetchSubscription, SubscriptionStatus } from '@/lib/api';
 import { Match, League, Prediction } from '@/lib/types';
 import { getMatchPredictionUrl, getTeamUrl, getLeagueUrl } from '@/lib/slugs';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -23,6 +23,7 @@ export default function DashboardPage() {
   const { user, loading: authLoading, logout, toggleFavoriteTeam, toggleFollowedLeague, toggleSavedPrediction } = useAuth();
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [subscription, setSubscription] = useState<SubscriptionStatus | null>(null);
   const [activeTab, setActiveTab] = useState<'teams' | 'saved' | 'leagues' | 'settings'>('teams');
   const [notifs, setNotifs] = useState({
     match_reminders: true,
@@ -47,6 +48,10 @@ export default function DashboardPage() {
         })
         .catch((err) => console.error('Failed to load dashboard:', err))
         .finally(() => setLoading(false));
+
+      fetchSubscription()
+        .then((sub) => setSubscription(sub))
+        .catch(() => setSubscription(null)); // fail silently — free tier assumed
     }
   }, [user, authLoading, router]);
 
@@ -151,6 +156,62 @@ export default function DashboardPage() {
             Sign Out
           </button>
         </div>
+      </div>
+
+      {/* ── Current Plan Widget ──────────────────────────────── */}
+      <div style={{
+        background: subscription?.is_premium
+          ? 'linear-gradient(135deg, rgba(30,58,138,0.30) 0%, rgba(17,24,39,0.95) 100%)'
+          : 'var(--bg-card)',
+        border: subscription?.is_premium
+          ? '1px solid rgba(59,130,246,0.35)'
+          : '1px solid var(--border-color)',
+        borderRadius: '14px',
+        padding: '1rem 1.25rem',
+        marginBottom: '1.75rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '1rem',
+        flexWrap: 'wrap',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <span style={{ fontSize: '1.6rem' }}>{subscription?.is_premium ? '💎' : '⭐'}</span>
+          <div>
+            <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' as const, letterSpacing: '0.04em' }}>
+              Current Plan
+            </div>
+            <div style={{ fontWeight: 900, fontSize: '0.97rem', color: subscription?.is_premium ? '#60a5fa' : 'var(--text-primary)' }}>
+              {subscription?.plan_name || 'Standard Access'}
+            </div>
+            {subscription?.is_premium && subscription.end_date && (
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.1rem' }}>
+                Expires: {new Date(subscription.end_date).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}
+              </div>
+            )}
+            {!subscription?.is_premium && (
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.1rem' }}>
+                Free plan · Flutterwave payment launching soon
+              </div>
+            )}
+          </div>
+        </div>
+        <Link
+          href="/pricing"
+          style={{
+            padding: '0.5rem 1rem',
+            background: subscription?.is_premium ? 'rgba(59,130,246,0.15)' : 'rgba(59,130,246,0.1)',
+            border: '1px solid rgba(59,130,246,0.3)',
+            borderRadius: '8px',
+            color: '#93c5fd',
+            fontSize: '0.82rem',
+            fontWeight: 800,
+            textDecoration: 'none',
+            whiteSpace: 'nowrap' as const,
+          }}
+        >
+          {subscription?.is_premium ? 'View Plans' : 'Upgrade Plan →'}
+        </Link>
       </div>
 
       {/* Navigation Tabs */}
