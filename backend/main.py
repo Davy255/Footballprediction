@@ -17,6 +17,7 @@ from app.api import auth, matches, predictions, leagues, leaderboard, admin, cha
 from app.services.sync_service import (
     sync_all_competitions,
     sync_all_competitions_full_season,
+    sync_all_competitions_today,
     sync_live_matches_from_api,
     score_finished_predictions,
     auto_manage_live_matches,
@@ -114,17 +115,18 @@ async def lifespan(app: FastAPI):
     logger.info("Database ready")
 
     # Schedule background jobs
-    # Bounded Background Jobs with concurrency lock (max_instances=1)
+    # 1. Targeted Today + Near Window Sync (every 15 min, runs immediately on boot)
     scheduler.add_job(
-        sync_all_competitions_full_season,
+        sync_all_competitions_today,
         "interval",
-        hours=6,
-        id="sync_full_season",
+        minutes=15,
+        id="sync_today_matches",
         max_instances=1,
         coalesce=True,
-        misfire_grace_time=120,
+        misfire_grace_time=60,
         next_run_time=datetime.now(),
     )
+    # 2. Live API Polling (every 60s)
     scheduler.add_job(
         sync_live_matches_from_api,
         "interval",
@@ -135,6 +137,7 @@ async def lifespan(app: FastAPI):
         misfire_grace_time=30,
         next_run_time=datetime.now(),
     )
+    # 3. Live Match Simulation & Auto-Finalization (every 30s)
     scheduler.add_job(
         auto_manage_live_matches,
         "interval",
@@ -143,6 +146,17 @@ async def lifespan(app: FastAPI):
         max_instances=1,
         coalesce=True,
         misfire_grace_time=15,
+        next_run_time=datetime.now(),
+    )
+    # 4. Full Season Deep Sync (every 6 hours)
+    scheduler.add_job(
+        sync_all_competitions_full_season,
+        "interval",
+        hours=6,
+        id="sync_full_season",
+        max_instances=1,
+        coalesce=True,
+        misfire_grace_time=120,
     )
     scheduler.add_job(
         score_finished_predictions,

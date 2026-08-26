@@ -223,12 +223,12 @@ export async function fetchMe() {
 // ──────────────────────────────────────────────────────────────
 
 /**
- * Unified high-speed matches feed with 60s memory cache and request deduplication.
+ * Unified high-speed matches feed with responsive memory cache and request deduplication.
  */
 export async function fetchMatchesFeed() {
   return fetchApi<{ matches: Match[]; leagues: League[]; total: number }>(
     '/api/matches/feed',
-    { cacheTtlMs: 60000, nextOptions: { revalidate: 60 } },
+    { cacheTtlMs: 30000, nextOptions: { revalidate: 30 } },
     1
   );
 }
@@ -239,15 +239,16 @@ export async function fetchMatches(params?: { league_code?: string; status?: str
   if (params?.status) query.append('status', params.status);
   if (params?.date) query.append('date', params.date);
   if (params?.limit) query.append('limit', params.limit.toString());
-  return fetchApi<Match[]>(`/api/matches/?${query.toString()}`, { cacheTtlMs: 45000 });
+  return fetchApi<Match[]>(`/api/matches/?${query.toString()}`, { cacheTtlMs: 30000 });
 }
 
 export async function fetchTodayMatches() {
-  return fetchApi<Match[]>('/api/matches/today', { cacheTtlMs: 45000 });
+  return fetchApi<Match[]>('/api/matches/today', { cacheTtlMs: 15000 });
 }
 
 export async function fetchLiveMatches() {
-  return fetchApi<Match[]>('/api/matches/live', { cacheTtlMs: 15000 });
+  // Live matches should always fetch fresh real-time scores without client memory caching
+  return fetchApi<Match[]>('/api/matches/live', {}, 1);
 }
 
 export async function fetchUpcomingMatches(days = 7) {

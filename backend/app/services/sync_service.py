@@ -221,6 +221,7 @@ def sync_all_competitions():
 def sync_all_competitions_full_season(season_year: int = CURRENT_SEASON_YEAR):
     """Fix 1: Sync ALL matches for the full 2026/2027 season across all competitions.
     No friendly matches included (Fix 6). Run once on startup or on demand."""
+    from app.core.cache import feed_cache
     logger.info(f"=== Starting full-season sync for season {season_year} ===")
     for code in SUPPORTED_COMPETITIONS:
         try:
@@ -228,12 +229,60 @@ def sync_all_competitions_full_season(season_year: int = CURRENT_SEASON_YEAR):
             time.sleep(7)  # slightly longer pause for large payloads
         except Exception as e:
             logger.error(f"Failed full-season sync for {code}: {e}")
+    feed_cache.clear()
+
+
+def sync_all_competitions_today():
+    """
+    Fast, targeted sync for active competitions around today (today - 1 day to today + 3 days).
+    Runs every 15 minutes to guarantee fresh scores, kick-off dates, and results without rate limits.
+    """
+    from app.core.cache import feed_cache
+    now = datetime.now(timezone.utc)
+    date_from = (now - timedelta(days=1)).strftime("%Y-%m-%d")
+    date_to = (now + timedelta(days=3)).strftime("%Y-%m-%d")
+
+    total_synced = 0
+    for code in SUPPORTED_COMPETITIONS:
+        db = SessionLocal()
+        try:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            try:
+                data = loop.run_until_complete(
+                    football_api.get_matches(code, date_from=date_from, date_to=date_to)
+                )
+            except Exception as e:
+                logger.error(f"Today sync API error for {code}: {e}")
+                continue
+            finally:
+                loop.close()
+
+            matches_data = data.get("matches", [])
+            league = get_or_create_league(db, code)
+            count = _upsert_matches(db, league, matches_data, CURRENT_SEASON_STR)
+            league.last_synced = datetime.now(timezone.utc)
+            db.commit()
+            total_synced += count
+        except Exception as e:
+            logger.error(f"Today sync error for {code}: {e}")
+            db.rollback()
+        finally:
+            db.close()
+            time.sleep(6)
+
+    if total_synced > 0:
+        feed_cache.clear()
+        logger.info(f"Targeted today sync completed: {total_synced} matches updated across leagues.")
+
+
 def sync_live_matches_from_api():
     """
     Automatically polls all currently in-play, paused (half-time), and freshly finished matches
     from football-data.org in a single unified API call.
     Consumes only 1 request every 30 seconds (2 req/min), completely safe from API rate limits.
     """
+    from app.core.cache import feed_cache
     db = SessionLocal()
     try:
         loop = asyncio.new_event_loop()
@@ -288,6 +337,7 @@ def sync_live_matches_from_api():
 
         if updated > 0:
             db.commit()
+            feed_cache.clear()
             logger.info(f"Auto-synced {updated} live matches from API. (Finished: {finished_count})")
             if finished_count > 0:
                 score_finished_predictions(db=None)
@@ -515,6 +565,8 @@ def auto_manage_live_matches(db: Session = None):
 
         if changed:
             db.commit()
+            from app.core.cache import feed_cache
+            feed_cache.clear()
             if expired:
                 logger.info(f"Auto-finalized {len(expired)} live matches to FINISHED (FT)")
                 # Fix 5: Pass db=None so score_finished_predictions opens its own fresh session

@@ -230,7 +230,7 @@ def get_today_matches(db: Session = Depends(get_db)):
     else:
         ensure_match_predictions(matches, db)
 
-    set_in_cache(cache_key, matches)
+    set_in_cache(cache_key, matches, ttl=15.0)
     return matches
 
 
@@ -253,7 +253,7 @@ def get_live_matches(db: Session = Depends(get_db)):
         .all()
     )
     ensure_match_predictions(results, db)
-    set_in_cache(cache_key, results)
+    set_in_cache(cache_key, results, ttl=5.0)
     return results
 
 

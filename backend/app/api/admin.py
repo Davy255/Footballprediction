@@ -138,31 +138,57 @@ def update_match_odds(
 
 
 @router.post("/sync")
+@router.post("/sync/all")
+@router.post("/sync/matches")
 def trigger_sync(
     background_tasks: BackgroundTasks,
     _=Depends(get_current_admin),
 ):
-    background_tasks.add_task(sync_all_competitions)
-    return {"detail": "Sync started in background"}
+    from app.services.sync_service import sync_all_competitions_today
+    background_tasks.add_task(sync_all_competitions_today)
+    return {"detail": "Match synchronization started in background", "status": "ok"}
+
+
+@router.post("/sync/today")
+def trigger_today_sync(
+    background_tasks: BackgroundTasks,
+    _=Depends(get_current_admin),
+):
+    from app.services.sync_service import sync_all_competitions_today
+    background_tasks.add_task(sync_all_competitions_today)
+    return {"detail": "Today fixtures synchronization started in background", "status": "ok"}
+
+
+@router.post("/sync/full-season")
+def trigger_full_season_sync(
+    background_tasks: BackgroundTasks,
+    _=Depends(get_current_admin),
+):
+    from app.services.sync_service import sync_all_competitions_full_season
+    background_tasks.add_task(sync_all_competitions_full_season)
+    return {"detail": "Full-season synchronization started in background", "status": "ok"}
 
 
 @router.post("/sync-odds")
+@router.post("/sync/odds")
 def trigger_odds_sync(
     background_tasks: BackgroundTasks,
     _=Depends(get_current_admin),
 ):
     from app.services.odds_api_service import sync_all_live_odds
     background_tasks.add_task(sync_all_live_odds)
-    return {"detail": "Live bookmaker odds sync started in background"}
+    return {"detail": "Live bookmaker odds sync started in background", "status": "ok"}
 
 
 @router.post("/score-predictions")
+@router.post("/sync/score")
+@router.post("/sync/predictions")
 def trigger_scoring(
     background_tasks: BackgroundTasks,
     _=Depends(get_current_admin),
 ):
     background_tasks.add_task(score_finished_predictions)
-    return {"detail": "Scoring started in background"}
+    return {"detail": "Scoring started in background", "status": "ok"}
 
 
 @router.get("/stats")
