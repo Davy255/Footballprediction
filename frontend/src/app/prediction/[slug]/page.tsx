@@ -10,6 +10,7 @@ import MatchCard from '@/components/MatchCard';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getMatchConfidence } from '@/lib/confidence';
 import { calculateMarketOddsAnalysis, calculateValueEdgeAnalysis } from '@/lib/odds';
+import { calculateLiveMatchMinute } from '@/lib/matchTime';
 import { Match } from '@/lib/types';
 
 interface PageProps {
@@ -285,7 +286,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                   {match.home_score ?? 0} : {match.away_score ?? 0}
                 </div>
                 <span style={{ fontSize: '0.78rem', color: '#ef4444', fontWeight: 800 }}>
-                  ● LIVE {match.live_minute ? `${match.live_minute}'` : ''}
+                  ● LIVE {calculateLiveMatchMinute(match.utc_date, match.status).minuteText}
                 </span>
               </div>
             ) : (

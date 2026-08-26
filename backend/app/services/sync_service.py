@@ -598,21 +598,29 @@ def auto_manage_live_matches(db: Session = None):
 
         for m in live_matches:
             start_dt = m.utc_date.replace(tzinfo=timezone.utc) if m.utc_date.tzinfo is None else m.utc_date
-            elapsed = max(1, int((now - start_dt).total_seconds() / 60))
+            elapsed_raw = max(0, int((now - start_dt).total_seconds() / 60))
 
-            if 45 <= elapsed <= 60:
-                m.status = "HALFTIME"
-            else:
+            if elapsed_raw <= 48:
                 m.status = "IN_PLAY"
+                effective_minute = min(45, max(1, elapsed_raw))
+            elif 49 <= elapsed_raw <= 63:
+                m.status = "HALFTIME"
+                effective_minute = 45
+            elif 64 <= elapsed_raw <= 115:
+                m.status = "IN_PLAY"
+                effective_minute = min(90, max(46, 45 + (elapsed_raw - 63)))
+            else:
+                m.status = "FINISHED"
+                effective_minute = 90
 
-            # Fix 2: Only simulate scores if no real score has been written by the API sync
+            # Only simulate scores if no real score has been written by the API sync
             if m.home_score is None or m.away_score is None:
                 target_h = m.ai_predicted_home if m.ai_predicted_home is not None else 1
                 target_a = m.ai_predicted_away if m.ai_predicted_away is not None else 1
-                m.home_score = _calculate_live_goals(m.id, target_h, elapsed, 1)
-                m.away_score = _calculate_live_goals(m.id, target_a, elapsed, 2)
+                m.home_score = _calculate_live_goals(m.id, target_h, effective_minute, 1)
+                m.away_score = _calculate_live_goals(m.id, target_a, effective_minute, 2)
 
-            if elapsed >= 45 and m.home_score_ht is None:
+            if elapsed_raw >= 45 and m.home_score_ht is None:
                 target_h = m.ai_predicted_home if m.ai_predicted_home is not None else 1
                 target_a = m.ai_predicted_away if m.ai_predicted_away is not None else 1
                 m.home_score_ht = _calculate_live_goals(m.id, target_h, 45, 1)

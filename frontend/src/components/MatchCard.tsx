@@ -33,16 +33,7 @@ function getLevelClass(level: string) {
   return 'ws-level-weak';
 }
 
-function parseUtcDate(utc_date: string): Date {
-  if (!utc_date) return new Date();
-  let s = String(utc_date).trim();
-  if (!s.endsWith('Z') && !s.includes('+') && !s.match(/-\d{2}:\d{2}$/)) {
-    s = s.replace(' ', 'T') + 'Z';
-  } else {
-    s = s.replace(' ', 'T');
-  }
-  return new Date(s);
-}
+import { calculateLiveMatchMinute, parseUtcDate } from '@/lib/matchTime';
 
 function formatMatchDateTime(utc_date: string) {
   if (!utc_date) return { time: '--:--', date: '', relative: '', full: '' };
@@ -164,20 +155,15 @@ function getMatchStatusDetails(match: Match): StatusDetails {
   }
 
   if (s === 'IN_PLAY' || s === 'LIVE') {
-    let min = match.live_minute ? `${match.live_minute}'` : '';
-    if (!min && match.utc_date) {
-      const startMs = parseUtcDate(match.utc_date).getTime();
-      const elapsed = Math.max(1, Math.floor((Date.now() - startMs) / 60000));
-      min = elapsed <= 45 ? `${elapsed}'` : elapsed <= 60 ? 'HT' : elapsed <= 105 ? `${Math.min(90, 45 + (elapsed - 60))}'` : "90+'";
-    }
-    const minuteText = min || 'LIVE';
+    const clockInfo = calculateLiveMatchMinute(match.utc_date, s);
+    const minuteText = clockInfo.minuteText;
     return {
-      statusKey: 'LIVE',
+      statusKey: clockInfo.isHalftime ? 'HT' : clockInfo.isFinished ? 'FT' : 'LIVE',
       badgeText: minuteText,
-      badgeClass: 'fs-live-badge-box',
+      badgeClass: clockInfo.isHalftime ? 'ws-badge-live-ht' : clockInfo.isFinished ? 'fs-badge-ft' : 'fs-live-badge-box',
       minuteText: minuteText,
-      isLive: true,
-      isFinished: false,
+      isLive: clockInfo.isLive,
+      isFinished: clockInfo.isFinished,
       isPostponed: false,
       isCancelled: false,
     };
