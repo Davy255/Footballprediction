@@ -18,6 +18,7 @@ from app.services.sync_service import (
     sync_all_competitions,
     sync_all_competitions_full_season,
     sync_all_competitions_today,
+    sync_fast_global_matches,
     sync_live_matches_from_api,
     score_finished_predictions,
     auto_manage_live_matches,
@@ -114,41 +115,51 @@ async def lifespan(app: FastAPI):
     bootstrap_db()
     logger.info("Database ready")
 
-    # Schedule background jobs
-    # 1. Targeted Today + Near Window Sync (every 15 min, runs immediately on boot)
+    # Schedule high-frequency background sync jobs
+    # 1. Ultra-Fast Global Match Sync (every 60s / 1 min, single-request multi-league sync)
     scheduler.add_job(
-        sync_all_competitions_today,
-        "interval",
-        minutes=15,
-        id="sync_today_matches",
-        max_instances=1,
-        coalesce=True,
-        misfire_grace_time=60,
-        next_run_time=datetime.now(),
-    )
-    # 2. Live API Polling (every 60s)
-    scheduler.add_job(
-        sync_live_matches_from_api,
+        sync_fast_global_matches,
         "interval",
         seconds=60,
-        id="sync_live_api",
+        id="sync_global_fast",
         max_instances=1,
         coalesce=True,
         misfire_grace_time=30,
         next_run_time=datetime.now(),
     )
-    # 3. Live Match Simulation & Auto-Finalization (every 30s)
+    # 2. Live API Polling for in-play scores (every 20s)
     scheduler.add_job(
-        auto_manage_live_matches,
+        sync_live_matches_from_api,
         "interval",
-        seconds=30,
-        id="live_poll",
+        seconds=20,
+        id="sync_live_api",
         max_instances=1,
         coalesce=True,
         misfire_grace_time=15,
         next_run_time=datetime.now(),
     )
-    # 4. Full Season Deep Sync (every 6 hours)
+    # 3. Live Match Clock & Goal Simulation Engine (every 15s)
+    scheduler.add_job(
+        auto_manage_live_matches,
+        "interval",
+        seconds=15,
+        id="live_poll",
+        max_instances=1,
+        coalesce=True,
+        misfire_grace_time=10,
+        next_run_time=datetime.now(),
+    )
+    # 4. Targeted multi-competition deeper window sync (every 10 min)
+    scheduler.add_job(
+        sync_all_competitions_today,
+        "interval",
+        minutes=10,
+        id="sync_today_matches",
+        max_instances=1,
+        coalesce=True,
+        misfire_grace_time=60,
+    )
+    # 5. Full Season Deep Sync (every 6 hours)
     scheduler.add_job(
         sync_all_competitions_full_season,
         "interval",

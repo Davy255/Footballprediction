@@ -131,5 +131,10 @@ async def get_todays_matches() -> dict:
     return await _get("/matches", params={"dateFrom": today, "dateTo": today})
 
 
+async def get_global_matches_window(date_from: str, date_to: str) -> dict:
+    """Fetch all matches across all supported competitions in a single API call."""
+    return await _get("/matches", params={"dateFrom": date_from, "dateTo": date_to})
+
+
 async def get_team(team_id: int) -> dict:
     return await _get(f"/teams/{team_id}")

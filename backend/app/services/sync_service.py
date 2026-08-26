@@ -232,10 +232,66 @@ def sync_all_competitions_full_season(season_year: int = CURRENT_SEASON_YEAR):
     feed_cache.clear()
 
 
+def sync_fast_global_matches():
+    """
+    Ultra-Fast Global Match Sync:
+    Fetches all matches from yesterday to tomorrow across all leagues in a single unified API call (1 request).
+    Runs every 60 seconds (1 minute), updating real-time scores, finished statuses, and newly timed fixtures.
+    """
+    from app.core.cache import feed_cache
+    db = SessionLocal()
+    try:
+        now = datetime.now(timezone.utc)
+        date_from = (now - timedelta(days=1)).strftime("%Y-%m-%d")
+        date_to = (now + timedelta(days=2)).strftime("%Y-%m-%d")
+
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        try:
+            data = loop.run_until_complete(
+                football_api.get_global_matches_window(date_from=date_from, date_to=date_to)
+            )
+        except Exception as e:
+            logger.error(f"Error fetching global match window: {e}")
+            return
+        finally:
+            loop.close()
+
+        matches_data = data.get("matches", [])
+        if not matches_data:
+            return
+
+        # Group matches by league/competition
+        by_league: dict[str, list] = {}
+        for m in matches_data:
+            comp = m.get("competition", {})
+            code = comp.get("code")
+            if code and code in SUPPORTED_COMPETITIONS:
+                by_league.setdefault(code, []).append(m)
+
+        updated_count = 0
+        for code, m_list in by_league.items():
+            league = get_or_create_league(db, code)
+            count = _upsert_matches(db, league, m_list, CURRENT_SEASON_STR)
+            league.last_synced = now
+            updated_count += count
+
+        if updated_count > 0:
+            db.commit()
+            feed_cache.clear()
+            logger.info(f"Ultra-fast 60s global sync updated {updated_count} fixtures across {len(by_league)} leagues.")
+
+    except Exception as e:
+        logger.error(f"sync_fast_global_matches error: {e}")
+        db.rollback()
+    finally:
+        db.close()
+
+
 def sync_all_competitions_today():
     """
-    Fast, targeted sync for active competitions around today (today - 1 day to today + 3 days).
-    Runs every 15 minutes to guarantee fresh scores, kick-off dates, and results without rate limits.
+    Comprehensive targeted sync across all supported competitions.
+    Runs every 10 minutes to guarantee deep league coverage.
     """
     from app.core.cache import feed_cache
     now = datetime.now(timezone.utc)
