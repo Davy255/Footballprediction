@@ -159,7 +159,7 @@ async def lifespan(app: FastAPI):
         coalesce=True,
         misfire_grace_time=60,
     )
-    # 5. Full Season Deep Sync (every 6 hours)
+    # 5. Full Season Deep Sync (runs 15s after startup, then every 6 hours)
     scheduler.add_job(
         sync_all_competitions_full_season,
         "interval",
@@ -168,6 +168,7 @@ async def lifespan(app: FastAPI):
         max_instances=1,
         coalesce=True,
         misfire_grace_time=120,
+        next_run_time=datetime.now() + timedelta(seconds=15),
     )
     scheduler.add_job(
         score_finished_predictions,

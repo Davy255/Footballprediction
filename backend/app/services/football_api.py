@@ -112,9 +112,13 @@ async def get_matches(
     return await _get(f"/competitions/{competition_code}/matches", params=params)
 
 
-async def get_season_matches(competition_code: str, season_year: int) -> dict:
-    params = {"season": str(season_year)}
-    return await _get(f"/competitions/{competition_code}/matches", params=params)
+async def get_season_matches(competition_code: str, season_year: int = None) -> dict:
+    params = {"season": str(season_year)} if season_year else {}
+    try:
+        return await _get(f"/competitions/{competition_code}/matches", params=params)
+    except Exception as e:
+        logger.warning(f"Season {season_year} query failed for {competition_code}, trying active season fallback: {e}")
+        return await _get(f"/competitions/{competition_code}/matches")
 
 
 async def get_match(match_id: int) -> dict:
