@@ -509,6 +509,57 @@ function getTeamFormPpg(stats: any, fallback: number = 1.60): string {
   return fallback.toFixed(2);
 }
 
+function getEffectiveMatchForecast(
+  rawForecast: string[] | undefined,
+  homeName: string,
+  awayName: string,
+  homeIntel: any,
+  awayIntel: any,
+  probs: { home_pct: number; draw_pct: number; away_pct: number },
+  score: { home: number | string; away: number | string },
+): string[] {
+  // If rawForecast exists and does NOT contain the legacy generic fallback lines, use it
+  if (
+    rawForecast &&
+    rawForecast.length > 0 &&
+    !rawForecast.some(f => f.toLowerCase().includes('tight, tactical encounter') || f.toLowerCase().includes('both defensive units'))
+  ) {
+    return rawForecast;
+  }
+
+  const list: string[] = [];
+  const hElo = homeIntel?.elo || 1500;
+  const aElo = awayIntel?.elo || 1500;
+  const totalGoals = (Number(score.home) || 1) + (Number(score.away) || 1);
+
+  // 1. Tactical Style & Possession
+  if (hElo >= aElo + 60 || probs.home_pct >= 55) {
+    list.push(`${homeName} will look to dominate central possession and control match tempo in the opponent half`);
+  } else if (aElo >= hElo + 60 || probs.away_pct >= 50) {
+    list.push(`${awayName} will aim to impose their technical passing rhythm and dictate tempo away from home`);
+  } else {
+    list.push(`${homeName} and ${awayName} are evenly matched tactically, setting up an intense midfield battle`);
+  }
+
+  // 2. Wide Overload vs Counter Attack threat
+  if (probs.home_pct >= probs.away_pct) {
+    list.push(`${homeName} will frequently overload the flanks and deliver crosses into ${awayName}'s penalty box`);
+    list.push(`${awayName} will pose a major danger on rapid counter-attacking transitions`);
+  } else {
+    list.push(`${awayName}'s dynamic forward line will test ${homeName}'s defensive organization`);
+    list.push(`${homeName} will rely on structured defensive shape and set-piece opportunities`);
+  }
+
+  // 3. Goal Total & Prediction
+  if (totalGoals >= 3) {
+    list.push(`High probability of over 2.5 goals with a projected ${score.home}-${score.away} scoreline`);
+  } else {
+    list.push(`Projected ${score.home}-${score.away} scoreline points to a disciplined tactical contest`);
+  }
+
+  return list;
+}
+
 interface MatchCardProps {
   match: Match;
   defaultOpen?: boolean;
@@ -761,6 +812,27 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
     ? ai.whoscored.referee
     : venueFallback.referee;
 
+  const probs = ai?.probs || {
+    home_pct: Math.round((match.ai_home_prob ?? 0.45) * 100),
+    draw_pct: Math.round((match.ai_draw_prob ?? 0.27) * 100),
+    away_pct: Math.round((match.ai_away_prob ?? 0.28) * 100),
+  };
+
+  const score = ai?.score || {
+    home: match.ai_predicted_home ?? 1,
+    away: match.ai_predicted_away ?? 1,
+  };
+
+  const dynamicForecast = getEffectiveMatchForecast(
+    ai?.whoscored?.match_forecast,
+    HN,
+    AN,
+    homeIntel,
+    awayIntel,
+    probs,
+    score
+  );
+
   const ws = {
     ...(ai?.whoscored || {}),
     home_rating: homeRating,
@@ -788,17 +860,7 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
       { title: 'Defending set pieces', level: 'Weak' },
     ],
     away_style: ai?.whoscored?.away_style || ['Direct football', 'Quick transitions'],
-    match_forecast: ai?.whoscored?.match_forecast || [
-      `${HN} will look to control tempo in the opponent half`,
-      `${AN} will pose danger on counter-attacking transitions`,
-      `Both teams possess attacking threats to find the net`,
-    ],
-  };
-
-  const probs = ai?.probs || {
-    home_pct: Math.round((match.ai_home_prob ?? 0.45) * 100),
-    draw_pct: Math.round((match.ai_draw_prob ?? 0.27) * 100),
-    away_pct: Math.round((match.ai_away_prob ?? 0.28) * 100),
+    match_forecast: dynamicForecast,
   };
 
   const homeStats = {
@@ -843,10 +905,6 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
     : typeof picks?.primary_odds === 'number'
     ? Number(picks.primary_odds).toFixed(2)
     : picks?.primary_odds ?? '1.50';
-  const score = ai?.score || {
-    home: match.ai_predicted_home ?? 1,
-    away: match.ai_predicted_away ?? 1,
-  };
   const analyticsText = ai?.analytics || `${HN} and ${AN} meet in this encounter. Form analysis and tactical metrics project a competitive clash with ${HN} holding baseline home advantage, while ${AN} remains dangerous on transitions. Projected scoreline is ${score.home}-${score.away}.`;
 
   const loadPred = useCallback(async () => {

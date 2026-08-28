@@ -2255,25 +2255,74 @@ def generate_comprehensive_analysis(
     h_possession = round(max(38, min(62, 50 + (h_elo - a_elo) / 60)), 1)
     a_possession = round(100 - h_possession, 1)
 
-    # WhoScored match forecast bullet points
+    # WhoScored match forecast bullet points (fully dynamic and fixture-specific)
     forecast = []
-    if h_gf5 >= 1.8:
-        forecast.append(f"{home_name} will create many scoring opportunities")
-    if a_gf5 >= 1.8:
-        forecast.append(f"{away_name} are dangerous in attacking transitions")
-    if h_possession >= 55:
-        forecast.append(f"{home_name} will dominate possession in the opponent half")
-    elif a_possession >= 55:
-        forecast.append(f"{away_name} will control the tempo of this match")
-    if h2h_stats.get("btts_pct", 0) >= 55 or btts_yes_prob >= 0.55:
-        forecast.append("Both teams are statistically likely to find the net")
-    if h_ga5 >= 1.5:
-        forecast.append(f"{home_name} have shown defensive vulnerabilities recently")
-    if a_ga5 >= 1.5:
-        forecast.append(f"{away_name} have conceded freely in recent away matches")
-    if not forecast:
-        forecast.append(f"This is expected to be a tight, tactical encounter")
-        forecast.append(f"Both defensive units are disciplined and organized")
+    h_styles = h_profile.get("style", [])
+    a_styles = a_profile.get("style", [])
+    h_strengths = [s.get("title", "") for s in h_profile.get("strengths", [])]
+    a_strengths = [s.get("title", "") for s in a_profile.get("strengths", [])]
+    h_weaknesses = [w.get("title", "") for w in h_profile.get("weaknesses", [])]
+    a_weaknesses = [w.get("title", "") for w in a_profile.get("weaknesses", [])]
+
+    # 1. Tactical Style & Possession Rhythm
+    if "Possession football" in h_styles or h_elo > a_elo + 60 or home_prob >= 0.55:
+        forecast.append(f"{home_name} will look to dominate central possession and control match tempo in the final third")
+    elif "Possession football" in a_styles or a_elo > h_elo + 60 or away_prob >= 0.50:
+        forecast.append(f"{away_name} will aim to impose their technical passing rhythm and dictate tempo away from home")
+    elif "Direct football" in h_styles or "Direct football" in a_styles:
+        forecast.append(f"Expect a direct, vertical contest with both teams looking to bypass midfield and attack space quickly")
+    elif "Counter attacks" in a_strengths or "Counter attacks" in a_styles:
+        forecast.append(f"{away_name} will set up in a compact structure and pose major danger on rapid counter-attacks")
+    elif "Counter attacks" in h_strengths or "Counter attacks" in h_styles:
+        forecast.append(f"{home_name} are poised to absorb early pressure and spring rapid transitions down the flanks")
+    else:
+        forecast.append(f"{home_name} and {away_name} are evenly matched tactically, setting up an intense midfield battle")
+
+    # 2. Key Attacking / Set-Piece Threat vs Defensive Vulnerability
+    if any("wing" in s.lower() or "width" in s.lower() for s in h_styles + h_strengths):
+        forecast.append(f"{home_name} will frequently overload the flanks and deliver crosses into {away_name}'s penalty box")
+    elif any("wing" in s.lower() or "width" in s.lower() for s in a_styles + a_strengths):
+        forecast.append(f"{away_name} will seek to exploit wide corridors and test {home_name}'s full-backs with pace")
+    elif any("set piece" in s.lower() for s in h_strengths) and any("set piece" in w.lower() for w in a_weaknesses):
+        forecast.append(f"{home_name} hold a notable aerial advantage from attacking corners and set-piece routines")
+    elif any("set piece" in s.lower() for s in a_strengths):
+        forecast.append(f"{away_name}'s precision on dead-ball deliveries will be a critical threat throughout the match")
+    elif h_gf5 >= 1.6:
+        forecast.append(f"{home_name} enter in prolific scoring form, averaging {h_gf5:.1f} goals per match in recent outings")
+    elif a_gf5 >= 1.6:
+        forecast.append(f"{away_name}'s forward line is firing efficiently, averaging {a_gf5:.1f} goals scored recently")
+    elif h_ga5 >= 1.3:
+        forecast.append(f"{home_name} have shown defensive lapses recently, giving {away_name} opportunities to penetrate")
+    elif a_ga5 >= 1.3:
+        forecast.append(f"{away_name}'s backline has conceded {a_ga5:.1f} goals per game on average, inviting home pressure")
+
+    # 3. Market Expectation & Goal Total Dynamics
+    total_expected = pred_home + pred_away
+    if total_expected >= 3 or over_25_prob >= 0.52:
+        forecast.append(f"Model assigns {round(over_25_prob*100)}% probability to Over 2.5 Goals, projecting a vibrant, open encounter")
+    elif btts_yes_prob >= 0.53:
+        forecast.append(f"Both teams to score is strongly favored ({round(btts_yes_prob*100)}% likelihood) given both attacking profiles")
+    elif total_expected <= 2 and under_25_prob >= 0.52:
+        forecast.append(f"A tactical affair is projected (Under 2.5 Goals @ {round(under_25_prob*100)}%), with disciplined defensive shapes")
+    elif btts_yes_prob < 0.45:
+        fav = home_name if home_prob >= away_prob else away_name
+        forecast.append(f"{fav}'s solid defensive organization gives them strong clean-sheet potential")
+
+    # 4. Form & Win Probability Verdict
+    h_pct = round(home_prob * 100)
+    a_pct = round(away_prob * 100)
+    if home_prob >= 0.55:
+        forecast.append(f"{home_name} are solid statistical favorites ({h_pct}% win chance) with a projected {pred_home}-{pred_away} victory")
+    elif away_prob >= 0.48:
+        forecast.append(f"{away_name} carry a significant quality edge ({a_pct}% win chance) to secure maximum points on the road")
+    elif h_stats.get("pts5", 1.3) >= 2.0:
+        forecast.append(f"{home_name} boast momentum with {h_stats.get('pts5', 1.3):.1f} PPG in their last 5 appearances")
+    elif a_stats.get("pts5", 1.3) >= 2.0:
+        forecast.append(f"{away_name} arrive in peak rhythm, unbeaten across their recent competitive stretch")
+    else:
+        forecast.append(f"Projected outcome leans towards a {pred_home}-{pred_away} scoreline with high tactical stakes")
+
+    forecast = forecast[:4]
 
     analytics_text = generate_analytics_text(
         home_name, away_name, h_stats, a_stats, h2h_stats,
