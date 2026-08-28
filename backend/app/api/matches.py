@@ -147,7 +147,7 @@ def get_matches(
     league_code: Optional[str] = None,
     status: Optional[str] = None,
     date: Optional[str] = None,
-    season: Optional[str] = "2026/2027",
+    season: Optional[str] = None,
     skip: int = 0,
     limit: int = 100,
     db: Session = Depends(get_db),

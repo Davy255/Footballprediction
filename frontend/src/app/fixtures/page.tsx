@@ -122,30 +122,15 @@ function FixturesContent() {
   }, []);
 
   const loadMatches = async (useCache = true) => {
-    const cacheKey = `fp_fix_${selectedLeague}_${selectedStatus}`;
-    if (useCache && typeof window !== 'undefined') {
-      try {
-        const cached = localStorage.getItem(cacheKey) || sessionStorage.getItem(cacheKey);
-        if (cached) {
-          setMatches(JSON.parse(cached));
-          setLoading(false);
-        }
-      } catch {}
-    }
-
+    setLoading(true);
     try {
       const data = await fetchMatches({
         league_code: selectedLeague || undefined,
-        status: selectedStatus || undefined,
-        limit: 150,
+        status: selectedStatus === 'ALL' ? undefined : (selectedStatus || undefined),
+        limit: 200,
       });
       if (Array.isArray(data)) {
         setMatches(data);
-        if (typeof window !== 'undefined') {
-          try {
-            localStorage.setItem(cacheKey, JSON.stringify(data));
-          } catch {}
-        }
       }
     } catch (err) {
       console.error(err);
@@ -155,7 +140,7 @@ function FixturesContent() {
   };
 
   useEffect(() => {
-    loadMatches(true);
+    loadMatches(false);
   }, [selectedLeague, selectedStatus]);
 
   // Filter matches based on search query
@@ -173,6 +158,14 @@ function FixturesContent() {
       } catch {
         return true;
       }
+    }
+
+    if (selectedStatus === 'FINISHED') {
+      return ['FINISHED', 'AWARDED'].includes(m.status);
+    }
+
+    if (selectedStatus === 'LIVE') {
+      return ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME'].includes(m.status);
     }
 
     return true;
@@ -332,15 +325,20 @@ function FixturesContent() {
           {/* Status buttons */}
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
             <span style={{ fontWeight: 700, fontSize: '0.86rem', color: 'var(--text-primary)' }}>Status:</span>
-            {['SCHEDULED', 'LIVE', 'FINISHED'].map((st) => (
+            {[
+              { key: 'SCHEDULED', label: 'Upcoming' },
+              { key: 'LIVE', label: '🔴 Live' },
+              { key: 'FINISHED', label: 'Completed' },
+              { key: 'ALL', label: 'All Matches' },
+            ].map(({ key, label }) => (
               <button
-                key={st}
+                key={key}
                 type="button"
-                onClick={() => setSelectedStatus(st)}
-                className={`btn ${selectedStatus === st ? 'btn-primary' : 'btn-secondary'}`}
+                onClick={() => setSelectedStatus(key)}
+                className={`btn ${selectedStatus === key ? 'btn-primary' : 'btn-secondary'}`}
                 style={{ fontSize: '0.80rem', padding: '0.35rem 0.9rem', borderRadius: '8px', fontWeight: 700 }}
               >
-                {st === 'SCHEDULED' ? 'Upcoming' : st === 'LIVE' ? '🔴 Live' : 'Completed'}
+                {label}
               </button>
             ))}
           </div>
@@ -497,16 +495,48 @@ function FixturesContent() {
           </div>
         </div>
       ) : (
-        <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
-          <p style={{ fontWeight: 700, fontSize: '0.96rem', color: 'var(--text-primary)' }}>
-            No matches found for the selected filters.
+        <div className="glass-panel" style={{ padding: '2.8rem 1.5rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+          <div style={{ fontSize: '2rem', marginBottom: '0.4rem' }}>⚽</div>
+          <p style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--text-primary)', marginBottom: '0.35rem' }}>
+            {selectedLeague
+              ? `No ${selectedStatus === 'SCHEDULED' ? 'upcoming' : selectedStatus === 'FINISHED' ? 'completed' : 'live'} matches found for ${leagues.find(l => l.code === selectedLeague)?.name || selectedLeague}`
+              : 'No matches found for the selected filters.'}
           </p>
-          <button
-            onClick={() => { setSelectedStatus('SCHEDULED'); setSelectedLeague(''); setSearchQuery(''); }}
-            style={{ marginTop: '0.5rem', background: 'none', border: 'none', color: 'var(--accent-blue)', fontWeight: 700, cursor: 'pointer', textDecoration: 'underline' }}
-          >
-            Reset all filters
-          </button>
+          <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', maxWidth: '480px', margin: '0 auto 1.2rem auto', lineHeight: 1.5 }}>
+            {selectedLeague && selectedStatus === 'SCHEDULED'
+              ? 'Upcoming tournament fixtures kick off in the next scheduled round. You can browse completed matches, final scores, and tactical statistics below.'
+              : 'Try changing your status filter or search query.'}
+          </p>
+          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            {selectedLeague && selectedStatus !== 'FINISHED' && (
+              <button
+                type="button"
+                onClick={() => setSelectedStatus('FINISHED')}
+                className="btn btn-primary"
+                style={{ padding: '0.5rem 1.1rem', borderRadius: '8px', fontWeight: 700, fontSize: '0.82rem' }}
+              >
+                🏆 View Completed {leagues.find(l => l.code === selectedLeague)?.name || 'League'} Matches
+              </button>
+            )}
+            {selectedLeague && selectedStatus !== 'ALL' && (
+              <button
+                type="button"
+                onClick={() => setSelectedStatus('ALL')}
+                className="btn btn-secondary"
+                style={{ padding: '0.5rem 1.1rem', borderRadius: '8px', fontWeight: 700, fontSize: '0.82rem' }}
+              >
+                📋 View All Matches
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => { setSelectedStatus('SCHEDULED'); setSelectedLeague(''); setSearchQuery(''); }}
+              className="btn btn-secondary"
+              style={{ padding: '0.5rem 1.1rem', borderRadius: '8px', fontWeight: 700, fontSize: '0.82rem' }}
+            >
+              🔄 Reset All Filters
+            </button>
+          </div>
         </div>
       )}
 
