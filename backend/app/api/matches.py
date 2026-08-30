@@ -27,11 +27,12 @@ def set_in_cache(key: str, data: Any, ttl: float = 15.0):
 
 
 def ensure_match_predictions(matches: list[Match], db: Session):
-    """Ensures returned matches have AI prediction fields populated with sub-millisecond memory caching."""
+    """Ensures returned matches have AI prediction fields populated and PERMANENTLY locked in DB."""
+    changed = False
     for m in matches:
-        if not m.home_team or not m.away_team or m.status == "FINISHED":
+        if not m.home_team or not m.away_team:
             continue
-        # Fast-path: If match already has AI probabilities and predictions in DB, skip heavy ML calculation
+        # Fast-path: If match already has AI probabilities and predictions in DB, NEVER re-calculate or overwrite
         if m.ai_home_prob is not None and m.ai_predicted_home is not None and m.prediction_description:
             continue
 
@@ -40,7 +41,7 @@ def ensure_match_predictions(matches: list[Match], db: Session):
             pred = prediction_mem_cache.get(pair_key)
             if not pred:
                 pred = predict_match(m.home_team, m.away_team, db)
-                prediction_mem_cache.set(pair_key, pred, ttl=3600.0)
+                prediction_mem_cache.set(pair_key, pred, ttl=86400.0)
 
             m.ai_home_prob = pred["ai_home_prob"]
             m.ai_draw_prob = pred["ai_draw_prob"]
@@ -59,8 +60,15 @@ def ensure_match_predictions(matches: list[Match], db: Session):
             m.odds_dc_1x = pred.get("odds_dc_1x", 1.30)
             m.odds_dc_x2 = pred.get("odds_dc_x2", 1.45)
             m.odds_dc_12 = pred.get("odds_dc_12", 1.25)
+            changed = True
         except Exception:
             pass
+
+    if changed:
+        try:
+            db.commit()
+        except Exception:
+            db.rollback()
 
 
 @router.get("/feed")

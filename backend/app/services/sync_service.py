@@ -138,6 +138,31 @@ def _upsert_matches(db: Session, league: League, matches_data: list, season_str:
             match.away_score = None
             match.winner = None
 
+        # Ensure pre-match AI prediction is generated and permanently locked in DB
+        if match.ai_predicted_home is None or not match.prediction_description:
+            try:
+                from app.services.ml_predictor import predict_match
+                pred = predict_match(home_team, away_team, db)
+                match.ai_home_prob = pred["ai_home_prob"]
+                match.ai_draw_prob = pred["ai_draw_prob"]
+                match.ai_away_prob = pred["ai_away_prob"]
+                match.ai_predicted_home = pred["ai_predicted_home"]
+                match.ai_predicted_away = pred["ai_predicted_away"]
+                match.ai_confidence = pred["ai_confidence"]
+                match.prediction_description = pred["prediction_description"]
+                match.odds_home = pred["odds_home"]
+                match.odds_draw = pred["odds_draw"]
+                match.odds_away = pred["odds_away"]
+                match.odds_over25 = pred.get("odds_over25", 1.85)
+                match.odds_under25 = pred.get("odds_under25", 1.95)
+                match.odds_btts_yes = pred.get("odds_btts_yes", 1.80)
+                match.odds_btts_no = pred.get("odds_btts_no", 2.00)
+                match.odds_dc_1x = pred.get("odds_dc_1x", 1.30)
+                match.odds_dc_x2 = pred.get("odds_dc_x2", 1.45)
+                match.odds_dc_12 = pred.get("odds_dc_12", 1.25)
+            except Exception:
+                pass
+
         count += 1
 
     db.commit()

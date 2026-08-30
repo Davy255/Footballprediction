@@ -104,10 +104,60 @@ def bootstrap_db():
                 ))
         db.commit()
         logger.info("Leagues seeded")
+
+        # Permanently lock initial pre-match predictions for any new matches so projected scores never mutate
+        lock_all_unlocked_predictions(db)
     except Exception as e:
         logger.error(f"Error during bootstrap_db: {e}")
     finally:
         db.close()
+
+
+def lock_all_unlocked_predictions(db):
+    """Ensures every match in the database has a pre-match prediction permanently locked so projected scorelines never mutate."""
+    from app.models.match import Match
+    from app.services.ml_predictor import predict_match
+
+    unlocked = db.query(Match).filter(
+        (Match.ai_predicted_home == None) | (Match.prediction_description == None)
+    ).all()
+    if not unlocked:
+        return
+
+    cache = {}
+    count = 0
+    for m in unlocked:
+        if not m.home_team_id or not m.away_team_id:
+            continue
+        pair = (m.home_team_id, m.away_team_id)
+        if pair not in cache:
+            try:
+                pred = predict_match(m.home_team, m.away_team, db)
+                cache[pair] = pred
+            except Exception:
+                continue
+        pred = cache[pair]
+        m.ai_home_prob = pred["ai_home_prob"]
+        m.ai_draw_prob = pred["ai_draw_prob"]
+        m.ai_away_prob = pred["ai_away_prob"]
+        m.ai_predicted_home = pred["ai_predicted_home"]
+        m.ai_predicted_away = pred["ai_predicted_away"]
+        m.ai_confidence = pred["ai_confidence"]
+        m.prediction_description = pred["prediction_description"]
+        m.odds_home = pred["odds_home"]
+        m.odds_draw = pred["odds_draw"]
+        m.odds_away = pred["odds_away"]
+        m.odds_over25 = pred.get("odds_over25", 1.85)
+        m.odds_under25 = pred.get("odds_under25", 1.95)
+        m.odds_btts_yes = pred.get("odds_btts_yes", 1.80)
+        m.odds_btts_no = pred.get("odds_btts_no", 2.00)
+        m.odds_dc_1x = pred.get("odds_dc_1x", 1.30)
+        m.odds_dc_x2 = pred.get("odds_dc_x2", 1.45)
+        m.odds_dc_12 = pred.get("odds_dc_12", 1.25)
+        count += 1
+
+    db.commit()
+    logger.info(f"Permanently locked pre-match predictions for {count} matches")
 
 
 @asynccontextmanager
