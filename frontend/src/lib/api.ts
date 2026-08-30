@@ -228,7 +228,7 @@ export async function fetchMe() {
 export async function fetchMatchesFeed() {
   return fetchApi<{ matches: Match[]; leagues: League[]; total: number }>(
     '/api/matches/feed',
-    { cacheTtlMs: 20000, nextOptions: { revalidate: 30 } },
+    { cacheTtlMs: 10000, nextOptions: { revalidate: 15 } },
     1
   );
 }
@@ -239,11 +239,11 @@ export async function fetchMatches(params?: { league_code?: string; status?: str
   if (params?.status) query.append('status', params.status);
   if (params?.date) query.append('date', params.date);
   if (params?.limit) query.append('limit', params.limit.toString());
-  return fetchApi<Match[]>(`/api/matches/?${query.toString()}`, { cacheTtlMs: 30000 });
+  return fetchApi<Match[]>(`/api/matches/?${query.toString()}`, { cacheTtlMs: 10000 });
 }
 
 export async function fetchTodayMatches() {
-  return fetchApi<Match[]>('/api/matches/today', { cacheTtlMs: 15000 });
+  return fetchApi<Match[]>('/api/matches/today', { cacheTtlMs: 8000 });
 }
 
 export async function fetchLiveMatches() {
@@ -252,21 +252,21 @@ export async function fetchLiveMatches() {
 }
 
 export async function fetchUpcomingMatches(days = 7) {
-  return fetchApi<Match[]>(`/api/matches/upcoming?days=${days}`, { cacheTtlMs: 60000 });
+  return fetchApi<Match[]>(`/api/matches/upcoming?days=${days}`, { cacheTtlMs: 15000 });
 }
 
 /**
- * Fetch yesterday's completed matches (FINISHED/AWARDED) with 2-minute cache.
+ * Fetch yesterday's completed matches (FINISHED/AWARDED) with 30s cache.
  */
 export async function fetchYesterdayMatches() {
-  return fetchApi<Match[]>('/api/matches/yesterday', { cacheTtlMs: 120000 }, 1);
+  return fetchApi<Match[]>('/api/matches/yesterday', { cacheTtlMs: 30000 }, 1);
 }
 
 /**
- * Fetch a single match by ID with 60s memory cache.
+ * Fetch a single match by ID with 15s memory cache.
  */
 export async function fetchMatch(id: number) {
-  return fetchApi<Match>(`/api/matches/${id}`, { cacheTtlMs: 60000, nextOptions: { revalidate: 60 } });
+  return fetchApi<Match>(`/api/matches/${id}`, { cacheTtlMs: 15000, nextOptions: { revalidate: 15 } });
 }
 
 // ──────────────────────────────────────────────────────────────

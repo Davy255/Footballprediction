@@ -45,7 +45,7 @@ class BoundedTTLCache:
 
 
 # Global Bounded Cache Instances with high-performance production TTLs
-feed_cache = BoundedTTLCache(max_size=100, default_ttl=60.0)          # 60 seconds for unified feed
+feed_cache = BoundedTTLCache(max_size=150, default_ttl=15.0)          # 15 seconds for fast match & fixture updates
 league_cache = BoundedTTLCache(max_size=50, default_ttl=600.0)        # 10 minutes for leagues
 standings_cache = BoundedTTLCache(max_size=50, default_ttl=600.0)     # 10 minutes for standings
 prediction_mem_cache = BoundedTTLCache(max_size=1000, default_ttl=3600.0) # 1 hour for predictions

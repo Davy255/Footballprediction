@@ -117,33 +117,33 @@ async def lifespan(app: FastAPI):
     logger.info("Database ready")
 
     # Schedule high-frequency background sync jobs
-    # 1. Ultra-Fast Global Match Sync (every 60s / 1 min, single-request multi-league sync)
+    # 1. Ultra-Fast Global Match Sync (every 45s, single-request multi-league sync)
     scheduler.add_job(
         sync_fast_global_matches,
         "interval",
-        seconds=60,
+        seconds=45,
         id="sync_global_fast",
         max_instances=1,
         coalesce=True,
         misfire_grace_time=30,
         next_run_time=datetime.now(),
     )
-    # 2. Live API Polling for in-play scores (every 20s)
+    # 2. Live API Polling for in-play scores (every 15s)
     scheduler.add_job(
         sync_live_matches_from_api,
         "interval",
-        seconds=20,
+        seconds=15,
         id="sync_live_api",
         max_instances=1,
         coalesce=True,
         misfire_grace_time=15,
         next_run_time=datetime.now(),
     )
-    # 3. Live Match Clock & Goal Simulation Engine (every 15s)
+    # 3. Live Match Clock & Goal Simulation Engine (every 10s)
     scheduler.add_job(
         auto_manage_live_matches,
         "interval",
-        seconds=15,
+        seconds=10,
         id="live_poll",
         max_instances=1,
         coalesce=True,
@@ -160,17 +160,17 @@ async def lifespan(app: FastAPI):
         coalesce=True,
         misfire_grace_time=60,
     )
-    # 5. Dedicated finished-match recovery sync (every 15 min)
+    # 5. Dedicated finished-match recovery sync (every 5 min)
     # Catches TIMED→FINISHED transitions missed during Render cold starts
     scheduler.add_job(
         sync_recently_finished_matches,
         "interval",
-        minutes=15,
+        minutes=5,
         id="sync_finished_recovery",
         max_instances=1,
         coalesce=True,
         misfire_grace_time=120,
-        next_run_time=datetime.now() + timedelta(seconds=30),
+        next_run_time=datetime.now() + timedelta(seconds=15),
     )
     # 6. Full Season Deep Sync (runs 15s after startup, then every 12 hours)
     # Reduced from 6h to 12h to lower Render memory/API pressure

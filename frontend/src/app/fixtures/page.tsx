@@ -121,8 +121,8 @@ function FixturesContent() {
       .catch(() => {});
   }, []);
 
-  const loadMatches = async (useCache = true) => {
-    setLoading(true);
+  const loadMatches = async (showLoading = true) => {
+    if (showLoading && matches.length === 0) setLoading(true);
     try {
       const data = await fetchMatches({
         league_code: selectedLeague || undefined,
@@ -140,7 +140,12 @@ function FixturesContent() {
   };
 
   useEffect(() => {
-    loadMatches(false);
+    loadMatches(true);
+    // Continuous background refresh every 20s
+    const interval = setInterval(() => {
+      loadMatches(false);
+    }, 20000);
+    return () => clearInterval(interval);
   }, [selectedLeague, selectedStatus]);
 
   // Filter matches based on search query

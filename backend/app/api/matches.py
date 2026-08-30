@@ -18,11 +18,11 @@ from app.core.cache import feed_cache, prediction_mem_cache
 from app.core.security import search_rate_limiter
 
 
-def get_from_cache(key: str, ttl_seconds: float = 180.0) -> Optional[Any]:
+def get_from_cache(key: str, ttl_seconds: float = 15.0) -> Optional[Any]:
     return feed_cache.get(key)
 
 
-def set_in_cache(key: str, data: Any, ttl: float = 180.0):
+def set_in_cache(key: str, data: Any, ttl: float = 15.0):
     feed_cache.set(key, data, ttl=ttl)
 
 
@@ -69,10 +69,10 @@ def get_unified_matches_feed(response: Response, db: Session = Depends(get_db)):
     High-Speed Unified Feed Endpoint.
     Returns all active fixtures (Upcoming, Live, Finished) + Leagues in a single, ultra-fast response.
     """
-    # Cache for 60 seconds — reduced from 180s for fresher data after cold starts
-    cached = get_from_cache("unified_matches_feed", ttl_seconds=60.0)
+    # Cache for 15 seconds for fast updates
+    cached = get_from_cache("unified_matches_feed", ttl_seconds=15.0)
     if cached is not None:
-        response.headers["Cache-Control"] = "public, max-age=30, s-maxage=60, stale-while-revalidate=120"
+        response.headers["Cache-Control"] = "public, max-age=10, s-maxage=15, stale-while-revalidate=30"
         return cached
 
     now = datetime.now(timezone.utc)
@@ -87,7 +87,7 @@ def get_unified_matches_feed(response: Response, db: Session = Depends(get_db)):
     live_matches = (
         db.query(Match)
         .options(*opts)
-        .filter(Match.status.in_(["LIVE", "IN_PLAY", "PAUSED", "HALFTIME"]))
+        .filter(Match.status.in_(["LIVE", "IN_PLAY", "PAUSED", "HALFTIME", "1H", "2H", "HT"]))
         .order_by(Match.utc_date.asc())
         .all()
     )
@@ -141,8 +141,8 @@ def get_unified_matches_feed(response: Response, db: Session = Depends(get_db)):
         "total": len(matches),
     }
 
-    set_in_cache("unified_matches_feed", result, ttl=60.0)
-    response.headers["Cache-Control"] = "public, max-age=30, s-maxage=60, stale-while-revalidate=120"
+    set_in_cache("unified_matches_feed", result, ttl=15.0)
+    response.headers["Cache-Control"] = "public, max-age=10, s-maxage=15, stale-while-revalidate=30"
     return result
 
 
@@ -619,5 +619,5 @@ def get_match(match_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Match not found")
 
     ensure_match_predictions([match], db)
-    set_in_cache(cache_key, match)
+    set_in_cache(cache_key, match, ttl=15.0)
     return match

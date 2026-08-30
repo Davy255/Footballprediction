@@ -180,6 +180,11 @@ export default function HomePage() {
 
   useEffect(() => {
     loadData(true);
+    // Background polling every 20s keeps scores, minutes, and fixtures fresh in real-time
+    const interval = setInterval(() => {
+      loadData(false);
+    }, 20000);
+    return () => clearInterval(interval);
   }, []);
 
   // Filter matches based on Search Query, selected Status & League
