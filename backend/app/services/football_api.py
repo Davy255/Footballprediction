@@ -9,65 +9,55 @@ logger = logging.getLogger("football_api")
 BASE_URL = settings.FOOTBALL_DATA_BASE_URL
 HEADERS = {"X-Auth-Token": settings.FOOTBALL_DATA_API_KEY}
 
-# Shared async client pool with bounded connections and realistic timeouts
-_client: Optional[httpx.AsyncClient] = None
-
-
-def _get_client() -> httpx.AsyncClient:
-    global _client
-    if _client is None or _client.is_closed:
-        _client = httpx.AsyncClient(
-            timeout=httpx.Timeout(8.0, connect=3.0),
-            limits=httpx.Limits(max_keepalive_connections=10, max_connections=20),
-            headers=HEADERS,
-        )
-    return _client
-
-
 async def _get(path: str, params: dict = None, max_retries: int = 2) -> dict:
     """
     Resilient HTTP GET with controlled retry and exponential backoff.
     Protects against transient 5xx provider failures, rate limits, and network hiccups.
+    Uses clean context-managed AsyncClient to prevent closed event loop errors across scheduler threads.
     """
-    client = _get_client()
     url = f"{BASE_URL}{path}"
     delay = 0.5
 
     for attempt in range(max_retries + 1):
         try:
-            resp = await client.get(url, params=params)
+            async with httpx.AsyncClient(
+                timeout=httpx.Timeout(10.0, connect=4.0),
+                limits=httpx.Limits(max_keepalive_connections=10, max_connections=20),
+                headers=HEADERS,
+            ) as client:
+                resp = await client.get(url, params=params)
 
-            # Success
-            if resp.status_code == 200:
-                return resp.json()
+                # Success
+                if resp.status_code == 200:
+                    return resp.json()
 
-            # Handle 429 Rate Limit
-            if resp.status_code == 429:
-                retry_after = float(resp.headers.get("Retry-After", delay))
-                logger.warning(f"Rate limited (429) by football-data.org on {path}. Backing off {retry_after}s...")
-                if attempt < max_retries:
-                    await asyncio.sleep(min(retry_after, 2.0))
-                    delay *= 2
-                    continue
-                else:
-                    logger.error(f"Rate limit retry exhausted on {path}")
+                # Handle 429 Rate Limit
+                if resp.status_code == 429:
+                    retry_after = float(resp.headers.get("Retry-After", delay))
+                    logger.warning(f"Rate limited (429) by football-data.org on {path}. Backing off {retry_after}s...")
+                    if attempt < max_retries:
+                        await asyncio.sleep(min(retry_after, 2.0))
+                        delay *= 2
+                        continue
+                    else:
+                        logger.error(f"Rate limit retry exhausted on {path}")
+                        return {}
+
+                # Handle Transient Server Errors (500, 502, 503, 504)
+                if resp.status_code in (500, 502, 503, 504):
+                    logger.warning(f"Transient {resp.status_code} error from football provider on {path} (Attempt {attempt+1}/{max_retries+1})")
+                    if attempt < max_retries:
+                        await asyncio.sleep(delay)
+                        delay *= 2
+                        continue
+                    else:
+                        logger.error(f"Server error retries exhausted for {path}: HTTP {resp.status_code}")
+                        return {}
+
+                # Permanent 4xx Client Errors (400, 401, 403, 404) - Do not retry
+                if 400 <= resp.status_code < 500:
+                    logger.error(f"Client error from football provider on {path}: HTTP {resp.status_code} - {resp.text[:100]}")
                     return {}
-
-            # Handle Transient Server Errors (500, 502, 503, 504)
-            if resp.status_code in (500, 502, 503, 504):
-                logger.warning(f"Transient {resp.status_code} error from football provider on {path} (Attempt {attempt+1}/{max_retries+1})")
-                if attempt < max_retries:
-                    await asyncio.sleep(delay)
-                    delay *= 2
-                    continue
-                else:
-                    logger.error(f"Server error retries exhausted for {path}: HTTP {resp.status_code}")
-                    return {}
-
-            # Permanent 4xx Client Errors (400, 401, 403, 404) - Do not retry
-            if 400 <= resp.status_code < 500:
-                logger.error(f"Client error from football provider on {path}: HTTP {resp.status_code} - {resp.text[:100]}")
-                return {}
 
         except (httpx.TimeoutException, httpx.ConnectError, httpx.ReadError) as e:
             logger.warning(f"Network exception on {path}: {type(e).__name__} (Attempt {attempt+1}/{max_retries+1})")
