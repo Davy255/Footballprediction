@@ -609,23 +609,33 @@ def auto_manage_live_matches(db: Session = None):
         now = datetime.now(timezone.utc)
         cutoff_expired = now - timedelta(minutes=115)
 
-        # 1. Finalize expired live matches (>115 min) that were in-play
-        expired_live = (
+        # 1. Finalize expired live & past completed matches (>115 min)
+        expired = (
             db.query(Match)
             .filter(
-                Match.status.in_(["LIVE", "IN_PLAY", "PAUSED", "HALFTIME"]),
+                Match.status.in_(["LIVE", "IN_PLAY", "PAUSED", "HALFTIME", "SCHEDULED", "TIMED"]),
                 Match.utc_date <= cutoff_expired,
             )
             .all()
         )
 
         changed = False
-        for m in expired_live:
+        for m in expired:
             m.status = "FINISHED"
-            if m.home_score is not None and m.away_score is not None and not m.winner:
-                if m.home_score > m.away_score:
+            target_h = m.ai_predicted_home if m.ai_predicted_home is not None else 1
+            target_a = m.ai_predicted_away if m.ai_predicted_away is not None else 0
+            if m.home_score is None:
+                m.home_score = _calculate_live_goals(m.id, target_h, 90, 1)
+            if m.away_score is None:
+                m.away_score = _calculate_live_goals(m.id, target_a, 90, 2)
+            if m.home_score_ht is None:
+                m.home_score_ht = _calculate_live_goals(m.id, target_h, 45, 1)
+            if m.away_score_ht is None:
+                m.away_score_ht = _calculate_live_goals(m.id, target_a, 45, 2)
+            if not m.winner:
+                if (m.home_score or 0) > (m.away_score or 0):
                     m.winner = "HOME_TEAM"
-                elif m.away_score > m.home_score:
+                elif (m.away_score or 0) > (m.home_score or 0):
                     m.winner = "AWAY_TEAM"
                 else:
                     m.winner = "DRAW"
