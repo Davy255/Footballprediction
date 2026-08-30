@@ -3,7 +3,7 @@ FastAPI main application entry point.
 """
 import logging
 from contextlib import asynccontextmanager
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from fastapi import FastAPI, Request, Depends, Response
 from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -20,6 +20,7 @@ from app.services.sync_service import (
     sync_all_competitions_today,
     sync_fast_global_matches,
     sync_live_matches_from_api,
+    sync_recently_finished_matches,
     score_finished_predictions,
     auto_manage_live_matches,
 )
@@ -159,11 +160,24 @@ async def lifespan(app: FastAPI):
         coalesce=True,
         misfire_grace_time=60,
     )
-    # 5. Full Season Deep Sync (runs 15s after startup, then every 6 hours)
+    # 5. Dedicated finished-match recovery sync (every 15 min)
+    # Catches TIMED→FINISHED transitions missed during Render cold starts
+    scheduler.add_job(
+        sync_recently_finished_matches,
+        "interval",
+        minutes=15,
+        id="sync_finished_recovery",
+        max_instances=1,
+        coalesce=True,
+        misfire_grace_time=120,
+        next_run_time=datetime.now() + timedelta(seconds=30),
+    )
+    # 6. Full Season Deep Sync (runs 15s after startup, then every 12 hours)
+    # Reduced from 6h to 12h to lower Render memory/API pressure
     scheduler.add_job(
         sync_all_competitions_full_season,
         "interval",
-        hours=6,
+        hours=12,
         id="sync_full_season",
         max_instances=1,
         coalesce=True,

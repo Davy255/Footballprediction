@@ -69,10 +69,10 @@ def get_unified_matches_feed(response: Response, db: Session = Depends(get_db)):
     High-Speed Unified Feed Endpoint.
     Returns all active fixtures (Upcoming, Live, Finished) + Leagues in a single, ultra-fast response.
     """
-    # Cache for 180 seconds (3 minutes) in server memory
-    cached = get_from_cache("unified_matches_feed", ttl_seconds=180.0)
+    # Cache for 60 seconds — reduced from 180s for fresher data after cold starts
+    cached = get_from_cache("unified_matches_feed", ttl_seconds=60.0)
     if cached is not None:
-        response.headers["Cache-Control"] = "public, max-age=60, s-maxage=180, stale-while-revalidate=300"
+        response.headers["Cache-Control"] = "public, max-age=30, s-maxage=60, stale-while-revalidate=120"
         return cached
 
     now = datetime.now(timezone.utc)
@@ -107,13 +107,17 @@ def get_unified_matches_feed(response: Response, db: Session = Depends(get_db)):
         .all()
     )
 
-    # 3. Recently Finished Matches (most recent first, capped at 40 for optimal payload performance)
+    # 3. Recently Finished Matches — past 3 days to guarantee yesterday's results
+    three_days_ago = now - timedelta(days=3)
     finished_matches = (
         db.query(Match)
         .options(*opts)
-        .filter(Match.status.in_(["FINISHED", "AWARDED"]))
+        .filter(
+            Match.status.in_(["FINISHED", "AWARDED"]),
+            Match.utc_date >= three_days_ago,
+        )
         .order_by(Match.utc_date.desc())
-        .limit(40)
+        .limit(60)
         .all()
     )
 
@@ -137,8 +141,8 @@ def get_unified_matches_feed(response: Response, db: Session = Depends(get_db)):
         "total": len(matches),
     }
 
-    set_in_cache("unified_matches_feed", result, ttl=180.0)
-    response.headers["Cache-Control"] = "public, max-age=60, s-maxage=180, stale-while-revalidate=300"
+    set_in_cache("unified_matches_feed", result, ttl=60.0)
+    response.headers["Cache-Control"] = "public, max-age=30, s-maxage=60, stale-while-revalidate=120"
     return result
 
 
@@ -543,6 +547,41 @@ def search_football_entities(
 
     set_in_cache(normalized_cache_key, result)
     return result
+
+
+@router.get("/yesterday", response_model=list[MatchOut])
+def get_yesterday_matches(db: Session = Depends(get_db)):
+    """
+    Returns all completed (FINISHED/AWARDED) matches from yesterday.
+    Uses UTC dates — yesterday is the full calendar day prior to today UTC.
+    """
+    cache_key = "matches_yesterday"
+    cached = get_from_cache(cache_key, ttl_seconds=120.0)
+    if cached is not None:
+        return cached
+
+    now = datetime.now(timezone.utc)
+    yesterday_start = (now - timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
+    yesterday_end = yesterday_start + timedelta(days=1)
+
+    matches = (
+        db.query(Match)
+        .options(
+            joinedload(Match.league),
+            joinedload(Match.home_team),
+            joinedload(Match.away_team),
+        )
+        .filter(
+            Match.utc_date >= yesterday_start,
+            Match.utc_date < yesterday_end,
+            Match.status.in_(["FINISHED", "AWARDED"]),
+        )
+        .order_by(Match.utc_date.asc())
+        .all()
+    )
+
+    set_in_cache(cache_key, matches, ttl=120.0)
+    return matches
 
 
 @router.get("/{match_id}", response_model=MatchOut)

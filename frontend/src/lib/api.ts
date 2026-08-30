@@ -228,7 +228,7 @@ export async function fetchMe() {
 export async function fetchMatchesFeed() {
   return fetchApi<{ matches: Match[]; leagues: League[]; total: number }>(
     '/api/matches/feed',
-    { cacheTtlMs: 30000, nextOptions: { revalidate: 30 } },
+    { cacheTtlMs: 20000, nextOptions: { revalidate: 30 } },
     1
   );
 }
@@ -253,6 +253,13 @@ export async function fetchLiveMatches() {
 
 export async function fetchUpcomingMatches(days = 7) {
   return fetchApi<Match[]>(`/api/matches/upcoming?days=${days}`, { cacheTtlMs: 60000 });
+}
+
+/**
+ * Fetch yesterday's completed matches (FINISHED/AWARDED) with 2-minute cache.
+ */
+export async function fetchYesterdayMatches() {
+  return fetchApi<Match[]>('/api/matches/yesterday', { cacheTtlMs: 120000 }, 1);
 }
 
 /**

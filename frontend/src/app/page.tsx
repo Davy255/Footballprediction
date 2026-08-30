@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Match, League } from '@/lib/types';
-import { fetchTodayMatches, fetchUpcomingMatches, fetchLiveMatches, fetchLeagues, fetchMatches, fetchMatchesFeed } from '@/lib/api';
+import { fetchTodayMatches, fetchUpcomingMatches, fetchLiveMatches, fetchLeagues, fetchMatches, fetchMatchesFeed, fetchYesterdayMatches } from '@/lib/api';
 import LeagueAccordionSection from '@/components/LeagueAccordionSection';
 import HowToPlayModal from '@/components/HowToPlayModal';
 import AdBanner from '@/components/AdBanner';
@@ -130,70 +130,46 @@ export default function HomePage() {
   const [showGuide, setShowGuide] = useState(false);
 
   const loadData = async (isInitial = true) => {
-    if (isInitial && typeof window !== 'undefined') {
-      try {
-        const cachedMatches = localStorage.getItem('fp_cache_all_matches') || sessionStorage.getItem('fp_cache_all_matches');
-        const cachedLeagues = localStorage.getItem('fp_cache_leagues') || sessionStorage.getItem('fp_cache_leagues');
-        if (cachedMatches && cachedLeagues) {
-          const parsed = JSON.parse(cachedMatches);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            setAllMatches(parsed);
-            setLeagues(JSON.parse(cachedLeagues));
-            setLoading(false);
-          }
-        }
-      } catch {}
-    }
-
     try {
       // 1. Try Ultra-Fast Unified Feed in a single HTTP request
       const feed = await fetchMatchesFeed().catch(() => null);
       if (feed && Array.isArray(feed.matches) && feed.matches.length > 0) {
-        setAllMatches(feed.matches);
+        // Also fetch yesterday's finished matches in parallel (fast, cached)
+        const yesterday = await fetchYesterdayMatches().catch(() => []);
+        const matchMap = new Map<number, Match>();
+        [...(feed.matches), ...(yesterday || [])].forEach((m) => {
+          if (m && m.id) matchMap.set(m.id, m);
+        });
+        setAllMatches(Array.from(matchMap.values()));
         if (Array.isArray(feed.leagues) && feed.leagues.length > 0) {
           setLeagues(feed.leagues);
-        }
-        if (typeof window !== 'undefined') {
-          try {
-            localStorage.setItem('fp_cache_all_matches', JSON.stringify(feed.matches));
-            if (feed.leagues) localStorage.setItem('fp_cache_leagues', JSON.stringify(feed.leagues));
-          } catch {}
         }
         setLoading(false);
         return;
       }
 
       // 2. Fallback to parallel fetch if feed is empty
-      const [today, upcoming, live, finished, lgs] = await Promise.all([
+      const [today, upcoming, live, finished, yesterday, lgs] = await Promise.all([
         fetchTodayMatches().catch(() => []),
         fetchUpcomingMatches(45).catch(() => []),
         fetchLiveMatches().catch(() => []),
-        fetchMatches({ status: 'FINISHED', limit: 40 }).catch(() => []),
+        fetchMatches({ status: 'FINISHED', limit: 60 }).catch(() => []),
+        fetchYesterdayMatches().catch(() => []),
         fetchLeagues().catch(() => []),
       ]);
 
       const matchMap = new Map<number, Match>();
-      [...today, ...upcoming, ...live, ...finished].forEach((m) => {
+      [...today, ...upcoming, ...live, ...finished, ...(yesterday || [])].forEach((m) => {
         if (m && m.id) matchMap.set(m.id, m);
       });
 
       const merged = Array.from(matchMap.values());
       if (merged.length > 0) {
         setAllMatches(merged);
-        if (typeof window !== 'undefined') {
-          try {
-            localStorage.setItem('fp_cache_all_matches', JSON.stringify(merged));
-          } catch {}
-        }
       }
 
       if (lgs.length > 0) {
         setLeagues(lgs);
-        if (typeof window !== 'undefined') {
-          try {
-            localStorage.setItem('fp_cache_leagues', JSON.stringify(lgs));
-          } catch {}
-        }
       }
     } catch (err) {
       console.error('Error loading homepage fixtures:', err);
@@ -220,7 +196,20 @@ export default function HomePage() {
       return ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME'].includes(m.status);
     }
     if (selectedStatus === 'FINISHED') {
+      // Show all completed matches — no date cutoff
       return ['FINISHED', 'AWARDED'].includes(m.status);
+    }
+    if (selectedStatus === 'YESTERDAY') {
+      // Show only yesterday's FINISHED/AWARDED matches
+      if (!['FINISHED', 'AWARDED'].includes(m.status)) return false;
+      try {
+        const matchDate = new Date(m.utc_date);
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        return matchDate.toDateString() === yesterday.toDateString();
+      } catch {
+        return false;
+      }
     }
     if (selectedStatus === 'SCHEDULED') {
       if (!['SCHEDULED', 'TIMED'].includes(m.status)) return false;
@@ -263,7 +252,7 @@ export default function HomePage() {
       dateMap[dateInfo.key].totalMatches += 1;
     });
 
-    if (selectedStatus === 'FINISHED') {
+    if (selectedStatus === 'FINISHED' || selectedStatus === 'YESTERDAY') {
       return Object.values(dateMap).sort((a, b) => b.dateKey.localeCompare(a.dateKey));
     }
     return Object.values(dateMap).sort((a, b) => a.dateKey.localeCompare(b.dateKey));
@@ -272,6 +261,16 @@ export default function HomePage() {
   const dateGroups = groupMatchesByDateAndLeague(filteredMatches);
 
   const liveCount = allMatches.filter((m) => ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME', '1H', '2H', 'HT'].includes(m.status)).length;
+  const yesterdayCount = allMatches.filter((m) => {
+    if (!['FINISHED', 'AWARDED'].includes(m.status)) return false;
+    try {
+      const matchDate = new Date(m.utc_date);
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      return matchDate.toDateString() === yesterday.toDateString();
+    } catch { return false; }
+  }).length;
+
 
   return (
     <div>
@@ -424,11 +423,11 @@ export default function HomePage() {
               )}
             </div>
 
-            {/* Segmented Status Tab Control (3 Equal Width Buttons) */}
+            {/* Segmented Status Tab Control (4 Equal Width Buttons) */}
             <div>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
+                gridTemplateColumns: 'repeat(4, 1fr)',
                 gap: '0.35rem',
                 background: 'var(--bg-card-hover)',
                 padding: '0.25rem',
@@ -442,7 +441,7 @@ export default function HomePage() {
                     border: 'none',
                     borderRadius: '8px',
                     padding: '0.45rem 0.2rem',
-                    fontSize: '0.80rem',
+                    fontSize: '0.75rem',
                     fontWeight: 800,
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
@@ -461,7 +460,7 @@ export default function HomePage() {
                     border: 'none',
                     borderRadius: '8px',
                     padding: '0.45rem 0.2rem',
-                    fontSize: '0.80rem',
+                    fontSize: '0.75rem',
                     fontWeight: 800,
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
@@ -469,7 +468,7 @@ export default function HomePage() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '0.35rem',
+                    gap: '0.3rem',
                     background: selectedStatus === 'LIVE' ? 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)' : 'transparent',
                     color: selectedStatus === 'LIVE' ? '#ffffff' : 'var(--text-secondary)',
                     boxShadow: selectedStatus === 'LIVE' ? '0 2px 8px rgba(220, 38, 38, 0.4)' : 'none',
@@ -487,8 +486,8 @@ export default function HomePage() {
                   <span>Live</span>
                   {liveCount > 0 && (
                     <span style={{
-                      fontSize: '0.68rem',
-                      padding: '0.08rem 0.35rem',
+                      fontSize: '0.65rem',
+                      padding: '0.08rem 0.3rem',
                       borderRadius: '10px',
                       background: selectedStatus === 'LIVE' ? 'rgba(255,255,255,0.3)' : 'rgba(239,68,68,0.2)',
                       color: selectedStatus === 'LIVE' ? '#ffffff' : '#ef4444',
@@ -500,12 +499,47 @@ export default function HomePage() {
                 </button>
                 <button
                   type="button"
+                  onClick={() => setSelectedStatus('YESTERDAY')}
+                  style={{
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '0.45rem 0.2rem',
+                    fontSize: '0.75rem',
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    textAlign: 'center',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.3rem',
+                    background: selectedStatus === 'YESTERDAY' ? 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)' : 'transparent',
+                    color: selectedStatus === 'YESTERDAY' ? '#ffffff' : 'var(--text-secondary)',
+                    boxShadow: selectedStatus === 'YESTERDAY' ? '0 2px 8px rgba(124, 58, 237, 0.4)' : 'none',
+                  }}
+                >
+                  Yesterday
+                  {yesterdayCount > 0 && (
+                    <span style={{
+                      fontSize: '0.65rem',
+                      padding: '0.08rem 0.3rem',
+                      borderRadius: '10px',
+                      background: selectedStatus === 'YESTERDAY' ? 'rgba(255,255,255,0.3)' : 'rgba(124,58,237,0.2)',
+                      color: selectedStatus === 'YESTERDAY' ? '#ffffff' : '#7c3aed',
+                      fontWeight: 800,
+                    }}>
+                      {yesterdayCount}
+                    </span>
+                  )}
+                </button>
+                <button
+                  type="button"
                   onClick={() => setSelectedStatus('FINISHED')}
                   style={{
                     border: 'none',
                     borderRadius: '8px',
                     padding: '0.45rem 0.2rem',
-                    fontSize: '0.80rem',
+                    fontSize: '0.75rem',
                     fontWeight: 800,
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
@@ -515,7 +549,7 @@ export default function HomePage() {
                     boxShadow: selectedStatus === 'FINISHED' ? '0 2px 8px rgba(16, 185, 129, 0.4)' : 'none',
                   }}
                 >
-                  Completed
+                  Results
                 </button>
               </div>
             </div>

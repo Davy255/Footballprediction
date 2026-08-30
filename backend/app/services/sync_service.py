@@ -332,6 +332,77 @@ def sync_all_competitions_today():
         logger.info(f"Targeted today sync completed: {total_synced} matches updated across leagues.")
 
 
+def sync_recently_finished_matches():
+    """
+    Dedicated recovery sync for recently finished matches.
+    Explicitly queries football-data.org for FINISHED status matches across all
+    supported competitions for the past 3 days. This catches any match
+    status transitions (TIMED → IN_PLAY → FINISHED) that were missed due to
+    Render cold starts or API rate limits during the actual match window.
+    Runs every 15 minutes.
+    """
+    from app.core.cache import feed_cache
+    db = SessionLocal()
+    try:
+        now = datetime.now(timezone.utc)
+        date_from = (now - timedelta(days=3)).strftime("%Y-%m-%d")
+        date_to = now.strftime("%Y-%m-%d")
+
+        logger.info(f"Syncing recently finished matches: {date_from} → {date_to}")
+
+        total_finished = 0
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        try:
+            # Single global window call for FINISHED status — 1 API request
+            data = loop.run_until_complete(
+                football_api.get_global_matches_window(date_from=date_from, date_to=date_to)
+            )
+        except Exception as e:
+            logger.error(f"Error fetching finished matches window: {e}")
+            return
+        finally:
+            loop.close()
+
+        matches_data = data.get("matches", [])
+        finished_matches = [
+            m for m in matches_data
+            if m.get("status") in ("FINISHED", "AWARDED")
+        ]
+
+        if not finished_matches:
+            logger.debug("No recently finished matches found in API response.")
+            return
+
+        # Group by league and upsert
+        by_league: dict[str, list] = {}
+        for m in finished_matches:
+            comp = m.get("competition", {})
+            code = comp.get("code")
+            if code and code in SUPPORTED_COMPETITIONS:
+                by_league.setdefault(code, []).append(m)
+
+        updated = 0
+        for code, m_list in by_league.items():
+            league = get_or_create_league(db, code)
+            count = _upsert_matches(db, league, m_list, CURRENT_SEASON_STR)
+            league.last_synced = now
+            updated += count
+
+        if updated > 0:
+            db.commit()
+            feed_cache.clear()
+            logger.info(f"Finished match recovery: updated {updated} finished fixtures across {len(by_league)} leagues.")
+        else:
+            logger.debug("Finished match recovery: no DB updates needed.")
+
+    except Exception as e:
+        logger.error(f"sync_recently_finished_matches error: {e}")
+        db.rollback()
+    finally:
+        db.close()
+
+
 def sync_live_matches_from_api():
     """
     Automatically polls all currently in-play, paused (half-time), and freshly finished matches
