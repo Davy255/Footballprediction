@@ -127,13 +127,13 @@ function FixturesContent() {
       const data = await fetchMatches({
         league_code: selectedLeague || undefined,
         status: selectedStatus === 'ALL' ? undefined : (selectedStatus || undefined),
-        limit: 200,
+        limit: 300,
       });
       if (Array.isArray(data)) {
         setMatches(data);
       }
     } catch (err) {
-      console.error(err);
+      console.error('Error loading fixtures:', err);
     } finally {
       setLoading(false);
     }
@@ -165,7 +165,7 @@ function FixturesContent() {
     }
 
     if (selectedStatus === 'LIVE') {
-      return ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME'].includes(m.status);
+      return ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME', '1H', '2H', 'HT'].includes(m.status);
     }
 
     return true;

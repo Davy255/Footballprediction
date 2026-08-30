@@ -153,13 +153,16 @@ def get_matches(
     date: Optional[str] = None,
     season: Optional[str] = None,
     skip: int = 0,
-    limit: int = 100,
+    limit: int = 200,
     db: Session = Depends(get_db),
 ):
     cache_key = f"matches_{league_code}_{status}_{date}_{season}_{skip}_{limit}"
     cached = get_from_cache(cache_key, ttl_seconds=20.0)
     if cached is not None:
         return cached
+
+    now = datetime.now(timezone.utc)
+    today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
 
     q = db.query(Match).options(
         joinedload(Match.league),
@@ -185,6 +188,15 @@ def get_matches(
                 if s not in statuses:
                     statuses.append(s)
         q = q.filter(Match.status.in_(statuses))
+
+        # If requesting upcoming scheduled fixtures without a specific date, start from today
+        if ("SCHEDULED" in statuses or "TIMED" in statuses) and "FINISHED" not in statuses and not date:
+            q = q.filter(Match.utc_date >= today_start)
+    else:
+        # If requesting ALL fixtures without a specific date/season filter, start from current season
+        if not date and not season and not league_code:
+            season_start = datetime(2026, 7, 1, tzinfo=timezone.utc)
+            q = q.filter(Match.utc_date >= season_start)
 
     if date:
         try:

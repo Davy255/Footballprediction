@@ -609,11 +609,11 @@ def auto_manage_live_matches(db: Session = None):
         now = datetime.now(timezone.utc)
         cutoff_expired = now - timedelta(minutes=115)
 
-        # 1. Finalize expired live matches (>115 min)
+        # 1. Finalize expired live & past unstarted matches (>115 min)
         expired = (
             db.query(Match)
             .filter(
-                Match.status.in_(["LIVE", "IN_PLAY", "PAUSED", "HALFTIME"]),
+                Match.status.in_(["LIVE", "IN_PLAY", "PAUSED", "HALFTIME", "SCHEDULED", "TIMED"]),
                 Match.utc_date <= cutoff_expired,
             )
             .all()

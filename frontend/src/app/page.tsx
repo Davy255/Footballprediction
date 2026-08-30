@@ -196,20 +196,8 @@ export default function HomePage() {
       return ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME'].includes(m.status);
     }
     if (selectedStatus === 'FINISHED') {
-      // Show all completed matches — no date cutoff
+      // Show all completed matches (including yesterday and earlier results)
       return ['FINISHED', 'AWARDED'].includes(m.status);
-    }
-    if (selectedStatus === 'YESTERDAY') {
-      // Show only yesterday's FINISHED/AWARDED matches
-      if (!['FINISHED', 'AWARDED'].includes(m.status)) return false;
-      try {
-        const matchDate = new Date(m.utc_date);
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-        return matchDate.toDateString() === yesterday.toDateString();
-      } catch {
-        return false;
-      }
     }
     if (selectedStatus === 'SCHEDULED') {
       if (!['SCHEDULED', 'TIMED'].includes(m.status)) return false;
@@ -252,7 +240,7 @@ export default function HomePage() {
       dateMap[dateInfo.key].totalMatches += 1;
     });
 
-    if (selectedStatus === 'FINISHED' || selectedStatus === 'YESTERDAY') {
+    if (selectedStatus === 'FINISHED') {
       return Object.values(dateMap).sort((a, b) => b.dateKey.localeCompare(a.dateKey));
     }
     return Object.values(dateMap).sort((a, b) => a.dateKey.localeCompare(b.dateKey));
@@ -261,15 +249,6 @@ export default function HomePage() {
   const dateGroups = groupMatchesByDateAndLeague(filteredMatches);
 
   const liveCount = allMatches.filter((m) => ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME', '1H', '2H', 'HT'].includes(m.status)).length;
-  const yesterdayCount = allMatches.filter((m) => {
-    if (!['FINISHED', 'AWARDED'].includes(m.status)) return false;
-    try {
-      const matchDate = new Date(m.utc_date);
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
-      return matchDate.toDateString() === yesterday.toDateString();
-    } catch { return false; }
-  }).length;
 
 
   return (
@@ -423,11 +402,11 @@ export default function HomePage() {
               )}
             </div>
 
-            {/* Segmented Status Tab Control (4 Equal Width Buttons) */}
+            {/* Segmented Status Tab Control (3 Equal Width Buttons) */}
             <div>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(4, 1fr)',
+                gridTemplateColumns: 'repeat(3, 1fr)',
                 gap: '0.35rem',
                 background: 'var(--bg-card-hover)',
                 padding: '0.25rem',
@@ -440,8 +419,8 @@ export default function HomePage() {
                   style={{
                     border: 'none',
                     borderRadius: '8px',
-                    padding: '0.45rem 0.2rem',
-                    fontSize: '0.75rem',
+                    padding: '0.48rem 0.2rem',
+                    fontSize: '0.82rem',
                     fontWeight: 800,
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
@@ -459,8 +438,8 @@ export default function HomePage() {
                   style={{
                     border: 'none',
                     borderRadius: '8px',
-                    padding: '0.45rem 0.2rem',
-                    fontSize: '0.75rem',
+                    padding: '0.48rem 0.2rem',
+                    fontSize: '0.82rem',
                     fontWeight: 800,
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
@@ -468,7 +447,7 @@ export default function HomePage() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '0.3rem',
+                    gap: '0.35rem',
                     background: selectedStatus === 'LIVE' ? 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)' : 'transparent',
                     color: selectedStatus === 'LIVE' ? '#ffffff' : 'var(--text-secondary)',
                     boxShadow: selectedStatus === 'LIVE' ? '0 2px 8px rgba(220, 38, 38, 0.4)' : 'none',
@@ -486,8 +465,8 @@ export default function HomePage() {
                   <span>Live</span>
                   {liveCount > 0 && (
                     <span style={{
-                      fontSize: '0.65rem',
-                      padding: '0.08rem 0.3rem',
+                      fontSize: '0.68rem',
+                      padding: '0.08rem 0.35rem',
                       borderRadius: '10px',
                       background: selectedStatus === 'LIVE' ? 'rgba(255,255,255,0.3)' : 'rgba(239,68,68,0.2)',
                       color: selectedStatus === 'LIVE' ? '#ffffff' : '#ef4444',
@@ -499,47 +478,12 @@ export default function HomePage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setSelectedStatus('YESTERDAY')}
-                  style={{
-                    border: 'none',
-                    borderRadius: '8px',
-                    padding: '0.45rem 0.2rem',
-                    fontSize: '0.75rem',
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    textAlign: 'center',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.3rem',
-                    background: selectedStatus === 'YESTERDAY' ? 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)' : 'transparent',
-                    color: selectedStatus === 'YESTERDAY' ? '#ffffff' : 'var(--text-secondary)',
-                    boxShadow: selectedStatus === 'YESTERDAY' ? '0 2px 8px rgba(124, 58, 237, 0.4)' : 'none',
-                  }}
-                >
-                  Yesterday
-                  {yesterdayCount > 0 && (
-                    <span style={{
-                      fontSize: '0.65rem',
-                      padding: '0.08rem 0.3rem',
-                      borderRadius: '10px',
-                      background: selectedStatus === 'YESTERDAY' ? 'rgba(255,255,255,0.3)' : 'rgba(124,58,237,0.2)',
-                      color: selectedStatus === 'YESTERDAY' ? '#ffffff' : '#7c3aed',
-                      fontWeight: 800,
-                    }}>
-                      {yesterdayCount}
-                    </span>
-                  )}
-                </button>
-                <button
-                  type="button"
                   onClick={() => setSelectedStatus('FINISHED')}
                   style={{
                     border: 'none',
                     borderRadius: '8px',
-                    padding: '0.45rem 0.2rem',
-                    fontSize: '0.75rem',
+                    padding: '0.48rem 0.2rem',
+                    fontSize: '0.82rem',
                     fontWeight: 800,
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
