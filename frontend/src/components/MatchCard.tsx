@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { submitPrediction, fetchMyPredictionForMatch } from '@/lib/api';
@@ -90,7 +90,7 @@ interface StatusDetails {
   isCancelled: boolean;
 }
 
-function getMatchStatusDetails(match: Match): StatusDetails {
+function getMatchStatusDetails(match: Match, clockOverride?: import('@/lib/matchTime').LiveClockInfo): StatusDetails {
   const s = (match.status || '').toUpperCase();
   
   if (s === 'POSTPONED') {
@@ -141,7 +141,7 @@ function getMatchStatusDetails(match: Match): StatusDetails {
     };
   }
 
-  if (s === 'HALFTIME' || s === 'PAUSED') {
+  if (s === 'HALFTIME' || s === 'PAUSED' || s === 'HT') {
     return {
       statusKey: 'HT',
       badgeText: 'HT',
@@ -154,8 +154,8 @@ function getMatchStatusDetails(match: Match): StatusDetails {
     };
   }
 
-  if (s === 'IN_PLAY' || s === 'LIVE') {
-    const clockInfo = calculateLiveMatchMinute(match.utc_date, s);
+  if (s === 'IN_PLAY' || s === 'LIVE' || s === '1H' || s === '2H') {
+    const clockInfo = clockOverride || calculateLiveMatchMinute(match.utc_date, s);
     const minuteText = clockInfo.minuteText;
     return {
       statusKey: clockInfo.isHalftime ? 'HT' : clockInfo.isFinished ? 'FT' : 'LIVE',
@@ -588,7 +588,24 @@ function MatchCard({ match, defaultOpen = false, onPredictionChange, isLast, isE
   const [existingPred, setExistingPred] = useState<any>(null);
   const [predLoaded, setPredLoaded] = useState(false);
 
-  const status = getMatchStatusDetails(match);
+  // Real-Time Live Clock Ticker for in-play matches (updates minute continuously in parallel with real match time)
+  const isLiveMatch = ['LIVE', 'IN_PLAY', '1H', '2H', 'HT', 'HALFTIME', 'PAUSED'].includes((match.status || '').toUpperCase());
+  const [liveMinuteInfo, setLiveMinuteInfo] = useState<import('@/lib/matchTime').LiveClockInfo>(() => {
+    return calculateLiveMatchMinute(match.utc_date, match.status);
+  });
+
+  useEffect(() => {
+    if (!isLiveMatch) return;
+    setLiveMinuteInfo(calculateLiveMatchMinute(match.utc_date, match.status));
+
+    const clockTimer = setInterval(() => {
+      setLiveMinuteInfo(calculateLiveMatchMinute(match.utc_date, match.status));
+    }, 15000);
+
+    return () => clearInterval(clockTimer);
+  }, [isLiveMatch, match.utc_date, match.status]);
+
+  const status = getMatchStatusDetails(match, liveMinuteInfo);
   const dateTime = formatMatchDateTime(match.utc_date);
   const matchConfidence = getMatchConfidence(match);
 
