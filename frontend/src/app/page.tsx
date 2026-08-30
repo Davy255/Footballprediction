@@ -134,10 +134,13 @@ export default function HomePage() {
       // 1. Try Ultra-Fast Unified Feed in a single HTTP request
       const feed = await fetchMatchesFeed().catch(() => null);
       if (feed && Array.isArray(feed.matches) && feed.matches.length > 0) {
-        // Also fetch yesterday's finished matches in parallel (fast, cached)
-        const yesterday = await fetchYesterdayMatches().catch(() => []);
+        // Also fetch live matches & yesterday's completed matches in parallel for instant fresh scores
+        const [yesterday, liveFresh] = await Promise.all([
+          fetchYesterdayMatches().catch(() => []),
+          fetchLiveMatches().catch(() => []),
+        ]);
         const matchMap = new Map<number, Match>();
-        [...(feed.matches), ...(yesterday || [])].forEach((m) => {
+        [...(feed.matches), ...(yesterday || []), ...(liveFresh || [])].forEach((m) => {
           if (m && m.id) matchMap.set(m.id, m);
         });
         setAllMatches(Array.from(matchMap.values()));
@@ -198,7 +201,7 @@ export default function HomePage() {
     }
 
     if (selectedStatus === 'LIVE') {
-      return ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME'].includes(m.status);
+      return ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME', '1H', '2H', 'HT'].includes(m.status);
     }
     if (selectedStatus === 'FINISHED') {
       // Show all completed matches (including yesterday and earlier results)

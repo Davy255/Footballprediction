@@ -253,7 +253,7 @@ def get_today_matches(db: Session = Depends(get_db)):
 @router.get("/live", response_model=list[MatchOut])
 def get_live_matches(db: Session = Depends(get_db)):
     cache_key = "matches_live"
-    cached = get_from_cache(cache_key, ttl_seconds=5.0)
+    cached = get_from_cache(cache_key, ttl_seconds=3.0)
     if cached is not None:
         return cached
 
@@ -264,12 +264,12 @@ def get_live_matches(db: Session = Depends(get_db)):
             joinedload(Match.home_team),
             joinedload(Match.away_team),
         )
-        .filter(Match.status.in_(["LIVE", "IN_PLAY", "PAUSED", "HALFTIME"]))
+        .filter(Match.status.in_(["LIVE", "IN_PLAY", "PAUSED", "HALFTIME", "1H", "2H", "HT"]))
         .order_by(Match.utc_date.asc())
         .all()
     )
     ensure_match_predictions(results, db)
-    set_in_cache(cache_key, results, ttl=5.0)
+    set_in_cache(cache_key, results, ttl=3.0)
     return results
 
 
