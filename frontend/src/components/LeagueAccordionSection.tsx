@@ -13,7 +13,7 @@ interface Props {
   defaultExpanded?: boolean;
 }
 
-export default function LeagueAccordionSection({
+function LeagueAccordionSection({
   league,
   matches,
   onPredictionChange,
@@ -115,3 +115,5 @@ export default function LeagueAccordionSection({
     </div>
   );
 }
+
+export default React.memo(LeagueAccordionSection);

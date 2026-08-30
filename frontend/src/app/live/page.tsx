@@ -1,51 +1,227 @@
 'use client';
 
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { Match } from '@/lib/types';
 import { fetchLiveMatches } from '@/lib/api';
 import LeagueAccordionSection from '@/components/LeagueAccordionSection';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { getLeagueUrl } from '@/lib/slugs';
 
 const REFRESH_INTERVAL = 15; // 15 seconds optimal live polling
 
-function CountdownBar({ seconds, total }: { seconds: number; total: number }) {
-  const pct = Math.max(0, Math.min(100, (seconds / total) * 100));
-  return (
-    <div style={{ height: '3px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden', width: '80px' }}>
-      <div style={{
-        height: '100%',
-        width: `${pct}%`,
-        background: '#ef4444',
-        borderRadius: '3px',
-        transition: 'width 1s linear',
-      }} />
-    </div>
-  );
+// Compare match arrays to prevent re-rendering when data has not changed
+function hasMatchesChanged(prev: Match[], next: Match[]): boolean {
+  if (prev.length !== next.length) return true;
+  for (let i = 0; i < prev.length; i++) {
+    const p = prev[i];
+    const n = next[i];
+    if (
+      p.id !== n.id ||
+      p.status !== n.status ||
+      p.home_score !== n.home_score ||
+      p.away_score !== n.away_score ||
+      p.home_score_ht !== n.home_score_ht ||
+      p.away_score_ht !== n.away_score_ht ||
+      p.utc_date !== n.utc_date
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
+// ──────────────────────────────────────────────────────────────
+// Isolated Countdown & Controls Header Component
+// Manages its own 1-second countdown ticker so the entire match
+// list does NOT re-render every second (eliminates screen shaking)
+// ──────────────────────────────────────────────────────────────
+interface HeaderControlsProps {
+  lastUpdated: Date | null;
+  refreshing: boolean;
+  isTabActive: boolean;
+  onManualRefresh: () => void;
+  matchesCount: number;
+}
+
+const LiveCountdownHeader = React.memo(function LiveCountdownHeader({
+  lastUpdated,
+  refreshing,
+  isTabActive,
+  onManualRefresh,
+  matchesCount,
+}: HeaderControlsProps) {
+  const [countdown, setCountdown] = useState(REFRESH_INTERVAL);
+
+  // Reset countdown whenever a fresh update arrives
+  useEffect(() => {
+    setCountdown(REFRESH_INTERVAL);
+  }, [lastUpdated]);
+
+  // Localized 1-second ticker that ONLY triggers re-renders inside this header
+  useEffect(() => {
+    if (!isTabActive) return;
+    const tick = setInterval(() => {
+      setCountdown((c) => Math.max(0, c - 1));
+    }, 1000);
+    return () => clearInterval(tick);
+  }, [isTabActive]);
+
+  const pct = Math.max(0, Math.min(100, (countdown / REFRESH_INTERVAL) * 100));
+
+  return (
+    <div
+      style={{
+        background: 'var(--gradient-hero)',
+        border: '1px solid var(--accent-red-border)',
+        borderRadius: '16px',
+        padding: '1.75rem 1.5rem',
+        marginBottom: '2rem',
+        boxShadow: 'var(--shadow-card)',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.4rem' }}>
+            <span
+              style={{
+                background: 'rgba(239,68,68,0.2)',
+                color: '#f87171',
+                border: '1px solid rgba(239,68,68,0.4)',
+                padding: '0.2rem 0.65rem',
+                borderRadius: '999px',
+                fontSize: '0.76rem',
+                fontWeight: 900,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+              }}
+            >
+              <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#ef4444', display: 'inline-block' }} />
+              LIVE IN-PLAY
+            </span>
+            <h1
+              style={{
+                fontSize: 'clamp(1.4rem, 5vw, 2rem)',
+                fontWeight: 900,
+                margin: 0,
+                color: 'var(--text-primary)',
+                fontFamily: 'Outfit, sans-serif',
+              }}
+            >
+              Live Match Centre 🔴
+            </h1>
+            {matchesCount > 0 && (
+              <span
+                style={{
+                  background: 'rgba(239,68,68,0.15)',
+                  color: '#fca5a5',
+                  border: '1px solid rgba(239,68,68,0.25)',
+                  padding: '0.2rem 0.65rem',
+                  borderRadius: '20px',
+                  fontSize: '0.80rem',
+                  fontWeight: 800,
+                }}
+              >
+                {matchesCount} in-play
+              </span>
+            )}
+          </div>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0, lineHeight: 1.5 }}>
+            Real-time in-play scorelines, tactical match centers, and pre-match model baseline projections — auto-refreshes every {REFRESH_INTERVAL}s.
+          </p>
+        </div>
+
+        {/* Refresh Controls & Stable Status Indicator */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          {lastUpdated && (
+            <div style={{ textAlign: 'right', minWidth: '130px' }}>
+              <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginBottom: '0.25rem', fontVariantNumeric: 'tabular-nums' }}>
+                Updated {lastUpdated.toLocaleTimeString()}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.5rem' }}>
+                <span style={{ fontSize: '0.72rem', color: '#94a3b8', fontVariantNumeric: 'tabular-nums' }}>
+                  {isTabActive ? `Next in ${countdown}s` : 'Paused (tab hidden)'}
+                </span>
+                {isTabActive && (
+                  <div style={{ height: '3px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden', width: '60px' }}>
+                    <div
+                      style={{
+                        height: '100%',
+                        width: `${pct}%`,
+                        background: '#ef4444',
+                        borderRadius: '3px',
+                        transition: 'width 1s linear',
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          <button
+            type="button"
+            onClick={onManualRefresh}
+            disabled={refreshing}
+            className="btn btn-secondary btn-sm"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.4rem',
+              padding: '0.5rem 0.9rem',
+              borderRadius: '8px',
+              fontWeight: 700,
+              minWidth: '105px', // Stable fixed width prevents horizontal layout jumping
+            }}
+          >
+            <span style={{ display: 'inline-block', animation: refreshing ? 'spin 0.7s linear infinite' : 'none' }}>↻</span>
+            <span>{refreshing ? 'Updating...' : 'Refresh'}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+// ──────────────────────────────────────────────────────────────
+// Main Live Page Component
+// ──────────────────────────────────────────────────────────────
 export default function LivePage() {
   const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
-  const [countdown, setCountdown] = useState(REFRESH_INTERVAL);
   const [refreshing, setRefreshing] = useState(false);
   const [isTabActive, setIsTabActive] = useState(true);
 
+  const requestSeqRef = useRef<number>(0);
+  const isMountedRef = useRef<boolean>(true);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  // Main Live Data Fetcher with race condition prevention
   const load = useCallback(async (showRefreshing = false) => {
     if (showRefreshing) setRefreshing(true);
+    const seq = ++requestSeqRef.current;
+
     try {
       const data = await fetchLiveMatches();
-      setMatches(Array.isArray(data) ? data : []);
+      if (!isMountedRef.current || seq !== requestSeqRef.current) return;
+
+      const cleanData = Array.isArray(data) ? data : [];
+      setMatches((prev) => (hasMatchesChanged(prev, cleanData) ? cleanData : prev));
       setLastUpdated(new Date());
-      setCountdown(REFRESH_INTERVAL);
     } catch (err) {
-      // silently keep current data on transient network error
-      console.warn('Live scores refresh failed, retaining previous snapshot.');
+      console.warn('Live scores background refresh failed, retaining previous snapshot.');
     } finally {
-      setLoading(false);
-      setRefreshing(false);
+      if (isMountedRef.current && seq === requestSeqRef.current) {
+        setLoading(false);
+        setRefreshing(false);
+      }
     }
   }, []);
 
@@ -60,7 +236,7 @@ export default function LivePage() {
       const active = document.visibilityState === 'visible';
       setIsTabActive(active);
       if (active) {
-        load(true); // immediately refresh when user returns
+        load(true); // immediately refresh when user returns to tab
       }
     };
 
@@ -73,38 +249,49 @@ export default function LivePage() {
     if (!isTabActive) return;
 
     const interval = setInterval(() => {
-      load(true);
+      load(false); // Quiet background refresh without flashing button
     }, REFRESH_INTERVAL * 1000);
 
     return () => clearInterval(interval);
   }, [load, isTabActive]);
 
-  // Countdown ticker
-  useEffect(() => {
-    if (!isTabActive) return;
+  // Stable deterministic sorting:
+  // 1. Matches sorted by kickoff time + ID
+  // 2. League sections sorted alphabetically by league name
+  const sortedMatches = useMemo(() => {
+    return [...matches].sort((a, b) => {
+      const timeA = new Date(a.utc_date).getTime();
+      const timeB = new Date(b.utc_date).getTime();
+      if (timeA !== timeB) return timeA - timeB;
+      return a.id - b.id;
+    });
+  }, [matches]);
 
-    const tick = setInterval(() => {
-      setCountdown((c) => Math.max(0, c - 1));
-    }, 1000);
-    return () => clearInterval(tick);
-  }, [isTabActive]);
+  const groupedByLeague = useMemo(() => {
+    const map: Record<string, { league: any; matches: Match[] }> = {};
+    sortedMatches.forEach((m) => {
+      const key = String(m.league?.id || m.league?.code || m.league?.name || 'OTHER');
+      if (!map[key]) {
+        map[key] = {
+          league: m.league,
+          matches: [],
+        };
+      }
+      map[key].matches.push(m);
+    });
+    return Object.values(map).sort((a, b) => {
+      const nameA = a.league?.name || '';
+      const nameB = b.league?.name || '';
+      return nameA.localeCompare(nameB);
+    });
+  }, [sortedMatches]);
 
-  // Group live matches by league
-  const groupedByLeague = matches.reduce<Record<string, { league: any; matches: Match[] }>>((acc, m) => {
-    const key = m.league?.id || m.league?.code || m.league?.name || 'OTHER';
-    if (!acc[key]) {
-      acc[key] = {
-        league: m.league,
-        matches: [],
-      };
-    }
-    acc[key].matches.push(m);
-    return acc;
-  }, {});
+  const handleManualRefresh = useCallback(() => {
+    load(true);
+  }, [load]);
 
   return (
     <div className="container" style={{ padding: '1.5rem 1rem 3.5rem 1rem', minHeight: '80vh' }}>
-      
       {/* Breadcrumb Navigation */}
       <Breadcrumbs
         items={[
@@ -113,120 +300,49 @@ export default function LivePage() {
         ]}
       />
 
-      {/* Page Header */}
-      <div style={{
-        background: 'var(--gradient-hero)',
-        border: '1px solid var(--accent-red-border)',
-        borderRadius: '16px',
-        padding: '1.75rem 1.5rem',
-        marginBottom: '2rem',
-        boxShadow: 'var(--shadow-card)',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.4rem' }}>
-              <span style={{
-                background: 'rgba(239,68,68,0.2)',
-                color: '#f87171',
-                border: '1px solid rgba(239,68,68,0.4)',
-                padding: '0.2rem 0.65rem',
-                borderRadius: '999px',
-                fontSize: '0.76rem',
-                fontWeight: 900,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.35rem',
-              }}>
-                <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#ef4444', display: 'inline-block' }} />
-                LIVE IN-PLAY
-              </span>
-              <h1 style={{
-                fontSize: 'clamp(1.4rem, 5vw, 2rem)',
-                fontWeight: 900,
-                margin: 0,
-                color: 'var(--text-primary)',
-                fontFamily: 'Outfit, sans-serif',
-              }}>
-                Live Match Centre 🔴
-              </h1>
-              {matches.length > 0 && (
-                <span style={{
-                  background: 'rgba(239,68,68,0.15)',
-                  color: '#fca5a5',
-                  border: '1px solid rgba(239,68,68,0.25)',
-                  padding: '0.2rem 0.65rem',
-                  borderRadius: '20px',
-                  fontSize: '0.80rem',
-                  fontWeight: 800,
-                }}>
-                  {matches.length} in-play
-                </span>
-              )}
-            </div>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0, lineHeight: 1.5 }}>
-              Real-time in-play scorelines, tactical match centers, and pre-match model baseline projections — auto-refreshes every {REFRESH_INTERVAL}s.
-            </p>
-          </div>
-
-          {/* Refresh Controls & Status Indicator */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            {lastUpdated && (
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>
-                  Updated {lastUpdated.toLocaleTimeString()}
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ fontSize: '0.72rem', color: '#94a3b8' }}>
-                    {isTabActive ? `Next in ${countdown}s` : 'Paused (tab hidden)'}
-                  </span>
-                  {isTabActive && <CountdownBar seconds={countdown} total={REFRESH_INTERVAL} />}
-                </div>
-              </div>
-            )}
-            <button
-              type="button"
-              onClick={() => load(true)}
-              disabled={refreshing}
-              className="btn btn-secondary btn-sm"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                padding: '0.5rem 0.9rem',
-                borderRadius: '8px',
-                fontWeight: 700,
-              }}
-            >
-              <span style={{ display: 'inline-block', animation: refreshing ? 'spin 0.7s linear infinite' : 'none' }}>↻</span>
-              {refreshing ? 'Refreshing...' : 'Refresh'}
-            </button>
-          </div>
-        </div>
-      </div>
+      {/* Page Header (Isolated countdown avoids full list re-renders) */}
+      <LiveCountdownHeader
+        lastUpdated={lastUpdated}
+        refreshing={refreshing}
+        isTabActive={isTabActive}
+        onManualRefresh={handleManualRefresh}
+        matchesCount={matches.length}
+      />
 
       {/* Live Match List */}
       <div>
-        {loading ? (
+        {loading && matches.length === 0 ? (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.2rem' }}>
             {[1, 2, 3].map((i) => (
               <div key={i} className="skeleton-card" style={{ height: '180px', borderRadius: '12px' }} />
             ))}
           </div>
         ) : matches.length === 0 ? (
-          <div className="glass-panel" style={{
-            textAlign: 'center',
-            padding: '3.5rem 2rem',
-            background: 'var(--bg-card)',
-            border: '1px solid rgba(239,68,68,0.2)',
-            borderRadius: '16px',
-            boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
-          }}>
-            <div style={{
-              width: '64px', height: '64px', borderRadius: '50%',
-              background: 'rgba(239,68,68,0.12)', border: '1px solid var(--accent-red-border)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '2rem', margin: '0 auto 1rem auto'
-            }}>
+          <div
+            className="glass-panel"
+            style={{
+              textAlign: 'center',
+              padding: '3.5rem 2rem',
+              background: 'var(--bg-card)',
+              border: '1px solid rgba(239,68,68,0.2)',
+              borderRadius: '16px',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+            }}
+          >
+            <div
+              style={{
+                width: '64px',
+                height: '64px',
+                borderRadius: '50%',
+                background: 'rgba(239,68,68,0.12)',
+                border: '1px solid var(--accent-red-border)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '2rem',
+                margin: '0 auto 1rem auto',
+              }}
+            >
               📡
             </div>
             <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
@@ -244,7 +360,7 @@ export default function LivePage() {
               </Link>
               <button
                 type="button"
-                onClick={() => load(true)}
+                onClick={handleManualRefresh}
                 className="btn btn-secondary"
                 style={{ padding: '0.6rem 1.4rem', borderRadius: '10px', fontWeight: 800 }}
               >
@@ -254,12 +370,12 @@ export default function LivePage() {
           </div>
         ) : (
           <div>
-            {Object.values(groupedByLeague).map(({ league, matches: leagueMatches }) => (
+            {groupedByLeague.map(({ league, matches: leagueMatches }) => (
               <LeagueAccordionSection
-                key={league?.id || league?.code || league?.name}
+                key={league?.id ? `league-${league.id}` : `league-${league?.code || league?.name || 'unknown'}`}
                 league={league}
                 matches={leagueMatches}
-                onPredictionChange={load}
+                onPredictionChange={handleManualRefresh}
               />
             ))}
           </div>
@@ -267,16 +383,18 @@ export default function LivePage() {
       </div>
 
       {/* Exploration Footer */}
-      <footer style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
-        borderRadius: '14px',
-        padding: '1.5rem',
-        marginTop: '2.5rem',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.8rem',
-      }}>
+      <footer
+        style={{
+          background: '#111827',
+          border: '1px solid rgba(255,255,255,0.08)',
+          borderRadius: '14px',
+          padding: '1.5rem',
+          marginTop: '2.5rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.8rem',
+        }}
+      >
         <div style={{ fontWeight: 800, color: 'var(--text-primary)', fontSize: '0.95rem' }}>
           Explore Full Prediction Hubs:
         </div>
@@ -343,7 +461,6 @@ export default function LivePage() {
           </Link>
         </div>
       </footer>
-
     </div>
   );
 }

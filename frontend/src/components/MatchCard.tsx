@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { submitPrediction, fetchMyPredictionForMatch } from '@/lib/api';
@@ -568,7 +568,7 @@ interface MatchCardProps {
   isEven?: boolean;
 }
 
-export default function MatchCard({ match, defaultOpen = false, onPredictionChange, isLast, isEven }: MatchCardProps) {
+function MatchCard({ match, defaultOpen = false, onPredictionChange, isLast, isEven }: MatchCardProps) {
   const { user, token } = useAuth();
   const [open, setOpen] = useState(defaultOpen);
   const [activeTab, setActiveTab] = useState<TabKey>('ai');
@@ -1129,15 +1129,21 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
         </div>
 
         {/* Center Column: Kickoff Time / Score + "Stats" link */}
-        <div className="fs-center-side">
+        <div className="fs-center-side" style={{ minWidth: '76px', fontVariantNumeric: 'tabular-nums' }}>
           {status.isLive ? (
             <>
-              <span className="fs-center-score live">{hs ?? 0} - {as_ ?? 0}</span>
-              <span className="fs-center-sub live">● {status.minuteText}</span>
+              <span className="fs-center-score live" style={{ fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.02em', minWidth: '40px', display: 'inline-block', textAlign: 'center' }}>
+                {hs ?? 0} - {as_ ?? 0}
+              </span>
+              <span className="fs-center-sub live" style={{ minWidth: '38px', textAlign: 'center' }}>
+                ● {status.minuteText}
+              </span>
             </>
           ) : showScore ? (
             <>
-              <span className="fs-center-score">{hs} - {as_}</span>
+              <span className="fs-center-score" style={{ fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.02em', minWidth: '40px', display: 'inline-block', textAlign: 'center' }}>
+                {hs} - {as_}
+              </span>
               <span className="fs-center-sub">{status.badgeText}</span>
             </>
           ) : (
@@ -1942,6 +1948,8 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
     </div>
   );
 }
+
+export default React.memo(MatchCard);
 
 
 
