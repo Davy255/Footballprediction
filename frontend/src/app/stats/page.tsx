@@ -529,7 +529,7 @@ export default function AccuracyDashboardPage() {
                   textDecoration: 'none',
                 }}
               >
-                👑 Tipster Leaderboard
+                👑 Community Leaderboard
               </Link>
             </div>
           </footer>

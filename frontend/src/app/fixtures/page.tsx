@@ -282,7 +282,7 @@ function FixturesContent() {
               textDecoration: 'none',
             }}
           >
-            🎯 Today&apos;s Tips
+            🎯 Today&apos;s Predictions
           </Link>
           <Link
             href="/live"
@@ -618,7 +618,7 @@ function FixturesContent() {
               textDecoration: 'none',
             }}
           >
-            👑 Tipster Leaderboard
+            👑 Community Leaderboard
           </Link>
           <Link
             href="/stats"
@@ -662,7 +662,7 @@ export default function FixturesPage() {
             Match Fixtures &amp; Predictions <span style={{ fontSize: '1.5rem' }}>⚽</span>
           </h1>
           <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', margin: 0 }}>
-            Browse upcoming matches, view comprehensive probability breakdowns, and place your predictions.
+            Browse upcoming matches, view comprehensive probability breakdowns, and submit your community predictions.
           </p>
         </div>
 

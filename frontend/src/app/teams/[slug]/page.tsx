@@ -632,7 +632,7 @@ export default async function TeamPage({ params }: PageProps) {
               textDecoration: 'none',
             }}
           >
-            🎯 Today&apos;s Tips
+            🎯 Today&apos;s Predictions
           </Link>
           <Link
             href="/fixtures"
@@ -677,7 +677,7 @@ export default async function TeamPage({ params }: PageProps) {
               textDecoration: 'none',
             }}
           >
-            👑 Tipster Leaderboard
+            👑 Community Leaderboard
           </Link>
         </div>
       </footer>

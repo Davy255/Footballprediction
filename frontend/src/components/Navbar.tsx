@@ -9,7 +9,7 @@ import HowToPlayModal from './HowToPlayModal';
 import SearchModal from './SearchModal';
 
 const primaryNavLinks = [
-  { href: '/football-predictions-today', label: "Today's Tips", icon: '🎯' },
+  { href: '/football-predictions-today', label: "Today's Predictions", icon: '🎯' },
   { href: '/fixtures', label: 'Fixtures', icon: '⚽' },
   { href: '/live', label: 'Live Now', icon: '🔴', isLive: true },
   { href: '/leagues', label: 'Leagues', icon: '🏆' },

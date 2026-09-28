@@ -290,7 +290,7 @@ export default function ChatbotWidget() {
                     </span>
                   </div>
                   <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                    Tactical match insights &amp; tips
+                    Tactical match insights &amp; projections
                   </div>
                 </div>
               </div>

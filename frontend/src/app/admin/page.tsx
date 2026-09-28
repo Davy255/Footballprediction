@@ -119,7 +119,7 @@ export default function AdminDashboardPage() {
 
   const handleOddsSync = async () => {
     try {
-      setOddsMsg('Fetching live Bet365 / Pinnacle odds from The Odds API in background...');
+      setOddsMsg('Fetching live reference market odds from The Odds API in background...');
       const res = await triggerAdminOddsSync();
       setOddsMsg(res.detail);
     } catch (err: any) {
@@ -340,7 +340,7 @@ export default function AdminDashboardPage() {
           Admin Dashboard ⚙️
         </h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem' }}>
-          System telemetry, manual data sync triggers, live bookmaker odds integration, email tester, and prediction scoring controls.
+          System telemetry, manual data sync triggers, reference market odds integration, email tester, and prediction scoring controls.
         </p>
       </div>
 
@@ -396,12 +396,12 @@ export default function AdminDashboardPage() {
             </div>
 
             <div className="glass-panel" style={{ padding: '1.5rem' }}>
-              <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.6rem' }}>🏷️ Sync Live Bookmaker Odds</h2>
+              <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.6rem' }}>🏷️ Sync Reference Market Odds</h2>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.25rem', lineHeight: 1.5 }}>
-                Fetch live real-time Bet365 / Pinnacle bookmaker odds from <strong>The Odds API</strong>.
+                Fetch live real-time reference market pricing and probabilities from <strong>The Odds API</strong>.
               </p>
               <button onClick={handleOddsSync} className="btn btn-secondary" style={{ width: '100%', fontSize: '0.86rem', borderColor: 'var(--accent-amber)', color: 'var(--accent-amber)' }}>
-                Sync Live Odds API Now
+                Sync Reference Market Odds Now
               </button>
               {oddsMsg && (
                 <div style={{ marginTop: '1rem', padding: '0.8rem', borderRadius: '8px', background: 'rgba(245, 158, 11, 0.15)', fontSize: '0.82rem' }}>

@@ -311,7 +311,7 @@ export default async function LeaguePage({ params }: PageProps) {
                       textDecoration: 'none',
                     }}
                   >
-                    Match Analysis &amp; Tips →
+                    Match Analysis &amp; Predictions →
                   </Link>
                 </div>
               );
@@ -645,7 +645,7 @@ export default async function LeaguePage({ params }: PageProps) {
               textDecoration: 'none',
             }}
           >
-            👑 Tipster Leaderboard
+            👑 Community Leaderboard
           </Link>
         </div>
       </footer>

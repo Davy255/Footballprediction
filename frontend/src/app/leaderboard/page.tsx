@@ -51,7 +51,7 @@ export default function LeaderboardPage() {
           Global Predictor Leaderboard 👑
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', margin: 0, maxWidth: '640px' }}>
-          Real-time performance rankings based on verified, finished football results. Compare community tipsters against the official FootballPredict AI model baseline.
+          Real-time performance rankings based on verified, finished football results. Compare community predictors against the official FootballPredict AI model baseline.
         </p>
       </div>
 
@@ -112,7 +112,7 @@ export default function LeaderboardPage() {
                   {myRank.rank ? `#${myRank.rank}` : 'Unranked'}
                 </div>
                 <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                  out of {myRank.total_users} active tipsters
+                  out of {myRank.total_users} active community predictors
                 </div>
               </div>
               <div style={{ textAlign: 'right' }}>
@@ -125,7 +125,7 @@ export default function LeaderboardPage() {
               </div>
             </div>
             <Link href="/dashboard" style={{ fontSize: '0.76rem', color: '#6ee7b7', fontWeight: 800, textDecoration: 'none' }}>
-              View Personal Dashboard &amp; My Picks →
+              View Personal Dashboard &amp; My Predictions →
             </Link>
           </div>
         )}

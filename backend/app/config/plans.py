@@ -56,10 +56,10 @@ PLANS: dict[str, dict] = {
         "is_premium":    True,
         "is_popular":    True,
         "savings_label": None,
-        "description":   "Advanced statistical edge models and professional match analytics for serious punters.",
+        "description":   "Advanced statistical models and in-depth match analytics for football analysts and enthusiasts.",
         "features": [
             "Everything in Free Tier",
-            "Model Edge & Expected Value (EV %)",
+            "Statistical Model vs Market Variance Analysis",
             "Full 7×7 Poisson Score Probability Heatmap",
             "High-Confidence Match Alert Feeds",
             "100% Ad-Free Experience",

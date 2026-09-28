@@ -126,7 +126,7 @@ export interface ValueEdgeAnalysis {
  * - Model Edge (pp) = Model Probability (%) - Normalized Market Implied Probability (%)
  * - Expected Value (EV %) = ((Model Probability Decimal * Decimal Odds) - 1) * 100
  *
- * NOTE: Model Edge is a statistical discrepancy indicator and NEVER guarantees betting profit.
+ * NOTE: Model Edge is a statistical discrepancy indicator and never guarantees match outcomes.
  */
 export function calculateValueEdgeAnalysis(
   modelProbs: { homePct: number; drawPct: number; awayPct: number },

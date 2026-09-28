@@ -349,7 +349,7 @@ If you did not request this, ignore this email.
 
 def send_welcome_email(to_email: str, username: str) -> bool:
     """
-    Sends a Welcome email focused on AI betting analytics and match predictions.
+    Sends a Welcome email focused on match predictions and tactical football intelligence.
     """
     frontend_base = get_effective_frontend_url()
 
@@ -380,10 +380,10 @@ def send_welcome_email(to_email: str, username: str) -> bool:
         <tr>
           <td style="padding:28px 32px 0;">
             <p style="margin:0 0 18px;font-size:15px;line-height:1.75;color:#cbd5e1;">
-              You've joined <strong style="color:#60a5fa;">FootballPredict</strong> — the platform built to give you a <strong style="color:#fff;">real analytical edge</strong> before you place a analyze upcoming fixtures and team form.
+              You've joined <strong style="color:#60a5fa;">FootballPredict</strong> — the platform built to give you a <strong style="color:#fff;">real analytical edge</strong> as you analyze upcoming fixtures and team form.
             </p>
             <p style="margin:0 0 24px;font-size:15px;line-height:1.75;color:#94a3b8;">
-              We analyse hundreds of data points per match — form, head-to-head records, goal averages, home/away strength, and bookmaker odds — to deliver <strong style="color:#fff;">clear, data-backed predictions</strong> for every fixture.
+              We analyse hundreds of data points per match — form, head-to-head records, goal averages, home/away strength, and market metrics — to deliver <strong style="color:#fff;">clear, data-backed predictions</strong> for every fixture.
             </p>
           </td>
         </tr>
@@ -435,7 +435,7 @@ def send_welcome_email(to_email: str, username: str) -> bool:
                     <tr>
                       <td width="36" style="font-size:22px;vertical-align:middle;">⚡</td>
                       <td style="padding-left:10px;vertical-align:middle;">
-                        <strong style="color:#c4b5fd;font-size:14px;">BTTS &amp; Over/Under Tips</strong>
+                        <strong style="color:#c4b5fd;font-size:14px;">BTTS &amp; Over/Under Analysis</strong>
                         <p style="margin:3px 0 0;font-size:13px;color:#94a3b8;line-height:1.5;">Both Teams to Score and Over/Under 2.5 Goals insights per fixture</p>
                       </td>
                     </tr>
@@ -473,7 +473,7 @@ def send_welcome_email(to_email: str, username: str) -> bool:
                 <li>Review the AI win probabilities and projected score</li>
                 <li>Check the BTTS and Over/Under recommendations</li>
                 <li>Use Coach AI to ask deeper questions about the match</li>
-                <li>Place your bet on your bookmaker with confidence</li>
+                <li>Submit your prediction on our global leaderboard</li>
               </ol>
             </div>
           </td>
@@ -507,20 +507,20 @@ def send_welcome_email(to_email: str, username: str) -> bool:
 
     text_content = f"""Welcome to FootballPredict, {username}!
 
-Your AI-powered betting intelligence platform is ready.
+Your AI-powered football intelligence platform is ready.
 
 What you get on every match:
 • AI Win Probability % (Home / Draw / Away)
 • Projected Final Scoreline
-• BTTS & Over/Under 2.5 Tips
+• BTTS & Over/Under 2.5 Insights
 • Coach AI — ask any match question and get instant analysis
 
 How to use it:
 1. Browse today's fixtures
 2. Check the AI predictions and win probabilities
-3. Review BTTS / Over/Under tips
+3. Review BTTS / Over/Under recommendations
 4. Use Coach AI for deeper analysis
-5. Bet smarter on Betway, Sportpesa, 1xBet, or any bookmaker
+5. Compete with the community on the global leaderboard
 
 View today's predictions: {frontend_base}/
 
@@ -532,13 +532,13 @@ View today's predictions: {frontend_base}/
 
 def send_daily_match_reminder_email(to_email: str, username: str, featured_matches: list = None) -> bool:
     """
-    Sends a Daily Match Digest with AI tips and predictions for today's top games.
+    Sends a Daily Match Digest with match forecasts and tactical predictions for today's top games.
     """
     from datetime import datetime
     frontend_base = get_effective_frontend_url()
 
     today_str = datetime.now().strftime("%A, %d %B %Y")
-    subject = f"⚽ Today's Betting Tips — {datetime.now().strftime('%d %b')} | FootballPredict AI"
+    subject = f"⚽ Today's Match Predictions & Tactical Digest — {datetime.now().strftime('%d %b')} | FootballPredict AI"
 
     # Build match cards HTML
     match_cards_html = ""
@@ -565,7 +565,7 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
             pred_h  = getattr(m, 'ai_predicted_home', None) if not isinstance(m, dict) else m.get('ai_predicted_home')
             pred_a  = getattr(m, 'ai_predicted_away', None) if not isinstance(m, dict) else m.get('ai_predicted_away')
 
-            # Build probability bar & intelligent betting tip
+            # Build probability bar & intelligent prediction indicator
             if ai_home and ai_draw and ai_away:
                 h_pct = int(round(ai_home * 100))
                 d_pct = int(round(ai_draw * 100))
@@ -613,7 +613,7 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
                     <td align="right" style="font-size:11px;color:#f59e0b;">A {a_pct}%</td>
                   </tr>
                 </table>"""
-                tip_badge = f'<span style="display:inline-block;background:{tip_color};color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:6px;">🎯 Tip: {tip_text}</span>'
+                tip_badge = f'<span style="display:inline-block;background:{tip_color};color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:6px;">🎯 Forecast: {tip_text}</span>'
             else:
                 prob_html = ""
                 tip_badge = '<span style="display:inline-block;background:#1e3a5f;color:#60a5fa;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:6px;">📊 View Full Analysis</span>'
@@ -643,7 +643,7 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
             <div style="font-size:28px;margin-bottom:8px;">📅</div>
             <p style="margin:0;font-size:14px;color:#94a3b8;line-height:1.6;">
               Top games are scheduled today across the Premier League, La Liga, Serie A, Bundesliga and Champions League.<br>
-              <strong style="color:#60a5fa;">Visit the platform for full AI predictions and tips.</strong>
+              <strong style="color:#60a5fa;">Visit the platform for full match predictions and analysis.</strong>
             </p>
           </td></tr>
         </table>"""
@@ -653,7 +653,7 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Today's Betting Tips</title>
+  <title>Today's Match Predictions</title>
 </head>
 <body style="margin:0;padding:0;background-color:#0b0f19;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;color:#e2e8f0;">
   <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#0b0f19;padding:40px 16px;">
@@ -691,8 +691,8 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
             <div style="background:rgba(37,99,235,0.1);border:1px solid rgba(59,130,246,0.2);border-radius:10px;padding:14px 16px;">
               <p style="margin:0 0 6px;font-size:12px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:0.5px;">💡 Today's Match Tactical Note</p>
               <p style="margin:0;font-size:13px;color:#94a3b8;line-height:1.6;">
-                Always check our <strong style="color:#fff;">Coach AI</strong> before placing bets — ask about team news, injuries, or head-to-head history for any fixture.
-                Combine our AI tips with your own research for the best results.
+                Always check our <strong style="color:#fff;">Coach AI</strong> before submitting predictions — ask about team news, injuries, or head-to-head history for any fixture.
+                Combine our model projections with your own research for the best insights.
               </p>
             </div>
           </td>
@@ -729,10 +729,10 @@ def send_daily_match_reminder_email(to_email: str, username: str, featured_match
 
 Here are today's top fixtures with AI predictions to help you make informed match predictions.
 
-Visit FootballPredict for full match analysis, win probabilities, BTTS tips, Over/Under predictions and Coach AI:
+Visit FootballPredict for full match analysis, win probabilities, BTTS insights, Over/Under predictions and Coach AI:
 {frontend_base}/
 
-Remember to check Coach AI before placing any bet — ask about team news, injuries, or head-to-head records.
+Remember to check Coach AI before submitting predictions — ask about team news, injuries, or head-to-head records.
 
 — FootballPredict Team
 © 2026 FootballPredict • AI Match Intelligence

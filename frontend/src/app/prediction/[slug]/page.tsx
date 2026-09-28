@@ -561,7 +561,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                 <span>🎯</span> 1X2 Market Decimal Odds &amp; Margin-Normalized Probabilities
               </div>
               <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                Market Overround: {oddsAnalysis.overroundPct}% ({oddsAnalysis.bookmakerMarginPct}% bookmaker margin)
+                Market Overround: {oddsAnalysis.overroundPct}% ({oddsAnalysis.bookmakerMarginPct}% implied market margin)
               </span>
             </div>
 
@@ -591,7 +591,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
               </div>
             </div>
 
-            {/* Model-vs-Market Potential Value Edge Table */}
+            {/* Model-vs-Market Statistical Variance Table */}
             {valueAnalysis.hasValidComparison && (
               <div style={{
                 background: 'rgba(0,0,0,0.25)',
@@ -601,7 +601,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem', flexWrap: 'wrap', gap: '0.4rem' }}>
                   <div style={{ fontSize: '0.80rem', fontWeight: 800, color: '#38bdf8', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                    <span>⚖️</span> Potential Model Edge Analysis (Model % vs Market %)
+                    <span>⚖️</span> Statistical Model vs Market Probability Comparison
                   </div>
                   {valueAnalysis.bestEdgeOutcome && (
                     <span style={{
@@ -613,7 +613,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                       padding: '0.15rem 0.5rem',
                       borderRadius: '6px',
                     }}>
-                      Primary Edge: {valueAnalysis.bestEdgeOutcome.label} (+{valueAnalysis.bestEdgeOutcome.modelEdgePp} pp)
+                      Statistical Variance: {valueAnalysis.bestEdgeOutcome.label} (+{valueAnalysis.bestEdgeOutcome.modelEdgePp} pp)
                     </span>
                   )}
                 </div>
@@ -626,7 +626,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                         <th style={{ padding: '0.4rem 0.6rem' }}>Model Prob</th>
                         <th style={{ padding: '0.4rem 0.6rem' }}>Market Norm %</th>
                         <th style={{ padding: '0.4rem 0.6rem' }}>Market Odds</th>
-                        <th style={{ padding: '0.4rem 0.6rem', textAlign: 'right' }}>Potential Model Edge</th>
+                        <th style={{ padding: '0.4rem 0.6rem', textAlign: 'right' }}>Statistical Variance</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -646,7 +646,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                 </div>
 
                 <div style={{ fontSize: '0.70rem', color: 'var(--text-muted)', marginTop: '0.6rem', lineHeight: 1.4 }}>
-                  ℹ️ <strong>Methodology Note:</strong> Potential Model Edge reflects mathematical variance between FootballPredict&apos;s objective statistical probability and margin-normalized bookmaker market pricing. It is an analytical reference and does not guarantee match results or betting profit.
+                  ℹ️ <strong>Methodology Note:</strong> Statistical Variance reflects mathematical variance between FootballPredict&apos;s objective statistical probability model and margin-normalized market implied probabilities. It is provided strictly for educational and analytical comparison, and does not guarantee match outcomes.
                 </div>
               </div>
             )}
@@ -821,7 +821,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
       {/* Interactive Match Hub with Full Form, H2H & Predictions */}
       <section style={{ marginBottom: '2.5rem' }}>
         <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '1rem' }}>
-          📊 Complete Match Analytics, Form &amp; Community Tips
+          📊 Complete Match Analytics, Form &amp; Community Predictions
         </h2>
         <MatchCard match={match} defaultOpen={true} />
       </section>
@@ -1024,7 +1024,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
               textDecoration: 'none',
             }}
           >
-            🎯 Today&apos;s Tips
+            🎯 Today&apos;s Predictions
           </Link>
           <Link
             href="/fixtures"
@@ -1069,7 +1069,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
               textDecoration: 'none',
             }}
           >
-            👑 Tipster Leaderboard
+            👑 Community Leaderboard
           </Link>
         </div>
       </footer>

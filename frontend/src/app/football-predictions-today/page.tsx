@@ -19,9 +19,9 @@ export const metadata: Metadata = {
     'football match predictions today',
     'soccer predictions today',
     "today's match predictions",
-    'football tips today',
-    'free football tips today',
-    'betting predictions today',
+    'match forecasts today',
+    'soccer statistical predictions',
+    'football analytics today',
     'win probabilities today',
   ],
   metadataBase: new URL(siteConfig.url),
@@ -535,7 +535,7 @@ export default async function FootballPredictionsTodayPage() {
                             textDecoration: 'none',
                           }}
                         >
-                          🎯 Full Prediction &amp; Odds →
+                          🎯 Full Match Analysis →
                         </Link>
                       </div>
                     );
@@ -644,7 +644,7 @@ export default async function FootballPredictionsTodayPage() {
               textDecoration: 'none',
             }}
           >
-            👑 Tipster Leaderboard
+            👑 Community Leaderboard
           </Link>
           <Link
             href="/stats"

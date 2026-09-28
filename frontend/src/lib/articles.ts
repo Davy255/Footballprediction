@@ -168,27 +168,27 @@ This disciplined approach ensures that all multi-market forecasts on FootballPre
   },
   {
     slug: 'understanding-bookmaker-overround-and-market-margin',
-    title: 'Deconstructing Bookmaker Overround: How to Calculate Margin-Normalized Implied Odds',
-    excerpt: 'A complete mathematical guide to converting decimal odds into true implied probabilities by removing the bookmaker vig.',
+    title: 'Understanding Market Overround: How to Calculate Margin-Normalized Implied Probabilities',
+    excerpt: 'A mathematical guide to converting decimal market odds into normalized implied probability distributions for comparative football analytics.',
     category: 'Prediction Methodology',
     publishedAt: '2026-08-22T14:00:00Z',
     updatedAt: '2026-08-25T16:00:00Z',
     author: {
       name: 'FootballPredict Analytics Team',
-      role: 'Market Analytics Lead',
+      role: 'Quantitative Modeling Specialist',
     },
     readingTimeMinutes: 5,
     relatedLeagueCodes: ['PL', 'PD', 'SA'],
     content: `
-## 1. What is Bookmaker Overround?
+## 1. What is Market Overround and Margin?
 
-When a bookmaker publishes 1X2 odds for a football match, the raw implied probabilities of Home, Draw, and Away will always sum to greater than 100%. This surplus percentage (typically between 104% and 108%) represents the bookmaker's built-in margin or **overround (vig)**.
+When decimal odds are published for a football match, the raw implied probabilities of Home, Draw, and Away will always sum to greater than 100%. This surplus percentage (typically between 104% and 108%) represents the commercial margin or **mathematical overround**.
 
 ---
 
-## 2. The Conversion Formula
+## 2. The Normalization Formula
 
-To compare market odds directly against an objective AI prediction model, the overround must be stripped out:
+To evaluate market consensus directly against an objective statistical prediction model, the overround margin must be mathematically normalized:
 
 ### Step 1: Compute Raw Implied Probabilities
 $$P_{raw} = \\frac{1}{\\text{Decimal Odds}}$$
@@ -196,18 +196,18 @@ $$P_{raw} = \\frac{1}{\\text{Decimal Odds}}$$
 ### Step 2: Sum the Total Overround
 $$O = P_{raw, H} + P_{raw, D} + P_{raw, A}$$
 
-### Step 3: Compute Normalized Probabilities
+### Step 3: Compute Margin-Normalized Probabilities
 $$P_{norm} = \\frac{P_{raw}}{O} \\times 100\\%$$
 
 ---
 
-## 3. Identifying Potential Model Edge
+## 3. Comparative Statistical Analysis
 
-When FootballPredict's objective statistical probability exceeds the margin-normalized market probability, a **Potential Model Edge** exists:
+By normalizing raw market pricing into true percentage distributions that sum exactly to 100%, sports analysts can quantitatively compare market implied consensus against algorithmic models (such as Poisson goal simulations and Elo ratings):
 
-$$\\text{Model Edge (pp)} = \\text{Model Probability (\\%)} - P_{norm} (\\%)$$
+$$\\text{Statistical Variance (pp)} = \\text{Model Probability (\\%)} - P_{norm} (\\%)$$
 
-This quantitative metric allows analysts to quickly identify fixtures where statistical form divergence from market consensus is most pronounced.
+This quantitative approach allows analysts to identify fixtures where underlying statistical team performance deviates from broader consensus forecasts for analytical and educational research.
     `,
   },
 ];

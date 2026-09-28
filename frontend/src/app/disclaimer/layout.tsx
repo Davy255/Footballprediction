@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { constructMetadata } from '@/config/site';
 
 export const metadata: Metadata = constructMetadata({
-  title: "Legal & Prediction Disclaimer",
-  description: "Legal disclaimer, entertainment notice, and responsible prediction terms for FootballPredict.",
+  title: "Football Prediction & Data Disclaimer",
+  description: "Mathematical modeling, prediction estimates, and statistical information disclaimer for FootballPredict.",
   path: "/disclaimer",
   noIndex: false,
 });

@@ -336,8 +336,8 @@ export default function PricingPage() {
         textAlign: 'center',
       }}>
         🛡️ <strong>Model Independence Guarantee:</strong> FootballPredict&apos;s statistical prediction
-        engine operates completely independently from subscription tiers, advertising, and sportsbook
-        partnerships. Model probabilities are calculated purely on objective mathematical algorithms
+        engine operates completely independently from subscription tiers, advertising, or external commercial
+        affiliations. Model probabilities are calculated purely on objective mathematical algorithms
         (Elo + Poisson distributions) and are never altered for commercial reasons.
       </div>
 

@@ -66,7 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       </span>
                     </Link>
                     <p>
-                      Comprehensive football match predictions, live odds synced from Bet365 & Pinnacle,
+                      Comprehensive football match predictions, live scores,
                       multi-market tactical analysis, and competitive leaderboard rankings.
                     </p>
                     <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
@@ -87,7 +87,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         borderRadius: '6px',
                         fontSize: '0.72rem',
                         fontWeight: 700,
-                      }}>Live Odds</span>
+                      }}>Live Scores</span>
                       <span style={{
                         padding: '0.25rem 0.6rem',
                         background: 'rgba(139,92,246,0.1)',
@@ -130,7 +130,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <ul className="footer-links">
                       <li><Link href="/privacy">Privacy Policy</Link></li>
                       <li><Link href="/terms">Terms of Service</Link></li>
-                      <li><Link href="/disclaimer">Disclaimer &amp; Gaming</Link></li>
+                      <li><Link href="/disclaimer">Prediction Disclaimer</Link></li>
                       <li><Link href="/forgot-password">Account Recovery</Link></li>
                     </ul>
                   </div>

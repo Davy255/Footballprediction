@@ -1273,9 +1273,9 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
                   cursor: 'pointer',
                   pointerEvents: 'auto',
                 }}
-                title={`${HN} vs ${AN} Full Prediction & Odds`}
+                title={`${HN} vs ${AN} Full Match Prediction & Analysis`}
               >
-                🎯 {HN} vs {AN} Prediction &amp; Odds →
+                🎯 {HN} vs {AN} Prediction &amp; Analysis →
               </Link>
             </div>
           </div>
@@ -1296,7 +1296,7 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
           {/* Tab Content Panel */}
           <div className="ws-tab-content">
 
-            {/* ── TAB 1: FORECAST & ODDS ── */}
+            {/* ── TAB 1: FORECAST & MARKETS ── */}
             {activeTab === 'ai' && (
               <div>
                 {/* Confidence Level Badge */}
@@ -1333,7 +1333,7 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
                   </span>
                 </div>
 
-                <div className="ws-section-title">🎯 1X2 Full-Time Match Odds (Match Winner)</div>
+                <div className="ws-section-title">🎯 1X2 Match Projections &amp; Win Probabilities</div>
                 <div className="ws-1x2-market-grid">
                   <div className="ws-1x2-market-card">
                     <div className="ws-1x2-market-header">
@@ -1386,23 +1386,23 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
 
                   return (
                     <>
-                      <div className="ws-section-title">Tactical Best Value Picks</div>
+                      <div className="ws-section-title">Model Projections &amp; Key Indicators</div>
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 8 }}>
                         <div className="ws-pick-card">
                           <div>
-                            <div className="ws-pick-label">🏆 Primary Pick</div>
+                            <div className="ws-pick-label">🏆 Primary Forecast</div>
                             <div className="ws-pick-val">{picks.primary} <span className="ws-pick-odds">@{primaryOdds}</span></div>
                           </div>
                         </div>
                         <div className="ws-pick-card">
                           <div>
-                            <div className="ws-pick-label">🛡️ Safety Pick</div>
+                            <div className="ws-pick-label">🛡️ High Probability Outlook</div>
                             <div className="ws-pick-val">{picks.safety} <span className="ws-pick-odds">@{picks.safety_odds}</span></div>
                           </div>
                         </div>
                         <div className="ws-pick-card">
                           <div>
-                            <div className="ws-pick-label">⚽ Goal Market</div>
+                            <div className="ws-pick-label">⚽ Goal Line Projection</div>
                             <div className="ws-pick-val">{coherentGoalPick} <span className="ws-pick-odds">@{coherentGoalOdds}</span></div>
                           </div>
                         </div>
@@ -1411,7 +1411,7 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
                   );
                 })()}
 
-                <div className="ws-section-title">Real Bookmaker Market Odds &amp; Probabilities</div>
+                <div className="ws-section-title">Implied Market Probabilities &amp; Reference Odds</div>
                 <div className="ws-markets-grid">
                   <div className="ws-market-item">
                     <span className="ws-market-label">Over 2.5 Goals</span>
@@ -1664,7 +1664,7 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
                       style={{ background: 'rgba(255,255,255,0.08)', marginTop: 8 }}
                       onClick={() => { setSubmitted(false); setExistingPred(null); }}
                     >
-                      ✏️ Edit Picks
+                      ✏️ Edit Prediction
                     </button>
                   </div>
                 ) : (

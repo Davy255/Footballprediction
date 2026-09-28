@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { constructMetadata } from '@/config/site';
 
 export const metadata: Metadata = constructMetadata({
-  title: "Community Tipster Leaderboard & Rankings",
-  description: "Track top football tipsters, prediction accuracy rankings, monthly leaderboards, and community prediction stats on FootballPredict.",
+  title: "Community Prediction Leaderboard & Rankings",
+  description: "Track top community predictors, model accuracy rankings, monthly leaderboards, and football prediction stats on FootballPredict.",
   path: "/leaderboard",
   noIndex: false,
 });

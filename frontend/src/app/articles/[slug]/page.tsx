@@ -186,7 +186,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
             🎯 Explore Live Mathematical Forecasts
           </div>
           <p style={{ fontSize: '0.84rem', color: '#cbd5e1', margin: '0 0 1rem 0' }}>
-            Apply these statistical insights directly to today&apos;s scheduled fixtures. View win probabilities, projected scores, and value edges across top European leagues.
+            Apply these statistical insights directly to today&apos;s scheduled fixtures. View win probabilities, projected scores, and tactical statistical breakdowns across top European leagues.
           </p>
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
             <Link href="/football-predictions-today" className="btn btn-primary btn-sm" style={{ fontWeight: 800 }}>
