@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <footer className="site-footer">
               <div className="container">
                 <div className="footer-grid">
-                  {/* Brand Column */}
+                  {/* Brand & Publisher Column */}
                   <div className="footer-brand">
                     <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                       <span style={{ fontSize: '1.4rem' }}>⚽</span>
@@ -69,7 +69,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       Comprehensive football match predictions, live scores,
                       multi-market tactical analysis, and competitive leaderboard rankings.
                     </p>
-                    <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
+                    <p style={{ marginTop: '0.65rem', fontSize: '0.80rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
+                      Published by <strong>{siteConfig.publisher}</strong><br />
+                      Inquiries: <a href={`mailto:${siteConfig.contactEmail}`} style={{ color: 'var(--accent-blue)', textDecoration: 'none' }}>{siteConfig.contactEmail}</a><br />
+                      Support: <a href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#4ade80', textDecoration: 'none' }}>{siteConfig.contactPhone}</a>
+                    </p>
+                    <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.85rem' }}>
                       <span style={{
                         padding: '0.25rem 0.6rem',
                         background: 'rgba(59,130,246,0.1)',
@@ -104,10 +109,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <div className="footer-col">
                     <h4>Predict &amp; Analysis</h4>
                     <ul className="footer-links">
-                      <li><Link href="/football-predictions-today">Today&apos;s AI Predictions</Link></li>
+                      <li><Link href="/football-predictions-today">Today&apos;s Match Predictions</Link></li>
                       <li><Link href="/fixtures">Fixtures Discovery</Link></li>
+                      <li><Link href="/live">Live Match Centre</Link></li>
                       <li><Link href="/articles">Football Analysis &amp; Articles</Link></li>
-                      <li><Link href="/accuracy">Historical Accuracy Audit</Link></li>
+                      <li><Link href="/stats">Historical Accuracy Audit</Link></li>
                       <li><Link href="/leaderboard">Community Leaderboard</Link></li>
                     </ul>
                   </div>
@@ -121,31 +127,38 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       <li><Link href="/fixtures?league=BL1">🇩🇪 Bundesliga</Link></li>
                       <li><Link href="/fixtures?league=SA">🇮🇹 Serie A</Link></li>
                       <li><Link href="/fixtures?league=CL">🇪🇺 Champions League</Link></li>
+                      <li><Link href="/leagues">🏆 All Competitions</Link></li>
                     </ul>
                   </div>
 
-                  {/* Legal Column */}
+                  {/* Legal & Trust Column */}
                   <div className="footer-col">
-                    <h4>Legal &amp; Trust</h4>
+                    <h4>Company &amp; Trust</h4>
                     <ul className="footer-links">
+                      <li><Link href="/about">About FootballPredict</Link></li>
+                      <li><Link href="/contact">Contact &amp; Support</Link></li>
+                      <li><Link href="/disclaimer">Prediction Disclaimer</Link></li>
                       <li><Link href="/privacy">Privacy Policy</Link></li>
                       <li><Link href="/terms">Terms of Service</Link></li>
-                      <li><Link href="/disclaimer">Prediction Disclaimer</Link></li>
                       <li><Link href="/forgot-password">Account Recovery</Link></li>
                     </ul>
                   </div>
                 </div>
 
                 <div className="footer-bottom">
-                  <span>⚽ FootballPredict &copy; {new Date().getFullYear()}. All rights reserved.</span>
-                  <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                  <span>⚽ FootballPredict &copy; {new Date().getFullYear()} {siteConfig.publisher}. All rights reserved.</span>
+                  <div style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    <Link href="/about" style={{ color: 'var(--text-muted)' }}>About Us</Link>
+                    <span>•</span>
+                    <Link href="/contact" style={{ color: 'var(--text-muted)' }}>Contact</Link>
+                    <span>•</span>
+                    <Link href="/disclaimer" style={{ color: 'var(--text-muted)' }}>Disclaimer</Link>
+                    <span>•</span>
                     <Link href="/privacy" style={{ color: 'var(--text-muted)' }}>Privacy Policy</Link>
                     <span>•</span>
                     <Link href="/terms" style={{ color: 'var(--text-muted)' }}>Terms of Service</Link>
-                    <span>•</span>
-                    <Link href="/disclaimer" style={{ color: 'var(--text-muted)' }}>Disclaimer</Link>
                   </div>
-                  <span>Powered by football-data.org &amp; statistical sports analytics models</span>
+                  <span>Powered by football-data.org API &amp; proprietary sports analytics models</span>
                 </div>
               </div>
             </footer>

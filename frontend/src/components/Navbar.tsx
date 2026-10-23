@@ -509,12 +509,12 @@ export default function Navbar() {
                   </Link>
                 ))}
                 <Link
-                  href="/accuracy"
+                  href="/stats"
                   style={{
                     padding: '0.6rem 0.8rem',
                     borderRadius: '10px',
-                    background: pathname === '/accuracy' ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
-                    color: pathname === '/accuracy' ? 'var(--accent-blue)' : 'var(--text-primary)',
+                    background: pathname === '/stats' ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
+                    color: pathname === '/stats' ? 'var(--accent-blue)' : 'var(--text-primary)',
                     fontWeight: 600,
                     fontSize: '0.84rem',
                     textDecoration: 'none',
@@ -551,6 +551,72 @@ export default function Navbar() {
               >
                 💎 VIP Pro Analytics
               </Link>
+            </div>
+
+            {/* Category 4: Company & Trust Information */}
+            <div>
+              <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
+                Company &amp; Trust
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.45rem' }}>
+                <Link
+                  href="/about"
+                  style={{
+                    padding: '0.6rem 0.8rem',
+                    borderRadius: '10px',
+                    background: pathname === '/about' ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
+                    color: pathname === '/about' ? 'var(--accent-blue)' : 'var(--text-primary)',
+                    fontWeight: 600,
+                    fontSize: '0.84rem',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.45rem',
+                    minHeight: '44px',
+                  }}
+                >
+                  <span>ℹ️</span>
+                  <span>About Us</span>
+                </Link>
+                <Link
+                  href="/contact"
+                  style={{
+                    padding: '0.6rem 0.8rem',
+                    borderRadius: '10px',
+                    background: pathname === '/contact' ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
+                    color: pathname === '/contact' ? 'var(--accent-blue)' : 'var(--text-primary)',
+                    fontWeight: 600,
+                    fontSize: '0.84rem',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.45rem',
+                    minHeight: '44px',
+                  }}
+                >
+                  <span>✉️</span>
+                  <span>Contact</span>
+                </Link>
+                <Link
+                  href="/disclaimer"
+                  style={{
+                    padding: '0.6rem 0.8rem',
+                    borderRadius: '10px',
+                    background: pathname === '/disclaimer' ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
+                    color: pathname === '/disclaimer' ? 'var(--accent-blue)' : 'var(--text-primary)',
+                    fontWeight: 600,
+                    fontSize: '0.84rem',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.45rem',
+                    minHeight: '44px',
+                  }}
+                >
+                  <span>⚖️</span>
+                  <span>Disclaimer</span>
+                </Link>
+              </div>
             </div>
           </div>
         )}

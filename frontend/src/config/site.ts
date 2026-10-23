@@ -35,8 +35,12 @@ export const siteConfig = {
   ],
   ogImage: '/og-image.png',
   locale: 'en_US',
-  creator: 'FootballPredict',
-  publisher: 'FootballPredict',
+  creator: 'Vertex Digital Services',
+  publisher: 'Vertex Digital Services',
+  contactEmail: 'footballlpredict@gmail.com',
+  contactPhone: '+254742669974',
+  whatsappUrl: 'https://wa.me/254742669974',
+
   themeColor: '#0b0f19',
 };
 
