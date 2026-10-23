@@ -122,7 +122,7 @@ export default function HowToPlayModal({ isOpen, onClose }: Props) {
               </h3>
             </div>
             <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: '0 0 0.8rem 0' }}>
-              As soon as a match ends, our automated system scores your prediction and deposits points directly into your account:
+              As soon as a match ends, our automated system scores your prediction and credits community points directly to your account:
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <div style={{
@@ -217,7 +217,7 @@ export default function HowToPlayModal({ isOpen, onClose }: Props) {
               </h3>
             </div>
             <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: '0 0 0.8rem 0' }}>
-              Our statistical intelligence engine analyzes 87,000+ historical database fixtures, team power ratings, and recent goal form:
+              Our statistical intelligence engine evaluates historical fixtures, Elo team ratings, and recent rolling form:
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.6rem' }}>
               <div style={{ background: 'var(--bg-primary)', padding: '0.75rem', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
@@ -262,11 +262,14 @@ export default function HowToPlayModal({ isOpen, onClose }: Props) {
         <div style={{
           padding: '1.25rem 1.75rem',
           borderTop: '1px solid var(--border-color)',
-          display: 'flex', justifyContent: 'flex-end',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem',
           background: 'rgba(0,0,0,0.2)',
           borderBottomLeftRadius: '20px',
           borderBottomRightRadius: '20px',
         }}>
+          <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', lineHeight: 1.4, maxWidth: '400px' }}>
+            ℹ️ Non-monetary community feature. Points carry no cash value and cannot be exchanged for currency.
+          </div>
           <button
             onClick={onClose}
             className="btn btn-primary"

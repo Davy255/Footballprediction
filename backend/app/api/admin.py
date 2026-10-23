@@ -87,7 +87,7 @@ def update_match_odds(
     db: Session = Depends(get_db),
     _=Depends(get_current_admin),
 ):
-    """Allows administrators to set exact Bet365/Pinnacle bookmaker odds in real-time."""
+    """Allows administrators to set exact market consensus odds in real-time."""
     match = db.query(Match).filter(Match.id == match_id).first()
     if not match:
         raise HTTPException(status_code=404, detail="Match not found")
@@ -96,7 +96,7 @@ def update_match_odds(
     match.odds_draw = payload.odds_draw
     match.odds_away = payload.odds_away
 
-    # Derive exact implied probabilities from bookmaker odds
+    # Derive exact implied probabilities from market odds
     raw_h = 1.0 / max(0.01, payload.odds_home)
     raw_d = 1.0 / max(0.01, payload.odds_draw)
     raw_a = 1.0 / max(0.01, payload.odds_away)
@@ -177,7 +177,7 @@ def trigger_odds_sync(
 ):
     from app.services.odds_api_service import sync_all_live_odds
     background_tasks.add_task(sync_all_live_odds)
-    return {"detail": "Live bookmaker odds sync started in background", "status": "ok"}
+    return {"detail": "Live market odds sync started in background", "status": "ok"}
 
 
 @router.post("/score-predictions")

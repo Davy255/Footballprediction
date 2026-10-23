@@ -3,10 +3,10 @@
  *
  * Provides mathematically sound conversions:
  * - Decimal Odds -> Raw Implied Probability (1 / odds)
- * - Bookmaker Overround / Margin Calculation (sum of raw implied probs)
+ * - Market Overround / Commercial Margin Calculation (sum of raw implied probs)
  * - Margin-Normalized Implied Probability (raw implied / total overround)
  *
- * NOTE: Normalizing removes bookmaker vig/margin, allowing direct analytical
+ * NOTE: Normalizing removes commercial market margin, allowing direct analytical
  * comparison against FootballPredict's true statistical model probabilities.
  */
 
@@ -19,7 +19,8 @@ export interface MarketOddsAnalysis {
   rawDrawImpliedPct?: number;
   rawAwayImpliedPct?: number;
   overroundPct?: number; // e.g. 105.4%
-  bookmakerMarginPct?: number; // e.g. 5.4%
+  bookmakerMarginPct?: number;
+  marketMarginPct?: number; // e.g. 5.4%
   normalizedHomeImpliedPct?: number;
   normalizedDrawImpliedPct?: number;
   normalizedAwayImpliedPct?: number;
@@ -66,10 +67,11 @@ export function calculateMarketOddsAnalysis(match: {
   const rawD = 1 / dOdds;
   const rawA = 1 / aOdds;
 
-  // 2. Bookmaker Overround / Margin Sum
+  // 2. Market Overround / Commercial Margin Sum
   const totalOverround = rawH + rawD + rawA;
   const overroundPct = Number((totalOverround * 100).toFixed(1));
   const bookmakerMarginPct = Number(((totalOverround - 1) * 100).toFixed(1));
+  const marketMarginPct = bookmakerMarginPct;
 
   // 3. Margin-Normalized Market Probabilities
   const normH = Number(((rawH / totalOverround) * 100).toFixed(1));
@@ -86,6 +88,7 @@ export function calculateMarketOddsAnalysis(match: {
     rawAwayImpliedPct: Number((rawA * 100).toFixed(1)),
     overroundPct,
     bookmakerMarginPct,
+    marketMarginPct,
     normalizedHomeImpliedPct: normH,
     normalizedDrawImpliedPct: normD,
     normalizedAwayImpliedPct: normA,

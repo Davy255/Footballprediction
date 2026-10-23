@@ -1,6 +1,6 @@
 """
 Live Sports Odds API Integration Service (The Odds API)
-Fetches live bookmaker odds (Bet365, Pinnacle, Betfair, Unibet) across supported soccer leagues
+Fetches live market odds across supported soccer leagues
 and updates DB matches with real market prices, probabilities, and score projections.
 """
 import logging
@@ -61,7 +61,7 @@ def clean_team_name(name: str) -> str:
 
 
 def sync_live_odds_for_league(league_code: str, db: Session) -> int:
-    """Fetch live bookmaker odds from The Odds API for a single league code."""
+    """Fetch live market odds from The Odds API for a single league code."""
     sport_key = ODDS_SPORT_MAP.get(league_code)
     if not sport_key or not settings.ODDS_API_KEY:
         return 0
@@ -203,7 +203,7 @@ def sync_live_odds_for_league(league_code: str, db: Session) -> int:
             updated_count += 1
 
     db.commit()
-    print(f"Synced {updated_count} live bookmaker odds for {league_code}")
+    print(f"Synced {updated_count} live market odds for {league_code}")
     return updated_count
 
 
@@ -215,7 +215,7 @@ def sync_all_live_odds() -> int:
         for league_code in ODDS_SPORT_MAP.keys():
             count = sync_live_odds_for_league(league_code, db)
             total_updated += count
-        print(f"Total live bookmaker odds synced from The Odds API: {total_updated}")
+        print(f"Total live market odds synced from The Odds API: {total_updated}")
         return total_updated
     finally:
         db.close()

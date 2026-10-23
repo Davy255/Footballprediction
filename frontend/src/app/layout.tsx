@@ -145,7 +145,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <span>•</span>
                     <Link href="/disclaimer" style={{ color: 'var(--text-muted)' }}>Disclaimer</Link>
                   </div>
-                  <span>Powered by football-data.org &amp; The Odds API</span>
+                  <span>Powered by football-data.org &amp; statistical sports analytics models</span>
                 </div>
               </div>
             </footer>

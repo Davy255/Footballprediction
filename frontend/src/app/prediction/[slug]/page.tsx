@@ -576,7 +576,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                 <span>🎯</span> 1X2 Market Decimal Odds &amp; Margin-Normalized Probabilities
               </div>
               <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                Market Overround: {oddsAnalysis.overroundPct}% ({oddsAnalysis.bookmakerMarginPct}% implied market margin)
+                Market Overround: {oddsAnalysis.overroundPct}% ({oddsAnalysis.marketMarginPct ?? oddsAnalysis.bookmakerMarginPct}% implied commercial margin)
               </span>
             </div>
 

@@ -333,7 +333,7 @@ FootballPredict constructs a complete **$7 \\times 7$ discrete score matrix** ($
 
 ## 3. Deriving Multi-Market Outcomes from the Score Matrix
 
-The principal advantage of a unified bivariate score matrix is that all secondary betting and analytics markets become direct mathematical summations of discrete cells:
+The principal advantage of a unified bivariate score matrix is that all secondary statistical and forecasting markets become direct mathematical summations of discrete cells:
 
 | Market | Mathematical Derivation |
 | :--- | :--- |
@@ -420,9 +420,9 @@ Review our live match predictions and see these Poisson scoreline distributions 
     content: `
 ## 1. Introduction: What is Market Overround?
 
-When sportsbooks and market makers publish decimal odds for a football match, the raw probabilities implied by those odds do not sum to 100%. Instead, they almost invariably sum to between **104% and 108%** (and occasionally higher in lower-tier competitions).
+When commercial sports markets and odds compilers publish decimal quotes for a football match, the raw probabilities implied by those odds do not sum to 100%. Instead, they almost invariably sum to between **104% and 108%** (and occasionally higher in lower-tier competitions).
 
-This surplus percentage is known as the **overround**, **vig**, or **market margin**. It represents the commercial fee built into betting pricing to ensure market operators retain an edge regardless of the match outcome.
+This surplus percentage is known as the **overround**, **vig**, or **market margin**. It represents the commercial fee built into market pricing to ensure market operators retain an edge regardless of the match outcome.
 
 For quantitative football researchers and data analysts, comparing a statistical model against raw market odds produces distorted conclusions unless the commercial overround is mathematically stripped out.
 
@@ -447,7 +447,7 @@ The commercial margin percentage ($M$) is defined as:
 $$M = (O_{total} - 1.0) \\times 100\\%$$
 
 ### Step 3: Compute Margin-Normalized Fair Probabilities
-To remove the bookmaker's margin proportionally, each raw probability is divided by the total overround sum:
+To remove the commercial margin proportionally, each raw probability is divided by the total overround sum:
 
 $$P_{norm} = \\frac{P_{raw}}{O_{total}} \\times 100\\%$$
 
@@ -479,7 +479,7 @@ The commercial overround in this fixture is **$4.81\\%$**.
 - **Draw:** $\\frac{0.2778}{1.0481} \\times 100 = 26.50\\%$
 - **Away Win (Liverpool):** $\\frac{0.2941}{1.0481} \\times 100 = 28.06\\%$
 
-Notice that the raw implied probability of Manchester City winning was $47.62\\%$, but once the bookmaker's margin is removed, the market's true consensus probability is actually **$45.43\\%$**.
+Notice that the raw implied probability of Manchester City winning was $47.62\\%$, but once the commercial margin is removed, the market's true consensus probability is actually **$45.43\\%$**.
 
 ### Step 4: Quantifying Statistical Variance
 Suppose the FootballPredict mathematical model estimates Manchester City's win probability at **$49.20\\%$**. We can now quantify the precise statistical variance in percentage points (pp):
@@ -494,8 +494,8 @@ This shows a $+3.77$ percentage point positive model deviation for analytical an
 
 While market consensus reflects the collective wisdom of thousands of participants, financial sports economists have identified structural biases in published odds:
 
-1. **The Favorite-Longshot Bias:** Empirical research by Richard Thaler and William Ziemba showed that recreational bettors systematically over-back extreme underdogs and high-odds scorelines. Consequently, bookmakers build a larger proportion of their overround into heavy underdogs, making longshots statistically overpriced.
-2. **Public Sentiment & Fan Liquidity:** Clubs with massive global fanbases (such as Real Madrid, Manchester United, or Barcelona) attract high volumes of uncritical public wagering. Bookmakers adjust their pricing defensively to balance book liability rather than reflecting pure underlying statistical probabilities.
+1. **The Favorite-Longshot Bias:** Empirical research by Richard Thaler and William Ziemba showed that recreational predictors systematically over-back extreme underdogs and high-odds scorelines. Consequently, market makers build a larger proportion of their overround into heavy underdogs, making longshots statistically overpriced.
+2. **Public Sentiment & Fan Liquidity:** Clubs with massive global fanbases (such as Real Madrid, Manchester United, or Barcelona) attract high volumes of uncritical public sentiment and volume. Market compilers adjust their pricing defensively to balance book liability rather than reflecting pure underlying statistical probabilities.
 3. **Late Information Asymmetry:** Team sheets released 60 minutes prior to kickoff frequently cause rapid market adjustments that render early opening prices obsolete.
 
 ---

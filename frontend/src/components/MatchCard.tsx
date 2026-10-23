@@ -1530,7 +1530,7 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
                   </div>
                 </div>
 
-                <div className="ws-section-title">WhoScored Strengths & Weaknesses Comparison</div>
+                <div className="ws-section-title">Tactical Strengths & Weaknesses Comparison</div>
                 <div className="ws-sw-grid">
                   <div>
                     <div className="ws-sw-col-title">🟢 {HN} Profile</div>
@@ -1566,7 +1566,7 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
 
                 {ws.match_forecast?.length > 0 && (
                   <div className="ws-forecast" style={{ marginTop: 12 }}>
-                    <div className="ws-forecast-title">📋 WhoScored Match Forecast</div>
+                    <div className="ws-forecast-title">📋 Tactical Match Forecast</div>
                     {ws.match_forecast.map((f: string, i: number) => (
                       <div key={i} className="ws-forecast-item">{f}</div>
                     ))}
@@ -1819,7 +1819,7 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
                   { label: 'Goals Scored pg (L10)', h: homeStats.gf10, a: awayStats.gf10, max: 4, fmt: (v: number) => (typeof v === 'number' ? v.toFixed(2) : '-') },
                   { label: 'Avg Points pg (L5)', h: homeStats.pts5, a: awayStats.pts5, max: 3, fmt: (v: number) => (typeof v === 'number' ? v.toFixed(2) : '-') },
                   { label: 'Elo Power Rating', h: homeStats.elo, a: awayStats.elo, max: 2200, fmt: (v: number) => Math.round(v) },
-                  { label: 'WhoScored Form Rating', h: homeStats.ws_rating, a: awayStats.ws_rating, max: 10, fmt: (v: number) => (typeof v === 'number' ? v.toFixed(2) : '-') },
+                  { label: 'Tactical Form Rating', h: homeStats.ws_rating, a: awayStats.ws_rating, max: 10, fmt: (v: number) => (typeof v === 'number' ? v.toFixed(2) : '-') },
                 ].map(row => (
                   <div key={row.label} className="ws-stat-row">
                     <div className="ws-stat-home-val">{row.fmt(row.h)}</div>
@@ -1926,7 +1926,7 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
               Sign In to Unlock Match Analytics
             </h3>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '1.4rem' }}>
-              Create a free account or sign in to explore full AI match forecasts, WhoScored tactical metrics, Head-to-Head histories, and place your score predictions!
+              Create a free account or sign in to explore comprehensive match forecasts, tactical metrics, Head-to-Head histories, and submit your community score predictions!
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
               <Link

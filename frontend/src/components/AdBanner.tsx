@@ -35,7 +35,7 @@ const AD_CREATIVES: Record<string, {
     tag: 'ANALYTICS PARTNER',
     tagBg: 'rgba(59, 130, 246, 0.15)',
     icon: '📊',
-    title: 'WhoScored Deep Tactical Match Insights & xG Stats',
+    title: 'Deep Tactical Match Insights & xG Stats',
     desc: 'Unlock live expected goals (xG), referee card tendencies, team form curves, and starting lineups before kickoff.',
     ctaText: 'Open Tactical Hub →',
     ctaLink: '/stats',
