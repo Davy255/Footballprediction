@@ -96,14 +96,19 @@ export default function AccuracyDashboardPage() {
         <div className="glass-panel" style={{ padding: '3rem 1.5rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
           <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>📜</div>
           <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
-            Historical Prediction Dataset Initializing
+            Historical Prediction Dataset Updating
           </h3>
-          <p style={{ fontSize: '0.88rem', maxWidth: '520px', margin: '0 auto 1.5rem auto' }}>
-            Completed fixtures are continually evaluated as matchdays conclude. Check back as new official results are finalized!
+          <p style={{ fontSize: '0.88rem', maxWidth: '580px', margin: '0 auto 1.25rem auto', lineHeight: 1.6 }}>
+            FootballPredict continuously records and benchmarks pre-match forecasts against official matchday outcomes across Europe&apos;s top leagues. Historical verification data updates automatically as full-time scores are confirmed.
           </p>
-          <Link href="/football-predictions-today" className="btn btn-primary" style={{ padding: '0.6rem 1.4rem', borderRadius: '10px', fontWeight: 800 }}>
-            🎯 Explore Today&apos;s Predictions
-          </Link>
+          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link href="/football-predictions-today" className="btn btn-primary" style={{ padding: '0.6rem 1.4rem', borderRadius: '10px', fontWeight: 800 }}>
+              🎯 Explore Today&apos;s Predictions
+            </Link>
+            <Link href="/articles/how-footballpredict-ai-calculates-win-probabilities" className="btn btn-secondary" style={{ padding: '0.6rem 1.4rem', borderRadius: '10px', fontWeight: 700 }}>
+              📚 Read Methodology Guide
+            </Link>
+          </div>
         </div>
       ) : (
         <div>
@@ -441,6 +446,33 @@ export default function AccuracyDashboardPage() {
               </div>
             </section>
           )}
+
+          {/* Accuracy Evaluation Methodology Guide */}
+          <section style={{
+            background: '#111827',
+            border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: '16px',
+            padding: '1.5rem',
+            marginBottom: '2.5rem',
+          }}>
+            <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 0.6rem 0', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <span>📐</span> Accuracy Audit Methodology &amp; Benchmark Standards
+            </h2>
+            <div style={{ fontSize: '0.86rem', color: '#cbd5e1', lineHeight: 1.65, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <p style={{ margin: 0 }}>
+                <strong>1. Pre-Kickoff Snapshot Locking:</strong> Every model prediction—including 1X2 win probabilities, projected integer scorelines, and confidence tiers—is permanently locked at kickoff. Predictions are never retroactively edited or adjusted after a match begins.
+              </p>
+              <p style={{ margin: 0 }}>
+                <strong>2. Standard 1X2 Outcome Benchmark:</strong> An outcome forecast is counted as a <em>Correct Hit</em> if the highest-probability outcome predicted by the model (Home Win, Draw, or Away Win) exactly matches the official final result at the end of regular time (90 minutes plus stoppage time).
+              </p>
+              <p style={{ margin: 0 }}>
+                <strong>3. The 3-Way Baseline Reality:</strong> Unlike binary 2-way sports (such as tennis or American football moneyline), European football features three distinct outcomes with draws occurring in ~25% of matches. In a 3-way distribution, naive random guessing yields ~33.3% accuracy; maintaining consistent 55%–65% hit rates across multi-hundred match samples represents a statistically significant predictive signal.
+              </p>
+              <p style={{ margin: 0 }}>
+                <strong>4. Evaluation Limitations:</strong> Single match outcomes carry high stochastic variance (e.g., unexpected early red cards or missed penalties). Model performance should always be evaluated across aggregate cohorts rather than individual fixtures. Read our full <Link href="/articles/how-footballpredict-ai-calculates-win-probabilities" style={{ color: '#60a5fa', textDecoration: 'underline' }}>Prediction Methodology Guide</Link> for detailed statistical formulas.
+              </p>
+            </div>
+          </section>
 
           {/* Internal Linking Footer */}
           <footer style={{

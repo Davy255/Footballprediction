@@ -6,7 +6,8 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import AdBanner from '@/components/AdBanner';
 import JsonLd from '@/components/JsonLd';
 import { getArticleBySlug, getAllArticles } from '@/lib/articles';
-import { constructMetadata } from '@/config/site';
+import { constructMetadata, siteConfig } from '@/config/site';
+import { renderMarkdownToHtml } from '@/lib/markdown';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -46,7 +47,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://footballprediction-lovat.vercel.app';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url || 'https://thefootballpredict.com';
   const articleUrl = `${siteUrl}/articles/${article.slug}`;
 
   // Article Schema JSON-LD
@@ -78,6 +79,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
   };
 
   const otherArticles = getAllArticles().filter((a) => a.slug !== article.slug).slice(0, 3);
+  const renderedContent = renderMarkdownToHtml(article.content);
 
   return (
     <div className="container" style={{ padding: '1.5rem 1rem 3.5rem 1rem', minHeight: '80vh' }}>
@@ -94,7 +96,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
         ]}
       />
 
-      <div style={{ maxWidth: '820px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '840px', margin: '0 auto' }}>
         
         {/* Article Meta Header */}
         <div style={{ marginBottom: '1.75rem' }}>
@@ -149,30 +151,15 @@ export default async function ArticleDetailPage({ params }: PageProps) {
         <AdBanner slot="hero-top" />
 
         {/* Article Body */}
-        <article style={{
-          color: '#e2e8f0',
-          fontSize: '0.96rem',
-          lineHeight: 1.8,
-          marginBottom: '3rem',
-        }}>
-          {article.content.split('## ').map((section, idx) => {
-            if (idx === 0) {
-              return section ? <div key={idx} dangerouslySetInnerHTML={{ __html: section.replace(/\n/g, '<br/>') }} /> : null;
-            }
-            const lines = section.split('\n');
-            const heading = lines[0];
-            const body = lines.slice(1).join('\n');
-
-            return (
-              <div key={idx} style={{ marginBottom: '2rem' }}>
-                <h2 style={{ fontSize: '1.35rem', fontWeight: 900, color: '#f8fafc', margin: '1.75rem 0 0.75rem 0', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '0.4rem' }}>
-                  {heading}
-                </h2>
-                <div style={{ color: '#cbd5e1', fontSize: '0.94rem', lineHeight: 1.7 }} dangerouslySetInnerHTML={{ __html: body.replace(/### (.*)/g, '<h3 style="font-size: 1.1rem; font-weight: 800; color: #93c5fd; margin: 1.2rem 0 0.4rem 0;">$1</h3>').replace(/\n\n/g, '<p style="margin-bottom: 1rem;"></p>') }} />
-              </div>
-            );
-          })}
-        </article>
+        <article
+          style={{
+            color: '#e2e8f0',
+            fontSize: '0.96rem',
+            lineHeight: 1.8,
+            marginBottom: '3rem',
+          }}
+          dangerouslySetInnerHTML={{ __html: renderedContent }}
+        />
 
         {/* Related Football Predictions Gateway */}
         <div style={{

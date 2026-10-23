@@ -501,6 +501,21 @@ export default async function MatchPredictionPage({ params }: PageProps) {
           <p style={{ margin: 0 }}>
             {analysisContent.marketsAnalysis}
           </p>
+          <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.6 }}>
+            ℹ️ {analysisContent.probabilityContext}
+          </p>
+          <div style={{ marginTop: '0.5rem', fontSize: '0.82rem', color: '#93c5fd', display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <span>Explore Methodology:</span>
+            <Link href="/articles/how-footballpredict-ai-calculates-win-probabilities" style={{ color: '#60a5fa', textDecoration: 'underline' }}>
+              How Predictions Are Calculated →
+            </Link>
+            <Link href="/articles/poisson-distribution-in-football-match-forecasting" style={{ color: '#60a5fa', textDecoration: 'underline' }}>
+              Poisson Goal Simulation →
+            </Link>
+            <Link href="/accuracy" style={{ color: '#60a5fa', textDecoration: 'underline' }}>
+              Accuracy Audit →
+            </Link>
+          </div>
         </div>
 
         {/* Prediction Disclaimer */}

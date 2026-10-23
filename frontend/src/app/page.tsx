@@ -688,38 +688,67 @@ export default function HomePage() {
           {/* Leaderboard Rewards Ad Placement */}
           <AdBanner slot="leaderboard-footer" />
 
-          {/* Informational Cards & How It Works (Bottom of page) */}
+          {/* Informational Cards & Platform Guide */}
           <section style={{
             background: 'var(--bg-card)',
             border: '1px solid var(--border-color)',
             borderRadius: '16px',
-            padding: '1.25rem',
+            padding: '1.5rem',
             marginTop: '1.75rem',
             boxShadow: 'var(--shadow-card)',
           }}>
-            <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.65rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <span>🏆</span> Football Intelligence &amp; Multi-Market Predictions
+            <h3 style={{ fontSize: '1.15rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+              <span>📐</span> Objective Football Analytics &amp; Statistical Modeling
             </h3>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '0.85rem' }}>
-              Explore tactical form ratings, H2H statistics, Over/Under 2.5 projections, and Both Teams to Score (BTTS) probabilities powered by deep match analytics.
+            <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1.25rem' }}>
+              FootballPredict is an independent football statistics and predictive modeling platform. We provide objective, data-driven pre-match probability distributions, projected scorelines, and form analytics across Europe&apos;s leading domestic and continental competitions.
             </p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem' }}>
-              <div style={{ background: 'var(--bg-card-hover)', padding: '0.75rem', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
-                <div style={{ fontSize: '1.2rem', marginBottom: '0.2rem' }}>🤖</div>
-                <div style={{ fontWeight: 700, fontSize: '0.82rem', color: 'var(--text-primary)' }}>Coach AI Assistant</div>
-                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Real-time match forecasts &amp; supporter</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '1.25rem' }}>
+              <div style={{ background: 'var(--bg-card-hover)', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+                <div style={{ fontSize: '1.3rem', marginBottom: '0.3rem' }}>🤖</div>
+                <div style={{ fontWeight: 800, fontSize: '0.88rem', color: 'var(--text-primary)', marginBottom: '0.25rem' }}>Predictive Engine</div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
+                  Synthesizes 19-feature match vectors, calibrated +48.0 Elo home advantage offsets, and bivariate Poisson goal distributions.
+                </div>
               </div>
-              <div style={{ background: 'var(--bg-card-hover)', padding: '0.75rem', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
-                <div style={{ fontSize: '1.2rem', marginBottom: '0.2rem' }}>📊</div>
-                <div style={{ fontWeight: 700, fontSize: '0.82rem', color: 'var(--text-primary)' }}>WhoScored Tactical Hub</div>
-                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Formations, referee stats &amp; style</div>
+
+              <div style={{ background: 'var(--bg-card-hover)', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+                <div style={{ fontSize: '1.3rem', marginBottom: '0.3rem' }}>📊</div>
+                <div style={{ fontWeight: 800, fontSize: '0.88rem', color: 'var(--text-primary)', marginBottom: '0.25rem' }}>Transparent Verification</div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
+                  Every prediction is locked prior to kickoff and tracked in our public accuracy ledger evaluated against official final scores.
+                </div>
               </div>
-              <div style={{ background: 'var(--bg-card-hover)', padding: '0.75rem', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
-                <div style={{ fontSize: '1.2rem', marginBottom: '0.2rem' }}>👑</div>
-                <div style={{ fontWeight: 700, fontSize: '0.82rem', color: 'var(--text-primary)' }}>Global Leaderboard</div>
-                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Compete with fans &amp; earn points</div>
+
+              <div style={{ background: 'var(--bg-card-hover)', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+                <div style={{ fontSize: '1.3rem', marginBottom: '0.3rem' }}>📚</div>
+                <div style={{ fontWeight: 800, fontSize: '0.88rem', color: 'var(--text-primary)', marginBottom: '0.25rem' }}>Educational Research Hub</div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
+                  Read in-depth research articles detailing Poisson modeling, home advantage quantification, and margin normalization.
+                </div>
               </div>
+
+              <div style={{ background: 'var(--bg-card-hover)', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+                <div style={{ fontSize: '1.3rem', marginBottom: '0.3rem' }}>👑</div>
+                <div style={{ fontWeight: 800, fontSize: '0.88rem', color: 'var(--text-primary)', marginBottom: '0.25rem' }}>Non-Monetary Community</div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
+                  Compete with fellow football fans on non-monetary leaderboards to test match prediction acumen without real-money staking.
+                </div>
+              </div>
+            </div>
+
+            {/* Model Limitations Notice */}
+            <div style={{
+              padding: '0.85rem 1rem',
+              background: 'rgba(59, 130, 246, 0.08)',
+              border: '1px solid rgba(59, 130, 246, 0.25)',
+              borderRadius: '10px',
+              fontSize: '0.78rem',
+              color: 'var(--text-muted)',
+              lineHeight: 1.55,
+            }}>
+              ⚖️ <strong>Model Limitations &amp; Uncertainty:</strong> Probability estimates reflect statistical tendencies across large sample sizes and do not guarantee single-match outcomes. Football inherently involves stochastic elements—including unexpected red cards, refereeing decisions, early-season form volatility, and sudden lineup rotations—that pre-match models cannot anticipate.
             </div>
           </section>
 
