@@ -3,8 +3,10 @@ import Link from 'next/link';
 import { siteConfig } from '@/config/site';
 
 export interface BreadcrumbItem {
-  name: string;
+  name?: string;
+  label?: string;
   url?: string;
+  href?: string;
 }
 
 interface BreadcrumbsProps {
@@ -21,16 +23,18 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
     '@type': 'BreadcrumbList',
     itemListElement: items.map((item, idx) => {
       const isLast = idx === items.length - 1;
-      const absoluteUrl = item.url
-        ? item.url.startsWith('http')
-          ? item.url
-          : `${siteConfig.url}${item.url.startsWith('/') ? item.url : `/${item.url}`}`
+      const itemName = item.name || item.label || '';
+      const rawUrl = item.url || item.href;
+      const absoluteUrl = rawUrl
+        ? rawUrl.startsWith('http')
+          ? rawUrl
+          : `${siteConfig.url}${rawUrl.startsWith('/') ? rawUrl : `/${rawUrl}`}`
         : undefined;
 
       const listItem: Record<string, any> = {
         '@type': 'ListItem',
         position: idx + 1,
-        name: item.name,
+        name: itemName,
       };
 
       if (absoluteUrl && !isLast) {
@@ -69,9 +73,11 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
         >
           {items.map((item, idx) => {
             const isLast = idx === items.length - 1;
+            const itemName = item.name || item.label || '';
+            const itemUrl = item.url || item.href;
 
             return (
-              <React.Fragment key={`${item.name}-${idx}`}>
+              <React.Fragment key={`${itemName}-${idx}`}>
                 {idx > 0 && (
                   <li
                     aria-hidden="true"
@@ -84,7 +90,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                     ›
                   </li>
                 )}
-                {isLast || !item.url ? (
+                {isLast || !itemUrl ? (
                   <li
                     aria-current="page"
                     style={{
@@ -96,12 +102,12 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {item.name}
+                    {itemName}
                   </li>
                 ) : (
                   <li>
                     <Link
-                      href={item.url}
+                      href={itemUrl}
                       style={{
                         color: 'var(--text-secondary)',
                         textDecoration: 'none',
@@ -109,7 +115,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                       }}
                       className="hover:text-[var(--accent-blue)]"
                     >
-                      {item.name}
+                      {itemName}
                     </Link>
                   </li>
                 )}
