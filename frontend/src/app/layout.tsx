@@ -9,6 +9,7 @@ import ChatbotWidget from '@/components/ChatbotWidget';
 import JsonLd from '@/components/JsonLd';
 import AnalyticsProvider from '@/components/AnalyticsProvider';
 import Link from 'next/link';
+import CookieConsent, { CookieSettingsTrigger } from '@/components/CookieConsent';
 import { siteConfig, constructMetadata } from '@/config/site';
 
 export const metadata: Metadata = constructMetadata();
@@ -155,6 +156,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <Link href="/disclaimer" style={{ color: 'var(--text-muted)' }}>Disclaimer</Link>
                     <span>•</span>
                     <Link href="/privacy" style={{ color: 'var(--text-muted)' }}>Privacy Policy</Link>
+                    <span>&bull;</span>
+                    <CookieSettingsTrigger />
                     <span>•</span>
                     <Link href="/terms" style={{ color: 'var(--text-muted)' }}>Terms of Service</Link>
                   </div>
@@ -163,6 +166,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </div>
             </footer>
             <ChatbotWidget />
+            <CookieConsent />
           </AuthProvider>
         </ThemeProvider>
       </body>

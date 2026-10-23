@@ -22,14 +22,14 @@ const AD_CREATIVES: Record<string, {
   gradient: string;
 }> = {
   'hero-top': {
-    tag: 'SPONSORED PROMO',
-    tagBg: 'rgba(234, 179, 8, 0.15)',
+    tag: 'MATCHDAY INSIGHTS',
+    tagBg: 'rgba(59, 130, 246, 0.15)',
     icon: '⚡',
-    title: 'Matchday Odds Boost — Up to +40% Enhanced Payouts',
-    desc: 'Access verified high-value accumulator boosts across Premier League, Champions League, and Serie A matches.',
-    ctaText: 'View Odds Boost →',
-    ctaLink: '/fixtures',
-    gradient: 'linear-gradient(135deg, rgba(234, 179, 8, 0.12) 0%, rgba(249, 115, 22, 0.08) 100%)',
+    title: 'Tactical Match Intelligence & Form Analysis',
+    desc: 'Access statistical head-to-head records, win probabilities, and team form curves across Premier League, Champions League, and Serie A matches.',
+    ctaText: 'Explore Match Predictions →',
+    ctaLink: '/football-predictions-today',
+    gradient: 'linear-gradient(135deg, rgba(37, 99, 235, 0.12) 0%, rgba(124, 58, 237, 0.08) 100%)',
   },
   'in-feed-match': {
     tag: 'ANALYTICS PARTNER',
@@ -46,7 +46,7 @@ const AD_CREATIVES: Record<string, {
     tagBg: 'rgba(16, 185, 129, 0.15)',
     icon: '🤖',
     title: 'Coach AI Assistant — Real-Time Match Forecaster',
-    desc: 'Ask Coach AI for the best value picks of the day, Both Teams To Score (BTTS) rates, and projected scorelines.',
+    desc: 'Ask Coach AI for statistical match predictions, Both Teams To Score (BTTS) rates, and projected scorelines.',
     ctaText: 'Chat with Coach AI →',
     ctaLink: '#coach-ai',
     gradient: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(6, 182, 212, 0.08) 100%)',
