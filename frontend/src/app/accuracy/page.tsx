@@ -1,5 +1,5 @@
-import AccuracyDashboardPage from '../stats/page';
+import { permanentRedirect } from 'next/navigation';
 
 export default function AccuracyPage() {
-  return <AccuracyDashboardPage />;
+  permanentRedirect('/stats');
 }

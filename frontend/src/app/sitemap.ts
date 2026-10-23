@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next';
 import { siteConfig } from '@/config/site';
 import { fetchMatchesFeed, fetchLeagues } from '@/lib/api';
 import { getMatchSlug, slugifyTeamName, slugifyLeagueName } from '@/lib/slugs';
+import { getAllArticles } from '@/lib/articles';
 
 export const revalidate = 3600; // Revalidate sitemap every hour
 
@@ -53,16 +54,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: `${siteConfig.url}/accuracy`,
+      url: `${siteConfig.url}/articles`,
       lastModified: now,
-      changeFrequency: 'daily',
+      changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
       url: `${siteConfig.url}/lineups`,
       lastModified: now,
       changeFrequency: 'daily',
-      priority: 0.8,
+      priority: 0.7,
     },
     {
       url: `${siteConfig.url}/privacy`,
@@ -84,7 +85,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // 2. Dynamic Leagues URLs
+  // 2. Educational & Analytical Articles
+  const articleUrls: MetadataRoute.Sitemap = getAllArticles().map((article) => ({
+    url: `${siteConfig.url}/articles/${article.slug}`,
+    lastModified: article.publishedDate ? new Date(article.publishedDate) : now,
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }));
+
+  // 3. Dynamic Leagues URLs
   const leagueUrls: MetadataRoute.Sitemap = [];
   try {
     const leagues = await fetchLeagues().catch(() => []);
@@ -107,7 +116,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Error generating league sitemap:', err);
   }
 
-  // 3. Dynamic Teams and Match Prediction URLs from match feed
+  // 4. Dynamic Teams and Match Prediction URLs from match feed
   const teamUrls: MetadataRoute.Sitemap = [];
   const matchUrls: MetadataRoute.Sitemap = [];
 
@@ -177,5 +186,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Error generating team & match sitemap:', err);
   }
 
-  return [...staticUrls, ...leagueUrls, ...teamUrls, ...matchUrls];
+  return [...staticUrls, ...articleUrls, ...leagueUrls, ...teamUrls, ...matchUrls];
 }
