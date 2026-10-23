@@ -7,7 +7,7 @@ import type { Metadata } from 'next';
  * NEXT_PUBLIC_SITE_URL environment variable (e.g. in Vercel or .env.local).
  */
 
-const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://footballprediction-lovat.vercel.app';
+const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://thefootballpredict.com';
 // Ensure no trailing slash for consistent URL construction
 export const SITE_URL = rawSiteUrl.replace(/\/+$/, '');
 
