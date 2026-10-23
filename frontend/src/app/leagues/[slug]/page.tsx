@@ -191,8 +191,8 @@ export default async function LeaguePage({ params }: PageProps) {
 
       {/* Data-Driven League Overview & Context Section */}
       <section style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: '16px',
         padding: '1.5rem',
         marginBottom: '2rem',
@@ -210,8 +210,8 @@ export default async function LeaguePage({ params }: PageProps) {
 
       {/* Upcoming League Predictions Section */}
       <section style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: '16px',
         padding: '1.5rem',
         marginBottom: '2rem',
@@ -327,8 +327,8 @@ export default async function LeaguePage({ params }: PageProps) {
       {/* Standings Table Section */}
       {standings.length > 0 && (
         <section style={{
-          background: '#111827',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
           borderRadius: '16px',
           padding: '1.5rem',
           marginBottom: '2rem',
@@ -397,8 +397,8 @@ export default async function LeaguePage({ params }: PageProps) {
       {/* Participating Teams Directory */}
       {teams.length > 0 && (
         <section style={{
-          background: '#111827',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
           borderRadius: '16px',
           padding: '1.5rem',
           marginBottom: '2rem',
@@ -440,8 +440,8 @@ export default async function LeaguePage({ params }: PageProps) {
       {/* Recent Results */}
       {recentMatches.length > 0 && (
         <section style={{
-          background: '#111827',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
           borderRadius: '16px',
           padding: '1.5rem',
           marginBottom: '2rem',
@@ -500,8 +500,8 @@ export default async function LeaguePage({ params }: PageProps) {
 
       {/* Internal Navigation Links */}
       <footer style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: '14px',
         padding: '1.5rem',
         display: 'flex',

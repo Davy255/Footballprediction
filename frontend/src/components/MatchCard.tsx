@@ -1198,7 +1198,7 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
 
       {/* Expanded WhoScored Match Centre Hub */}
       {open && (
-        <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '0 0 10px 10px', overflow: 'hidden', marginBottom: 6, background: '#111827' }}>
+        <div style={{ border: '1px solid var(--border-color)', borderRadius: '0 0 10px 10px', overflow: 'hidden', marginBottom: 6, background: 'var(--bg-card)' }}>
           
           {/* WhoScored Match Centre Header */}
           <div className="ws-match-header">

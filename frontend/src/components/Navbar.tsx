@@ -44,6 +44,29 @@ export default function Navbar() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Close menus on Escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMoreMenuOpen(false);
+        setUserDropdownOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, []);
+
+  // Body scroll-lock when mobile drawer is open
+  useEffect(() => {
+    if (moreMenuOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [moreMenuOpen]);
+
   // Close menus when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -182,8 +205,70 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Right Action Cluster: Pure Icon Buttons (Emoji User + Menu) */}
+          {/* Right Action Cluster */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexShrink: 0 }}>
+            {/* Quick Search Button */}
+            <button
+              onClick={() => setShowSearch(true)}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                padding: '0.4rem 0.65rem',
+                borderRadius: '8px',
+                background: 'var(--bg-elevated)',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-secondary)',
+                fontSize: '0.82rem',
+                cursor: 'pointer',
+                minHeight: '36px',
+                transition: 'all 0.15s ease',
+              }}
+              className="hover:text-[var(--text-primary)] hover:border-[var(--accent-blue)]"
+              title="Search teams, leagues, and fixtures (Ctrl+K)"
+              aria-label="Search football content"
+            >
+              <span style={{ fontSize: '0.95rem' }}>ðŸ”</span>
+              <span className="hidden md:inline" style={{ fontSize: '0.80rem', fontWeight: 600 }}>Search</span>
+              <kbd
+                className="hidden lg:inline"
+                style={{
+                  fontSize: '0.68rem',
+                  padding: '1px 5px',
+                  borderRadius: '4px',
+                  background: 'var(--bg-card)',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-muted)',
+                  fontFamily: 'monospace',
+                }}
+              >
+                Ctrl+K
+              </kbd>
+            </button>
+
+            {/* Quick Theme Toggle (Light / Dark) */}
+            <button
+              onClick={toggleTheme}
+              style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '8px',
+                background: 'var(--bg-elevated)',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-primary)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1rem',
+                cursor: 'pointer',
+                padding: 0,
+              }}
+              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              aria-label="Toggle Theme"
+              className="hidden sm:flex"
+            >
+              {theme === 'dark' ? 'â˜€ï¸' : 'ðŸŒ™'}
+            </button>
             {/* User Profile / Auth State Emoji Button */}
             {user ? (
               <div style={{ position: 'relative' }} ref={userMenuRef}>
@@ -380,6 +465,32 @@ export default function Navbar() {
               boxShadow: 'var(--shadow-card-hover)',
             }}
           >
+            {/* Mobile Drawer Header with Close Button */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '0.4rem', borderBottom: '1px solid var(--border-color)' }}>
+              <span style={{ fontSize: '0.82rem', fontWeight: 800, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <span>ðŸ§­</span> Quick Navigation &amp; Tools
+              </span>
+              <button
+                onClick={() => setMoreMenuOpen(false)}
+                style={{
+                  background: 'var(--bg-elevated)',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-secondary)',
+                  padding: '0.3rem 0.65rem',
+                  borderRadius: '6px',
+                  fontSize: '0.78rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.3rem',
+                }}
+                aria-label="Close navigation menu"
+              >
+                âœ• Close
+              </button>
+            </div>
+
             {/* Top Quick Actions Row: Search + Theme Toggle + Coach AI */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.5rem' }}>
               {/* 1. Quick Search Trigger */}

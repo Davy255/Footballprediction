@@ -357,8 +357,8 @@ export default function LiveClient({ initialMatches = [] }: LiveClientProps) {
       {/* Exploration Footer */}
       <footer
         style={{
-          background: '#111827',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
           borderRadius: '14px',
           padding: '1.5rem',
           marginTop: '2.5rem',

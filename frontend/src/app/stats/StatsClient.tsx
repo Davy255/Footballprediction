@@ -81,7 +81,7 @@ export default function StatsClient({ initialMetrics }: StatsClientProps) {
       }}>
         {/* Overall 1X2 Accuracy */}
         <div style={{
-          background: '#111827',
+          background: 'var(--bg-card)',
           border: '1px solid rgba(34,197,94,0.3)',
           borderRadius: '14px',
           padding: '1.4rem',
@@ -100,7 +100,7 @@ export default function StatsClient({ initialMetrics }: StatsClientProps) {
 
         {/* Exact Score Accuracy */}
         <div style={{
-          background: '#111827',
+          background: 'var(--bg-card)',
           border: '1px solid rgba(56,189,248,0.3)',
           borderRadius: '14px',
           padding: '1.4rem',
@@ -119,7 +119,7 @@ export default function StatsClient({ initialMetrics }: StatsClientProps) {
 
         {/* High Confidence Accuracy */}
         <div style={{
-          background: '#111827',
+          background: 'var(--bg-card)',
           border: '1px solid rgba(168,85,247,0.3)',
           borderRadius: '14px',
           padding: '1.4rem',
@@ -141,7 +141,7 @@ export default function StatsClient({ initialMetrics }: StatsClientProps) {
 
         {/* Current Streak */}
         <div style={{
-          background: '#111827',
+          background: 'var(--bg-card)',
           border: '1px solid rgba(255,255,255,0.1)',
           borderRadius: '14px',
           padding: '1.4rem',
@@ -168,8 +168,8 @@ export default function StatsClient({ initialMetrics }: StatsClientProps) {
       }}>
         {/* Outcome Segment Performance */}
         <div style={{
-          background: '#111827',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
           borderRadius: '16px',
           padding: '1.5rem',
         }}>
@@ -221,8 +221,8 @@ export default function StatsClient({ initialMetrics }: StatsClientProps) {
 
         {/* Confidence Tier Accuracy */}
         <div style={{
-          background: '#111827',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
           borderRadius: '16px',
           padding: '1.5rem',
         }}>
@@ -283,8 +283,8 @@ export default function StatsClient({ initialMetrics }: StatsClientProps) {
       {/* Verified Prediction Ledger */}
       {metrics.recentRecords.length > 0 && (
         <section style={{
-          background: '#111827',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
           borderRadius: '16px',
           padding: '1.5rem',
           marginBottom: '2rem',
@@ -352,8 +352,8 @@ export default function StatsClient({ initialMetrics }: StatsClientProps) {
 
       {/* Accuracy Evaluation Methodology Guide */}
       <section style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: '16px',
         padding: '1.5rem',
         marginBottom: '2.5rem',
@@ -379,8 +379,8 @@ export default function StatsClient({ initialMetrics }: StatsClientProps) {
 
       {/* Internal Linking Footer */}
       <footer style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: '14px',
         padding: '1.5rem',
         display: 'flex',

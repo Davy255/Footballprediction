@@ -13,6 +13,18 @@ interface SearchModalProps {
   onClose: () => void;
 }
 
+const POPULAR_SEARCH_PRESETS = [
+  'Arsenal',
+  'Real Madrid',
+  'Manchester City',
+  'Barcelona',
+  'Bayern Munich',
+  'Liverpool',
+  'Premier League',
+  'Champions League',
+  'La Liga',
+];
+
 export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const router = useRouter();
   const [query, setQuery] = useState('');
@@ -174,7 +186,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search teams (Arsenal), leagues (Premier League), or matches (Arsenal vs Chelsea)..."
+            placeholder="Search teams, leagues, or fixtures..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -198,6 +210,11 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 cursor: 'pointer',
                 fontSize: '1.1rem',
                 padding: '0.2rem',
+                minWidth: '32px',
+                minHeight: '32px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
               aria-label="Clear search input"
             >
@@ -210,11 +227,12 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
               background: 'var(--bg-card)',
               border: '1px solid var(--border-color)',
               color: 'var(--text-secondary)',
-              padding: '0.25rem 0.6rem',
-              borderRadius: '6px',
+              padding: '0.35rem 0.7rem',
+              borderRadius: '8px',
               fontSize: '0.75rem',
-              fontWeight: 600,
+              fontWeight: 700,
               cursor: 'pointer',
+              minHeight: '34px',
             }}
           >
             Esc
@@ -248,9 +266,9 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 key={cat}
                 onClick={() => { setActiveFilter(cat); setSelectedIndex(-1); }}
                 style={{
-                  padding: '0.3rem 0.75rem',
+                  padding: '0.4rem 0.85rem',
                   borderRadius: '999px',
-                  fontSize: '0.75rem',
+                  fontSize: '0.78rem',
                   fontWeight: isActive ? 700 : 500,
                   border: isActive ? '1px solid var(--accent-blue)' : '1px solid var(--border-color)',
                   background: isActive ? 'var(--accent-blue-bg)' : 'transparent',
@@ -258,6 +276,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   cursor: 'pointer',
                   whiteSpace: 'nowrap',
                   transition: 'all 0.15s ease',
+                  minHeight: '36px',
                 }}
               >
                 {cat.charAt(0).toUpperCase() + cat.slice(1)} {query.trim().length >= 2 && `(${count})`}
@@ -291,7 +310,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
               <button
                 onClick={() => executeSearch(query)}
                 className="fp-btn-secondary"
-                style={{ marginTop: '0.75rem', padding: '0.4rem 0.9rem', fontSize: '0.8rem' }}
+                style={{ marginTop: '0.75rem', padding: '0.5rem 1rem', fontSize: '0.82rem', minHeight: '44px' }}
               >
                 Try Again
               </button>
@@ -299,11 +318,41 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
           )}
 
           {!loading && !error && query.trim().length < 2 && (
-            <div style={{ padding: '2.5rem 1rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+            <div style={{ padding: '1.5rem 0.5rem', textAlign: 'center', color: 'var(--text-muted)' }}>
               <div style={{ fontSize: '1.6rem', marginBottom: '0.5rem' }}>⚽</div>
               <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '0.95rem' }}>Search Teams, Competitions &amp; Fixtures</div>
               <div style={{ fontSize: '0.82rem', marginTop: '0.35rem', color: 'var(--text-muted)' }}>
-                Type at least 2 letters to search clubs (e.g. &ldquo;Arsenal&rdquo;), leagues (&ldquo;Premier League&rdquo;), or matches (&ldquo;Arsenal vs Chelsea&rdquo;).
+                Type at least 2 letters to search clubs, leagues, or matches.
+              </div>
+
+              {/* Popular Search Presets */}
+              <div style={{ marginTop: '1.25rem' }}>
+                <div style={{ fontSize: '0.74rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-muted)', marginBottom: '0.6rem' }}>
+                  Popular Searches
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem', justifyContent: 'center' }}>
+                  {POPULAR_SEARCH_PRESETS.map((preset) => (
+                    <button
+                      key={preset}
+                      onClick={() => setQuery(preset)}
+                      style={{
+                        padding: '0.4rem 0.8rem',
+                        borderRadius: '999px',
+                        background: 'var(--bg-elevated)',
+                        border: '1px solid var(--border-color)',
+                        color: 'var(--text-primary)',
+                        fontSize: '0.80rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        minHeight: '36px',
+                        transition: 'all 0.15s ease',
+                      }}
+                      className="hover:border-[var(--accent-blue)] hover:text-[var(--accent-blue)]"
+                    >
+                      {preset}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           )}
@@ -322,43 +371,50 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
           {!loading && !error && (activeFilter === 'all' || activeFilter === 'teams') && results.teams.length > 0 && (
             <div>
               <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.45rem' }}>
-                ⚽ Clubs &amp; Teams
+                ⚽ Clubs &amp; Teams ({results.teams.length})
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '0.45rem' }}>
-                {results.teams.map((t) => (
-                  <Link
-                    key={t.id}
-                    href={getTeamUrl(t.name)}
-                    onClick={onClose}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.65rem',
-                      padding: '0.6rem 0.8rem',
-                      borderRadius: '10px',
-                      background: 'var(--bg-elevated)',
-                      border: '1px solid var(--border-color)',
-                      textDecoration: 'none',
-                      color: 'var(--text-primary)',
-                      transition: 'all 0.15s ease',
-                    }}
-                    className="hover:border-[var(--accent-blue)]"
-                  >
-                    {t.crest ? (
-                      <Image src={t.crest} alt={t.name} width={26} height={26} style={{ objectFit: 'contain' }} />
-                    ) : (
-                      <span style={{ fontSize: '1.1rem' }}>🛡️</span>
-                    )}
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontWeight: 700, fontSize: '0.86rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        {t.name}
+                {results.teams.map((t, tIdx) => {
+                  const itemIndex = activeFilter === 'all' ? tIdx : activeFilter === 'teams' ? tIdx : -1;
+                  const isSelected = selectedIndex === itemIndex;
+
+                  return (
+                    <Link
+                      key={t.id}
+                      href={getTeamUrl(t.name)}
+                      onClick={onClose}
+                      onMouseEnter={() => setSelectedIndex(itemIndex)}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.65rem',
+                        padding: '0.65rem 0.85rem',
+                        borderRadius: '10px',
+                        background: isSelected ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
+                        border: isSelected ? '1px solid var(--accent-blue)' : '1px solid var(--border-color)',
+                        textDecoration: 'none',
+                        color: 'var(--text-primary)',
+                        transition: 'all 0.15s ease',
+                        minHeight: '44px',
+                      }}
+                      className="hover:border-[var(--accent-blue)]"
+                    >
+                      {t.crest ? (
+                        <Image src={t.crest} alt={t.name} width={26} height={26} style={{ objectFit: 'contain' }} />
+                      ) : (
+                        <span style={{ fontSize: '1.1rem' }}>🛡️</span>
+                      )}
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontWeight: 700, fontSize: '0.86rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {t.name}
+                        </div>
+                        <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+                          Elo: {Math.round(t.elo_rating || 1500)}
+                        </div>
                       </div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                        Elo: {Math.round(t.elo_rating || 1500)}
-                      </div>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -367,37 +423,49 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
           {!loading && !error && (activeFilter === 'all' || activeFilter === 'leagues') && results.leagues.length > 0 && (
             <div>
               <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.45rem' }}>
-                🏆 Competitions
+                🏆 Competitions ({results.leagues.length})
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '0.45rem' }}>
-                {results.leagues.map((l) => (
-                  <Link
-                    key={l.id}
-                    href={getLeagueUrl(l.name, l.code)}
-                    onClick={onClose}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.65rem',
-                      padding: '0.6rem 0.8rem',
-                      borderRadius: '10px',
-                      background: 'var(--bg-elevated)',
-                      border: '1px solid var(--border-color)',
-                      textDecoration: 'none',
-                      color: 'var(--text-primary)',
-                      transition: 'all 0.15s ease',
-                    }}
-                    className="hover:border-[var(--accent-blue)]"
-                  >
-                    <span style={{ fontSize: '1.25rem' }}>{l.flag || '🏆'}</span>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontWeight: 700, fontSize: '0.86rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        {l.name}
+                {results.leagues.map((l, lIdx) => {
+                  const itemIndex =
+                    activeFilter === 'all'
+                      ? results.teams.length + lIdx
+                      : activeFilter === 'leagues'
+                      ? lIdx
+                      : -1;
+                  const isSelected = selectedIndex === itemIndex;
+
+                  return (
+                    <Link
+                      key={l.id}
+                      href={getLeagueUrl(l.name, l.code)}
+                      onClick={onClose}
+                      onMouseEnter={() => setSelectedIndex(itemIndex)}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.65rem',
+                        padding: '0.65rem 0.85rem',
+                        borderRadius: '10px',
+                        background: isSelected ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
+                        border: isSelected ? '1px solid var(--accent-blue)' : '1px solid var(--border-color)',
+                        textDecoration: 'none',
+                        color: 'var(--text-primary)',
+                        transition: 'all 0.15s ease',
+                        minHeight: '44px',
+                      }}
+                      className="hover:border-[var(--accent-blue)]"
+                    >
+                      <span style={{ fontSize: '1.25rem' }}>{l.flag || '🏆'}</span>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontWeight: 700, fontSize: '0.86rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {l.name}
+                        </div>
+                        <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>{l.country}</div>
                       </div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>{l.country}</div>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -406,31 +474,40 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
           {!loading && !error && (activeFilter === 'all' || activeFilter === 'matches') && results.matches.length > 0 && (
             <div>
               <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.45rem' }}>
-                🎯 Match Predictions &amp; Fixtures
+                🎯 Match Predictions &amp; Fixtures ({results.matches.length})
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
-                {results.matches.map((m) => {
+                {results.matches.map((m, mIdx) => {
                   const hName = m.home_team?.short_name || m.home_team?.name || 'Home';
                   const aName = m.away_team?.short_name || m.away_team?.name || 'Away';
                   const predUrl = getMatchPredictionUrl(m);
+                  const itemIndex =
+                    activeFilter === 'all'
+                      ? results.teams.length + results.leagues.length + mIdx
+                      : activeFilter === 'matches'
+                      ? mIdx
+                      : -1;
+                  const isSelected = selectedIndex === itemIndex;
 
                   return (
                     <Link
                       key={m.id}
                       href={predUrl}
                       onClick={onClose}
+                      onMouseEnter={() => setSelectedIndex(itemIndex)}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         padding: '0.65rem 0.85rem',
                         borderRadius: '10px',
-                        background: 'var(--bg-elevated)',
-                        border: '1px solid var(--border-color)',
+                        background: isSelected ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
+                        border: isSelected ? '1px solid var(--accent-blue)' : '1px solid var(--border-color)',
                         textDecoration: 'none',
                         color: 'var(--text-primary)',
                         gap: '0.5rem',
                         transition: 'all 0.15s ease',
+                        minHeight: '44px',
                       }}
                       className="hover:border-[var(--accent-blue)]"
                     >

@@ -216,8 +216,8 @@ export default async function FootballPredictionsTodayPage() {
 
       {/* Data-Driven Daily Summary Insights Section */}
       <section style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: '16px',
         padding: '1.5rem',
         marginBottom: '2rem',
@@ -264,8 +264,8 @@ export default async function FootballPredictionsTodayPage() {
 
             {/* Popular Competitions & Leagues Quick Navigation */}
       <section style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: '16px',
         padding: '1.5rem',
         marginBottom: '2rem',
@@ -346,8 +346,8 @@ export default async function FootballPredictionsTodayPage() {
               <section
                 key={code}
                 style={{
-                  background: '#111827',
-                  border: '1px solid rgba(255,255,255,0.08)',
+                  background: 'var(--bg-card)',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '16px',
                   padding: '1.5rem',
                 }}
@@ -547,8 +547,8 @@ export default async function FootballPredictionsTodayPage() {
         </div>
       ) : (
         <div style={{
-          background: '#111827',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
           borderRadius: '16px',
           padding: '2.5rem',
           textAlign: 'center',
@@ -573,8 +573,8 @@ export default async function FootballPredictionsTodayPage() {
 
       {/* Internal Navigation Links Footer */}
       <footer style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: '14px',
         padding: '1.5rem',
         marginTop: '2.5rem',

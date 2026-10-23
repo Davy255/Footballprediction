@@ -226,7 +226,7 @@ export default async function TeamPage({ params }: PageProps) {
 
         return (
           <section style={{
-            background: '#111827',
+            background: 'var(--bg-card)',
             border: '1px solid rgba(59,130,246,0.3)',
             borderRadius: '16px',
             padding: '1.5rem',
@@ -315,8 +315,8 @@ export default async function TeamPage({ params }: PageProps) {
         );
       })() : (
         <div style={{
-          background: '#111827',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
           borderRadius: '16px',
           padding: '1.2rem 1.5rem',
           marginBottom: '2rem',
@@ -329,8 +329,8 @@ export default async function TeamPage({ params }: PageProps) {
 
       {/* Team Performance Stats & Data-Driven Overview Section */}
       <section style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: '16px',
         padding: '1.5rem',
         marginBottom: '2rem',
@@ -426,8 +426,8 @@ export default async function TeamPage({ params }: PageProps) {
 
       {/* Recent Match Form */}
       <section style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: '16px',
         padding: '1.5rem',
         marginBottom: '2rem',
@@ -523,8 +523,8 @@ export default async function TeamPage({ params }: PageProps) {
       {/* Upcoming Fixtures Schedule */}
       {upcomingMatches.length > 1 && (
         <section style={{
-          background: '#111827',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
           borderRadius: '16px',
           padding: '1.5rem',
           marginBottom: '2rem',
@@ -590,8 +590,8 @@ export default async function TeamPage({ params }: PageProps) {
 
       {/* Internal Navigation Links */}
       <footer style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: '14px',
         padding: '1.5rem',
         display: 'flex',

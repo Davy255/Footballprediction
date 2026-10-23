@@ -134,7 +134,7 @@ export default function ArticlesPage() {
             style={{
               width: '100%',
               background: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(255,255,255,0.08)',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               padding: '0.4rem 0.75rem',
               color: '#f8fafc',
@@ -151,8 +151,8 @@ export default function ArticlesPage() {
           <div
             key={art.slug}
             style={{
-              background: '#111827',
-              border: '1px solid rgba(255,255,255,0.08)',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border-color)',
               borderRadius: '14px',
               padding: '1.5rem',
               display: 'flex',

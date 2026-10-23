@@ -52,7 +52,7 @@ export default function Leaderboard({ entries, hideHeader = false }: Leaderboard
                       height: '32px',
                       borderRadius: '50%',
                       background: 'var(--gradient-badge)',
-                      color: '#white',
+                      color: '#ffffff',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
