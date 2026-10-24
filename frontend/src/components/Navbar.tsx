@@ -843,6 +843,84 @@ export default function Navbar() {
               </Link>
             </div>
 
+            {/* User Account & Admin Tools */}
+            {user && (
+              <div>
+                <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
+                  Account ({user.username})
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.45rem' }}>
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setMoreMenuOpen(false)}
+                    style={{
+                      padding: '0.65rem 0.85rem',
+                      borderRadius: '10px',
+                      background: 'var(--bg-elevated)',
+                      color: 'var(--text-primary)',
+                      border: '1px solid var(--border-color)',
+                      fontWeight: 600,
+                      fontSize: '0.84rem',
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.45rem',
+                      minHeight: '44px',
+                    }}
+                  >
+                    <span>📊</span>
+                    <span>Dashboard</span>
+                  </Link>
+
+                  {user.is_admin && (
+                    <Link
+                      href="/admin"
+                      onClick={() => setMoreMenuOpen(false)}
+                      style={{
+                        padding: '0.65rem 0.85rem',
+                        borderRadius: '10px',
+                        background: 'rgba(59, 130, 246, 0.12)',
+                        color: 'var(--accent-blue)',
+                        border: '1px solid rgba(59, 130, 246, 0.3)',
+                        fontWeight: 700,
+                        fontSize: '0.84rem',
+                        textDecoration: 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.45rem',
+                        minHeight: '44px',
+                      }}
+                    >
+                      <span>⚙️</span>
+                      <span>Admin Console</span>
+                    </Link>
+                  )}
+
+                  <button
+                    onClick={() => { logout(); setMoreMenuOpen(false); }}
+                    style={{
+                      padding: '0.65rem 0.85rem',
+                      borderRadius: '10px',
+                      background: 'var(--accent-red-bg)',
+                      color: 'var(--accent-red)',
+                      border: '1px solid var(--accent-red-border)',
+                      fontWeight: 600,
+                      fontSize: '0.84rem',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.45rem',
+                      minHeight: '44px',
+                      textAlign: 'left',
+                    }}
+                  >
+                    <span>🚪</span>
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Category 4: Company & Trust Information */}
             <div>
               <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
