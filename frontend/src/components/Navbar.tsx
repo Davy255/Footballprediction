@@ -18,6 +18,29 @@ const primaryNavLinks = [
   { href: '/leaderboard', label: 'Leaderboard', icon: '👑' },
 ];
 
+/**
+ * Intelligent active navigation matching helper.
+ * Handles nested subroutes for articles, leagues, fixtures, and match predictions.
+ */
+function isNavActive(pathname: string, href: string): boolean {
+  if (!pathname) return false;
+  if (href === '/') return pathname === '/';
+  if (pathname === href) return true;
+  if (href === '/football-predictions-today') {
+    return pathname.startsWith('/football-predictions-today') || pathname.startsWith('/prediction/');
+  }
+  if (href === '/fixtures') {
+    return pathname.startsWith('/fixtures');
+  }
+  if (href === '/leagues') {
+    return pathname.startsWith('/leagues') || pathname.startsWith('/league/');
+  }
+  if (href === '/articles') {
+    return pathname.startsWith('/articles');
+  }
+  return pathname === href;
+}
+
 export default function Navbar() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
@@ -29,6 +52,8 @@ export default function Navbar() {
   
   const userMenuRef = useRef<HTMLDivElement>(null);
   const moreMenuRef = useRef<HTMLDivElement>(null);
+  const menuBtnRef = useRef<HTMLButtonElement>(null);
+  const wasMenuOpenRef = useRef(false);
 
   const initials = user?.username ? user.username.slice(0, 2).toUpperCase() : '';
 
@@ -55,6 +80,16 @@ export default function Navbar() {
     window.addEventListener('keydown', handleEscape);
     return () => window.removeEventListener('keydown', handleEscape);
   }, []);
+
+  // Keyboard focus management: restore focus to menu toggle button when drawer closes
+  useEffect(() => {
+    if (moreMenuOpen) {
+      wasMenuOpenRef.current = true;
+    } else if (wasMenuOpenRef.current) {
+      wasMenuOpenRef.current = false;
+      menuBtnRef.current?.focus();
+    }
+  }, [moreMenuOpen]);
 
   // Body scroll-lock when mobile drawer is open
   useEffect(() => {
@@ -136,6 +171,7 @@ export default function Navbar() {
               textDecoration: 'none',
               flexShrink: 0,
             }}
+            aria-label="FootballPredict Home"
           >
             <span style={{ fontSize: '1.35rem', lineHeight: 1 }}>⚽</span>
             <span
@@ -156,35 +192,38 @@ export default function Navbar() {
 
           {/* Desktop Navigation Links (Middle) */}
           <nav
-            aria-label="Main Navigation"
+            aria-label="Primary Navigation"
             style={{
               display: 'none',
               alignItems: 'center',
-              gap: '0.2rem',
+              gap: '0.25rem',
               margin: '0 auto',
             }}
             className="hidden lg:flex"
           >
             {primaryNavLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const isActive = isNavActive(pathname, link.href);
               return (
                 <Link
                   key={link.href}
                   href={link.href}
+                  aria-current={isActive ? 'page' : undefined}
                   style={{
-                    padding: '0.45rem 0.7rem',
+                    position: 'relative',
+                    padding: '0.45rem 0.75rem',
                     borderRadius: '8px',
                     fontSize: '0.86rem',
                     fontWeight: isActive ? 700 : 500,
                     color: isActive ? 'var(--color-brand-emerald)' : 'var(--text-secondary)',
                     background: isActive ? 'rgba(16, 185, 129, 0.12)' : 'transparent',
-                    border: isActive ? '1px solid rgba(16, 185, 129, 0.25)' : '1px solid transparent',
+                    border: isActive ? '1px solid rgba(16, 185, 129, 0.28)' : '1px solid transparent',
                     textDecoration: 'none',
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '0.35rem',
                     transition: 'all 0.15s ease',
                     whiteSpace: 'nowrap',
+                    minHeight: '38px',
                   }}
                   className="hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]"
                 >
@@ -201,6 +240,19 @@ export default function Navbar() {
                     />
                   )}
                   {link.label}
+                  {isActive && (
+                    <span
+                      style={{
+                        position: 'absolute',
+                        bottom: '2px',
+                        left: '25%',
+                        right: '25%',
+                        height: '2px',
+                        background: 'var(--color-brand-emerald)',
+                        borderRadius: '2px',
+                      }}
+                    />
+                  )}
                 </Link>
               );
             })}
@@ -290,7 +342,8 @@ export default function Navbar() {
                 </svg>
               )}
             </button>
-            {/* User Profile / Auth State Emoji Button */}
+
+            {/* User Profile / Auth State Button */}
             {user ? (
               <div style={{ position: 'relative' }} ref={userMenuRef}>
                 <button
@@ -318,7 +371,7 @@ export default function Navbar() {
                         width: '28px',
                         height: '28px',
                         borderRadius: '50%',
-                        background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+                        background: 'linear-gradient(135deg, #10B981, #059669)',
                         color: '#ffffff',
                         display: 'flex',
                         alignItems: 'center',
@@ -359,6 +412,7 @@ export default function Navbar() {
                     </div>
                     <Link
                       href="/dashboard"
+                      onClick={() => setUserDropdownOpen(false)}
                       style={{
                         padding: '0.45rem 0.6rem',
                         borderRadius: '6px',
@@ -368,6 +422,7 @@ export default function Navbar() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.4rem',
+                        minHeight: '36px',
                       }}
                       className="hover:bg-[var(--bg-elevated)]"
                     >
@@ -377,6 +432,7 @@ export default function Navbar() {
                     {user.is_admin && (
                       <Link
                         href="/admin"
+                        onClick={() => setUserDropdownOpen(false)}
                         style={{
                           padding: '0.45rem 0.6rem',
                           borderRadius: '6px',
@@ -386,6 +442,7 @@ export default function Navbar() {
                           display: 'flex',
                           alignItems: 'center',
                           gap: '0.4rem',
+                          minHeight: '36px',
                         }}
                         className="hover:bg-[var(--bg-elevated)]"
                       >
@@ -412,6 +469,7 @@ export default function Navbar() {
                         borderTop: '1px solid var(--border-color)',
                         marginTop: '0.2rem',
                         paddingTop: '0.4rem',
+                        minHeight: '36px',
                       }}
                       className="hover:bg-[var(--accent-red-bg)]"
                     >
@@ -445,8 +503,9 @@ export default function Navbar() {
               </Link>
             )}
 
-            {/* Mobile & Options Menu Button */}
+            {/* Mobile Menu Hamburger Button */}
             <button
+              ref={menuBtnRef}
               onClick={() => setMoreMenuOpen(!moreMenuOpen)}
               className="fp-more-options-btn"
               style={{
@@ -465,7 +524,7 @@ export default function Navbar() {
                 flexShrink: 0,
                 transition: 'all 0.15s ease',
               }}
-              aria-label="Toggle Options Menu"
+              aria-label={moreMenuOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={moreMenuOpen}
             >
               {moreMenuOpen ? (
@@ -484,7 +543,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* "More Options" Full Dropdown & Mobile Drawer */}
+        {/* Mobile Navigation Drawer */}
         {moreMenuOpen && (
           <div
             ref={moreMenuRef}
@@ -501,9 +560,13 @@ export default function Navbar() {
             }}
           >
             {/* Mobile Drawer Header with Close Button */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '0.4rem', borderBottom: '1px solid var(--border-color)' }}>
-              <span style={{ fontSize: '0.82rem', fontWeight: 800, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <span>ðŸ§­</span> Quick Navigation &amp; Tools
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '0.5rem', borderBottom: '1px solid var(--border-color)' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-brand-emerald)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+                </svg>
+                Navigation &amp; Quick Tools
               </span>
               <button
                 onClick={() => setMoreMenuOpen(false)}
@@ -511,18 +574,23 @@ export default function Navbar() {
                   background: 'var(--bg-elevated)',
                   border: '1px solid var(--border-color)',
                   color: 'var(--text-secondary)',
-                  padding: '0.3rem 0.65rem',
-                  borderRadius: '6px',
-                  fontSize: '0.78rem',
+                  padding: '0.4rem 0.75rem',
+                  borderRadius: '8px',
+                  fontSize: '0.8rem',
                   fontWeight: 700,
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0.3rem',
+                  gap: '0.35rem',
+                  minHeight: '36px',
                 }}
                 aria-label="Close navigation menu"
               >
-                ✕ Close
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+                Close
               </button>
             </div>
 
@@ -544,9 +612,13 @@ export default function Navbar() {
                   fontSize: '0.84rem',
                   cursor: 'pointer',
                   textAlign: 'left',
+                  minHeight: '44px',
                 }}
               >
-                <span style={{ fontSize: '1.1rem' }}>🔍</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
                 <span>Search</span>
               </button>
 
@@ -566,9 +638,26 @@ export default function Navbar() {
                   fontSize: '0.84rem',
                   cursor: 'pointer',
                   textAlign: 'left',
+                  minHeight: '44px',
                 }}
               >
-                <span style={{ fontSize: '1.1rem' }}>{theme === 'dark' ? '☀️' : '🌙'}</span>
+                {theme === 'dark' ? (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                  </svg>
+                )}
                 <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
               </button>
 
@@ -581,13 +670,14 @@ export default function Navbar() {
                   gap: '0.5rem',
                   padding: '0.65rem 0.85rem',
                   borderRadius: '10px',
-                  background: 'linear-gradient(135deg, rgba(37,99,235,0.15) 0%, rgba(124,58,237,0.15) 100%)',
-                  border: '1px solid rgba(59,130,246,0.3)',
-                  color: 'var(--accent-blue)',
+                  background: 'rgba(16, 185, 129, 0.1)',
+                  border: '1px solid rgba(16, 185, 129, 0.25)',
+                  color: 'var(--color-brand-emerald)',
                   fontWeight: 800,
                   fontSize: '0.84rem',
                   cursor: 'pointer',
                   textAlign: 'left',
+                  minHeight: '44px',
                 }}
               >
                 <span style={{ fontSize: '1.1rem' }}>🤖</span>
@@ -601,28 +691,45 @@ export default function Navbar() {
                 Predictions &amp; Fixtures
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.45rem' }}>
-                {primaryNavLinks.slice(0, 4).map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    style={{
-                      padding: '0.6rem 0.8rem',
-                      borderRadius: '10px',
-                      background: pathname === link.href ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
-                      color: pathname === link.href ? 'var(--accent-blue)' : 'var(--text-primary)',
-                      fontWeight: 600,
-                      fontSize: '0.84rem',
-                      textDecoration: 'none',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.45rem',
-                      minHeight: '44px',
-                    }}
-                  >
-                    <span>{link.icon}</span>
-                    <span>{link.label}</span>
-                  </Link>
-                ))}
+                {primaryNavLinks.slice(0, 4).map((link) => {
+                  const isActive = isNavActive(pathname, link.href);
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setMoreMenuOpen(false)}
+                      aria-current={isActive ? 'page' : undefined}
+                      style={{
+                        padding: '0.65rem 0.85rem',
+                        borderRadius: '10px',
+                        background: isActive ? 'rgba(16, 185, 129, 0.14)' : 'var(--bg-elevated)',
+                        color: isActive ? 'var(--color-brand-emerald)' : 'var(--text-primary)',
+                        border: isActive ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid var(--border-color)',
+                        fontWeight: isActive ? 700 : 500,
+                        fontSize: '0.84rem',
+                        textDecoration: 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.45rem',
+                        minHeight: '44px',
+                      }}
+                    >
+                      <span>{link.icon}</span>
+                      <span>{link.label}</span>
+                      {isActive && (
+                        <span
+                          style={{
+                            marginLeft: 'auto',
+                            width: '6px',
+                            height: '6px',
+                            borderRadius: '50%',
+                            background: 'var(--color-brand-emerald)',
+                          }}
+                        />
+                      )}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
 
@@ -632,47 +739,83 @@ export default function Navbar() {
                 Intelligence &amp; Data
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.45rem' }}>
-                {primaryNavLinks.slice(4).map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    style={{
-                      padding: '0.6rem 0.8rem',
-                      borderRadius: '10px',
-                      background: pathname === link.href ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
-                      color: pathname === link.href ? 'var(--accent-blue)' : 'var(--text-primary)',
-                      fontWeight: 600,
-                      fontSize: '0.84rem',
-                      textDecoration: 'none',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.45rem',
-                      minHeight: '44px',
-                    }}
-                  >
-                    <span>{link.icon}</span>
-                    <span>{link.label}</span>
-                  </Link>
-                ))}
-                <Link
-                  href="/stats"
-                  style={{
-                    padding: '0.6rem 0.8rem',
-                    borderRadius: '10px',
-                    background: pathname === '/stats' ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
-                    color: pathname === '/stats' ? 'var(--accent-blue)' : 'var(--text-primary)',
-                    fontWeight: 600,
-                    fontSize: '0.84rem',
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.45rem',
-                    minHeight: '44px',
-                  }}
-                >
-                  <span>📈</span>
-                  <span>Accuracy Audit</span>
-                </Link>
+                {primaryNavLinks.slice(4).map((link) => {
+                  const isActive = isNavActive(pathname, link.href);
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setMoreMenuOpen(false)}
+                      aria-current={isActive ? 'page' : undefined}
+                      style={{
+                        padding: '0.65rem 0.85rem',
+                        borderRadius: '10px',
+                        background: isActive ? 'rgba(16, 185, 129, 0.14)' : 'var(--bg-elevated)',
+                        color: isActive ? 'var(--color-brand-emerald)' : 'var(--text-primary)',
+                        border: isActive ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid var(--border-color)',
+                        fontWeight: isActive ? 700 : 500,
+                        fontSize: '0.84rem',
+                        textDecoration: 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.45rem',
+                        minHeight: '44px',
+                      }}
+                    >
+                      <span>{link.icon}</span>
+                      <span>{link.label}</span>
+                      {isActive && (
+                        <span
+                          style={{
+                            marginLeft: 'auto',
+                            width: '6px',
+                            height: '6px',
+                            borderRadius: '50%',
+                            background: 'var(--color-brand-emerald)',
+                          }}
+                        />
+                      )}
+                    </Link>
+                  );
+                })}
+                {(() => {
+                  const isAuditActive = pathname === '/stats';
+                  return (
+                    <Link
+                      href="/stats"
+                      onClick={() => setMoreMenuOpen(false)}
+                      aria-current={isAuditActive ? 'page' : undefined}
+                      style={{
+                        padding: '0.65rem 0.85rem',
+                        borderRadius: '10px',
+                        background: isAuditActive ? 'rgba(16, 185, 129, 0.14)' : 'var(--bg-elevated)',
+                        color: isAuditActive ? 'var(--color-brand-emerald)' : 'var(--text-primary)',
+                        border: isAuditActive ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid var(--border-color)',
+                        fontWeight: isAuditActive ? 700 : 500,
+                        fontSize: '0.84rem',
+                        textDecoration: 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.45rem',
+                        minHeight: '44px',
+                      }}
+                    >
+                      <span>📈</span>
+                      <span>Accuracy Audit</span>
+                      {isAuditActive && (
+                        <span
+                          style={{
+                            marginLeft: 'auto',
+                            width: '6px',
+                            height: '6px',
+                            borderRadius: '50%',
+                            background: 'var(--color-brand-emerald)',
+                          }}
+                        />
+                      )}
+                    </Link>
+                  );
+                })()}
               </div>
             </div>
 
@@ -687,12 +830,13 @@ export default function Navbar() {
               </button>
               <Link
                 href="/pricing"
+                onClick={() => setMoreMenuOpen(false)}
                 className="fp-btn-primary"
                 style={{
                   flex: '1 1 130px',
                   minHeight: '44px',
                   fontSize: '0.84rem',
-                  background: 'linear-gradient(135deg, #d97706, #f59e0b)',
+                  background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
                 }}
               >
                 💎 VIP Pro Analytics
@@ -705,63 +849,49 @@ export default function Navbar() {
                 Company &amp; Trust
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.45rem' }}>
-                <Link
-                  href="/about"
-                  style={{
-                    padding: '0.6rem 0.8rem',
-                    borderRadius: '10px',
-                    background: pathname === '/about' ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
-                    color: pathname === '/about' ? 'var(--accent-blue)' : 'var(--text-primary)',
-                    fontWeight: 600,
-                    fontSize: '0.84rem',
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.45rem',
-                    minHeight: '44px',
-                  }}
-                >
-                  <span>ℹ️</span>
-                  <span>About Us</span>
-                </Link>
-                <Link
-                  href="/contact"
-                  style={{
-                    padding: '0.6rem 0.8rem',
-                    borderRadius: '10px',
-                    background: pathname === '/contact' ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
-                    color: pathname === '/contact' ? 'var(--accent-blue)' : 'var(--text-primary)',
-                    fontWeight: 600,
-                    fontSize: '0.84rem',
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.45rem',
-                    minHeight: '44px',
-                  }}
-                >
-                  <span>✉️</span>
-                  <span>Contact</span>
-                </Link>
-                <Link
-                  href="/disclaimer"
-                  style={{
-                    padding: '0.6rem 0.8rem',
-                    borderRadius: '10px',
-                    background: pathname === '/disclaimer' ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
-                    color: pathname === '/disclaimer' ? 'var(--accent-blue)' : 'var(--text-primary)',
-                    fontWeight: 600,
-                    fontSize: '0.84rem',
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.45rem',
-                    minHeight: '44px',
-                  }}
-                >
-                  <span>⚖️</span>
-                  <span>Disclaimer</span>
-                </Link>
+                {[
+                  { href: '/about', label: 'About Us', icon: 'ℹ️' },
+                  { href: '/contact', label: 'Contact', icon: '✉️' },
+                  { href: '/disclaimer', label: 'Disclaimer', icon: '⚖️' },
+                ].map((item) => {
+                  const isActive = isNavActive(pathname, item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMoreMenuOpen(false)}
+                      aria-current={isActive ? 'page' : undefined}
+                      style={{
+                        padding: '0.65rem 0.85rem',
+                        borderRadius: '10px',
+                        background: isActive ? 'rgba(16, 185, 129, 0.14)' : 'var(--bg-elevated)',
+                        color: isActive ? 'var(--color-brand-emerald)' : 'var(--text-primary)',
+                        border: isActive ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid var(--border-color)',
+                        fontWeight: isActive ? 700 : 500,
+                        fontSize: '0.84rem',
+                        textDecoration: 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.45rem',
+                        minHeight: '44px',
+                      }}
+                    >
+                      <span>{item.icon}</span>
+                      <span>{item.label}</span>
+                      {isActive && (
+                        <span
+                          style={{
+                            marginLeft: 'auto',
+                            width: '6px',
+                            height: '6px',
+                            borderRadius: '50%',
+                            background: 'var(--color-brand-emerald)',
+                          }}
+                        />
+                      )}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>

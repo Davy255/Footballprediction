@@ -375,13 +375,13 @@ img {
 
 .nav-link:hover {
   color: var(--text-primary);
-  background: rgba(59, 130, 246, 0.1);
+  background: rgba(16, 185, 129, 0.08);
 }
 
 .nav-link.active {
-  color: var(--accent-blue);
-  background: rgba(59, 130, 246, 0.12);
-  font-weight: 600;
+  color: var(--color-brand-emerald);
+  background: rgba(16, 185, 129, 0.12);
+  font-weight: 700;
 }
 
 .nav-link.active::after {
@@ -392,7 +392,7 @@ img {
   transform: translateX(-50%);
   width: 20px;
   height: 2px;
-  background: var(--accent-blue);
+  background: var(--color-brand-emerald);
   border-radius: 2px;
 }
 
@@ -1292,7 +1292,7 @@ div[id^="google-btn-container"] iframe {
 }
 
 .footer-links a:hover {
-  color: var(--accent-blue);
+  color: var(--color-brand-emerald);
 }
 
 .footer-bottom {

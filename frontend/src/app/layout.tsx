@@ -80,33 +80,33 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     </p>
                     <p style={{ marginTop: '0.65rem', fontSize: '0.80rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
                       Published by <strong>{siteConfig.publisher}</strong><br />
-                      Inquiries: <a href={`mailto:${siteConfig.contactEmail}`} style={{ color: 'var(--accent-blue)', textDecoration: 'none' }}>{siteConfig.contactEmail}</a><br />
+                      Inquiries: <a href={`mailto:${siteConfig.contactEmail}`} style={{ color: 'var(--color-brand-emerald)', textDecoration: 'none' }}>{siteConfig.contactEmail}</a><br />
                       Support: <a href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#4ade80', textDecoration: 'none' }}>{siteConfig.contactPhone}</a>
                     </p>
-                    <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.85rem' }}>
+                    <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.85rem', flexWrap: 'wrap' }}>
                       <span style={{
                         padding: '0.25rem 0.6rem',
-                        background: 'rgba(59,130,246,0.1)',
-                        color: 'var(--accent-blue)',
-                        border: '1px solid rgba(59,130,246,0.2)',
+                        background: 'rgba(16, 185, 129, 0.1)',
+                        color: 'var(--color-brand-emerald)',
+                        border: '1px solid rgba(16, 185, 129, 0.2)',
                         borderRadius: '6px',
                         fontSize: '0.72rem',
                         fontWeight: 700,
                       }}>Tactical Data</span>
                       <span style={{
                         padding: '0.25rem 0.6rem',
-                        background: 'rgba(16,185,129,0.1)',
-                        color: 'var(--accent-green)',
-                        border: '1px solid rgba(16,185,129,0.2)',
+                        background: 'rgba(16, 185, 129, 0.1)',
+                        color: 'var(--color-brand-emerald)',
+                        border: '1px solid rgba(16, 185, 129, 0.2)',
                         borderRadius: '6px',
                         fontSize: '0.72rem',
                         fontWeight: 700,
                       }}>Live Scores</span>
                       <span style={{
                         padding: '0.25rem 0.6rem',
-                        background: 'rgba(139,92,246,0.1)',
-                        color: 'var(--accent-purple)',
-                        border: '1px solid rgba(139,92,246,0.2)',
+                        background: 'rgba(16, 185, 129, 0.1)',
+                        color: 'var(--color-brand-emerald)',
+                        border: '1px solid rgba(16, 185, 129, 0.2)',
                         borderRadius: '6px',
                         fontSize: '0.72rem',
                         fontWeight: 700,

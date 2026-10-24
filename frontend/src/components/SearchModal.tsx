@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -40,6 +40,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const resultsListRef = useRef<HTMLDivElement>(null);
   const searchRequestIdRef = useRef<number>(0);
 
   useEffect(() => {
@@ -92,16 +93,17 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
       });
   }, []);
 
+  // 300ms debounce interval for balanced responsiveness and network efficiency
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       executeSearch(query);
-    }, 200);
+    }, 300);
 
     return () => clearTimeout(timeoutId);
   }, [query, executeSearch]);
 
   // Flattened active results list for keyboard navigation
-  const visibleItems = React.useMemo(() => {
+  const visibleItems = useMemo(() => {
     const items: Array<{ type: 'team' | 'league' | 'match'; url: string; label: string }> = [];
     if (activeFilter === 'all' || activeFilter === 'teams') {
       results.teams.forEach((t) => items.push({ type: 'team', url: getTeamUrl(t.name), label: t.name }));
@@ -114,6 +116,16 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
     }
     return items;
   }, [activeFilter, results]);
+
+  // Auto-scroll the selected element into view during keyboard navigation
+  useEffect(() => {
+    if (selectedIndex >= 0 && resultsListRef.current) {
+      const selectedEl = resultsListRef.current.querySelector('[data-selected="true"]');
+      if (selectedEl) {
+        selectedEl.scrollIntoView({ block: 'nearest' });
+      }
+    }
+  }, [selectedIndex]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
@@ -142,7 +154,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.65)',
+        backgroundColor: 'rgba(0, 0, 0, 0.70)',
         backdropFilter: 'blur(6px)',
         WebkitBackdropFilter: 'blur(6px)',
         zIndex: 9999,
@@ -182,7 +194,10 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
             background: 'var(--bg-elevated)',
           }}
         >
-          <span style={{ fontSize: '1.2rem', color: 'var(--text-muted)' }}>🔍</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
           <input
             ref={inputRef}
             type="text"
@@ -196,44 +211,58 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
               border: 'none',
               outline: 'none',
               color: 'var(--text-primary)',
-              fontSize: '0.95rem',
+              fontSize: '1rem',
               fontWeight: 500,
             }}
+            aria-label="Search query"
+            autoComplete="off"
+            spellCheck="false"
           />
           {query && (
             <button
-              onClick={() => setQuery('')}
+              type="button"
+              onClick={() => { setQuery(''); inputRef.current?.focus(); }}
               style={{
                 background: 'transparent',
                 border: 'none',
                 color: 'var(--text-muted)',
                 cursor: 'pointer',
-                fontSize: '1.1rem',
                 padding: '0.2rem',
                 minWidth: '32px',
                 minHeight: '32px',
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                borderRadius: '50%',
+                transition: 'color 0.15s ease',
               }}
+              className="hover:text-[var(--text-primary)]"
               aria-label="Clear search input"
             >
-              ✕
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
             </button>
           )}
           <button
+            type="button"
             onClick={onClose}
             style={{
               background: 'var(--bg-card)',
               border: '1px solid var(--border-color)',
               color: 'var(--text-secondary)',
-              padding: '0.35rem 0.7rem',
+              padding: '0.35rem 0.75rem',
               borderRadius: '8px',
               fontSize: '0.75rem',
               fontWeight: 700,
               cursor: 'pointer',
               minHeight: '34px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
+            aria-label="Close search modal"
           >
             Esc
           </button>
@@ -249,6 +278,8 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
             background: 'var(--bg-card)',
             overflowX: 'auto',
           }}
+          role="tablist"
+          aria-label="Filter search results by type"
         >
           {(['all', 'teams', 'leagues', 'matches'] as const).map((cat) => {
             const count =
@@ -264,15 +295,18 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
             return (
               <button
                 key={cat}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
                 onClick={() => { setActiveFilter(cat); setSelectedIndex(-1); }}
                 style={{
                   padding: '0.4rem 0.85rem',
                   borderRadius: '999px',
                   fontSize: '0.78rem',
                   fontWeight: isActive ? 700 : 500,
-                  border: isActive ? '1px solid var(--accent-blue)' : '1px solid var(--border-color)',
-                  background: isActive ? 'var(--accent-blue-bg)' : 'transparent',
-                  color: isActive ? 'var(--accent-blue)' : 'var(--text-secondary)',
+                  border: isActive ? '1px solid var(--color-brand-emerald)' : '1px solid var(--border-color)',
+                  background: isActive ? 'rgba(16, 185, 129, 0.12)' : 'transparent',
+                  color: isActive ? 'var(--color-brand-emerald)' : 'var(--text-secondary)',
                   cursor: 'pointer',
                   whiteSpace: 'nowrap',
                   transition: 'all 0.15s ease',
@@ -287,6 +321,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
         {/* Results List */}
         <div
+          ref={resultsListRef}
           style={{
             flex: 1,
             overflowY: 'auto',
@@ -295,22 +330,48 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
             flexDirection: 'column',
             gap: '0.85rem',
           }}
+          role="region"
+          aria-live="polite"
         >
           {loading && (
-            <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-              <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>⏳</div>
-              <div style={{ fontWeight: 600 }}>Searching teams, leagues &amp; matches...</div>
+            <div style={{ padding: '2.5rem 1rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+              <svg
+                style={{
+                  width: '28px',
+                  height: '28px',
+                  margin: '0 auto 0.6rem',
+                  display: 'block',
+                  animation: 'spin 1s linear infinite',
+                }}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="var(--color-brand-emerald)"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" strokeOpacity="0.25" />
+                <path d="M12 2a10 10 0 0 1 10 10" />
+              </svg>
+              <div style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)' }}>
+                Searching teams, leagues &amp; fixtures...
+              </div>
             </div>
           )}
 
           {error && (
-            <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--accent-red)' }}>
-              <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>⚠️</div>
-              <div style={{ fontWeight: 700 }}>Search is temporarily unavailable.</div>
+            <div style={{ padding: '2.5rem 1rem', textAlign: 'center', color: 'var(--accent-red)' }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ margin: '0 auto 0.6rem', display: 'block' }}>
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>Search is temporarily unavailable.</div>
               <button
+                type="button"
                 onClick={() => executeSearch(query)}
                 className="fp-btn-secondary"
-                style={{ marginTop: '0.75rem', padding: '0.5rem 1rem', fontSize: '0.82rem', minHeight: '44px' }}
+                style={{ marginTop: '0.85rem', padding: '0.5rem 1.1rem', fontSize: '0.82rem', minHeight: '44px' }}
               >
                 Try Again
               </button>
@@ -334,6 +395,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   {POPULAR_SEARCH_PRESETS.map((preset) => (
                     <button
                       key={preset}
+                      type="button"
                       onClick={() => setQuery(preset)}
                       style={{
                         padding: '0.4rem 0.8rem',
@@ -347,7 +409,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                         minHeight: '36px',
                         transition: 'all 0.15s ease',
                       }}
-                      className="hover:border-[var(--accent-blue)] hover:text-[var(--accent-blue)]"
+                      className="hover:border-[var(--color-brand-emerald)] hover:text-[var(--color-brand-emerald)]"
                     >
                       {preset}
                     </button>
@@ -359,7 +421,10 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
           {!loading && !error && query.trim().length >= 2 && totalResults === 0 && (
             <div style={{ padding: '2.5rem 1rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-              <div style={{ fontSize: '1.6rem', marginBottom: '0.5rem' }}>🔍</div>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ margin: '0 auto 0.6rem', display: 'block', opacity: 0.6 }}>
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
               <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '0.95rem' }}>No results found for &ldquo;{query}&rdquo;</div>
               <div style={{ fontSize: '0.82rem', marginTop: '0.35rem', color: 'var(--text-muted)' }}>
                 Try checking the spelling or searching by club name, league, or fixture.
@@ -384,20 +449,21 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       href={getTeamUrl(t.name)}
                       onClick={onClose}
                       onMouseEnter={() => setSelectedIndex(itemIndex)}
+                      data-selected={isSelected ? 'true' : undefined}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.65rem',
                         padding: '0.65rem 0.85rem',
                         borderRadius: '10px',
-                        background: isSelected ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
-                        border: isSelected ? '1px solid var(--accent-blue)' : '1px solid var(--border-color)',
+                        background: isSelected ? 'rgba(16, 185, 129, 0.12)' : 'var(--bg-elevated)',
+                        border: isSelected ? '1px solid var(--color-brand-emerald)' : '1px solid var(--border-color)',
                         textDecoration: 'none',
                         color: 'var(--text-primary)',
                         transition: 'all 0.15s ease',
                         minHeight: '44px',
                       }}
-                      className="hover:border-[var(--accent-blue)]"
+                      className="hover:border-[var(--color-brand-emerald)]"
                     >
                       {t.crest ? (
                         <Image src={t.crest} alt={t.name} width={26} height={26} style={{ objectFit: 'contain' }} />
@@ -441,20 +507,21 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       href={getLeagueUrl(l.name, l.code)}
                       onClick={onClose}
                       onMouseEnter={() => setSelectedIndex(itemIndex)}
+                      data-selected={isSelected ? 'true' : undefined}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.65rem',
                         padding: '0.65rem 0.85rem',
                         borderRadius: '10px',
-                        background: isSelected ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
-                        border: isSelected ? '1px solid var(--accent-blue)' : '1px solid var(--border-color)',
+                        background: isSelected ? 'rgba(16, 185, 129, 0.12)' : 'var(--bg-elevated)',
+                        border: isSelected ? '1px solid var(--color-brand-emerald)' : '1px solid var(--border-color)',
                         textDecoration: 'none',
                         color: 'var(--text-primary)',
                         transition: 'all 0.15s ease',
                         minHeight: '44px',
                       }}
-                      className="hover:border-[var(--accent-blue)]"
+                      className="hover:border-[var(--color-brand-emerald)]"
                     >
                       <span style={{ fontSize: '1.25rem' }}>{l.flag || '🏆'}</span>
                       <div style={{ flex: 1, minWidth: 0 }}>
@@ -495,21 +562,22 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       href={predUrl}
                       onClick={onClose}
                       onMouseEnter={() => setSelectedIndex(itemIndex)}
+                      data-selected={isSelected ? 'true' : undefined}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         padding: '0.65rem 0.85rem',
                         borderRadius: '10px',
-                        background: isSelected ? 'var(--accent-blue-bg)' : 'var(--bg-elevated)',
-                        border: isSelected ? '1px solid var(--accent-blue)' : '1px solid var(--border-color)',
+                        background: isSelected ? 'rgba(16, 185, 129, 0.12)' : 'var(--bg-elevated)',
+                        border: isSelected ? '1px solid var(--color-brand-emerald)' : '1px solid var(--border-color)',
                         textDecoration: 'none',
                         color: 'var(--text-primary)',
                         gap: '0.5rem',
                         transition: 'all 0.15s ease',
                         minHeight: '44px',
                       }}
-                      className="hover:border-[var(--accent-blue)]"
+                      className="hover:border-[var(--color-brand-emerald)]"
                     >
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', minWidth: 0 }}>
                         <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>⚽</span>
@@ -522,7 +590,22 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                           </span>
                         )}
                       </div>
-                      <span className="fp-badge fp-badge-blue" style={{ fontSize: '0.72rem' }}>
+                      <span
+                        style={{
+                          fontSize: '0.72rem',
+                          fontWeight: 700,
+                          padding: '0.25rem 0.55rem',
+                          borderRadius: '6px',
+                          background: 'rgba(16, 185, 129, 0.12)',
+                          color: 'var(--color-brand-emerald)',
+                          border: '1px solid rgba(16, 185, 129, 0.25)',
+                          whiteSpace: 'nowrap',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.25rem',
+                          flexShrink: 0,
+                        }}
+                      >
                         Prediction →
                       </span>
                     </Link>
