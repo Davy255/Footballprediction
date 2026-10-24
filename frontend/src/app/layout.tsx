@@ -67,7 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         fontFamily: 'Outfit, sans-serif',
                         fontWeight: 900,
                         fontSize: '1.2rem',
-                        background: 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)',
+                        background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                       }}>

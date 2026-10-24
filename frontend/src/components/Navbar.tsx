@@ -144,7 +144,7 @@ export default function Navbar() {
                 fontSize: '1.2rem',
                 fontWeight: 900,
                 letterSpacing: '-0.02em',
-                background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 whiteSpace: 'nowrap',
@@ -176,8 +176,9 @@ export default function Navbar() {
                     borderRadius: '8px',
                     fontSize: '0.86rem',
                     fontWeight: isActive ? 700 : 500,
-                    color: isActive ? 'var(--accent-blue)' : 'var(--text-secondary)',
-                    background: isActive ? 'var(--accent-blue-bg)' : 'transparent',
+                    color: isActive ? 'var(--color-brand-emerald)' : 'var(--text-secondary)',
+                    background: isActive ? 'rgba(16, 185, 129, 0.12)' : 'transparent',
+                    border: isActive ? '1px solid rgba(16, 185, 129, 0.25)' : '1px solid transparent',
                     textDecoration: 'none',
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -213,28 +214,31 @@ export default function Navbar() {
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.4rem',
-                padding: '0.4rem 0.65rem',
-                borderRadius: '8px',
+                gap: '0.45rem',
+                padding: '0.45rem 0.85rem',
+                borderRadius: 'var(--radius-md, 10px)',
                 background: 'var(--bg-elevated)',
                 border: '1px solid var(--border-color)',
                 color: 'var(--text-secondary)',
-                fontSize: '0.82rem',
+                fontSize: '0.84rem',
                 cursor: 'pointer',
-                minHeight: '36px',
+                minHeight: '44px',
                 transition: 'all 0.15s ease',
               }}
-              className="hover:text-[var(--text-primary)] hover:border-[var(--accent-blue)]"
+              className="hover:text-[var(--text-primary)] hover:border-[var(--color-brand-emerald)]"
               title="Search teams, leagues, and fixtures (Ctrl+K)"
               aria-label="Search football content"
             >
-              <span style={{ fontSize: '0.95rem' }}>ðŸ”</span>
-              <span className="hidden md:inline" style={{ fontSize: '0.80rem', fontWeight: 600 }}>Search</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              <span className="hidden md:inline" style={{ fontSize: '0.82rem', fontWeight: 600 }}>Search</span>
               <kbd
                 className="hidden lg:inline"
                 style={{
                   fontSize: '0.68rem',
-                  padding: '1px 5px',
+                  padding: '2px 6px',
                   borderRadius: '4px',
                   background: 'var(--bg-card)',
                   border: '1px solid var(--border-color)',
@@ -250,24 +254,41 @@ export default function Navbar() {
             <button
               onClick={toggleTheme}
               style={{
-                width: '36px',
-                height: '36px',
-                borderRadius: '8px',
+                width: '44px',
+                height: '44px',
+                minHeight: '44px',
+                borderRadius: 'var(--radius-md, 10px)',
                 background: 'var(--bg-elevated)',
                 border: '1px solid var(--border-color)',
                 color: 'var(--text-primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1rem',
                 cursor: 'pointer',
                 padding: 0,
+                transition: 'all 0.15s ease',
               }}
               title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               aria-label="Toggle Theme"
-              className="hidden sm:flex"
+              className="hidden sm:flex hover:border-[var(--color-brand-emerald)]"
             >
-              {theme === 'dark' ? 'â˜€ï¸' : 'ðŸŒ™'}
+              {theme === 'dark' ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5"/>
+                  <line x1="12" y1="1" x2="12" y2="3"/>
+                  <line x1="12" y1="21" x2="12" y2="23"/>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                  <line x1="1" y1="12" x2="3" y2="12"/>
+                  <line x1="21" y1="12" x2="23" y2="12"/>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+              )}
             </button>
             {/* User Profile / Auth State Emoji Button */}
             {user ? (
@@ -275,8 +296,9 @@ export default function Navbar() {
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                   style={{
-                    width: '36px',
-                    height: '36px',
+                    width: '44px',
+                    height: '44px',
+                    minHeight: '44px',
                     borderRadius: '50%',
                     background: 'var(--bg-elevated)',
                     border: '1px solid var(--border-color)',
@@ -403,8 +425,9 @@ export default function Navbar() {
               <Link
                 href="/login"
                 style={{
-                  width: '36px',
-                  height: '36px',
+                  width: '44px',
+                  height: '44px',
+                  minHeight: '44px',
                   borderRadius: '50%',
                   background: 'var(--bg-elevated)',
                   border: '1px solid var(--border-color)',
@@ -422,29 +445,41 @@ export default function Navbar() {
               </Link>
             )}
 
-            {/* Icon-Only "☰" Menu Button */}
+            {/* Mobile & Options Menu Button */}
             <button
               onClick={() => setMoreMenuOpen(!moreMenuOpen)}
               className="fp-more-options-btn"
               style={{
-                width: '36px',
-                height: '36px',
-                borderRadius: '8px',
-                background: 'var(--bg-elevated)',
-                border: '1px solid var(--border-color)',
-                color: 'var(--text-primary)',
+                width: '44px',
+                height: '44px',
+                minHeight: '44px',
+                borderRadius: 'var(--radius-md, 10px)',
+                background: moreMenuOpen ? 'var(--color-brand-emerald)' : 'var(--bg-elevated)',
+                border: '1px solid ' + (moreMenuOpen ? 'var(--color-brand-emerald-dark)' : 'var(--border-color)'),
+                color: moreMenuOpen ? '#FFFFFF' : 'var(--text-primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.25rem',
                 cursor: 'pointer',
                 padding: 0,
                 flexShrink: 0,
+                transition: 'all 0.15s ease',
               }}
               aria-label="Toggle Options Menu"
               aria-expanded={moreMenuOpen}
             >
-              ☰
+              {moreMenuOpen ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="3" y1="12" x2="21" y2="12"/>
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+              )}
             </button>
           </div>
         </div>
@@ -487,7 +522,7 @@ export default function Navbar() {
                 }}
                 aria-label="Close navigation menu"
               >
-                âœ• Close
+                ✕ Close
               </button>
             </div>
 
