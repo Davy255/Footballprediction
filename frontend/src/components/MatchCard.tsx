@@ -1164,201 +1164,94 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
           if (!open && activeTab === 'predict') loadPred();
         }}
       >
-        {/* Desktop Match Row (Screens >= 641px) */}
-        <div className="fs-desktop-row">
-          <div className="fs-home-side">
-            <Link
-              href={getTeamUrl(HN)}
-              onClick={(e) => e.stopPropagation()}
-              className={`fs-team-name-home ${homeWin ? 'is-winner' : ''}`}
-              title={`${HN} Team Profile`}
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-              {HN}
-            </Link>
-            {match.home_team?.crest && (
-              <img
-                src={match.home_team.crest}
-                alt={`${HN} logo`}
-                width="20"
-                height="20"
-                className="fs-team-crest"
-                loading="lazy"
-                decoding="async"
-                onError={(e) => { (e.currentTarget as HTMLElement).style.display = 'none'; }}
-              />
-            )}
-            <span className={`fs-ppg-badge ${getFormBadgeColor(homePpg)}`}>
-              {homePpg}
-            </span>
-          </div>
-
-          <div className="fs-center-side" style={{ minWidth: '76px', fontVariantNumeric: 'tabular-nums' }}>
-            {status.isLive ? (
-              <>
-                <span className="fs-center-score live" style={{ fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.02em', minWidth: '40px', display: 'inline-block', textAlign: 'center' }}>
-                  {hs ?? 0} - {as_ ?? 0}
-                </span>
-                <span className="fs-center-sub live" style={{ minWidth: '38px', textAlign: 'center' }}>
-                  ● {status.minuteText}
-                </span>
-              </>
-            ) : showScore ? (
-              <>
-                <span className="fs-center-score" style={{ fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.02em', minWidth: '40px', display: 'inline-block', textAlign: 'center' }}>
-                  {hs} - {as_}
-                </span>
-                <span className="fs-center-sub">{status.badgeText}</span>
-              </>
-            ) : (
-              <>
-                <span className="fs-center-time">{dateTime.time}</span>
-                <Link
-                  href={getMatchPredictionUrl(match)}
-                  onClick={(e) => e.stopPropagation()}
-                  className="fs-center-sub"
-                  title={`${HN} vs ${AN} Prediction`}
-                  style={{ textDecoration: 'none' }}
-                >
-                  Stats 🎯
-                </Link>
-              </>
-            )}
-          </div>
-
-          <div className="fs-away-side">
-            <span className={`fs-ppg-badge ${getFormBadgeColor(awayPpg)}`}>
-              {awayPpg}
-            </span>
-            {match.away_team?.crest && (
-              <img
-                src={match.away_team.crest}
-                alt={`${AN} logo`}
-                width="20"
-                height="20"
-                className="fs-team-crest"
-                loading="lazy"
-                decoding="async"
-                onError={(e) => { (e.currentTarget as HTMLElement).style.display = 'none'; }}
-              />
-            )}
-            <Link
-              href={getTeamUrl(AN)}
-              onClick={(e) => e.stopPropagation()}
-              className={`fs-team-name-away ${awayWin ? 'is-winner' : ''}`}
-              title={`${AN} Team Profile`}
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-              {AN}
-            </Link>
-          </div>
+        {/* Home Side: Team Name (right) + Crest + Form Badge */}
+        <div className="fs-home-side">
+          <Link
+            href={getTeamUrl(HN)}
+            onClick={(e) => e.stopPropagation()}
+            className={`fs-team-name-home ${homeWin ? 'is-winner' : ''}`}
+            title={`${HN} Team Profile`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            {HN}
+          </Link>
+          {match.home_team?.crest && (
+            <img
+              src={match.home_team.crest}
+              alt={`${HN} logo`}
+              width="20"
+              height="20"
+              className="fs-team-crest"
+              loading="lazy"
+              decoding="async"
+              onError={(e) => { (e.currentTarget as HTMLElement).style.display = 'none'; }}
+            />
+          )}
+          <span className={`fs-ppg-badge ${getFormBadgeColor(homePpg)}`}>
+            {homePpg}
+          </span>
         </div>
 
-        {/* Mobile-Optimized Match Card (Viewports <= 640px) */}
-        <div className="fs-mobile-match-card">
-          <div className="fs-mobile-meta-bar">
-            <div className="fs-mobile-meta-left">
-              {status.isLive ? (
-                <span className="fs-mobile-badge-live">
-                  ● LIVE {status.minuteText}
-                </span>
-              ) : showScore ? (
-                <span className="fs-mobile-badge-status">
-                  {status.badgeText}
-                </span>
-              ) : (
-                <span className="fs-mobile-badge-time">
-                  ⏰ {dateTime.time} UTC
-                </span>
-              )}
-              {dateTime.relative && !status.isLive && (
-                <span className="fs-mobile-badge-rel">{dateTime.relative}</span>
-              )}
-            </div>
+        {/* Center Column: Kickoff Time / Score + "Stats" link */}
+        <div className="fs-center-side">
+          {status.isLive ? (
+            <>
+              <span className="fs-center-score live">
+                {hs ?? 0} - {as_ ?? 0}
+              </span>
+              <span className="fs-center-sub live">
+                ● {status.minuteText}
+              </span>
+            </>
+          ) : showScore ? (
+            <>
+              <span className="fs-center-score">
+                {hs} - {as_}
+              </span>
+              <span className="fs-center-sub">{status.badgeText}</span>
+            </>
+          ) : (
+            <>
+              <span className="fs-center-time">{dateTime.time}</span>
+              <Link
+                href={getMatchPredictionUrl(match)}
+                onClick={(e) => e.stopPropagation()}
+                className="fs-center-sub"
+                title={`${HN} vs ${AN} Prediction`}
+                style={{ textDecoration: 'none' }}
+              >
+                Stats 🎯
+              </Link>
+            </>
+          )}
+        </div>
 
-            <Link
-              href={getMatchPredictionUrl(match)}
-              onClick={(e) => e.stopPropagation()}
-              className="fs-mobile-stats-btn"
-              title={`${HN} vs ${AN} Prediction & Analytics`}
-            >
-              Stats 🎯
-            </Link>
-          </div>
-
-          <div className="fs-mobile-teams-list">
-            <div className={`fs-mobile-team-row ${homeWin ? 'is-winner' : ''}`}>
-              <div className="fs-mobile-team-info">
-                {match.home_team?.crest && (
-                  <img
-                    src={match.home_team.crest}
-                    alt={HN}
-                    width="20"
-                    height="20"
-                    className="fs-team-crest"
-                    loading="lazy"
-                    decoding="async"
-                    onError={(e) => { (e.currentTarget as HTMLElement).style.display = 'none'; }}
-                  />
-                )}
-                <Link
-                  href={getTeamUrl(HN)}
-                  onClick={(e) => e.stopPropagation()}
-                  className="fs-mobile-team-name"
-                  title={HN}
-                >
-                  {HN}
-                </Link>
-              </div>
-              <div className="fs-mobile-team-score-col">
-                {showScore ? (
-                  <span className={`fs-mobile-score ${homeWin ? 'winner' : ''}`}>
-                    {hs}
-                  </span>
-                ) : (
-                  <span className={`fs-ppg-badge ${getFormBadgeColor(homePpg)}`}>
-                    {homePpg}
-                  </span>
-                )}
-              </div>
-            </div>
-
-            <div className={`fs-mobile-team-row ${awayWin ? 'is-winner' : ''}`}>
-              <div className="fs-mobile-team-info">
-                {match.away_team?.crest && (
-                  <img
-                    src={match.away_team.crest}
-                    alt={AN}
-                    width="20"
-                    height="20"
-                    className="fs-team-crest"
-                    loading="lazy"
-                    decoding="async"
-                    onError={(e) => { (e.currentTarget as HTMLElement).style.display = 'none'; }}
-                  />
-                )}
-                <Link
-                  href={getTeamUrl(AN)}
-                  onClick={(e) => e.stopPropagation()}
-                  className="fs-mobile-team-name"
-                  title={AN}
-                >
-                  {AN}
-                </Link>
-              </div>
-              <div className="fs-mobile-team-score-col">
-                {showScore ? (
-                  <span className={`fs-mobile-score ${awayWin ? 'winner' : ''}`}>
-                    {as_}
-                  </span>
-                ) : (
-                  <span className={`fs-ppg-badge ${getFormBadgeColor(awayPpg)}`}>
-                    {awayPpg}
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
+        {/* Away Side: Form Badge + Crest + Team Name (left) */}
+        <div className="fs-away-side">
+          <span className={`fs-ppg-badge ${getFormBadgeColor(awayPpg)}`}>
+            {awayPpg}
+          </span>
+          {match.away_team?.crest && (
+            <img
+              src={match.away_team.crest}
+              alt={`${AN} logo`}
+              width="20"
+              height="20"
+              className="fs-team-crest"
+              loading="lazy"
+              decoding="async"
+              onError={(e) => { (e.currentTarget as HTMLElement).style.display = 'none'; }}
+            />
+          )}
+          <Link
+            href={getTeamUrl(AN)}
+            onClick={(e) => e.stopPropagation()}
+            className={`fs-team-name-away ${awayWin ? 'is-winner' : ''}`}
+            title={`${AN} Team Profile`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            {AN}
+          </Link>
         </div>
       </div>
 
