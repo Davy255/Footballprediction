@@ -115,19 +115,24 @@ export default async function MatchPredictionPage({ params }: PageProps) {
     } catch {}
   }
 
-  const homeProb = match.ai_home_prob != null ? Math.round(match.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 45);
-  const drawProb = match.ai_draw_prob != null ? Math.round(match.ai_draw_prob * 100) : (ai?.probs?.draw_pct ?? 27);
-  const awayProb = match.ai_away_prob != null ? Math.round(match.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 28);
+  const hasCalculatedPrediction = Boolean(
+    (match.ai_home_prob != null && match.ai_away_prob != null) ||
+    ai?.probs?.home_pct != null
+  );
 
-  const predictedHomeScore = match.ai_predicted_home != null ? match.ai_predicted_home : (ai?.score?.home ?? 1);
-  const predictedAwayScore = match.ai_predicted_away != null ? match.ai_predicted_away : (ai?.score?.away ?? 1);
+  const homeProb = match.ai_home_prob != null ? Math.round(match.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 0);
+  const drawProb = match.ai_draw_prob != null ? Math.round(match.ai_draw_prob * 100) : (ai?.probs?.draw_pct ?? 0);
+  const awayProb = match.ai_away_prob != null ? Math.round(match.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 0);
+
+  const predictedHomeScore = match.ai_predicted_home ?? ai?.score?.home;
+  const predictedAwayScore = match.ai_predicted_away ?? ai?.score?.away;
 
   // Generate deterministic content & fetch related fixtures
   const analysisContent = generateMatchAnalysisText(match);
   const confidence = getMatchConfidence(match);
   const explanation = generatePredictionFactors(match);
   const oddsAnalysis = calculateMarketOddsAnalysis(match);
-  const valueAnalysis = calculateValueEdgeAnalysis({ homePct: homeProb, drawPct: drawProb, awayPct: awayProb }, oddsAnalysis, { home: HN, away: AN });
+  const valueAnalysis = hasCalculatedPrediction ? calculateValueEdgeAnalysis({ homePct: homeProb, drawPct: drawProb, awayPct: awayProb }, oddsAnalysis, { home: HN, away: AN }) : { hasValidComparison: false, bestEdgeOutcome: null, homeValue: null, drawValue: null, awayValue: null };
   const relatedMatches = await getRelatedMatchesForMatch(match, 6);
 
   const formattedDate = match.utc_date
@@ -347,93 +352,118 @@ export default async function MatchPredictionPage({ params }: PageProps) {
           🎯 Match Prediction &amp; Probability Breakdown
         </h2>
 
-        {/* Score Prediction, Primary Verdict & Confidence Level Banner */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '1rem',
-          marginBottom: '1.5rem',
-        }}>
-          <div style={{
-            background: 'rgba(34,197,94,0.08)',
-            border: '1px solid rgba(34,197,94,0.25)',
-            borderRadius: '12px',
-            padding: '1rem 1.2rem',
-            textAlign: 'center',
-          }}>
-            <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#86efac', textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-              Projected Final Score
-            </div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--text-primary)' }}>
-              {HN} {predictedHomeScore} – {predictedAwayScore} {AN}
-            </div>
-            <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
-              Statistical expectation from team attack and defence ratings
-            </div>
-          </div>
+        {hasCalculatedPrediction ? (
+          <>
+            {/* Score Prediction, Primary Verdict & Confidence Level Banner */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '1rem',
+              marginBottom: '1.5rem',
+            }}>
+              {predictedHomeScore != null && predictedAwayScore != null && (
+                <div style={{
+                  background: 'rgba(34,197,94,0.08)',
+                  border: '1px solid rgba(34,197,94,0.25)',
+                  borderRadius: '12px',
+                  padding: '1rem 1.2rem',
+                  textAlign: 'center',
+                }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#86efac', textTransform: 'uppercase', marginBottom: '0.3rem' }}>
+                    Projected Final Score
+                  </div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--text-primary)' }}>
+                    {HN} {predictedHomeScore} – {predictedAwayScore} {AN}
+                  </div>
+                  <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+                    Statistical expectation from team attack and defence ratings
+                  </div>
+                </div>
+              )}
 
-          <div style={{
-            background: 'rgba(56,189,248,0.08)',
-            border: '1px solid rgba(56,189,248,0.25)',
-            borderRadius: '12px',
-            padding: '1rem 1.2rem',
-            textAlign: 'center',
-          }}>
-            <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#7dd3fc', textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-              Primary Outcome Verdict
-            </div>
-            <div style={{ fontSize: '1.35rem', fontWeight: 900, color: '#38bdf8' }}>
-              {homeProb > awayProb && homeProb > drawProb
-                ? `${HN} Win or Draw Lean`
-                : awayProb > homeProb && awayProb > drawProb
-                ? `${AN} Win or Draw Lean`
-                : 'Close Contest / Draw Risk'}
-            </div>
-            <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
-              Model estimate based on form, Elo differential &amp; home strength
-            </div>
-          </div>
+              <div style={{
+                background: 'rgba(56,189,248,0.08)',
+                border: '1px solid rgba(56,189,248,0.25)',
+                borderRadius: '12px',
+                padding: '1rem 1.2rem',
+                textAlign: 'center',
+              }}>
+                <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#7dd3fc', textTransform: 'uppercase', marginBottom: '0.3rem' }}>
+                  Primary Outcome Verdict
+                </div>
+                <div style={{ fontSize: '1.35rem', fontWeight: 900, color: '#38bdf8' }}>
+                  {homeProb > awayProb && homeProb > drawProb
+                    ? `${HN} Win or Draw Lean`
+                    : awayProb > homeProb && awayProb > drawProb
+                    ? `${AN} Win or Draw Lean`
+                    : 'Close Contest / Draw Risk'}
+                </div>
+                <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+                  Model estimate based on form, Elo differential &amp; home strength
+                </div>
+              </div>
 
-          <div style={{
-            background: confidence.bgColor,
-            border: `1px solid ${confidence.borderColor}`,
-            borderRadius: '12px',
-            padding: '1rem 1.2rem',
-            textAlign: 'center',
-          }}>
-            <div style={{ fontSize: '0.78rem', fontWeight: 800, color: confidence.textColor, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-              Model Confidence
+              <div style={{
+                background: confidence.bgColor,
+                border: `1px solid ${confidence.borderColor}`,
+                borderRadius: '12px',
+                padding: '1rem 1.2rem',
+                textAlign: 'center',
+              }}>
+                <div style={{ fontSize: '0.78rem', fontWeight: 800, color: confidence.textColor, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
+                  Model Confidence
+                </div>
+                <div style={{ fontSize: '1.35rem', fontWeight: 900, color: confidence.badgeColor, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}>
+                  <span>🛡️</span> {confidence.badgeText}
+                </div>
+                <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+                  {confidence.explanation}
+                </div>
+              </div>
             </div>
-            <div style={{ fontSize: '1.35rem', fontWeight: 900, color: confidence.badgeColor, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}>
-              <span>🛡️</span> {confidence.badgeText}
-            </div>
-            <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
-              {confidence.explanation}
-            </div>
-          </div>
-        </div>
 
-        {/* Win Probability Breakdown */}
-        <div style={{ marginBottom: '1.5rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.6rem', fontSize: '0.88rem', fontWeight: 800 }}>
-            <span style={{ color: '#60a5fa' }}>{HN} Win ({homeProb}%)</span>
-            <span style={{ color: 'var(--text-muted)' }}>Draw ({drawProb}%)</span>
-            <span style={{ color: '#a78bfa' }}>{AN} Win ({awayProb}%)</span>
-          </div>
+            {/* Win Probability Breakdown */}
+            <div style={{ marginBottom: '1.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.6rem', fontSize: '0.88rem', fontWeight: 800 }}>
+                <span style={{ color: '#60a5fa' }}>{HN} Win ({homeProb}%)</span>
+                <span style={{ color: 'var(--text-muted)' }}>Draw ({drawProb}%)</span>
+                <span style={{ color: '#a78bfa' }}>{AN} Win ({awayProb}%)</span>
+              </div>
 
-          {/* Visual Percentage Distribution Bar */}
-          <div style={{
-            display: 'flex',
-            height: '14px',
-            borderRadius: '999px',
-            overflow: 'hidden',
-            background: 'rgba(255,255,255,0.06)',
-          }}>
-            <div style={{ width: `${homeProb}%`, background: 'linear-gradient(90deg, #3b82f6, #60a5fa)' }} title={`${HN} ${homeProb}%`} />
-            <div style={{ width: `${drawProb}%`, background: 'linear-gradient(90deg, #64748b, #94a3b8)' }} title={`Draw ${drawProb}%`} />
-            <div style={{ width: `${awayProb}%`, background: 'linear-gradient(90deg, #8b5cf6, #a78bfa)' }} title={`${AN} ${awayProb}%`} />
+              {/* Visual Percentage Distribution Bar */}
+              <div style={{
+                display: 'flex',
+                height: '14px',
+                borderRadius: '999px',
+                overflow: 'hidden',
+                background: 'rgba(255,255,255,0.06)',
+              }}>
+                <div style={{ width: `${homeProb}%`, background: 'linear-gradient(90deg, #3b82f6, #60a5fa)' }} title={`${HN} ${homeProb}%`} />
+                <div style={{ width: `${drawProb}%`, background: 'linear-gradient(90deg, #64748b, #94a3b8)' }} title={`Draw ${drawProb}%`} />
+                <div style={{ width: `${awayProb}%`, background: 'linear-gradient(90deg, #8b5cf6, #a78bfa)' }} title={`${AN} ${awayProb}%`} />
+              </div>
+            </div>
+          </>
+        ) : (
+          <div
+            style={{
+              background: 'rgba(59, 130, 246, 0.08)',
+              border: '1px solid rgba(59, 130, 246, 0.25)',
+              borderRadius: '12px',
+              padding: '1.5rem',
+              marginBottom: '1.5rem',
+              textAlign: 'center',
+            }}
+          >
+            <div style={{ fontSize: '1.6rem', marginBottom: '0.4rem' }}>⏳</div>
+            <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>
+              Pre-Match Probability Calculation In Progress
+            </div>
+            <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', maxWidth: '640px', margin: '0 auto', lineHeight: 1.55 }}>
+              Quantitative 1X2 win probabilities, Poisson scoreline distributions, and expected goals for this fixture will be computed once finalized team lineups, venue conditions, and rolling form inputs are processed prior to kickoff.
+            </p>
           </div>
-        </div>
+        )}
 
         {/* Data-Driven Prediction Explanation Engine */}
         <div style={{
@@ -512,8 +542,8 @@ export default async function MatchPredictionPage({ params }: PageProps) {
             <Link href="/articles/poisson-distribution-in-football-match-forecasting" style={{ color: '#60a5fa', textDecoration: 'underline' }}>
               Poisson Goal Simulation →
             </Link>
-            <Link href="/accuracy" style={{ color: '#60a5fa', textDecoration: 'underline' }}>
-              Accuracy Audit →
+            <Link href="/stats" style={{ color: '#60a5fa', textDecoration: 'underline' }}>
+              Model Performance Audit →
             </Link>
           </div>
         </div>

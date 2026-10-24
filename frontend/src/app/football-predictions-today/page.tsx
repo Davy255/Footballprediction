@@ -399,12 +399,18 @@ export default async function FootballPredictionsTodayPage() {
                       try { ai = JSON.parse(m.prediction_description); } catch {}
                     }
 
-                    const hp = m.ai_home_prob != null ? Math.round(m.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 45);
-                    const dp = m.ai_draw_prob != null ? Math.round(m.ai_draw_prob * 100) : (ai?.probs?.draw_pct ?? 27);
-                    const ap = m.ai_away_prob != null ? Math.round(m.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 28);
+                    const hasProbs = Boolean(
+                      (m.ai_home_prob != null && m.ai_away_prob != null) ||
+                      ai?.probs?.home_pct != null
+                    );
 
-                    const predHome = m.ai_predicted_home ?? ai?.score?.home ?? 1;
-                    const predAway = m.ai_predicted_away ?? ai?.score?.away ?? 1;
+                    const hp = m.ai_home_prob != null ? Math.round(m.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 0);
+                    const dp = m.ai_draw_prob != null ? Math.round(m.ai_draw_prob * 100) : (ai?.probs?.draw_pct ?? 0);
+                    const ap = m.ai_away_prob != null ? Math.round(m.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 0);
+
+                    const hasScore = m.ai_predicted_home != null || ai?.score?.home != null;
+                    const predHome = m.ai_predicted_home ?? ai?.score?.home;
+                    const predAway = m.ai_predicted_away ?? ai?.score?.away;
 
                     const isLive = ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME'].includes((m.status || '').toUpperCase());
                     const isFinished = (m.status || '').toUpperCase() === 'FINISHED';
@@ -500,24 +506,34 @@ export default async function FootballPredictionsTodayPage() {
                         </div>
 
                         {/* Prediction & Probabilities Box */}
-                        <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '0.6rem 0.8rem' }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.74rem', marginBottom: '0.35rem', fontWeight: 700 }}>
-                            <span style={{ color: '#60a5fa' }}>{HN} {hp}%</span>
-                            <span style={{ color: '#94a3b8' }}>Draw {dp}%</span>
-                            <span style={{ color: '#a78bfa' }}>{AN} {ap}%</span>
-                          </div>
+                        {hasProbs ? (
+                          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '0.6rem 0.8rem' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.74rem', marginBottom: '0.35rem', fontWeight: 700 }}>
+                              <span style={{ color: '#60a5fa' }}>{HN} {hp}%</span>
+                              <span style={{ color: '#94a3b8' }}>Draw {dp}%</span>
+                              <span style={{ color: '#a78bfa' }}>{AN} {ap}%</span>
+                            </div>
 
-                          {/* Percentage Bar */}
-                          <div style={{ display: 'flex', height: '6px', borderRadius: '999px', overflow: 'hidden', marginBottom: '0.4rem' }}>
-                            <div style={{ width: `${hp}%`, background: '#3b82f6' }} />
-                            <div style={{ width: `${dp}%`, background: '#64748b' }} />
-                            <div style={{ width: `${ap}%`, background: '#8b5cf6' }} />
-                          </div>
+                            {/* Percentage Bar */}
+                            <div style={{ display: 'flex', height: '6px', borderRadius: '999px', overflow: 'hidden', marginBottom: '0.4rem' }}>
+                              <div style={{ width: `${hp}%`, background: '#3b82f6' }} />
+                              <div style={{ width: `${dp}%`, background: '#64748b' }} />
+                              <div style={{ width: `${ap}%`, background: '#8b5cf6' }} />
+                            </div>
 
-                          <div style={{ fontSize: '0.76rem', color: '#4ade80', fontWeight: 800, textAlign: 'center' }}>
-                            Projected: {HN} {predHome} – {predAway} {AN}
+                            {hasScore && predHome != null && predAway != null && (
+                              <div style={{ fontSize: '0.76rem', color: '#4ade80', fontWeight: 800, textAlign: 'center' }}>
+                                Projected: {HN} {predHome} – {predAway} {AN}
+                              </div>
+                            )}
                           </div>
-                        </div>
+                        ) : (
+                          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '0.6rem 0.8rem', textAlign: 'center' }}>
+                            <div style={{ fontSize: '0.74rem', color: '#93c5fd', fontWeight: 700 }}>
+                              ⚙️ Pre-match calculation scheduled prior to kickoff
+                            </div>
+                          </div>
+                        )}
 
                         {/* Direct Match Page Link Button */}
                         <Link

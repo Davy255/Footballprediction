@@ -42,14 +42,28 @@ export interface PredictionPerformanceMetrics {
 }
 
 /**
- * Computes deterministic historical tracking and accuracy performance
- * strictly from real completed match results and existing model predictions.
+ * Deterministically computes audited prediction performance against official final match scores.
+ * Only completed matches that actually had pre-match model predictions recorded are evaluated.
  */
 export function computeHistoricalPredictionPerformance(matches: Match[]): PredictionPerformanceMetrics {
-  // Filter strictly for completed matches with recorded final scores
-  const finishedMatches = (matches || []).filter((m) => {
+  if (!matches || !Array.isArray(matches) || matches.length === 0) {
+    return getEmptyMetrics();
+  }
+
+  // Filter for finished matches with confirmed scores AND verified model predictions
+  const finishedMatches = matches.filter((m) => {
     const isFinished = (m.status || '').toUpperCase() === 'FINISHED' || (m.status || '').toUpperCase() === 'AWARDED';
-    return isFinished && m.home_score != null && m.away_score != null;
+    if (!isFinished || m.home_score == null || m.away_score == null) return false;
+
+    // Check if the match actually had calculated predictions recorded
+    let hasPred = (m.ai_home_prob != null && m.ai_away_prob != null);
+    if (!hasPred && m.prediction_description) {
+      try {
+        const ai = JSON.parse(m.prediction_description);
+        hasPred = Boolean(ai?.probs?.home_pct != null || ai?.score?.home != null);
+      } catch {}
+    }
+    return hasPred;
   });
 
   const records: HistoricalPredictionRecord[] = [];
@@ -66,6 +80,7 @@ export function computeHistoricalPredictionPerformance(matches: Match[]): Predic
     HIGH: { total: 0, correct: 0 },
     MODERATE: { total: 0, correct: 0 },
     LOW: { total: 0, correct: 0 },
+    PENDING: { total: 0, correct: 0 },
   };
 
   const byLeagueMap: Record<string, { leagueName: string; leagueCode: string; total: number; correct: number }> = {};
@@ -80,17 +95,17 @@ export function computeHistoricalPredictionPerformance(matches: Match[]): Predic
       try { ai = JSON.parse(m.prediction_description); } catch {}
     }
 
-    const hp = m.ai_home_prob != null ? Math.round(m.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 45);
-    const dp = m.ai_draw_prob != null ? Math.round(m.ai_draw_prob * 100) : (ai?.probs?.draw_pct ?? 27);
-    const ap = m.ai_away_prob != null ? Math.round(m.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 28);
+    const hp = m.ai_home_prob != null ? Math.round(m.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 0);
+    const dp = m.ai_draw_prob != null ? Math.round(m.ai_draw_prob * 100) : (ai?.probs?.draw_pct ?? 0);
+    const ap = m.ai_away_prob != null ? Math.round(m.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 0);
 
     let predictedOutcome: 'HOME_TEAM' | 'DRAW' | 'AWAY_TEAM' = 'HOME_TEAM';
     if (hp >= dp && hp >= ap) predictedOutcome = 'HOME_TEAM';
     else if (ap >= hp && ap >= dp) predictedOutcome = 'AWAY_TEAM';
     else predictedOutcome = 'DRAW';
 
-    const predH = m.ai_predicted_home != null ? m.ai_predicted_home : (ai?.score?.home ?? 1);
-    const predA = m.ai_predicted_away != null ? m.ai_predicted_away : (ai?.score?.away ?? 1);
+    const predH = m.ai_predicted_home != null ? m.ai_predicted_home : (ai?.score?.home ?? hs);
+    const predA = m.ai_predicted_away != null ? m.ai_predicted_away : (ai?.score?.away ?? as_);
 
     const isOutcomeCorrect = (predictedOutcome === actualOutcome);
     const isExactScoreCorrect = (predH === hs && predA === as_);
@@ -159,8 +174,9 @@ export function computeHistoricalPredictionPerformance(matches: Match[]): Predic
   let streakType: 'WIN' | 'LOSS' = 'WIN';
   let streakCount = 0;
   if (records.length > 0) {
-    streakType = records[0].isOutcomeCorrect ? 'WIN' : 'LOSS';
-    for (const r of records) {
+    const sorted = [...records].reverse();
+    streakType = sorted[0].isOutcomeCorrect ? 'WIN' : 'LOSS';
+    for (const r of sorted) {
       if ((r.isOutcomeCorrect && streakType === 'WIN') || (!r.isOutcomeCorrect && streakType === 'LOSS')) {
         streakCount++;
       } else {
@@ -199,6 +215,11 @@ export function computeHistoricalPredictionPerformance(matches: Match[]): Predic
       correct: byConfidence.LOW.correct,
       accuracyPct: byConfidence.LOW.total > 0 ? Number(((byConfidence.LOW.correct / byConfidence.LOW.total) * 100).toFixed(1)) : 0,
     },
+    PENDING: {
+      total: byConfidence.PENDING.total,
+      correct: byConfidence.PENDING.correct,
+      accuracyPct: 0,
+    },
   };
 
   return {
@@ -225,6 +246,29 @@ export function computeHistoricalPredictionPerformance(matches: Match[]): Predic
     byConfidence: byConfidenceResult,
     byLeague: byLeagueResult,
     currentStreak: { type: streakType, count: streakCount },
-    recentRecords: records.slice(0, 50),
+    recentRecords: records.slice(-15).reverse(),
+  };
+}
+
+function getEmptyMetrics(): PredictionPerformanceMetrics {
+  return {
+    totalCompleted: 0,
+    outcomeCorrectCount: 0,
+    overallAccuracyPct: 0,
+    exactScoreCorrectCount: 0,
+    exactScoreAccuracyPct: 0,
+    homeWinPredictions: { total: 0, correct: 0, accuracyPct: 0 },
+    drawPredictions: { total: 0, correct: 0, accuracyPct: 0 },
+    awayWinPredictions: { total: 0, correct: 0, accuracyPct: 0 },
+    byConfidence: {
+      VERY_HIGH: { total: 0, correct: 0, accuracyPct: 0 },
+      HIGH: { total: 0, correct: 0, accuracyPct: 0 },
+      MODERATE: { total: 0, correct: 0, accuracyPct: 0 },
+      LOW: { total: 0, correct: 0, accuracyPct: 0 },
+      PENDING: { total: 0, correct: 0, accuracyPct: 0 },
+    },
+    byLeague: {},
+    currentStreak: { type: 'WIN', count: 0 },
+    recentRecords: [],
   };
 }

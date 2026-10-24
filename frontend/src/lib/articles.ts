@@ -33,8 +33,8 @@ export const ARTICLES: Article[] = [
     publishedAt: '2026-08-15T09:00:00Z',
     updatedAt: '2026-10-23T16:00:00Z',
     author: {
-      name: 'FootballPredict Analytics Team',
-      role: 'Lead Quantitative Football Modeler',
+      name: 'FootballPredict Analytics Desk',
+      role: 'Vertex Digital Services Sports Research Group',
     },
     readingTimeMinutes: 10,
     relatedLeagueCodes: ['PL', 'CL', 'PD', 'SA', 'BL1'],
@@ -139,7 +139,7 @@ A common misconception among sports enthusiasts is interpreting a high probabili
 When viewing match predictions on our [Today's Football Predictions](/football-predictions-today) hub:
 - High probability forecasts (e.g., 65%+) still carry a 35% non-win risk.
 - Competitive matches (e.g., 42% vs 31%) reflect significant tactical equilibrium where draw probabilities often peak.
-- Model performance must be evaluated across multi-hundred match samples rather than individual fixture outcomes. Check our live [Prediction Performance Dashboard](/accuracy) to review verified historical tracking.
+- Model performance must be evaluated across multi-hundred match samples rather than individual fixture outcomes. Check our live [Prediction Performance Dashboard](/stats) to review verified historical tracking.
 
 ---
 
@@ -177,8 +177,8 @@ By removing emotional bias and applying rigorous statistical mechanics, we provi
     publishedAt: '2026-08-18T10:30:00Z',
     updatedAt: '2026-10-23T16:00:00Z',
     author: {
-      name: 'FootballPredict Analytics Team',
-      role: 'Senior Sports Data Scientist',
+      name: 'FootballPredict Analytics Desk',
+      role: 'Vertex Digital Services Sports Research Group',
     },
     readingTimeMinutes: 9,
     relatedLeagueCodes: ['PL'],
@@ -295,8 +295,8 @@ Explore upcoming Premier League fixtures and team venue splits directly on our [
     publishedAt: '2026-08-20T11:15:00Z',
     updatedAt: '2026-10-23T16:00:00Z',
     author: {
-      name: 'FootballPredict Analytics Team',
-      role: 'Quantitative Modeling Specialist',
+      name: 'FootballPredict Analytics Desk',
+      role: 'Vertex Digital Services Sports Research Group',
     },
     readingTimeMinutes: 11,
     relatedLeagueCodes: ['CL', 'PL', 'BL1', 'SA'],
@@ -411,8 +411,8 @@ Review our live match predictions and see these Poisson scoreline distributions 
     publishedAt: '2026-08-22T14:00:00Z',
     updatedAt: '2026-10-23T16:00:00Z',
     author: {
-      name: 'FootballPredict Analytics Team',
-      role: 'Quantitative Modeling Specialist',
+      name: 'FootballPredict Analytics Desk',
+      role: 'Vertex Digital Services Sports Research Group',
     },
     readingTimeMinutes: 8,
     relatedLeagueCodes: ['PL', 'PD', 'SA', 'CL'],
@@ -504,7 +504,7 @@ While market consensus reflects the collective wisdom of thousands of participan
 
 Understanding market overround enables sports data enthusiasts to evaluate probability claims scientifically. By normalizing commercial odds into true percentage distributions that sum to 100%, analysts can objectively benchmark statistical models against market consensus.
 
-Compare model probabilities and margin-normalized market statistics across all active fixtures on our [Individual Match Prediction Pages](/football-predictions-today) and evaluate our long-term verification track record on our [Prediction Performance Dashboard](/accuracy).
+Compare model probabilities and margin-normalized market statistics across all active fixtures on our [Individual Match Prediction Pages](/football-predictions-today) and evaluate our long-term verification track record on our [Prediction Performance Dashboard](/stats).
 
 ---
 

@@ -179,7 +179,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
             <Link href="/football-predictions-today" className="btn btn-primary btn-sm" style={{ fontWeight: 800 }}>
               Today&apos;s Predictions →
             </Link>
-            <Link href="/accuracy" className="btn btn-secondary btn-sm" style={{ fontWeight: 700 }}>
+            <Link href="/stats" className="btn btn-secondary btn-sm" style={{ fontWeight: 700 }}>
               Model Performance Audit →
             </Link>
           </div>

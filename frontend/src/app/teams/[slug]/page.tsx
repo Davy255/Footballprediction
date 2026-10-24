@@ -206,19 +206,27 @@ export default async function TeamPage({ params }: PageProps) {
           try { ai = JSON.parse(nextMatch.prediction_description); } catch {}
         }
 
+        const hasProbs = Boolean(
+          (nextMatch.ai_home_prob != null && nextMatch.ai_away_prob != null) ||
+          ai?.probs?.home_pct != null
+        );
+
         const teamProb = isHome
-          ? (nextMatch.ai_home_prob != null ? Math.round(nextMatch.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 45))
-          : (nextMatch.ai_away_prob != null ? Math.round(nextMatch.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 30));
+          ? (nextMatch.ai_home_prob != null ? Math.round(nextMatch.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 0))
+          : (nextMatch.ai_away_prob != null ? Math.round(nextMatch.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 0));
         
         const oppProb = isHome
-          ? (nextMatch.ai_away_prob != null ? Math.round(nextMatch.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 30))
-          : (nextMatch.ai_home_prob != null ? Math.round(nextMatch.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 45));
+          ? (nextMatch.ai_away_prob != null ? Math.round(nextMatch.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 0))
+          : (nextMatch.ai_home_prob != null ? Math.round(nextMatch.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 0));
 
-        const drawProb = nextMatch.ai_draw_prob != null ? Math.round(nextMatch.ai_draw_prob * 100) : (ai?.probs?.draw_pct ?? 25);
+        const drawProb = nextMatch.ai_draw_prob != null ? Math.round(nextMatch.ai_draw_prob * 100) : (ai?.probs?.draw_pct ?? 0);
 
-        const predHomeScore = nextMatch.ai_predicted_home ?? ai?.score?.home ?? 1;
-        const predAwayScore = nextMatch.ai_predicted_away ?? ai?.score?.away ?? 1;
-        const predScoreText = isHome ? `${predHomeScore} - ${predAwayScore}` : `${predAwayScore} - ${predHomeScore}`;
+        const hasScore = nextMatch.ai_predicted_home != null || ai?.score?.home != null;
+        const predHomeScore = nextMatch.ai_predicted_home ?? ai?.score?.home;
+        const predAwayScore = nextMatch.ai_predicted_away ?? ai?.score?.away;
+        const predScoreText = hasScore && predHomeScore != null && predAwayScore != null
+          ? (isHome ? `${predHomeScore} - ${predAwayScore}` : `${predAwayScore} - ${predHomeScore}`)
+          : 'Pending';
 
         const matchDate = nextMatch.utc_date
           ? new Date(nextMatch.utc_date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
@@ -268,23 +276,36 @@ export default async function TeamPage({ params }: PageProps) {
                 <div style={{ fontSize: '0.78rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 800, marginBottom: '0.2rem' }}>
                   {shortName} Win Probability
                 </div>
-                <div style={{ fontSize: '1.5rem', fontWeight: 900, color: '#38bdf8' }}>
-                  {teamProb}%
-                </div>
-                <div style={{ fontSize: '0.74rem', color: '#94a3b8' }}>
-                  Draw: {drawProb}% · {oppName}: {oppProb}%
-                </div>
+                {hasProbs ? (
+                  <>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 900, color: '#38bdf8' }}>
+                      {teamProb}%
+                    </div>
+                    <div style={{ fontSize: '0.74rem', color: '#94a3b8' }}>
+                      Draw: {drawProb}% · {oppName}: {oppProb}%
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#93c5fd' }}>
+                      Pending
+                    </div>
+                    <div style={{ fontSize: '0.74rem', color: '#64748b' }}>
+                      Calculated prior to kickoff
+                    </div>
+                  </>
+                )}
               </div>
 
               <div>
                 <div style={{ fontSize: '0.78rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 800, marginBottom: '0.2rem' }}>
                   Projected Score
                 </div>
-                <div style={{ fontSize: '1.5rem', fontWeight: 900, color: '#4ade80' }}>
+                <div style={{ fontSize: hasScore ? '1.5rem' : '1.2rem', fontWeight: 800, color: hasScore ? '#4ade80' : '#94a3b8' }}>
                   {predScoreText}
                 </div>
-                <div style={{ fontSize: '0.74rem', color: '#94a3b8' }}>
-                  Model forecast
+                <div style={{ fontSize: '0.74rem', color: '#64748b' }}>
+                  {hasScore ? 'Model forecast' : 'Pending lineups confirmation'}
                 </div>
               </div>
 

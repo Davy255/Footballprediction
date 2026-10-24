@@ -199,6 +199,86 @@ export default async function HomePage() {
                   ))}
                 </div>
               )}
+
+              {/* Quick Platform Navigation Hub for Real Discovery */}
+              <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', alignItems: 'center', paddingTop: '0.4rem', borderTop: '1px solid var(--border-color)', marginTop: '0.3rem' }}>
+                <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 700 }}>Platform Hubs:</span>
+                <Link
+                  href="/fixtures"
+                  style={{
+                    fontSize: '0.74rem',
+                    color: 'var(--text-secondary)',
+                    textDecoration: 'none',
+                    fontWeight: 700,
+                    padding: '0.2rem 0.55rem',
+                    borderRadius: '6px',
+                    background: 'var(--bg-elevated)',
+                    border: '1px solid var(--border-color)',
+                  }}
+                >
+                  📅 Fixtures Schedule
+                </Link>
+                <Link
+                  href="/live"
+                  style={{
+                    fontSize: '0.74rem',
+                    color: '#f87171',
+                    textDecoration: 'none',
+                    fontWeight: 700,
+                    padding: '0.2rem 0.55rem',
+                    borderRadius: '6px',
+                    background: 'rgba(239, 68, 68, 0.1)',
+                    border: '1px solid rgba(239, 68, 68, 0.25)',
+                  }}
+                >
+                  🔴 Live Scores
+                </Link>
+                <Link
+                  href="/stats"
+                  style={{
+                    fontSize: '0.74rem',
+                    color: 'var(--text-secondary)',
+                    textDecoration: 'none',
+                    fontWeight: 700,
+                    padding: '0.2rem 0.55rem',
+                    borderRadius: '6px',
+                    background: 'var(--bg-elevated)',
+                    border: '1px solid var(--border-color)',
+                  }}
+                >
+                  📊 Model Accuracy
+                </Link>
+                <Link
+                  href="/articles"
+                  style={{
+                    fontSize: '0.74rem',
+                    color: 'var(--text-secondary)',
+                    textDecoration: 'none',
+                    fontWeight: 700,
+                    padding: '0.2rem 0.55rem',
+                    borderRadius: '6px',
+                    background: 'var(--bg-elevated)',
+                    border: '1px solid var(--border-color)',
+                  }}
+                >
+                  📚 Research Articles
+                </Link>
+                <Link
+                  href="/leagues"
+                  style={{
+                    fontSize: '0.74rem',
+                    color: 'var(--text-secondary)',
+                    textDecoration: 'none',
+                    fontWeight: 700,
+                    padding: '0.2rem 0.55rem',
+                    borderRadius: '6px',
+                    background: 'var(--bg-elevated)',
+                    border: '1px solid var(--border-color)',
+                  }}
+                >
+                  🏆 All Leagues
+                </Link>
+              </div>
             </header>
           </div>
 

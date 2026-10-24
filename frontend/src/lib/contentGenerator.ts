@@ -14,6 +14,7 @@ export interface MatchAnalysisContent {
   marketsAnalysis: string;
   probabilityContext: string;
   disclaimer: string;
+  hasCalculatedPrediction: boolean;
 }
 
 export function generateMatchAnalysisText(match: Match): MatchAnalysisContent {
@@ -26,12 +27,32 @@ export function generateMatchAnalysisText(match: Match): MatchAnalysisContent {
     try { ai = JSON.parse(match.prediction_description); } catch {}
   }
 
-  const hp = match.ai_home_prob != null ? Math.round(match.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 45);
-  const dp = match.ai_draw_prob != null ? Math.round(match.ai_draw_prob * 100) : (ai?.probs?.draw_pct ?? 27);
-  const ap = match.ai_away_prob != null ? Math.round(match.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 28);
+  const hasCalculatedPrediction = Boolean(
+    (match.ai_home_prob != null && match.ai_away_prob != null) ||
+    ai?.probs?.home_pct != null
+  );
 
-  const predHome = match.ai_predicted_home ?? ai?.score?.home ?? 1;
-  const predAway = match.ai_predicted_away ?? ai?.score?.away ?? 1;
+  const disclaimer = 'FootballPredict provides statistical forecasts derived from historical team ratings and performance metrics. Model outputs are educational probability estimates and are not guaranteed match results.';
+
+  // If predictions have not been computed for this match yet
+  if (!hasCalculatedPrediction) {
+    return {
+      mainAnalysis: `FootballPredict is tracking ${HN} vs ${AN} in ${comp}. Pre-match quantitative win probabilities, projected scorelines, and tactical distributions will be calculated once official team sheets, starting lineups, and rolling form adjustments are processed prior to kickoff.`,
+      formAnalysis: `Pre-match analysis evaluates home venue dynamics for ${HN}, travel splits for ${AN}, and recent league standings in ${comp}. Full tactical indicators update as the fixture approaches.`,
+      marketsAnalysis: `Poisson goal distribution projections (Over/Under 2.5 and BTTS) will be computed from the 7x7 scoreline matrix once pre-match team metrics are finalized.`,
+      probabilityContext: `Our predictive models compute calibrated probabilities only when sufficient data is available. Speculative estimates are withheld to ensure accuracy and statistical integrity.`,
+      disclaimer,
+      hasCalculatedPrediction: false,
+    };
+  }
+
+  const hp = match.ai_home_prob != null ? Math.round(match.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 0);
+  const dp = match.ai_draw_prob != null ? Math.round(match.ai_draw_prob * 100) : (ai?.probs?.draw_pct ?? 0);
+  const ap = match.ai_away_prob != null ? Math.round(match.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 0);
+
+  const hasProjectedScore = match.ai_predicted_home != null || ai?.score?.home != null;
+  const predHome = match.ai_predicted_home ?? ai?.score?.home;
+  const predAway = match.ai_predicted_away ?? ai?.score?.away;
 
   // 1. Main Match Analysis Narrative based on confidence tier
   let favTeam = HN;
@@ -46,35 +67,41 @@ export function generateMatchAnalysisText(match: Match): MatchAnalysisContent {
     underdogPct = hp;
   }
 
+  const scorelineText = hasProjectedScore
+    ? `projects a most likely final scoreline of ${HN} ${predHome} – ${predAway} ${AN}`
+    : `points toward a competitive goal expectancy in ${comp}`;
+
   let mainAnalysis = '';
   if (favPct >= 65) {
-    mainAnalysis = `FootballPredict's statistical model establishes ${favTeam} as a strong statistical favorite with an estimated pre-match win probability of ${favPct}%, compared with ${dp}% for a draw and ${underdogPct}% for ${underdogTeam}. Based on rolling attack ratings and defensive resilience in ${comp}, the engine projects a most likely final scoreline of ${HN} ${predHome} – ${predAway} ${AN}.`;
+    mainAnalysis = `FootballPredict's statistical model establishes ${favTeam} as a strong statistical favorite with an estimated pre-match win probability of ${favPct}%, compared with ${dp}% for a draw and ${underdogPct}% for ${underdogTeam}. Based on rolling attack ratings and defensive resilience in ${comp}, the engine ${scorelineText}.`;
   } else if (favPct >= 55) {
-    mainAnalysis = `FootballPredict's quantitative model projects a favorable edge for ${favTeam} at ${favPct}%, with ${dp}% allocated to a draw and ${underdogPct}% to ${underdogTeam}. Attack and defense calibrations in ${comp} generate a projected scoreline of ${HN} ${predHome} – ${predAway} ${AN}.`;
+    mainAnalysis = `FootballPredict's quantitative model projects a favorable edge for ${favTeam} at ${favPct}%, with ${dp}% allocated to a draw and ${underdogPct}% to ${underdogTeam}. Attack and defense calibrations in ${comp} ${scorelineText}.`;
   } else if (Math.abs(hp - ap) <= 5) {
-    mainAnalysis = `The statistical model projects a closely contested encounter between ${HN} (${hp}%) and ${AN} (${ap}%), with the draw probability standing at ${dp}%. The projected scoreline of ${HN} ${predHome} – ${predAway} ${AN} highlights tactical balance between both squads in ${comp}.`;
+    mainAnalysis = `The statistical model projects a closely contested encounter between ${HN} (${hp}%) and ${AN} (${ap}%), with the draw probability standing at ${dp}%. The analysis ${scorelineText}, highlighting tactical balance between both squads in ${comp}.`;
   } else {
-    mainAnalysis = `FootballPredict identifies a moderate directional lean toward ${favTeam} at ${favPct}%, with a draw evaluated at ${dp}% and ${underdogTeam} at ${underdogPct}%. The projected scoreline of ${HN} ${predHome} – ${predAway} ${AN} captures the underlying goal expectancy for this fixture.`;
+    mainAnalysis = `FootballPredict identifies a moderate directional lean toward ${favTeam} at ${favPct}%, with a draw evaluated at ${dp}% and ${underdogTeam} at ${underdogPct}%. The model ${scorelineText} capturing the underlying performance metrics for this fixture.`;
   }
 
   // 2. Form & Tactical Context
-  let formAnalysis = `Pre-match indicators incorporate home venue performance for ${HN}, travel splits for ${AN}, and rolling goal efficiency across the recent competitive campaign. Detailed tactical block setups and official player lineups are incorporated as team sheets are confirmed prior to kickoff.`;
+  let formAnalysis = `Pre-match indicators incorporate home venue performance for ${HN}, travel splits for ${AN}, and rolling goal efficiency across the recent competitive campaign in ${comp}. Detailed tactical block setups and official player lineups are incorporated as team sheets are confirmed prior to kickoff.`;
   if (ai?.analytics && typeof ai.analytics === 'string' && ai.analytics.trim().length > 15) {
     formAnalysis = ai.analytics;
   }
 
   // 3. Key Markets Analysis
-  const totalPredGoals = predHome + predAway;
-  const isOver25 = totalPredGoals >= 3;
-  const isBtts = predHome > 0 && predAway > 0;
-
-  const marketsAnalysis = `Goal expectation for this fixture stands at ${totalPredGoals} projected goals (${isOver25 ? 'lean toward Over 2.5' : 'lean toward Under 2.5'}). Both teams to score (BTTS) is projected as ${isBtts ? 'Yes' : 'No'} derived from joint bivariate Poisson goal distributions across the 7x7 score matrix.`;
+  let marketsAnalysis = '';
+  if (hasProjectedScore && predHome != null && predAway != null) {
+    const totalPredGoals = predHome + predAway;
+    const isOver25 = totalPredGoals >= 3;
+    const isBtts = predHome > 0 && predAway > 0;
+    marketsAnalysis = `Goal expectation for this fixture stands at ${totalPredGoals} projected goals (${isOver25 ? 'lean toward Over 2.5' : 'lean toward Under 2.5'}). Both teams to score (BTTS) is projected as ${isBtts ? 'Yes' : 'No'} derived from joint bivariate Poisson goal distributions across the 7x7 score matrix.`;
+  } else {
+    marketsAnalysis = `Goal expectation and multi-market distributions (Over/Under 2.5 and BTTS) are derived from joint bivariate Poisson distributions across the 7x7 scoreline matrix.`;
+  }
 
   // 4. Probability Interpretation Context
   const nonFavoredPct = 100 - favPct;
   const probabilityContext = `A ${favPct}% model estimate reflects a statistical edge across comparable historical matches, but it inherently implies a ${nonFavoredPct}% likelihood of points being dropped through a draw or upset. Models evaluate underlying averages and cannot anticipate unexpected in-match events such as early dismissals, penalty decisions, or sudden injuries.`;
-
-  const disclaimer = 'FootballPredict provides statistical forecasts derived from historical team ratings and performance metrics. Model outputs are educational probability estimates and are not guaranteed match results.';
 
   return {
     mainAnalysis,
@@ -82,6 +109,7 @@ export function generateMatchAnalysisText(match: Match): MatchAnalysisContent {
     marketsAnalysis,
     probabilityContext,
     disclaimer,
+    hasCalculatedPrediction: true,
   };
 }
 
@@ -132,7 +160,7 @@ export function generateLeagueOverviewText(
   const LN = league.name;
   const country = league.country || 'Global';
 
-  const overviewText = `${LN} is one of the world's premier football competitions representing ${country}. FootballPredict tracks comprehensive match schedules, real-time standings, win probabilities, and tactical forecasts for all ${teamsCount} participating clubs in the current dataset.`;
+  const overviewText = `${LN} is one of the premier football competitions representing ${country}. FootballPredict tracks comprehensive match schedules, real-time standings, win probabilities, and tactical forecasts for participating clubs in the current dataset.`;
 
   let standingsSummary = `The competition table tracks team positions, points, goal differences, and head-to-head performance across the active season.`;
   if (standings && standings.length >= 2) {
@@ -143,10 +171,12 @@ export function generateLeagueOverviewText(
     const leaderGD = leader.goalDifference > 0 ? `+${leader.goalDifference}` : `${leader.goalDifference}`;
 
     standingsSummary = `In the current standings table, ${leaderTeam} occupy 1st place with ${leader.points} points from ${leader.playedGames} matches (${leader.won} wins, GD of ${leaderGD}), followed closely by ${secondTeam} with ${second.points} points.`;
+  } else if (!standings || standings.length === 0) {
+    standingsSummary = `Official single league table standings are not applicable for this tournament format (knockout/cup) or active stage. Match fixtures and statistical predictions are updated per round.`;
   }
 
   const fixturesSummary = upcomingCount > 0
-    ? `The upcoming round features ${upcomingCount} scheduled fixtures with pre-match AI win probabilities, form indicators, and projected scorelines.`
+    ? `The upcoming schedule features ${upcomingCount} scheduled fixtures with pre-match AI win probabilities, form indicators, and projected scorelines.`
     : `Upcoming fixtures and match probabilities update continuously for upcoming matchdays.`;
 
   return {
@@ -171,26 +201,31 @@ export function generateTodayPredictionsSummary(matches: Match[], dateFormatted:
     };
   }
 
-  // Find the single highest probability among today's matches
+  // Find the single highest probability among today's matches with real calculated data
   let maxProb = 0;
   let topMatch: Match | null = null;
   let topFavTeam = '';
   let topOppTeam = '';
 
   for (const m of matches) {
-    const hp = m.ai_home_prob ? Math.round(m.ai_home_prob * 100) : 0;
-    const ap = m.ai_away_prob ? Math.round(m.ai_away_prob * 100) : 0;
+    let ai: any = null;
+    if (m.prediction_description) {
+      try { ai = JSON.parse(m.prediction_description); } catch {}
+    }
+
+    const hp = m.ai_home_prob != null ? Math.round(m.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 0);
+    const ap = m.ai_away_prob != null ? Math.round(m.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 0);
 
     const HN = m.home_team?.short_name || m.home_team?.name || 'Home';
     const AN = m.away_team?.short_name || m.away_team?.name || 'Away';
 
-    if (hp > maxProb) {
+    if (hp > maxProb && hp > 0) {
       maxProb = hp;
       topMatch = m;
       topFavTeam = HN;
       topOppTeam = AN;
     }
-    if (ap > maxProb) {
+    if (ap > maxProb && ap > 0) {
       maxProb = ap;
       topMatch = m;
       topFavTeam = AN;
@@ -234,18 +269,50 @@ export interface PredictionExplanationSummary {
 export function generatePredictionFactors(match: Match): PredictionExplanationSummary {
   const HN = match.home_team?.short_name || match.home_team?.name || 'Home Team';
   const AN = match.away_team?.short_name || match.away_team?.name || 'Away Team';
+  const comp = match.league?.name || 'competition';
 
   let ai: any = null;
   if (match.prediction_description) {
     try { ai = JSON.parse(match.prediction_description); } catch {}
   }
 
-  const hp = match.ai_home_prob != null ? Math.round(match.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 45);
-  const dp = match.ai_draw_prob != null ? Math.round(match.ai_draw_prob * 100) : (ai?.probs?.draw_pct ?? 27);
-  const ap = match.ai_away_prob != null ? Math.round(match.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 28);
+  const hasCalculatedPrediction = Boolean(
+    (match.ai_home_prob != null && match.ai_away_prob != null) ||
+    ai?.probs?.home_pct != null
+  );
 
-  const predHome = match.ai_predicted_home ?? ai?.score?.home ?? 1;
-  const predAway = match.ai_predicted_away ?? ai?.score?.away ?? 1;
+  // If no prediction yet, explain the pending fixture state honestly
+  if (!hasCalculatedPrediction) {
+    return {
+      favoredTeam: 'Evaluation Pending',
+      verdictSummary: `Pre-match model calculations for ${HN} vs ${AN} in ${comp} are scheduled to run prior to kickoff.`,
+      factors: [
+        {
+          id: 'fixture-scheduled',
+          icon: '📅',
+          title: `Scheduled Fixture in ${comp}`,
+          description: `Match between ${HN} and ${AN} is scheduled. Pre-match variables, venue conditions, and official team sheets will be ingested prior to kickoff.`,
+          category: 'VENUE',
+          favors: 'NEUTRAL',
+        },
+        {
+          id: 'model-queued',
+          icon: '⚙️',
+          title: 'Algorithmic Calibration Pending',
+          description: 'Poisson goal expectancy distributions and calibrated 1X2 probabilities update automatically as team data is finalized.',
+          category: 'MARKET',
+          favors: 'NEUTRAL',
+        },
+      ],
+    };
+  }
+
+  const hp = match.ai_home_prob != null ? Math.round(match.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 0);
+  const dp = match.ai_draw_prob != null ? Math.round(match.ai_draw_prob * 100) : (ai?.probs?.draw_pct ?? 0);
+  const ap = match.ai_away_prob != null ? Math.round(match.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 0);
+
+  const predHome = match.ai_predicted_home ?? ai?.score?.home;
+  const predAway = match.ai_predicted_away ?? ai?.score?.away;
 
   const homeElo = match.home_team?.elo_rating ?? 1500;
   const awayElo = match.away_team?.elo_rating ?? 1500;
@@ -289,55 +356,57 @@ export function generatePredictionFactors(match: Match): PredictionExplanationSu
   }
 
   // 3. Projected Attack Rate & Scoreline Expectation
-  if (predHome > predAway) {
-    factors.push({
-      id: 'attack-edge-home',
-      icon: '🎯',
-      title: `Higher Projected Scoring Efficiency for ${HN}`,
-      description: `Tactical model projects ${HN} to generate ${predHome} goal${predHome === 1 ? '' : 's'} vs ${predAway} for ${AN} based on recent chance creation and conversion rates.`,
-      category: 'ATTACK',
-      favors: 'HOME_TEAM',
-    });
-  } else if (predAway > predHome) {
-    factors.push({
-      id: 'attack-edge-away',
-      icon: '🎯',
-      title: `Higher Projected Scoring Efficiency for ${AN}`,
-      description: `Tactical model projects ${AN} to generate ${predAway} goal${predAway === 1 ? '' : 's'} vs ${predHome} for ${HN} based on offensive output metrics.`,
-      category: 'ATTACK',
-      favors: 'AWAY_TEAM',
-    });
-  } else {
-    factors.push({
-      id: 'attack-even',
-      icon: '🎯',
-      title: 'Balanced Attacking Expectations',
-      description: `Model forecasts balanced offensive output (${predHome}–${predAway}) with scoring opportunities evenly distributed across both sides.`,
-      category: 'ATTACK',
-      favors: 'DRAW',
-    });
-  }
+  if (predHome != null && predAway != null) {
+    if (predHome > predAway) {
+      factors.push({
+        id: 'attack-edge-home',
+        icon: '🎯',
+        title: `Higher Projected Scoring Efficiency for ${HN}`,
+        description: `Tactical model projects ${HN} to generate ${predHome} goal${predHome === 1 ? '' : 's'} vs ${predAway} for ${AN} based on chance creation and conversion rates.`,
+        category: 'ATTACK',
+        favors: 'HOME_TEAM',
+      });
+    } else if (predAway > predHome) {
+      factors.push({
+        id: 'attack-edge-away',
+        icon: '🎯',
+        title: `Higher Projected Scoring Efficiency for ${AN}`,
+        description: `Tactical model projects ${AN} to generate ${predAway} goal${predAway === 1 ? '' : 's'} vs ${predHome} for ${HN} based on offensive output metrics.`,
+        category: 'ATTACK',
+        favors: 'AWAY_TEAM',
+      });
+    } else {
+      factors.push({
+        id: 'attack-even',
+        icon: '🎯',
+        title: 'Balanced Attacking Expectations',
+        description: `Model forecasts balanced offensive output (${predHome}–${predAway}) with scoring opportunities evenly distributed across both sides.`,
+        category: 'ATTACK',
+        favors: 'DRAW',
+      });
+    }
 
-  // 4. Over/Under & Goal Distribution Market Factor
-  const totalGoals = predHome + predAway;
-  if (totalGoals >= 3) {
-    factors.push({
-      id: 'market-over25',
-      icon: '🔥',
-      title: 'High-Tempo Goal Expectation (Over 2.5 Lean)',
-      description: `Combined projected goals of ${totalGoals} indicates an open encounter with frequent attacking transitions.`,
-      category: 'MARKET',
-      favors: 'NEUTRAL',
-    });
-  } else {
-    factors.push({
-      id: 'market-under25',
-      icon: '🛡️',
-      title: 'Controlled Goal Expectation (Under 2.5 Lean)',
-      description: `Projected total of ${totalGoals} goal${totalGoals === 1 ? '' : 's'} indicates a compact, defensively disciplined encounter.`,
-      category: 'MARKET',
-      favors: 'NEUTRAL',
-    });
+    // 4. Over/Under & Goal Distribution Market Factor
+    const totalGoals = predHome + predAway;
+    if (totalGoals >= 3) {
+      factors.push({
+        id: 'market-over25',
+        icon: '🔥',
+        title: 'High-Tempo Goal Expectation (Over 2.5 Lean)',
+        description: `Combined projected goals of ${totalGoals} indicates an open encounter with frequent attacking transitions.`,
+        category: 'MARKET',
+        favors: 'NEUTRAL',
+      });
+    } else {
+      factors.push({
+        id: 'market-under25',
+        icon: '🛡️',
+        title: 'Controlled Goal Expectation (Under 2.5 Lean)',
+        description: `Projected total of ${totalGoals} goal${totalGoals === 1 ? '' : 's'} indicates a compact, defensively disciplined encounter.`,
+        category: 'MARKET',
+        favors: 'NEUTRAL',
+      });
+    }
   }
 
   // 5. Draw Probability / Stalemate Risk

@@ -1,6 +1,6 @@
 import { Match } from './types';
 
-export type ConfidenceLevel = 'VERY_HIGH' | 'HIGH' | 'MODERATE' | 'LOW';
+export type ConfidenceLevel = 'VERY_HIGH' | 'HIGH' | 'MODERATE' | 'LOW' | 'PENDING';
 
 export interface ConfidenceDetails {
   level: ConfidenceLevel;
@@ -23,6 +23,7 @@ export interface ConfidenceDetails {
  * - 55% - 64%: High Confidence (Clear favourite)
  * - 45% - 54%: Moderate Confidence (Slight statistical edge)
  * - < 45%: Low Margin / Balanced (Close contest / high draw risk)
+ * - 0% / missing: Pending Calculation (Pre-match data pending)
  *
  * NOTE: Confidence indicates model probability conviction and is distinct from guaranteed outcomes.
  */
@@ -42,11 +43,20 @@ export function getMatchConfidence(match: Match): ConfidenceDetails {
     } catch {}
   }
 
-  // Fallback if probability fields are null
+  // If probability fields are truly missing/uncomputed
   if (homePct === 0 && drawPct === 0 && awayPct === 0) {
-    homePct = 45;
-    drawPct = 27;
-    awayPct = 28;
+    return {
+      level: 'PENDING',
+      label: 'Pending Calculation',
+      badgeText: 'PENDING',
+      highestProbPct: 0,
+      favoredOutcome: 'EVEN',
+      badgeColor: '#94a3b8',
+      textColor: '#cbd5e1',
+      bgColor: 'rgba(148, 163, 184, 0.12)',
+      borderColor: 'rgba(148, 163, 184, 0.25)',
+      explanation: 'Statistical probabilities will be computed prior to kickoff once pre-match variables are confirmed.',
+    };
   }
 
   const maxProb = Math.max(homePct, drawPct, awayPct);
