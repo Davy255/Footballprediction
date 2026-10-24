@@ -1,8 +1,12 @@
 import React from 'react';
 import { siteConfig } from '@/config/site';
 
-export default function JsonLd() {
-  const schema = {
+interface JsonLdProps {
+  data?: Record<string, any>;
+}
+
+export default function JsonLd({ data }: JsonLdProps = {}) {
+  const schema = data || {
     '@context': 'https://schema.org',
     '@graph': [
       {

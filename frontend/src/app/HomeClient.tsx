@@ -514,9 +514,6 @@ export default function HomeClient({ initialMatches = [], initialLeagues = [] }:
         </div>
       </div>
 
-      {/* Top Banner Ad Placement */}
-      <AdBanner slot="hero-top" />
-
       {/* Matches Display Section */}
       <div style={{ marginTop: '0.85rem' }}>
         {loading && allMatches.length === 0 ? (
@@ -678,11 +675,8 @@ export default function HomeClient({ initialMatches = [], initialLeagues = [] }:
         )}
       </div>
 
-      {/* Bottom Merch & Sports Gear Ad Placement */}
-      <AdBanner slot="merch-sports" />
-
-      {/* Leaderboard Rewards Ad Placement */}
-      <AdBanner slot="leaderboard-footer" />
+      {/* Responsive Content Ad Placement (Between Matches & Analytics Guide) */}
+      <AdBanner slot="home-content-mid" />
 
       {/* Informational Cards & Platform Guide */}
       <section

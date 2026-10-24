@@ -148,18 +148,19 @@ export default async function ArticleDetailPage({ params }: PageProps) {
           </div>
         </div>
 
-        <AdBanner slot="hero-top" />
-
         {/* Article Body */}
         <article
           style={{
             color: '#e2e8f0',
             fontSize: '0.96rem',
             lineHeight: 1.8,
-            marginBottom: '3rem',
+            marginBottom: '2rem',
           }}
           dangerouslySetInnerHTML={{ __html: renderedContent }}
         />
+
+        {/* Responsive Content Ad Placement (Below Editorial Article Body) */}
+        <AdBanner slot="article-content-bottom" />
 
         {/* Related Football Predictions Gateway */}
         <div style={{

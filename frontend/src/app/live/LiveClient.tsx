@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { Match } from '@/lib/types';
+import AdBanner from '@/components/AdBanner';
 import { fetchLiveMatches } from '@/lib/api';
 import LeagueAccordionSection from '@/components/LeagueAccordionSection';
 
@@ -353,6 +354,9 @@ export default function LiveClient({ initialMatches = [] }: LiveClientProps) {
           </div>
         )}
       </div>
+
+      {/* Responsive Content Ad Placement (Below Live Content, Above Footer) */}
+      <AdBanner slot="live-scores-bottom" />
 
       {/* Exploration Footer */}
       <footer

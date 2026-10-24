@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import ProbabilityBar from '@/components/ProbabilityBar';
+import AdBanner from '@/components/AdBanner';
 import { getTeamDataBySlug, getMatchPredictionUrl, slugifyTeamName, getLeagueUrl } from '@/lib/slugs';
 import { siteConfig, getCanonicalUrl } from '@/config/site';
 import { generateTeamOverviewText } from '@/lib/contentGenerator';
@@ -447,6 +448,9 @@ export default async function TeamPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      {/* Responsive Content Ad Placement (Between Team Performance & Form) */}
+      <AdBanner slot="team-content-mid" />
 
       {/* Recent Match Form */}
       <section style={{

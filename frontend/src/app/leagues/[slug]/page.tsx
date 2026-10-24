@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { getLeagueDataBySlug, getMatchPredictionUrl, getTeamUrl } from '@/lib/slugs';
 import { siteConfig, getCanonicalUrl } from '@/config/site';
 import { generateLeagueOverviewText } from '@/lib/contentGenerator';
+import AdBanner from '@/components/AdBanner';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -339,6 +340,9 @@ export default async function LeaguePage({ params }: PageProps) {
           </div>
         )}
       </section>
+
+      {/* Responsive Content Ad Placement (Between Predictions & Standings) */}
+      <AdBanner slot="league-content-mid" />
 
       {/* Standings Table Section */}
       {standings.length > 0 && (

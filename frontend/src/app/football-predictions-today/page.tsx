@@ -3,6 +3,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import ProbabilityBar from '@/components/ProbabilityBar';
+import AdBanner from '@/components/AdBanner';
 import { fetchMatchesFeed } from '@/lib/api';
 import { getMatchSlug, getMatchPredictionUrl, getTeamUrl, getLeagueUrl } from '@/lib/slugs';
 import { siteConfig, getCanonicalUrl } from '@/config/site';
@@ -339,13 +340,13 @@ export default async function FootballPredictionsTodayPage() {
       {/* Main Grouped Matches Section */}
       {totalCount > 0 ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
-          {Object.entries(leagueGroups).map(([code, group]) => {
+          {Object.entries(leagueGroups).map(([code, group], groupIndex) => {
             const league = group.league;
             const leagueUrl = getLeagueUrl(league.name, league.code);
 
             return (
+              <React.Fragment key={code}>
               <section
-                key={code}
                 style={{
                   background: 'var(--bg-card)',
                   border: '1px solid var(--border-color)',
@@ -569,8 +570,10 @@ export default async function FootballPredictionsTodayPage() {
                   })}
                 </div>
               </section>
-            );
-          })}
+              {groupIndex === 0 && <AdBanner slot="today-predictions-mid" />}
+            </React.Fragment>
+          );
+        })}
         </div>
       ) : (
         <div style={{

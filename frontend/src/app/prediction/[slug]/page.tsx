@@ -8,6 +8,7 @@ import { generateMatchAnalysisText, generatePredictionFactors } from '@/lib/cont
 import { getRelatedMatchesForMatch } from '@/lib/relatedMatches';
 import MatchCard from '@/components/MatchCard';
 import ProbabilityBar from '@/components/ProbabilityBar';
+import AdBanner from '@/components/AdBanner';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getMatchConfidence } from '@/lib/confidence';
 import { calculateMarketOddsAnalysis, calculateValueEdgeAnalysis } from '@/lib/odds';
@@ -552,6 +553,9 @@ export default async function MatchPredictionPage({ params }: PageProps) {
           ⚠️ {analysisContent.disclaimer}
         </div>
       </section>
+
+      {/* Responsive Content Ad Placement (After Primary Prediction Analysis) */}
+      <AdBanner slot="prediction-mid" />
 
       {/* Advanced Multi-Market Analytics Section */}
       <section style={{

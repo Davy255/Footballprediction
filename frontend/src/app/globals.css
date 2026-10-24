@@ -2917,6 +2917,19 @@ textarea:focus-visible,
   text-align: center;
   min-height: 90px;
   overflow: hidden;
+  clear: both;
+}
+
+.ad-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: center;
+  margin-bottom: 0.35rem;
+  user-select: none;
 }
 
 .ad-placeholder-frame {
