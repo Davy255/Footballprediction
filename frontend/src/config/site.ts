@@ -153,5 +153,8 @@ export function constructMetadata({
       shortcut: ['/icon.svg'],
     },
     manifest: '/manifest.json',
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'ka2BdzrohHlAaHxo4gC4rdanbBGzGvRkl42FGzx12U4',
+    },
   };
 }
