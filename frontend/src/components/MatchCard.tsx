@@ -9,6 +9,7 @@ import { getMatchPredictionUrl, getTeamUrl, getLeagueUrl } from '@/lib/slugs';
 import { getMatchConfidence } from '@/lib/confidence';
 import dynamic from 'next/dynamic';
 import type { LineupData } from './TacticalPitch';
+import ProbabilityBar from './ProbabilityBar';
 
 const TacticalPitch = dynamic(() => import('./TacticalPitch'), {
   ssr: false,
@@ -838,15 +839,40 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
     ? ai.whoscored.referee
     : venueFallback.referee;
 
-  const probs = ai?.probs || {
-    home_pct: Math.round((match.ai_home_prob ?? 0.45) * 100),
-    draw_pct: Math.round((match.ai_draw_prob ?? 0.27) * 100),
-    away_pct: Math.round((match.ai_away_prob ?? 0.28) * 100),
+  const hasRealProbs = Boolean(
+    (match.ai_home_prob != null && match.ai_away_prob != null) ||
+    ai?.probs?.home_pct != null
+  );
+
+  const homeProbPct = match.ai_home_prob != null
+    ? Math.round(match.ai_home_prob * 100)
+    : (ai?.probs?.home_pct != null ? Math.round(ai.probs.home_pct) : null);
+
+  const drawProbPct = match.ai_draw_prob != null
+    ? Math.round(match.ai_draw_prob * 100)
+    : (ai?.probs?.draw_pct != null ? Math.round(ai.probs.draw_pct) : null);
+
+  const awayProbPct = match.ai_away_prob != null
+    ? Math.round(match.ai_away_prob * 100)
+    : (ai?.probs?.away_pct != null ? Math.round(ai.probs.away_pct) : null);
+
+  const hasRealScore = Boolean(
+    (match.ai_predicted_home != null && match.ai_predicted_away != null) ||
+    (ai?.score?.home != null && ai?.score?.away != null)
+  );
+
+  const predHomeScore = match.ai_predicted_home ?? ai?.score?.home ?? null;
+  const predAwayScore = match.ai_predicted_away ?? ai?.score?.away ?? null;
+
+  const probs = {
+    home_pct: homeProbPct ?? 0,
+    draw_pct: drawProbPct ?? 0,
+    away_pct: awayProbPct ?? 0,
   };
 
-  const score = ai?.score || {
-    home: match.ai_predicted_home ?? 1,
-    away: match.ai_predicted_away ?? 1,
+  const score = {
+    home: predHomeScore ?? 0,
+    away: predAwayScore ?? 0,
   };
 
   const dynamicForecast = getEffectiveMatchForecast(
@@ -1138,7 +1164,7 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
           if (!open && activeTab === 'predict') loadPred();
         }}
       >
-        {/* Home Side: Team Name (right) + Form Badge */}
+        {/* Home Side: Team Name (right) + Crest + Form Badge */}
         <div className="fs-home-side">
           <Link
             href={getTeamUrl(HN)}
@@ -1149,6 +1175,18 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
           >
             {HN}
           </Link>
+          {match.home_team?.crest && (
+            <img
+              src={match.home_team.crest}
+              alt={`${HN} logo`}
+              width="20"
+              height="20"
+              className="fs-team-crest"
+              loading="lazy"
+              decoding="async"
+              onError={(e) => { (e.currentTarget as HTMLElement).style.display = 'none'; }}
+            />
+          )}
           <span className={`fs-ppg-badge ${getFormBadgeColor(homePpg)}`}>
             {homePpg}
           </span>
@@ -1188,11 +1226,23 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
           )}
         </div>
 
-        {/* Away Side: Form Badge + Team Name (left) */}
+        {/* Away Side: Form Badge + Crest + Team Name (left) */}
         <div className="fs-away-side">
           <span className={`fs-ppg-badge ${getFormBadgeColor(awayPpg)}`}>
             {awayPpg}
           </span>
+          {match.away_team?.crest && (
+            <img
+              src={match.away_team.crest}
+              alt={`${AN} logo`}
+              width="20"
+              height="20"
+              className="fs-team-crest"
+              loading="lazy"
+              decoding="async"
+              onError={(e) => { (e.currentTarget as HTMLElement).style.display = 'none'; }}
+            />
+          )}
           <Link
             href={getTeamUrl(AN)}
             onClick={(e) => e.stopPropagation()}
@@ -1269,16 +1319,17 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
                   e.stopPropagation();
                 }}
                 style={{
-                  color: '#38bdf8',
+                  color: 'var(--color-brand-emerald)',
                   fontWeight: 800,
                   textDecoration: 'none',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '4px',
-                  background: 'rgba(56,189,248,0.12)',
-                  padding: '4px 10px',
-                  borderRadius: '6px',
-                  border: '1px solid rgba(56,189,248,0.35)',
+                  gap: '6px',
+                  background: 'rgba(16, 185, 129, 0.12)',
+                  padding: '6px 14px',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(16, 185, 129, 0.35)',
+                  minHeight: '36px',
                   cursor: 'pointer',
                   pointerEvents: 'auto',
                 }}
@@ -1343,48 +1394,100 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
                 </div>
 
                 <div className="ws-section-title">🎯 1X2 Match Projections &amp; Win Probabilities</div>
-                <div className="ws-1x2-market-grid">
-                  <div className="ws-1x2-market-card">
-                    <div className="ws-1x2-market-header">
-                      <span className="ws-1x2-market-code">1</span>
-                      <span className="ws-1x2-market-team">{HN}</span>
+
+                {hasRealProbs && homeProbPct != null && drawProbPct != null && awayProbPct != null ? (
+                  <>
+                    <div style={{ marginBottom: '1rem' }}>
+                      <ProbabilityBar
+                        homeProb={homeProbPct}
+                        drawProb={drawProbPct}
+                        awayProb={awayProbPct}
+                        homeTeamName={HN}
+                        awayTeamName={AN}
+                        size="md"
+                      />
                     </div>
-                    <div className="ws-1x2-market-odds">@{homeOddsFormatted}</div>
-                    <div className="ws-1x2-market-sub">{probs.home_pct}% win chance</div>
-                    <div className="ws-1x2-card-bar-wrap">
-                      <div className="ws-1x2-card-bar-h" style={{ width: `${probs.home_pct}%` }} />
+                    <div className="ws-1x2-market-grid">
+                      <div className="ws-1x2-market-card">
+                        <div className="ws-1x2-market-header">
+                          <span className="ws-1x2-market-code" style={{ background: 'rgba(16, 185, 129, 0.15)', color: 'var(--prob-home, #10B981)', border: '1px solid rgba(16, 185, 129, 0.3)' }}>1</span>
+                          <span className="ws-1x2-market-team">Home Win ({HN})</span>
+                        </div>
+                        <div className="ws-1x2-market-odds">@{homeOddsFormatted}</div>
+                        <div className="ws-1x2-market-sub" style={{ color: 'var(--prob-home, #10B981)', fontWeight: 800 }}>{homeProbPct}% win chance</div>
+                        <div className="ws-1x2-card-bar-wrap">
+                          <div className="ws-1x2-card-bar-h" style={{ width: `${homeProbPct}%`, background: 'var(--prob-home, #10B981)' }} />
+                        </div>
+                      </div>
+                      <div className="ws-1x2-market-card">
+                        <div className="ws-1x2-market-header">
+                          <span className="ws-1x2-market-code" style={{ background: 'rgba(245, 158, 11, 0.15)', color: 'var(--prob-draw, #F59E0B)', border: '1px solid rgba(245, 158, 11, 0.3)' }}>X</span>
+                          <span className="ws-1x2-market-team">Draw</span>
+                        </div>
+                        <div className="ws-1x2-market-odds">@{drawOddsFormatted}</div>
+                        <div className="ws-1x2-market-sub" style={{ color: 'var(--prob-draw, #F59E0B)', fontWeight: 800 }}>{drawProbPct}% draw chance</div>
+                        <div className="ws-1x2-card-bar-wrap">
+                          <div className="ws-1x2-card-bar-d" style={{ width: `${drawProbPct}%`, background: 'var(--prob-draw, #F59E0B)' }} />
+                        </div>
+                      </div>
+                      <div className="ws-1x2-market-card">
+                        <div className="ws-1x2-market-header">
+                          <span className="ws-1x2-market-code" style={{ background: 'rgba(59, 130, 246, 0.15)', color: 'var(--prob-away, #3B82F6)', border: '1px solid rgba(59, 130, 246, 0.3)' }}>2</span>
+                          <span className="ws-1x2-market-team">Away Win ({AN})</span>
+                        </div>
+                        <div className="ws-1x2-market-odds">@{awayOddsFormatted}</div>
+                        <div className="ws-1x2-market-sub" style={{ color: 'var(--prob-away, #3B82F6)', fontWeight: 800 }}>{awayProbPct}% win chance</div>
+                        <div className="ws-1x2-card-bar-wrap">
+                          <div className="ws-1x2-card-bar-a" style={{ width: `${awayProbPct}%`, background: 'var(--prob-away, #3B82F6)' }} />
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div style={{
+                    background: 'var(--color-brand-emerald-subtle, rgba(16, 185, 129, 0.08))',
+                    border: '1px solid rgba(16, 185, 129, 0.2)',
+                    borderRadius: '10px',
+                    padding: '1.25rem',
+                    textAlign: 'center',
+                    marginBottom: '1rem',
+                  }}>
+                    <div style={{ fontSize: '1.2rem', marginBottom: '0.3rem' }}>⏳</div>
+                    <div style={{ fontSize: '0.92rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                      Pre-Match Probability Calculation In Progress
+                    </div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+                      Quantitative 1X2 win probabilities and scorelines will be computed once finalized team lineups and conditions are processed prior to kickoff.
                     </div>
                   </div>
-                  <div className="ws-1x2-market-card">
-                    <div className="ws-1x2-market-header">
-                      <span className="ws-1x2-market-code">X</span>
-                      <span className="ws-1x2-market-team">Draw</span>
-                    </div>
-                    <div className="ws-1x2-market-odds">@{drawOddsFormatted}</div>
-                    <div className="ws-1x2-market-sub">{probs.draw_pct}% draw chance</div>
-                    <div className="ws-1x2-card-bar-wrap">
-                      <div className="ws-1x2-card-bar-d" style={{ width: `${probs.draw_pct}%` }} />
-                    </div>
-                  </div>
-                  <div className="ws-1x2-market-card">
-                    <div className="ws-1x2-market-header">
-                      <span className="ws-1x2-market-code">2</span>
-                      <span className="ws-1x2-market-team">{AN}</span>
-                    </div>
-                    <div className="ws-1x2-market-odds">@{awayOddsFormatted}</div>
-                    <div className="ws-1x2-market-sub">{probs.away_pct}% win chance</div>
-                    <div className="ws-1x2-card-bar-wrap">
-                      <div className="ws-1x2-card-bar-a" style={{ width: `${probs.away_pct}%` }} />
-                    </div>
-                  </div>
-                </div>
+                )}
 
                 <div className="ws-section-title">Projected Scoreline</div>
-                <div className="ws-pred-score">
-                  <span className="ws-pred-score-num">{score.home}</span>
-                  <span className="ws-pred-score-sep">–</span>
-                  <span className="ws-pred-score-num">{score.away}</span>
-                </div>
+                {hasRealScore && predHomeScore != null && predAwayScore != null ? (
+                  <>
+                    <div className="ws-pred-score">
+                      <span className="ws-pred-score-num">{predHomeScore}</span>
+                      <span className="ws-pred-score-sep">–</span>
+                      <span className="ws-pred-score-num">{predAwayScore}</span>
+                    </div>
+                    <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '-0.3rem', marginBottom: '1rem' }}>
+                      Statistical expectation from Poisson predictive goal-distribution models
+                    </div>
+                  </>
+                ) : (
+                  <div style={{
+                    background: 'var(--bg-elevated)',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '10px',
+                    padding: '0.75rem',
+                    textAlign: 'center',
+                    color: 'var(--text-muted)',
+                    fontSize: '0.80rem',
+                    marginBottom: '1rem',
+                  }}>
+                    Score projection pending finalized match lineup inputs
+                  </div>
+                )}
 
                 {picks && (() => {
                   const totalGoals = (Number(score.home) || 0) + (Number(score.away) || 0);

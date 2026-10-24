@@ -1701,9 +1701,9 @@ div[id^="google-btn-container"] iframe {
 }
 
 .ws-1x2-market-card {
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
   padding: 10px 12px;
   text-align: center;
   transition: transform 0.15s ease, border-color 0.15s ease;
@@ -1711,7 +1711,7 @@ div[id^="google-btn-container"] iframe {
 
 .ws-1x2-market-card:hover {
   transform: translateY(-1px);
-  border-color: rgba(56, 189, 248, 0.4);
+  border-color: var(--color-brand-emerald);
 }
 
 .ws-1x2-market-header {
@@ -1734,7 +1734,7 @@ div[id^="google-btn-container"] iframe {
 .ws-1x2-market-team {
   font-size: 0.84rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1765,24 +1765,24 @@ div[id^="google-btn-container"] iframe {
 }
 
 .ws-1x2-card-bar-h {
-  background: var(--accent-green);
+  background: var(--prob-home, #10B981);
   height: 100%;
-  border-radius: 2px;
-  transition: width 0.6s ease;
+  border-radius: 999px;
+  transition: width 0.3s ease;
 }
 
 .ws-1x2-card-bar-d {
-  background: var(--accent-amber);
+  background: var(--prob-draw, #F59E0B);
   height: 100%;
-  border-radius: 2px;
-  transition: width 0.6s ease;
+  border-radius: 999px;
+  transition: width 0.3s ease;
 }
 
 .ws-1x2-card-bar-a {
-  background: var(--accent-blue);
+  background: var(--prob-away, #3B82F6);
   height: 100%;
-  border-radius: 2px;
-  transition: width 0.6s ease;
+  border-radius: 999px;
+  transition: width 0.3s ease;
 }
 
 /* ── Projected Scoreline ── */
@@ -2006,7 +2006,12 @@ div[id^="google-btn-container"] iframe {
 }
 
 .footystats-match-row:hover {
-  background: rgba(59, 130, 246, 0.06);
+  background: rgba(16, 185, 129, 0.06);
+}
+
+.footystats-match-row:focus-visible {
+  outline: 2px solid var(--color-brand-emerald);
+  outline-offset: -1px;
 }
 
 .footystats-match-row.live-row {
@@ -2962,4 +2967,15 @@ textarea:focus-visible,
   border-radius: var(--radius-sm);
   font-weight: var(--weight-bold);
   font-size: var(--text-xs);
+}
+
+
+/* Team Crest Helper in Match Cards */
+.fs-team-crest {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
 }

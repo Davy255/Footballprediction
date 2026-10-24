@@ -2,6 +2,7 @@ import React from 'react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import ProbabilityBar from '@/components/ProbabilityBar';
 import { fetchMatchesFeed } from '@/lib/api';
 import { getMatchSlug, getMatchPredictionUrl, getTeamUrl, getLeagueUrl } from '@/lib/slugs';
 import { siteConfig, getCanonicalUrl } from '@/config/site';
@@ -185,7 +186,7 @@ export default async function FootballPredictionsTodayPage() {
           </span>
         </div>
 
-        <h1 style={{ margin: '0 0 0.6rem 0', fontSize: '2.1rem', fontWeight: 900, color: '#f8fafc', fontFamily: 'Outfit, sans-serif' }}>
+        <h1 style={{ margin: '0 0 0.6rem 0', fontSize: '2.1rem', fontWeight: 900, color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif' }}>
           Football Predictions Today
         </h1>
         <p style={{ margin: 0, color: '#94a3b8', fontSize: '0.95rem', lineHeight: 1.6, maxWidth: '780px' }}>
@@ -201,7 +202,7 @@ export default async function FootballPredictionsTodayPage() {
         }}>
           <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '10px', padding: '0.8rem', textAlign: 'center' }}>
             <div style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 800 }}>Matches Featured</div>
-            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#f8fafc', marginTop: '0.2rem' }}>{totalCount}</div>
+            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--text-primary)', marginTop: '0.2rem' }}>{totalCount}</div>
           </div>
           <div style={{ background: 'rgba(59,130,246,0.06)', border: '1px solid rgba(59,130,246,0.2)', borderRadius: '10px', padding: '0.8rem', textAlign: 'center' }}>
             <div style={{ fontSize: '0.72rem', color: '#93c5fd', textTransform: 'uppercase', fontWeight: 800 }}>Leagues Active</div>
@@ -222,7 +223,7 @@ export default async function FootballPredictionsTodayPage() {
         padding: '1.5rem',
         marginBottom: '2rem',
       }}>
-        <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 0.8rem 0' }}>
+        <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: 'var(--text-primary)', margin: '0 0 0.8rem 0' }}>
           💡 Today&apos;s Prediction Highlights &amp; Statistical Insights
         </h2>
 
@@ -272,7 +273,7 @@ export default async function FootballPredictionsTodayPage() {
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
           <div>
-            <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 0.2rem 0', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <h2 style={{ fontSize: '1.15rem', fontWeight: 900, color: 'var(--text-primary)', margin: '0 0 0.2rem 0', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               🏆 Explore Top Football Leagues &amp; Competitions
             </h2>
             <p style={{ margin: 0, fontSize: '0.84rem', color: '#94a3b8' }}>
@@ -304,7 +305,7 @@ export default async function FootballPredictionsTodayPage() {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   textDecoration: 'none',
-                  color: '#f8fafc',
+                  color: 'var(--text-primary)',
                   transition: 'background 0.2s',
                 }}
               >
@@ -361,7 +362,7 @@ export default async function FootballPredictionsTodayPage() {
                       alignItems: 'center',
                       gap: '0.6rem',
                       textDecoration: 'none',
-                      color: '#f8fafc',
+                      color: 'var(--text-primary)',
                     }}
                   >
                     {league.emblem ? (
@@ -404,13 +405,22 @@ export default async function FootballPredictionsTodayPage() {
                       ai?.probs?.home_pct != null
                     );
 
-                    const hp = m.ai_home_prob != null ? Math.round(m.ai_home_prob * 100) : (ai?.probs?.home_pct ?? 0);
-                    const dp = m.ai_draw_prob != null ? Math.round(m.ai_draw_prob * 100) : (ai?.probs?.draw_pct ?? 0);
-                    const ap = m.ai_away_prob != null ? Math.round(m.ai_away_prob * 100) : (ai?.probs?.away_pct ?? 0);
+                    const hp = m.ai_home_prob != null
+                      ? Math.round(m.ai_home_prob * 100)
+                      : (ai?.probs?.home_pct != null ? Math.round(ai.probs.home_pct) : null);
+                    const dp = m.ai_draw_prob != null
+                      ? Math.round(m.ai_draw_prob * 100)
+                      : (ai?.probs?.draw_pct != null ? Math.round(ai.probs.draw_pct) : null);
+                    const ap = m.ai_away_prob != null
+                      ? Math.round(m.ai_away_prob * 100)
+                      : (ai?.probs?.away_pct != null ? Math.round(ai.probs.away_pct) : null);
 
-                    const hasScore = m.ai_predicted_home != null || ai?.score?.home != null;
-                    const predHome = m.ai_predicted_home ?? ai?.score?.home;
-                    const predAway = m.ai_predicted_away ?? ai?.score?.away;
+                    const hasScore = Boolean(
+                      (m.ai_predicted_home != null && m.ai_predicted_away != null) ||
+                      (ai?.score?.home != null && ai?.score?.away != null)
+                    );
+                    const predHome = m.ai_predicted_home ?? ai?.score?.home ?? null;
+                    const predAway = m.ai_predicted_away ?? ai?.score?.away ?? null;
 
                     const isLive = ['LIVE', 'IN_PLAY', 'PAUSED', 'HALFTIME'].includes((m.status || '').toUpperCase());
                     const isFinished = (m.status || '').toUpperCase() === 'FINISHED';
@@ -423,15 +433,16 @@ export default async function FootballPredictionsTodayPage() {
                       <div
                         key={m.id}
                         style={{
-                          background: 'rgba(255,255,255,0.02)',
-                          border: isLive ? '1px solid rgba(239,68,68,0.4)' : '1px solid rgba(255,255,255,0.06)',
-                          borderRadius: '12px',
-                          padding: '1.2rem',
+                          background: 'var(--bg-card)',
+                          border: isLive ? '1px solid var(--accent-red)' : '1px solid var(--border-color)',
+                          borderRadius: '14px',
+                          padding: '1.25rem',
                           display: 'flex',
                           flexDirection: 'column',
                           justifyContent: 'space-between',
-                          gap: '0.8rem',
-                          boxShadow: isLive ? '0 0 16px rgba(239,68,68,0.15)' : 'none',
+                          gap: '0.9rem',
+                          boxShadow: isLive ? '0 0 16px rgba(239,68,68,0.2)' : 'var(--shadow-card)',
+                          transition: 'all 0.15s ease',
                         }}
                       >
                         {/* Status & Time Bar */}
@@ -459,7 +470,7 @@ export default async function FootballPredictionsTodayPage() {
                               alignItems: 'center',
                               gap: '0.4rem',
                               textDecoration: 'none',
-                              color: '#f8fafc',
+                              color: 'var(--text-primary)',
                               fontWeight: 800,
                               fontSize: '0.92rem',
                               flex: 1,
@@ -491,7 +502,7 @@ export default async function FootballPredictionsTodayPage() {
                               justifyContent: 'flex-end',
                               gap: '0.4rem',
                               textDecoration: 'none',
-                              color: '#f8fafc',
+                              color: 'var(--text-primary)',
                               fontWeight: 800,
                               fontSize: '0.92rem',
                               flex: 1,
@@ -506,31 +517,26 @@ export default async function FootballPredictionsTodayPage() {
                         </div>
 
                         {/* Prediction & Probabilities Box */}
-                        {hasProbs ? (
-                          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '0.6rem 0.8rem' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.74rem', marginBottom: '0.35rem', fontWeight: 700 }}>
-                              <span style={{ color: '#60a5fa' }}>{HN} {hp}%</span>
-                              <span style={{ color: '#94a3b8' }}>Draw {dp}%</span>
-                              <span style={{ color: '#a78bfa' }}>{AN} {ap}%</span>
-                            </div>
-
-                            {/* Percentage Bar */}
-                            <div style={{ display: 'flex', height: '6px', borderRadius: '999px', overflow: 'hidden', marginBottom: '0.4rem' }}>
-                              <div style={{ width: `${hp}%`, background: '#3b82f6' }} />
-                              <div style={{ width: `${dp}%`, background: '#64748b' }} />
-                              <div style={{ width: `${ap}%`, background: '#8b5cf6' }} />
-                            </div>
-
+                        {hasProbs && hp != null && dp != null && ap != null ? (
+                          <div style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '0.75rem 0.85rem' }}>
+                            <ProbabilityBar
+                              homeProb={hp}
+                              drawProb={dp}
+                              awayProb={ap}
+                              homeTeamName={HN}
+                              awayTeamName={AN}
+                              size="sm"
+                            />
                             {hasScore && predHome != null && predAway != null && (
-                              <div style={{ fontSize: '0.76rem', color: '#4ade80', fontWeight: 800, textAlign: 'center' }}>
+                              <div style={{ fontSize: '0.78rem', color: 'var(--color-brand-emerald)', fontWeight: 800, textAlign: 'center', marginTop: '0.45rem' }}>
                                 Projected: {HN} {predHome} – {predAway} {AN}
                               </div>
                             )}
                           </div>
                         ) : (
-                          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '0.6rem 0.8rem', textAlign: 'center' }}>
-                            <div style={{ fontSize: '0.74rem', color: '#93c5fd', fontWeight: 700 }}>
-                              ⚙️ Pre-match calculation scheduled prior to kickoff
+                          <div style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '0.75rem 0.85rem', textAlign: 'center' }}>
+                            <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                              ⏳ Pre-match probability calculation scheduled prior to kickoff
                             </div>
                           </div>
                         )}
@@ -539,19 +545,24 @@ export default async function FootballPredictionsTodayPage() {
                         <Link
                           href={matchUrl}
                           style={{
-                            display: 'block',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
                             textAlign: 'center',
-                            background: 'linear-gradient(135deg, rgba(37,99,235,0.15) 0%, rgba(29,78,216,0.25) 100%)',
-                            border: '1px solid rgba(59,130,246,0.3)',
-                            color: '#93c5fd',
-                            padding: '0.5rem',
+                            background: 'rgba(16, 185, 129, 0.12)',
+                            border: '1px solid rgba(16, 185, 129, 0.3)',
+                            color: 'var(--color-brand-emerald)',
+                            padding: '0.6rem 1rem',
                             borderRadius: '8px',
-                            fontSize: '0.80rem',
+                            fontSize: '0.82rem',
                             fontWeight: 800,
                             textDecoration: 'none',
+                            minHeight: '44px',
+                            transition: 'all 0.15s ease',
                           }}
+                          className="hover:bg-[rgba(16,185,129,0.18)] hover:border-[var(--color-brand-emerald)]"
                         >
-                          🎯 Full Match Analysis →
+                          🎯 Full Match Prediction &amp; Analytics →
                         </Link>
                       </div>
                     );
@@ -570,7 +581,7 @@ export default async function FootballPredictionsTodayPage() {
           textAlign: 'center',
         }}>
           <div style={{ fontSize: '3rem', marginBottom: '0.8rem' }}>⚽</div>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#f8fafc', margin: '0 0 0.5rem 0' }}>
+          <h2 style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--text-primary)', margin: '0 0 0.5rem 0' }}>
             No Football Matches with Available Predictions Today
           </h2>
           <p style={{ color: '#94a3b8', fontSize: '0.92rem', marginBottom: '1.5rem' }}>
@@ -598,7 +609,7 @@ export default async function FootballPredictionsTodayPage() {
         flexDirection: 'column',
         gap: '0.8rem',
       }}>
-        <div style={{ fontWeight: 800, color: '#f8fafc', fontSize: '0.95rem' }}>
+        <div style={{ fontWeight: 800, color: 'var(--text-primary)', fontSize: '0.95rem' }}>
           Explore More Football Analytics:
         </div>
         <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>

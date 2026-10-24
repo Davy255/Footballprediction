@@ -3,6 +3,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import ProbabilityBar from '@/components/ProbabilityBar';
 import { getTeamDataBySlug, getMatchPredictionUrl, slugifyTeamName, getLeagueUrl } from '@/lib/slugs';
 import { siteConfig, getCanonicalUrl } from '@/config/site';
 import { generateTeamOverviewText } from '@/lib/contentGenerator';
@@ -272,25 +273,25 @@ export default async function TeamPage({ params }: PageProps) {
                 </div>
               </div>
 
-              <div>
-                <div style={{ fontSize: '0.78rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 800, marginBottom: '0.2rem' }}>
-                  {shortName} Win Probability
+              <div style={{ minWidth: '220px' }}>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 800, marginBottom: '0.4rem' }}>
+                  Win Probability Breakdown
                 </div>
                 {hasProbs ? (
-                  <>
-                    <div style={{ fontSize: '1.5rem', fontWeight: 900, color: '#38bdf8' }}>
-                      {teamProb}%
-                    </div>
-                    <div style={{ fontSize: '0.74rem', color: '#94a3b8' }}>
-                      Draw: {drawProb}% · {oppName}: {oppProb}%
-                    </div>
-                  </>
+                  <ProbabilityBar
+                    homeProb={isHome ? teamProb : oppProb}
+                    drawProb={drawProb}
+                    awayProb={isHome ? oppProb : teamProb}
+                    homeTeamName={isHome ? shortName : oppName}
+                    awayTeamName={isHome ? oppName : shortName}
+                    size="sm"
+                  />
                 ) : (
                   <>
-                    <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#93c5fd' }}>
+                    <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-muted)' }}>
                       Pending
                     </div>
-                    <div style={{ fontSize: '0.74rem', color: '#64748b' }}>
+                    <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
                       Calculated prior to kickoff
                     </div>
                   </>
@@ -317,7 +318,7 @@ export default async function TeamPage({ params }: PageProps) {
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '0.4rem',
-                    background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                    background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
                     color: '#ffffff',
                     padding: '0.7rem 1.2rem',
                     borderRadius: '10px',
@@ -325,10 +326,12 @@ export default async function TeamPage({ params }: PageProps) {
                     fontWeight: 800,
                     textDecoration: 'none',
                     width: '100%',
-                    boxShadow: '0 4px 12px rgba(37,99,235,0.3)',
+                    minHeight: '44px',
+                    boxShadow: '0 4px 12px rgba(16,185,129,0.3)',
                   }}
+                  className="hover:brightness-110"
                 >
-                  🎯 View Match Analysis →
+                  🎯 View Match Prediction &amp; Analysis →
                 </Link>
               </div>
             </div>

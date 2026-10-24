@@ -7,6 +7,7 @@ import { siteConfig, getCanonicalUrl } from '@/config/site';
 import { generateMatchAnalysisText, generatePredictionFactors } from '@/lib/contentGenerator';
 import { getRelatedMatchesForMatch } from '@/lib/relatedMatches';
 import MatchCard from '@/components/MatchCard';
+import ProbabilityBar from '@/components/ProbabilityBar';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getMatchConfidence } from '@/lib/confidence';
 import { calculateMarketOddsAnalysis, calculateValueEdgeAnalysis } from '@/lib/odds';
@@ -424,24 +425,14 @@ export default async function MatchPredictionPage({ params }: PageProps) {
 
             {/* Win Probability Breakdown */}
             <div style={{ marginBottom: '1.5rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.6rem', fontSize: '0.88rem', fontWeight: 800 }}>
-                <span style={{ color: '#60a5fa' }}>{HN} Win ({homeProb}%)</span>
-                <span style={{ color: 'var(--text-muted)' }}>Draw ({drawProb}%)</span>
-                <span style={{ color: '#a78bfa' }}>{AN} Win ({awayProb}%)</span>
-              </div>
-
-              {/* Visual Percentage Distribution Bar */}
-              <div style={{
-                display: 'flex',
-                height: '14px',
-                borderRadius: '999px',
-                overflow: 'hidden',
-                background: 'rgba(255,255,255,0.06)',
-              }}>
-                <div style={{ width: `${homeProb}%`, background: 'linear-gradient(90deg, #3b82f6, #60a5fa)' }} title={`${HN} ${homeProb}%`} />
-                <div style={{ width: `${drawProb}%`, background: 'linear-gradient(90deg, #64748b, #94a3b8)' }} title={`Draw ${drawProb}%`} />
-                <div style={{ width: `${awayProb}%`, background: 'linear-gradient(90deg, #8b5cf6, #a78bfa)' }} title={`${AN} ${awayProb}%`} />
-              </div>
+              <ProbabilityBar
+                homeProb={homeProb}
+                drawProb={drawProb}
+                awayProb={awayProb}
+                homeTeamName={HN}
+                awayTeamName={AN}
+                size="lg"
+              />
             </div>
           </>
         ) : (
@@ -918,12 +909,26 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                 try { relAi = JSON.parse(rel.prediction_description); } catch {}
               }
 
-              const rhp = rel.ai_home_prob != null ? Math.round(rel.ai_home_prob * 100) : (relAi?.probs?.home_pct ?? 45);
-              const rdp = rel.ai_draw_prob != null ? Math.round(rel.ai_draw_prob * 100) : (relAi?.probs?.draw_pct ?? 27);
-              const rap = rel.ai_away_prob != null ? Math.round(rel.ai_away_prob * 100) : (relAi?.probs?.away_pct ?? 28);
+              const hasRelProbs = Boolean(
+                (rel.ai_home_prob != null && rel.ai_away_prob != null) ||
+                relAi?.probs?.home_pct != null
+              );
+              const rhp = rel.ai_home_prob != null
+                ? Math.round(rel.ai_home_prob * 100)
+                : (relAi?.probs?.home_pct != null ? Math.round(relAi.probs.home_pct) : null);
+              const rdp = rel.ai_draw_prob != null
+                ? Math.round(rel.ai_draw_prob * 100)
+                : (relAi?.probs?.draw_pct != null ? Math.round(relAi.probs.draw_pct) : null);
+              const rap = rel.ai_away_prob != null
+                ? Math.round(rel.ai_away_prob * 100)
+                : (relAi?.probs?.away_pct != null ? Math.round(relAi.probs.away_pct) : null);
 
-              const rPredHome = rel.ai_predicted_home ?? relAi?.score?.home ?? 1;
-              const rPredAway = rel.ai_predicted_away ?? relAi?.score?.away ?? 1;
+              const hasRelScore = Boolean(
+                (rel.ai_predicted_home != null && rel.ai_predicted_away != null) ||
+                (relAi?.score?.home != null && relAi?.score?.away != null)
+              );
+              const rPredHome = rel.ai_predicted_home ?? relAi?.score?.home ?? null;
+              const rPredAway = rel.ai_predicted_away ?? relAi?.score?.away ?? null;
 
               const relDate = rel.utc_date
                 ? new Date(rel.utc_date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
@@ -985,38 +990,50 @@ export default async function MatchPredictionPage({ params }: PageProps) {
                   </div>
 
                   {/* Probabilities & Projected Score */}
-                  <div style={{ background: 'var(--bg-elevated)', borderRadius: '8px', padding: '0.6rem' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', marginBottom: '0.3rem', fontWeight: 700 }}>
-                      <span style={{ color: '#60a5fa' }}>{relHome} {rhp}%</span>
-                      <span style={{ color: 'var(--text-muted)' }}>Draw {rdp}%</span>
-                      <span style={{ color: '#a78bfa' }}>{relAway} {rap}%</span>
+                  {hasRelProbs && rhp != null && rdp != null && rap != null ? (
+                    <div style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '0.65rem' }}>
+                      <ProbabilityBar
+                        homeProb={rhp}
+                        drawProb={rdp}
+                        awayProb={rap}
+                        homeTeamName={relHome}
+                        awayTeamName={relAway}
+                        size="sm"
+                      />
+                      {hasRelScore && rPredHome != null && rPredAway != null && (
+                        <div style={{ fontSize: '0.78rem', color: 'var(--color-brand-emerald)', fontWeight: 800, textAlign: 'center', marginTop: '0.35rem' }}>
+                          Projected: {relHome} {rPredHome} – {rPredAway} {relAway}
+                        </div>
+                      )}
                     </div>
-
-                    <div style={{ display: 'flex', height: '5px', borderRadius: '999px', overflow: 'hidden', marginBottom: '0.4rem' }}>
-                      <div style={{ width: `${rhp}%`, background: '#3b82f6' }} />
-                      <div style={{ width: `${rdp}%`, background: '#64748b' }} />
-                      <div style={{ width: `${rap}%`, background: '#8b5cf6' }} />
+                  ) : (
+                    <div style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '0.65rem', textAlign: 'center' }}>
+                      <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
+                        ⏳ Probability calculation scheduled
+                      </div>
                     </div>
-
-                    <div style={{ fontSize: '0.76rem', color: '#4ade80', fontWeight: 800, textAlign: 'center' }}>
-                      Projected: {relHome} {rPredHome} – {rPredAway} {relAway}
-                    </div>
-                  </div>
+                  )}
 
                   {/* Prediction CTA Button */}
                   <Link
                     href={relUrl}
                     style={{
                       textAlign: 'center',
-                      background: 'rgba(59,130,246,0.1)',
-                      border: '1px solid var(--gradient-hero-border)',
-                      color: '#93c5fd',
-                      padding: '0.5rem',
+                      background: 'rgba(16, 185, 129, 0.12)',
+                      border: '1px solid rgba(16, 185, 129, 0.3)',
+                      color: 'var(--color-brand-emerald)',
+                      padding: '0.55rem 0.85rem',
                       borderRadius: '8px',
-                      fontSize: '0.80rem',
+                      fontSize: '0.82rem',
                       fontWeight: 800,
                       textDecoration: 'none',
+                      minHeight: '40px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transition: 'all 0.15s ease',
                     }}
+                    className="hover:bg-[rgba(16,185,129,0.18)] hover:border-[var(--color-brand-emerald)]"
                   >
                     🎯 {relHome} vs {relAway} Prediction →
                   </Link>
