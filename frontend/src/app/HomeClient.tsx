@@ -3,8 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { Match, League } from '@/lib/types';
 import { fetchTodayMatches, fetchUpcomingMatches, fetchLiveMatches, fetchLeagues, fetchMatches, fetchMatchesFeed, fetchYesterdayMatches } from '@/lib/api';
+import dynamic from 'next/dynamic';
 import LeagueAccordionSection from '@/components/LeagueAccordionSection';
-import HowToPlayModal from '@/components/HowToPlayModal';
+
+const HowToPlayModal = dynamic(() => import('@/components/HowToPlayModal'), { ssr: false });
 import AdBanner from '@/components/AdBanner';
 import Link from 'next/link';
 import { getLeagueUrl } from '@/lib/slugs';
@@ -188,11 +190,41 @@ export default function HomeClient({ initialMatches = [], initialLeagues = [] }:
       loadData(true);
     }
 
-    // Background polling every 20s keeps scores, minutes, and fixtures fresh in real-time
-    const interval = setInterval(() => {
-      loadData(false);
-    }, 20000);
-    return () => clearInterval(interval);
+    let intervalId: NodeJS.Timeout | null = null;
+
+    const startPolling = () => {
+      if (!intervalId) {
+        intervalId = setInterval(() => {
+          if (document.visibilityState === 'visible') {
+            loadData(false);
+          }
+        }, 20000);
+      }
+    };
+
+    const stopPolling = () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        loadData(false);
+        startPolling();
+      } else {
+        stopPolling();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    startPolling();
+
+    return () => {
+      stopPolling();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, [initialMatches.length]);
 
   // Filter matches based on Search Query, selected Status & League

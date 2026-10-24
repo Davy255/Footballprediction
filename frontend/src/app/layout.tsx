@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
+import dynamic from 'next/dynamic';
 import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
 import { ThemeProvider } from '@/context/ThemeContext';
 import Navbar from '@/components/Navbar';
-import LiveScoreTicker from '@/components/LiveScoreTicker';
-import ChatbotWidget from '@/components/ChatbotWidget';
+
+const ChatbotWidget = dynamic(() => import('@/components/ChatbotWidget'));
 import JsonLd from '@/components/JsonLd';
 import AnalyticsProvider from '@/components/AnalyticsProvider';
 import Link from 'next/link';
@@ -32,6 +33,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'ka2BdzrohHlAaHxo4gC4rdanbBGzGvRkl42FGzx12U4'}
         />
         <meta name="google-adsense-account" content="ca-pub-3089881788835574" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
         <script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adClient}`}

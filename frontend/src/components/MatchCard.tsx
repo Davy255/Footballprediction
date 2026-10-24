@@ -7,8 +7,17 @@ import { submitPrediction, fetchMyPredictionForMatch } from '@/lib/api';
 import { Match } from '@/lib/types';
 import { getMatchPredictionUrl, getTeamUrl, getLeagueUrl } from '@/lib/slugs';
 import { getMatchConfidence } from '@/lib/confidence';
-import TacticalPitch, { LineupData } from './TacticalPitch';
-import PlayerStatsTable from './PlayerStatsTable';
+import dynamic from 'next/dynamic';
+import type { LineupData } from './TacticalPitch';
+
+const TacticalPitch = dynamic(() => import('./TacticalPitch'), {
+  ssr: false,
+  loading: () => <div className="p-4 text-center text-xs text-muted-foreground">Loading tactical formation...</div>,
+});
+const PlayerStatsTable = dynamic(() => import('./PlayerStatsTable'), {
+  ssr: false,
+  loading: () => <div className="p-4 text-center text-xs text-muted-foreground">Loading player statistics...</div>,
+});
 
 type TabKey = 'ai' | 'lineups' | 'analytics' | 'sw' | 'predict' | 'stats' | 'h2h';
 
@@ -1205,7 +1214,7 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
             <div className="ws-match-header-top">
               {/* Home Team Profile */}
               <div className="ws-team-block">
-                {match.home_team?.crest && <img src={match.home_team.crest} className="ws-team-crest" alt={HN} />}
+                {match.home_team?.crest && <img src={match.home_team.crest} className="ws-team-crest" alt={HN} width="24" height="24" loading="lazy" decoding="async" />}
                 <div className="ws-team-name" title={HN}>{HN}</div>
                 {ws?.home_manager && <div className="ws-manager-pill" title={`Manager: ${ws.home_manager}`}>👔 {ws.home_manager}</div>}
                 {ws?.home_formation && <div className="ws-formation-pill">{ws.home_formation}</div>}
@@ -1239,7 +1248,7 @@ function getClubVenue(teamName: string, leagueName: string = ''): { stadium: str
 
               {/* Away Team Profile */}
               <div className="ws-team-block">
-                {match.away_team?.crest && <img src={match.away_team.crest} className="ws-team-crest" alt={AN} />}
+                {match.away_team?.crest && <img src={match.away_team.crest} className="ws-team-crest" alt={AN} width="24" height="24" loading="lazy" decoding="async" />}
                 <div className="ws-team-name" title={AN}>{AN}</div>
                 {ws?.away_manager && <div className="ws-manager-pill" title={`Manager: ${ws.away_manager}`}>👔 {ws.away_manager}</div>}
                 {ws?.away_formation && <div className="ws-formation-pill">{ws.away_formation}</div>}

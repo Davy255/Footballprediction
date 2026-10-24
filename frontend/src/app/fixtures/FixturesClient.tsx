@@ -147,22 +147,55 @@ export default function FixturesClient({ initialMatches = [], initialLeagues = [
   };
 
   useEffect(() => {
+    let intervalId: NodeJS.Timeout | null = null;
+
+    const startPolling = () => {
+      if (!intervalId) {
+        intervalId = setInterval(() => {
+          if (document.visibilityState === 'visible') {
+            loadMatches(false);
+          }
+        }, 20000);
+      }
+    };
+
+    const stopPolling = () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        loadMatches(false);
+        startPolling();
+      } else {
+        stopPolling();
+      }
+    };
+
     if (isFirstMount.current) {
       isFirstMount.current = false;
       // If we already have server pre-rendered matches for the default view, skip first client fetch
       if (initialMatches.length > 0 && !selectedLeague && selectedStatus === 'SCHEDULED') {
-        const interval = setInterval(() => {
-          loadMatches(false);
-        }, 20000);
-        return () => clearInterval(interval);
+        startPolling();
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        return () => {
+          stopPolling();
+          document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
       }
     }
 
     loadMatches(true);
-    const interval = setInterval(() => {
-      loadMatches(false);
-    }, 20000);
-    return () => clearInterval(interval);
+    startPolling();
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      stopPolling();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, [selectedLeague, selectedStatus]);
 
   // Filter matches based on search query

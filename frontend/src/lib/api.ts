@@ -36,7 +36,13 @@ function getCached<T>(key: string): T | null {
   return entry.data as T;
 }
 
+const MAX_CACHE_ENTRIES = 120;
+
 function setCache<T>(key: string, data: T, ttlMs = 45000): void {
+  if (_memoryCache.size >= MAX_CACHE_ENTRIES) {
+    const oldestKey = _memoryCache.keys().next().value;
+    if (oldestKey) _memoryCache.delete(oldestKey);
+  }
   _memoryCache.set(key, {
     timestamp: Date.now(),
     ttl: ttlMs,
@@ -75,11 +81,11 @@ export async function fetchApi<T>(
     const { cacheTtlMs, nextOptions, ...fetchOptions } = options as any;
 
     for (let attempt = 0; attempt <= retries; attempt++) {
-      try {
-        const controller = new AbortController();
-        // 25s timeout per attempt: comfortably accommodates Render free tier cold-starts
-        const timeoutId = setTimeout(() => controller.abort(), 25000);
+      const controller = new AbortController();
+      // 25s timeout per attempt: comfortably accommodates Render free tier cold-starts
+      const timeoutId = setTimeout(() => controller.abort(), 25000);
 
+      try {
         const res = await fetch(url, {
           ...fetchOptions,
           signal: fetchOptions.signal || controller.signal,
@@ -89,8 +95,6 @@ export async function fetchApi<T>(
           },
           ...(nextOptions ? { next: nextOptions } : (isGet ? { next: { revalidate: 60 } } : {})),
         });
-
-        clearTimeout(timeoutId);
 
         if (!res.ok) {
           const errorData = await res.json().catch(() => ({ detail: 'An error occurred' }));
@@ -135,6 +139,8 @@ export async function fetchApi<T>(
           // 1s backoff for backend wakeup
           await new Promise((resolve) => setTimeout(resolve, 1000));
         }
+      } finally {
+        clearTimeout(timeoutId);
       }
     }
 
