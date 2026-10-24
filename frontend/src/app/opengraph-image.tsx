@@ -73,7 +73,7 @@ export default async function Image() {
         {/* Footer */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '18px', color: '#94a3b8', fontWeight: 600 }}>
           <span>Free AI Football Predictions &amp; Analytical Insights</span>
-          <span style={{ color: '#38bdf8' }}>footballprediction-lovat.vercel.app</span>
+          <span style={{ color: '#38bdf8' }}>thefootballpredict.com</span>
         </div>
       </div>
     ),

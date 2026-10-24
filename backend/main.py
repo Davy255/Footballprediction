@@ -301,6 +301,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         settings.FRONTEND_URL,
+        "https://thefootballpredict.com",
+        "https://www.thefootballpredict.com",
         "http://localhost:3000",
         "http://localhost:3001",
         "https://footballprediction-lovat.vercel.app",

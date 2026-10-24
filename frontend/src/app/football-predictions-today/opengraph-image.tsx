@@ -132,7 +132,7 @@ export default async function Image() {
         {/* Footer Bar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '16px', color: '#94a3b8', fontWeight: 600 }}>
           <span>Premier League, Champions League, La Liga, Serie A &amp; Worldwide Matches</span>
-          <span style={{ color: '#86efac' }}>footballprediction-lovat.vercel.app</span>
+          <span style={{ color: '#86efac' }}>thefootballpredict.com</span>
         </div>
       </div>
     ),

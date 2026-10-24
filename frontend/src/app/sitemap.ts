@@ -66,6 +66,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     },
     {
+      url: `${siteConfig.url}/pricing`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
       url: `${siteConfig.url}/about`,
       lastModified: now,
       changeFrequency: 'monthly',
@@ -100,7 +106,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 2. Educational & Analytical Articles
   const articleUrls: MetadataRoute.Sitemap = getAllArticles().map((article) => ({
     url: `${siteConfig.url}/articles/${article.slug}`,
-    lastModified: article.publishedDate ? new Date(article.publishedDate) : now,
+    lastModified: article.updatedAt
+      ? new Date(article.updatedAt)
+      : (article.publishedAt ? new Date(article.publishedAt) : now),
     changeFrequency: 'monthly',
     priority: 0.8,
   }));

@@ -81,7 +81,7 @@ def generate_og():
         draw.text((px + (190 - pw) // 2, 487), pill, fill=(241, 245, 249), font=font_foot)
 
     # Footer Domain
-    domain_text = "footballprediction-lovat.vercel.app"
+    domain_text = "thefootballpredict.com"
     bbox_dom = draw.textbbox((0, 0), domain_text, font=font_foot)
     w_dom = bbox_dom[2] - bbox_dom[0]
     draw.text((center_x - w_dom // 2, 575), domain_text, fill=(100, 116, 139), font=font_foot)

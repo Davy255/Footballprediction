@@ -15,11 +15,17 @@ export default function JsonLd() {
           '@id': `${siteConfig.url}/#organization`,
         },
         inLanguage: 'en-US',
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: `${siteConfig.url}/fixtures?search={search_term_string}`,
+          'query-input': 'required name=search_term_string',
+        },
       },
       {
         '@type': 'Organization',
         '@id': `${siteConfig.url}/#organization`,
-        name: siteConfig.name,
+        name: siteConfig.publisher,
+        alternateName: siteConfig.name,
         url: siteConfig.url,
         logo: {
           '@type': 'ImageObject',
@@ -27,10 +33,16 @@ export default function JsonLd() {
           width: 512,
           height: 512,
         },
-        sameAs: [],
+        contactPoint: {
+          '@type': 'ContactPoint',
+          telephone: siteConfig.contactPhone,
+          contactType: 'customer support',
+          email: siteConfig.contactEmail,
+          availableLanguage: 'English',
+        },
       },
       {
-        '@type': 'WebApplication',
+        '@type': 'SportsApplication',
         '@id': `${siteConfig.url}/#webapp`,
         name: siteConfig.name,
         url: siteConfig.url,

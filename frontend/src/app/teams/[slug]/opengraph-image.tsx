@@ -122,7 +122,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
         {/* Footer Bar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '16px', color: '#94a3b8', fontWeight: 600 }}>
           <span>Comprehensive Team Statistics, Upcoming Fixtures &amp; AI Analysis</span>
-          <span style={{ color: '#38bdf8' }}>footballprediction-lovat.vercel.app</span>
+          <span style={{ color: '#38bdf8' }}>thefootballpredict.com</span>
         </div>
       </div>
     ),

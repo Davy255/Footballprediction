@@ -248,7 +248,7 @@ def get_effective_frontend_url() -> str:
     import os as _os
     raw = _os.environ.get("FRONTEND_URL", "").strip() or settings.FRONTEND_URL.rstrip("/")
     if not raw or "localhost" in raw or "vertex-digital3" in raw or "6c4jcm9j2" in raw:
-        return "https://footballprediction-lovat.vercel.app"
+        return "https://thefootballpredict.com"
     return raw.rstrip("/")
 
 
