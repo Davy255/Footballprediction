@@ -16,7 +16,7 @@ export const siteConfig = {
   shortName: 'FootballPredict',
   url: SITE_URL,
   defaultTitle: 'FootballPredict — Football Predictions, Stats & Analytics',
-  titleTemplate: '%s | FootballPredict',
+  titleTemplate: '%s',
   description:
     'FootballPredict provides football match predictions, statistics, team form, win probabilities, tactical analysis and AI-powered football insights for leagues and matches worldwide.',
   keywords: [

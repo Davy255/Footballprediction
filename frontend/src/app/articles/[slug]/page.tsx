@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return constructMetadata({
-    title: `${article.title} | Football Analysis`,
+    title: `${article.title} | Football Analysis | FootballPredict`,
     description: article.excerpt,
     path: `/articles/${article.slug}`,
     keywords: [article.category.toLowerCase(), "football analysis", "match preview", "prediction statistics"],
