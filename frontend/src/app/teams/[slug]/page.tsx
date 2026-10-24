@@ -258,7 +258,7 @@ export default async function TeamPage({ params }: PageProps) {
               borderRadius: '12px',
               padding: '1.2rem',
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))',
               gap: '1.2rem',
               alignItems: 'center',
             }}>
@@ -274,7 +274,7 @@ export default async function TeamPage({ params }: PageProps) {
                 </div>
               </div>
 
-              <div style={{ minWidth: '220px' }}>
+              <div style={{ width: '100%', minWidth: 0 }}>
                 <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 800, marginBottom: '0.4rem' }}>
                   Win Probability Breakdown
                 </div>
@@ -373,7 +373,7 @@ export default async function TeamPage({ params }: PageProps) {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 105px), 1fr))',
           gap: '0.8rem',
           marginBottom: '1.5rem',
         }}>
@@ -406,7 +406,7 @@ export default async function TeamPage({ params }: PageProps) {
         {/* Detailed Attack / Defence / Venue Split */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
           gap: '1rem',
         }}>
           <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '1rem' }}>

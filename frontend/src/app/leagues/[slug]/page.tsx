@@ -230,7 +230,7 @@ export default async function LeaguePage({ params }: PageProps) {
         </div>
 
         {upcomingMatches.length > 0 ? (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1rem' }}>
             {upcomingMatches.slice(0, 6).map(m => {
               const HN = m.home_team?.short_name || m.home_team?.name || 'Home';
               const AN = m.away_team?.short_name || m.away_team?.name || 'Away';
@@ -276,18 +276,18 @@ export default async function LeaguePage({ params }: PageProps) {
                     {m.matchday && <span>MD {m.matchday}</span>}
                   </div>
 
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 800, fontSize: '0.92rem' }}>
-                    <Link href={getTeamUrl(HN)} style={{ color: '#f8fafc', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '0.92rem' }}>
+                    <Link href={getTeamUrl(HN)} style={{ color: '#f8fafc', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem', flex: 1, minWidth: 0 }}>
                       {m.home_team?.crest && (
-                        <img src={m.home_team.crest} alt={HN} style={{ width: '20px', height: '20px', objectFit: 'contain' }} />
+                        <img src={m.home_team.crest} alt={HN} style={{ width: '20px', height: '20px', objectFit: 'contain', flexShrink: 0 }} />
                       )}
-                      <span>{HN}</span>
+                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={HN}>{HN}</span>
                     </Link>
-                    <span style={{ fontSize: '0.75rem', color: '#64748b' }}>VS</span>
-                    <Link href={getTeamUrl(AN)} style={{ color: '#f8fafc', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                      <span>{AN}</span>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b', flexShrink: 0, padding: '0 0.2rem' }}>VS</span>
+                    <Link href={getTeamUrl(AN)} style={{ color: '#f8fafc', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.4rem', flex: 1, minWidth: 0, textAlign: 'right' }}>
+                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={AN}>{AN}</span>
                       {m.away_team?.crest && (
-                        <img src={m.away_team.crest} alt={AN} style={{ width: '20px', height: '20px', objectFit: 'contain' }} />
+                        <img src={m.away_team.crest} alt={AN} style={{ width: '20px', height: '20px', objectFit: 'contain', flexShrink: 0 }} />
                       )}
                     </Link>
                   </div>

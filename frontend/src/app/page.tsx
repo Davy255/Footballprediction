@@ -119,23 +119,6 @@ export default async function HomePage() {
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.6rem' }}>
                 <div>
-                  <span
-                    style={{
-                      background: 'rgba(34,197,94,0.15)',
-                      border: '1px solid rgba(34,197,94,0.3)',
-                      color: '#86efac',
-                      padding: '0.2rem 0.6rem',
-                      borderRadius: '999px',
-                      fontSize: '0.74rem',
-                      fontWeight: 800,
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '0.3rem',
-                      marginBottom: '0.4rem',
-                    }}
-                  >
-                    ● AI Match Predictions Active
-                  </span>
                   <h1
                     style={{
                       fontSize: 'clamp(1.4rem, 5vw, 1.85rem)',

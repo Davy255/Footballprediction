@@ -253,7 +253,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
         </h1>
 
         {/* Teams Display Row */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: '1rem', textAlign: 'center' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: 'clamp(0.4rem, 2vw, 1rem)', textAlign: 'center' }}>
           
           {/* Home Team */}
           <Link
@@ -265,6 +265,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
               gap: '0.5rem',
               textDecoration: 'none',
               transition: 'transform 0.2s',
+              minWidth: 0,
             }}
             title={`View ${HN} Team Profile & Stats`}
           >
@@ -272,13 +273,13 @@ export default async function MatchPredictionPage({ params }: PageProps) {
               <img
                 src={match.home_team.crest}
                 alt={`${HN} Crest`}
-                style={{ width: '64px', height: '64px', objectFit: 'contain' }}
+                style={{ width: 'clamp(44px, 8vw, 64px)', height: 'clamp(44px, 8vw, 64px)', objectFit: 'contain' }}
               />
             )}
-            <div style={{ margin: 0, fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-primary)' }}>
+            <div style={{ margin: 0, fontSize: 'clamp(0.95rem, 3.2vw, 1.25rem)', fontWeight: 900, color: 'var(--text-primary)', wordBreak: 'break-word', lineHeight: 1.25 }}>
               {HN}
             </div>
-            <span style={{ fontSize: '0.78rem', color: '#93c5fd', fontWeight: 700 }}>Home Profile →</span>
+            <span style={{ fontSize: '0.75rem', color: '#93c5fd', fontWeight: 700 }}>Home Profile →</span>
           </Link>
 
           {/* Center: Match Status / Score / VS */}
@@ -324,6 +325,7 @@ export default async function MatchPredictionPage({ params }: PageProps) {
               gap: '0.5rem',
               textDecoration: 'none',
               transition: 'transform 0.2s',
+              minWidth: 0,
             }}
             title={`View ${AN} Team Profile & Stats`}
           >
@@ -331,13 +333,13 @@ export default async function MatchPredictionPage({ params }: PageProps) {
               <img
                 src={match.away_team.crest}
                 alt={`${AN} Crest`}
-                style={{ width: '64px', height: '64px', objectFit: 'contain' }}
+                style={{ width: 'clamp(44px, 8vw, 64px)', height: 'clamp(44px, 8vw, 64px)', objectFit: 'contain' }}
               />
             )}
-            <div style={{ margin: 0, fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-primary)' }}>
+            <div style={{ margin: 0, fontSize: 'clamp(0.95rem, 3.2vw, 1.25rem)', fontWeight: 900, color: 'var(--text-primary)', wordBreak: 'break-word', lineHeight: 1.25 }}>
               {AN}
             </div>
-            <span style={{ fontSize: '0.78rem', color: '#93c5fd', fontWeight: 700 }}>Away Profile →</span>
+            <span style={{ fontSize: '0.75rem', color: '#93c5fd', fontWeight: 700 }}>Away Profile →</span>
           </Link>
         </div>
       </header>

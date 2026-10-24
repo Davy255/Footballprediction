@@ -390,7 +390,7 @@ export default async function FootballPredictionsTodayPage() {
                 </div>
 
                 {/* Match Prediction Cards Grid */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '1rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1rem' }}>
                   {group.matches.map((m) => {
                     const HN = m.home_team?.short_name || m.home_team?.name || 'Home';
                     const AN = m.away_team?.short_name || m.away_team?.name || 'Away';
@@ -475,16 +475,17 @@ export default async function FootballPredictionsTodayPage() {
                               fontWeight: 800,
                               fontSize: '0.92rem',
                               flex: 1,
+                              minWidth: 0,
                             }}
                           >
                             {m.home_team?.crest && (
-                              <img src={m.home_team.crest} alt={HN} style={{ width: '22px', height: '22px', objectFit: 'contain' }} />
+                              <img src={m.home_team.crest} alt={HN} style={{ width: '22px', height: '22px', objectFit: 'contain', flexShrink: 0 }} />
                             )}
-                            <span title={HN}>{HN}</span>
+                            <span title={HN} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{HN}</span>
                           </Link>
 
                           {/* Center Score / VS */}
-                          <div style={{ padding: '0 0.4rem', textAlign: 'center' }}>
+                          <div style={{ padding: '0 0.4rem', textAlign: 'center', flexShrink: 0 }}>
                             {isFinished || isLive ? (
                               <span style={{ fontWeight: 900, fontSize: '1.1rem', color: isLive ? '#ef4444' : '#38bdf8' }}>
                                 {m.home_score ?? 0} - {m.away_score ?? 0}
@@ -507,12 +508,13 @@ export default async function FootballPredictionsTodayPage() {
                               fontWeight: 800,
                               fontSize: '0.92rem',
                               flex: 1,
+                              minWidth: 0,
                               textAlign: 'right',
                             }}
                           >
-                            <span title={AN}>{AN}</span>
+                            <span title={AN} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{AN}</span>
                             {m.away_team?.crest && (
-                              <img src={m.away_team.crest} alt={AN} style={{ width: '22px', height: '22px', objectFit: 'contain' }} />
+                              <img src={m.away_team.crest} alt={AN} style={{ width: '22px', height: '22px', objectFit: 'contain', flexShrink: 0 }} />
                             )}
                           </Link>
                         </div>

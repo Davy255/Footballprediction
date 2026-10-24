@@ -387,7 +387,15 @@ export default function FixturesClient({ initialMatches = [], initialLeagues = [
 
         {/* League Horizontal Pill Filter */}
         {leagues.length > 0 && (
-          <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.4rem' }}>
+          <div style={{
+            display: 'flex',
+            gap: '0.5rem',
+            overflowX: 'auto',
+            paddingBottom: '0.4rem',
+            WebkitOverflowScrolling: 'touch',
+            scrollbarWidth: 'none',
+            maxWidth: '100%',
+          }}>
             <button
               onClick={() => setSelectedLeague('')}
               className={`btn btn-sm ${selectedLeague === '' ? 'btn-primary' : 'btn-secondary'}`}
@@ -410,8 +418,7 @@ export default function FixturesClient({ initialMatches = [], initialLeagues = [
         )}
       </div>
 
-      {/* Top Hero Ad Banner */}
-      <AdBanner slot="hero-top" />
+
 
       {/* Matches Categorized by Date & Day */}
       {loading && matches.length === 0 ? (

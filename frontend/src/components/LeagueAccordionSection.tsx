@@ -37,7 +37,7 @@ function LeagueAccordionSection({
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0, flex: 1 }}>
           {/* League Flag */}
-          <span style={{ fontSize: '1.15rem', display: 'inline-flex', alignItems: 'center' }}>
+          <span style={{ fontSize: '1.15rem', display: 'inline-flex', alignItems: 'center', flexShrink: 0 }}>
             {league.flag || '⚽'}
           </span>
 
@@ -46,7 +46,7 @@ function LeagueAccordionSection({
             href={getLeagueUrl(league.name, league.code)}
             onClick={(e) => e.stopPropagation()}
             className="footystats-league-title"
-            style={{ textDecoration: 'none', color: 'inherit' }}
+            style={{ textDecoration: 'none', color: 'inherit', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
             title={`View ${league.name} Standings & Predictions`}
           >
             {league.country ? `${league.country} - ` : ''}{league.name}
