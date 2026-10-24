@@ -113,6 +113,7 @@ export default function ChatbotWidget() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>(DEFAULT_SUGGESTIONS);
+  const [failedMessage, setFailedMessage] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -136,6 +137,7 @@ export default function ChatbotWidget() {
     setMessages(newMessages);
     setInput('');
     setLoading(true);
+    setFailedMessage(null);
 
     try {
       const response = await sendChatMessage(textToSend, messages);
@@ -143,12 +145,29 @@ export default function ChatbotWidget() {
       if (response.suggestions && response.suggestions.length > 0) {
         setSuggestions(response.suggestions);
       }
-    } catch {
+      setFailedMessage(null);
+    } catch (err: any) {
+      console.error('[Coach AI Error]:', err?.message || err);
+      setFailedMessage(textToSend);
+
+      let userErrorMessage = '⚠️ I encountered a temporary connection issue. Please check your network or try again.';
+      const errMsg = String(err?.message || '').toLowerCase();
+
+      if (errMsg.includes('timeout') || errMsg.includes('aborted') || err?.name === 'AbortError') {
+        userErrorMessage = '⏳ Request timed out. The server might be waking up or handling high traffic. Please retry in a moment!';
+      } else if (errMsg.includes('rate limit') || errMsg.includes('429') || errMsg.includes('too many')) {
+        userErrorMessage = '⏳ You are sending messages too quickly. Please pause for a few seconds before trying again.';
+      } else if (errMsg.includes('reach the football server') || errMsg.includes('failed to fetch') || errMsg.includes('network')) {
+        userErrorMessage = '📡 Unable to reach the server. Please check your internet connection and try again.';
+      } else if (errMsg.includes('500') || errMsg.includes('502') || errMsg.includes('503')) {
+        userErrorMessage = '⚠️ The analytics server encountered a temporary hiccup. Please try again shortly.';
+      }
+
       setMessages([
         ...newMessages,
         {
           role: 'assistant',
-          content: '⚠️ I encountered a temporary connection issue. Please verify your connection or try again!',
+          content: userErrorMessage,
         },
       ]);
     } finally {
@@ -167,6 +186,7 @@ export default function ChatbotWidget() {
   const clearChat = () => {
     setMessages([INITIAL_MESSAGE]);
     setSuggestions(DEFAULT_SUGGESTIONS);
+    setFailedMessage(null);
   };
 
   return (
@@ -388,6 +408,31 @@ export default function ChatbotWidget() {
                     <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#8b5cf6' }} />
                     <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#10b981' }} />
                   </span>
+                </div>
+              )}
+
+              {failedMessage && !loading && (
+                <div style={{ display: 'flex', justifyContent: 'center', margin: '0.35rem 0' }}>
+                  <button
+                    onClick={() => handleSend(failedMessage)}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      padding: '0.4rem 0.9rem',
+                      borderRadius: '20px',
+                      background: 'rgba(59, 130, 246, 0.15)',
+                      border: '1px solid rgba(59, 130, 246, 0.4)',
+                      color: '#60a5fa',
+                      fontSize: '0.80rem',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                    }}
+                  >
+                    <span>🔄</span>
+                    <span>Retry Message</span>
+                  </button>
                 </div>
               )}
               <div ref={messagesEndRef} />

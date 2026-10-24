@@ -398,11 +398,16 @@ export async function updateAdminUserStatus(userId: number, updates: { is_active
 // ──────────────────────────────────────────────────────────────
 // Chat API (Coach AI)
 // ──────────────────────────────────────────────────────────────
-export async function sendChatMessage(messages: ChatMessage[], matchContext?: Match): Promise<ChatResponse> {
-  return fetchApi<ChatResponse>('/api/chat/message', {
+export async function sendChatMessage(
+  message: string,
+  history: ChatMessage[] = [],
+  matchContext?: Match | null
+): Promise<ChatResponse> {
+  return fetchApi<ChatResponse>('/api/chat/', {
     method: 'POST',
     body: JSON.stringify({
-      messages,
+      message: message.trim(),
+      history: history.slice(-10),
       match_context: matchContext || null,
     }),
   });

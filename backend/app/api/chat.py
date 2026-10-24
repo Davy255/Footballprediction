@@ -25,12 +25,18 @@ class ChatMessage(BaseModel):
 
 
 class ChatRequest(BaseModel):
-    message: str
+    message: Optional[str] = None
+    messages: Optional[List[ChatMessage]] = None
     history: Optional[List[ChatMessage]] = []
+    match_context: Optional[dict] = None
 
 
 class ChatResponse(BaseModel):
     reply: str
+    suggestions: List[str] = []
+
+
+class SuggestionsResponse(BaseModel):
     suggestions: List[str] = []
 
 
@@ -228,15 +234,45 @@ def generate_smart_reply(user_msg: str, db: Session) -> dict:
     return {"reply": reply, "suggestions": suggestions}
 
 
+@router.post("", response_model=ChatResponse, dependencies=[Depends(chat_rate_limiter)])
 @router.post("/", response_model=ChatResponse, dependencies=[Depends(chat_rate_limiter)])
+@router.post("/message", response_model=ChatResponse, dependencies=[Depends(chat_rate_limiter)])
 def chat_with_supporter(payload: ChatRequest, db: Session = Depends(get_db)):
     """Receives user chat messages, parses intent with match context, and provides intelligent support."""
+    user_query = payload.message
+    if not user_query and payload.messages:
+        user_msgs = [m.content for m in payload.messages if m.role == "user"]
+        if user_msgs:
+            user_query = user_msgs[-1]
+        elif payload.messages:
+            user_query = payload.messages[-1].content
+
+    if not user_query or not user_query.strip():
+        return ChatResponse(
+            reply="👋 **Hello! I am Coach AI, your match prediction and football supporter.**\n\nAsk me about today’s top value picks, live match scores, team statistics, or how to earn points on the leaderboard!",
+            suggestions=["🎯 Top picks today", "🔴 What matches are live?", "🏆 How does scoring work?"],
+        )
+
     try:
-        res = generate_smart_reply(payload.message, db)
+        res = generate_smart_reply(user_query.strip(), db)
         return ChatResponse(reply=res["reply"], suggestions=res.get("suggestions", []))
     except Exception as e:
-        logger.error(f"Chat error: {e}")
+        logger.error(f"Chat error processing query '{user_query[:50]}': {e}", exc_info=True)
         return ChatResponse(
             reply="I encountered a brief issue retrieving match details. Please feel free to ask about live matches, top predictions, or scoring rules!",
             suggestions=["Top picks today", "Live matches", "Scoring rules"],
         )
+
+
+@router.get("/suggestions", response_model=SuggestionsResponse)
+@router.post("/suggestions", response_model=SuggestionsResponse)
+def get_chat_suggestions():
+    """Returns conversational suggestion prompts for Coach AI."""
+    return SuggestionsResponse(
+        suggestions=[
+            "🎯 Top picks today",
+            "🔴 What matches are live?",
+            "🏆 How does scoring work?",
+            "📊 Search upcoming fixtures",
+        ]
+    )
